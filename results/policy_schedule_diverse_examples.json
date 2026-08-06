@@ -1,0 +1,138 @@
+{
+  "low_risk": [
+    {
+      "person": 10757,
+      "screen_ages": []
+    },
+    {
+      "person": 570,
+      "screen_ages": [
+        57
+      ]
+    },
+    {
+      "person": 18757,
+      "screen_ages": [
+        57,
+        66
+      ]
+    },
+    {
+      "person": 10533,
+      "screen_ages": [
+        57,
+        66,
+        74
+      ]
+    },
+    {
+      "person": 18315,
+      "screen_ages": [
+        57,
+        66,
+        72,
+        76
+      ]
+    },
+    {
+      "person": 4281,
+      "screen_ages": [
+        57,
+        66,
+        72,
+        76,
+        82
+      ]
+    },
+    {
+      "person": 10290,
+      "screen_ages": [
+        57,
+        66,
+        72,
+        76,
+        80,
+        84
+      ]
+    },
+    {
+      "person": 15514,
+      "screen_ages": [
+        57,
+        66,
+        72,
+        76,
+        82,
+        85
+      ]
+    }
+  ],
+  "high_risk": [
+    {
+      "person": 12152,
+      "screen_ages": []
+    },
+    {
+      "person": 6709,
+      "screen_ages": [
+        57
+      ]
+    },
+    {
+      "person": 18163,
+      "screen_ages": [
+        57,
+        66
+      ]
+    },
+    {
+      "person": 941,
+      "screen_ages": [
+        57,
+        66,
+        74
+      ]
+    },
+    {
+      "person": 18188,
+      "screen_ages": [
+        57,
+        66,
+        72,
+        76
+      ]
+    },
+    {
+      "person": 610,
+      "screen_ages": [
+        57,
+        66,
+        72,
+        76,
+        82
+      ]
+    },
+    {
+      "person": 12849,
+      "screen_ages": [
+        57,
+        65,
+        69,
+        75,
+        78,
+        83
+      ]
+    },
+    {
+      "person": 2434,
+      "screen_ages": [
+        57,
+        66,
+        72,
+        76,
+        82,
+        85
+      ]
+    }
+  ]
+}

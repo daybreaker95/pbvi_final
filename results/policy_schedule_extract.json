@@ -1,0 +1,570 @@
+{
+  "age_stats": [
+    {
+      "age": 40,
+      "n_alive": 500000,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 41,
+      "n_alive": 499054,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 42,
+      "n_alive": 498066,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 43,
+      "n_alive": 496961,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 44,
+      "n_alive": 495711,
+      "screen_pct_all": 49.78707351662561,
+      "screen_pct_low": 49.782820219222565,
+      "screen_pct_high": 49.79986900516702
+    },
+    {
+      "age": 45,
+      "n_alive": 494354,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 46,
+      "n_alive": 492907,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 47,
+      "n_alive": 491289,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 48,
+      "n_alive": 489622,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 49,
+      "n_alive": 487779,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 50,
+      "n_alive": 486008,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 51,
+      "n_alive": 483886,
+      "screen_pct_all": 99.91568261945996,
+      "screen_pct_low": 99.94438356616979,
+      "screen_pct_high": 99.82930628749462
+    },
+    {
+      "age": 52,
+      "n_alive": 481580,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 53,
+      "n_alive": 479394,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 54,
+      "n_alive": 476846,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 55,
+      "n_alive": 474194,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 56,
+      "n_alive": 471174,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 57,
+      "n_alive": 468130,
+      "screen_pct_all": 9.095336765428407,
+      "screen_pct_low": 4.275727061394399,
+      "screen_pct_high": 23.612241924563556
+    },
+    {
+      "age": 58,
+      "n_alive": 465131,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 59,
+      "n_alive": 461593,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 60,
+      "n_alive": 457827,
+      "screen_pct_all": 4.076867463037348,
+      "screen_pct_low": 1.6281147333471069,
+      "screen_pct_high": 11.447038834101141
+    },
+    {
+      "age": 61,
+      "n_alive": 453698,
+      "screen_pct_all": 0.19263915644327284,
+      "screen_pct_low": 0.13386959457475853,
+      "screen_pct_high": 0.36968903668588815
+    },
+    {
+      "age": 62,
+      "n_alive": 449040,
+      "screen_pct_all": 47.77659005879209,
+      "screen_pct_low": 49.83094079962036,
+      "screen_pct_high": 41.585627457990704
+    },
+    {
+      "age": 63,
+      "n_alive": 443999,
+      "screen_pct_all": 42.729825968076504,
+      "screen_pct_low": 45.64956531651797,
+      "screen_pct_high": 33.93400992291217
+    },
+    {
+      "age": 64,
+      "n_alive": 438672,
+      "screen_pct_all": 8.197240763030237,
+      "screen_pct_low": 4.050259402387899,
+      "screen_pct_high": 20.699975288529302
+    },
+    {
+      "age": 65,
+      "n_alive": 433304,
+      "screen_pct_all": 0.7228181599985231,
+      "screen_pct_low": 0.29595891610809416,
+      "screen_pct_high": 2.0098034673511176
+    },
+    {
+      "age": 66,
+      "n_alive": 427170,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 67,
+      "n_alive": 420625,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 68,
+      "n_alive": 413744,
+      "screen_pct_all": 8.912757647240806,
+      "screen_pct_low": 4.475801651722663,
+      "screen_pct_high": 22.313126111332434
+    },
+    {
+      "age": 69,
+      "n_alive": 406340,
+      "screen_pct_all": 0.8224639464487867,
+      "screen_pct_low": 0.2500393246644295,
+      "screen_pct_high": 2.5487211922362336
+    },
+    {
+      "age": 70,
+      "n_alive": 398511,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 71,
+      "n_alive": 390180,
+      "screen_pct_all": 47.03521451637705,
+      "screen_pct_low": 47.0224142107939,
+      "screen_pct_high": 47.073846375647484
+    },
+    {
+      "age": 72,
+      "n_alive": 381335,
+      "screen_pct_all": 44.554787785018426,
+      "screen_pct_low": 48.64918650932197,
+      "screen_pct_high": 32.199336248222096
+    },
+    {
+      "age": 73,
+      "n_alive": 371843,
+      "screen_pct_all": 9.569092331978819,
+      "screen_pct_low": 4.6146247888453065,
+      "screen_pct_high": 24.546939747043613
+    },
+    {
+      "age": 74,
+      "n_alive": 361719,
+      "screen_pct_all": 1.0624269114975988,
+      "screen_pct_low": 0.7193768099410148,
+      "screen_pct_high": 2.098803859664725
+    },
+    {
+      "age": 75,
+      "n_alive": 350837,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 76,
+      "n_alive": 339426,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 77,
+      "n_alive": 327425,
+      "screen_pct_all": 4.191799648774529,
+      "screen_pct_low": 1.2135567328631325,
+      "screen_pct_high": 13.20965936350552
+    },
+    {
+      "age": 78,
+      "n_alive": 314991,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 79,
+      "n_alive": 301631,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 80,
+      "n_alive": 287339,
+      "screen_pct_all": 20.348786624857745,
+      "screen_pct_low": 10.205960029046238,
+      "screen_pct_high": 51.17809143564078
+    },
+    {
+      "age": 81,
+      "n_alive": 272263,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 82,
+      "n_alive": 256616,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 83,
+      "n_alive": 241422,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 84,
+      "n_alive": 225131,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 85,
+      "n_alive": 208198,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 86,
+      "n_alive": 191722,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 87,
+      "n_alive": 174277,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 88,
+      "n_alive": 157588,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 89,
+      "n_alive": 140846,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 90,
+      "n_alive": 125119,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 91,
+      "n_alive": 109367,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 92,
+      "n_alive": 94989,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 93,
+      "n_alive": 81208,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 94,
+      "n_alive": 68052,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 95,
+      "n_alive": 56618,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 96,
+      "n_alive": 46245,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 97,
+      "n_alive": 37166,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 98,
+      "n_alive": 29212,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 99,
+      "n_alive": 22665,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    },
+    {
+      "age": 100,
+      "n_alive": 17143,
+      "screen_pct_all": 0.0,
+      "screen_pct_low": 0.0,
+      "screen_pct_high": 0.0
+    }
+  ],
+  "examples": {
+    "low_risk": [
+      {
+        "person": 26838,
+        "sex": 2,
+        "screen_ages": [
+          51,
+          62
+        ]
+      },
+      {
+        "person": 296066,
+        "sex": 1,
+        "screen_ages": [
+          44,
+          51,
+          63,
+          71
+        ]
+      },
+      {
+        "person": 454499,
+        "sex": 1,
+        "screen_ages": [
+          44,
+          51
+        ]
+      },
+      {
+        "person": 109960,
+        "sex": 2,
+        "screen_ages": [
+          51,
+          62,
+          72,
+          80
+        ]
+      },
+      {
+        "person": 7635,
+        "sex": 2,
+        "screen_ages": [
+          51,
+          62,
+          72
+        ]
+      },
+      {
+        "person": 340779,
+        "sex": 2,
+        "screen_ages": [
+          51,
+          62,
+          68,
+          73,
+          80
+        ]
+      }
+    ],
+    "high_risk": [
+      {
+        "person": 461786,
+        "sex": 2,
+        "screen_ages": [
+          51,
+          62,
+          72,
+          80
+        ]
+      },
+      {
+        "person": 226545,
+        "sex": 1,
+        "screen_ages": [
+          44,
+          51,
+          63,
+          71
+        ]
+      },
+      {
+        "person": 406356,
+        "sex": 1,
+        "screen_ages": [
+          44,
+          51,
+          63,
+          71
+        ]
+      },
+      {
+        "person": 225522,
+        "sex": 1,
+        "screen_ages": [
+          44,
+          51,
+          63,
+          71
+        ]
+      },
+      {
+        "person": 394864,
+        "sex": 1,
+        "screen_ages": [
+          44,
+          51,
+          57,
+          62,
+          65,
+          71,
+          80
+        ]
+      },
+      {
+        "person": 138391,
+        "sex": 2,
+        "screen_ages": [
+          51,
+          62,
+          72
+        ]
+      }
+    ]
+  },
+  "gap_final_male": {
+    "iter": 100,
+    "vl": 18.630119481870626,
+    "vu": 18.688070094034728,
+    "gap": 0.057950612164102466,
+    "n_extra": 4000
+  },
+  "gap_final_female": {
+    "iter": 100,
+    "vl": 19.73162395298511,
+    "vu": 19.78772418130472,
+    "gap": 0.056100228319611034,
+    "n_extra": 4000
+  },
+  "n_sim": 500000
+}

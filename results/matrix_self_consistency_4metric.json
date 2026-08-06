@@ -1,0 +1,16 @@
+{
+  "n": 1000000,
+  "seed": 42,
+  "crc_100k_no_screen": 1922.3,
+  "crc_100k_policy": 980.2,
+  "incid_100k_no_screen": 4032.8,
+  "incid_100k_policy": 2382.1,
+  "cost_pp_no_screen": 3034.2392686230464,
+  "cost_pp_policy": 5094.160358239456,
+  "life_years_no_screen": 40.2053035,
+  "life_years_policy": 40.3982745,
+  "mortality_reduction_pct": 49.00899963585288,
+  "incidence_reduction_pct": 40.931858758182905,
+  "cost_change_pct": 67.88921068018519,
+  "dlyg_days": 70.48265775
+}

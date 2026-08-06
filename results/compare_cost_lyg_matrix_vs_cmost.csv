@@ -1,0 +1,7 @@
+scenario,metric,real_cmost,matrix,gap_pct
+No screening,avg_age_at_death,77.096,78.222,-1.4%
+No screening,cost_per_person_usd,2743.43,2148.28,+27.7%
+"Screen q10y (50,60,70)",avg_age_at_death,77.22,78.417,-1.5%
+"Screen q10y (50,60,70)",cost_per_person_usd,4608.93,4435.12,+3.9%
+Screen q5y (50-75),avg_age_at_death,77.222,78.495,-1.6%
+Screen q5y (50-75),cost_per_person_usd,7213.77,7117.19,+1.4%

@@ -1,0 +1,583 @@
+{
+  "config": {
+    "n": 30000,
+    "seed": 90210,
+    "adh_seed": 13,
+    "best_fixed": {
+      "2": [
+        58,
+        70
+      ],
+      "3": [
+        52,
+        58,
+        70
+      ]
+    },
+    "ref_mortality": 1.71,
+    "ref_lost": 0.21681666666666666,
+    "alphas": [
+      1.0,
+      0.75,
+      0.5,
+      0.25
+    ],
+    "hetero": {
+      "f_low": 0.4,
+      "a_low": 0.2,
+      "a_high": 0.9
+    }
+  },
+  "sweep": {
+    "K2|a1.0|fixed": {
+      "n": 30000,
+      "crc_mortality": 1.1199999999999999,
+      "crc_mortality_se": 0.060758892804004365,
+      "crc_incidence": 2.8000000000000003,
+      "mean_colo": 1.6561666666666666,
+      "mean_recommended": 1.6659333333333333,
+      "attendance_rate": 1.0,
+      "LYG_per_1000": 67.19999999999999,
+      "LYG_per_colo": 40.57562644661366,
+      "ly_lost_mean": 0.14961666666666668
+    },
+    "K2|a1.0|recall": {
+      "n": 30000,
+      "crc_mortality": 1.1199999999999999,
+      "crc_mortality_se": 0.060758892804004365,
+      "crc_incidence": 2.8000000000000003,
+      "mean_colo": 1.6561666666666666,
+      "mean_recommended": 1.6659333333333333,
+      "attendance_rate": 1.0,
+      "LYG_per_1000": 67.19999999999999,
+      "LYG_per_colo": 40.57562644661366,
+      "ly_lost_mean": 0.14961666666666668
+    },
+    "K2|a1.0|pbvi": {
+      "n": 30000,
+      "crc_mortality": 1.1333333333333333,
+      "crc_mortality_se": 0.0611153619467192,
+      "crc_incidence": 2.9266666666666667,
+      "mean_colo": 1.6736,
+      "mean_recommended": 1.6746333333333334,
+      "attendance_rate": 1.0,
+      "LYG_per_1000": 68.75833333333334,
+      "LYG_per_colo": 41.084090184831105,
+      "ly_lost_mean": 0.14805833333333332
+    },
+    "K2|a0.75|fixed": {
+      "n": 30000,
+      "crc_mortality": 1.2766666666666668,
+      "crc_mortality_se": 0.0648179476830378,
+      "crc_incidence": 3.18,
+      "mean_colo": 1.2439,
+      "mean_recommended": 1.6655333333333333,
+      "attendance_rate": 0.7516711363727334,
+      "LYG_per_1000": 49.84999999999998,
+      "LYG_per_colo": 40.07556877562504,
+      "ly_lost_mean": 0.16696666666666668
+    },
+    "K2|a0.75|recall": {
+      "n": 30000,
+      "crc_mortality": 1.09,
+      "crc_mortality_se": 0.05994872638341174,
+      "crc_incidence": 2.83,
+      "mean_colo": 1.649,
+      "mean_recommended": 2.209966666666667,
+      "attendance_rate": 0.7506598892894312,
+      "LYG_per_1000": 69.15833333333332,
+      "LYG_per_colo": 41.93955932888618,
+      "ly_lost_mean": 0.14765833333333334
+    },
+    "K2|a0.75|pbvi": {
+      "n": 30000,
+      "crc_mortality": 1.0866666666666667,
+      "crc_mortality_se": 0.059858000078629334,
+      "crc_incidence": 2.88,
+      "mean_colo": 1.663,
+      "mean_recommended": 2.2173,
+      "attendance_rate": 0.7504773072355266,
+      "LYG_per_1000": 77.64166666666667,
+      "LYG_per_colo": 46.68771296853077,
+      "ly_lost_mean": 0.139175
+    },
+    "K2|a0.5|fixed": {
+      "n": 30000,
+      "crc_mortality": 1.35,
+      "crc_mortality_se": 0.06662880743291648,
+      "crc_incidence": 3.39,
+      "mean_colo": 0.8318,
+      "mean_recommended": 1.6652,
+      "attendance_rate": 0.5030226599407479,
+      "LYG_per_1000": 42.69999999999999,
+      "LYG_per_colo": 51.33445539793218,
+      "ly_lost_mean": 0.17411666666666667
+    },
+    "K2|a0.5|recall": {
+      "n": 30000,
+      "crc_mortality": 1.0866666666666667,
+      "crc_mortality_se": 0.059858000078629334,
+      "crc_incidence": 2.83,
+      "mean_colo": 1.6298333333333332,
+      "mean_recommended": 3.2841666666666667,
+      "attendance_rate": 0.4994366911951281,
+      "LYG_per_1000": 67.67499999999998,
+      "LYG_per_colo": 41.52265057776868,
+      "ly_lost_mean": 0.14914166666666667
+    },
+    "K2|a0.5|pbvi": {
+      "n": 30000,
+      "crc_mortality": 1.1433333333333333,
+      "crc_mortality_se": 0.06138129190701306,
+      "crc_incidence": 2.9366666666666665,
+      "mean_colo": 1.6265666666666667,
+      "mean_recommended": 3.2588,
+      "attendance_rate": 0.4994476494415122,
+      "LYG_per_1000": 72.64999999999999,
+      "LYG_per_colo": 44.664631022398915,
+      "ly_lost_mean": 0.14416666666666667
+    },
+    "K2|a0.25|fixed": {
+      "n": 30000,
+      "crc_mortality": 1.5966666666666667,
+      "crc_mortality_se": 0.07237001212308795,
+      "crc_incidence": 3.826666666666666,
+      "mean_colo": 0.41383333333333333,
+      "mean_recommended": 1.6650666666666667,
+      "attendance_rate": 0.25046044202434337,
+      "LYG_per_1000": 18.049999999999983,
+      "LYG_per_colo": 43.616592831252476,
+      "ly_lost_mean": 0.19876666666666667
+    },
+    "K2|a0.25|recall": {
+      "n": 30000,
+      "crc_mortality": 1.0566666666666666,
+      "crc_mortality_se": 0.05903490700211953,
+      "crc_incidence": 2.9000000000000004,
+      "mean_colo": 1.5558666666666667,
+      "mean_recommended": 6.3251333333333335,
+      "attendance_rate": 0.24795788231078134,
+      "LYG_per_1000": 68.10833333333332,
+      "LYG_per_colo": 43.77517353672122,
+      "ly_lost_mean": 0.14870833333333333
+    },
+    "K2|a0.25|pbvi": {
+      "n": 30000,
+      "crc_mortality": 1.0933333333333333,
+      "crc_mortality_se": 0.06003930942147579,
+      "crc_incidence": 2.93,
+      "mean_colo": 1.4554666666666667,
+      "mean_recommended": 5.8665,
+      "attendance_rate": 0.2482627347367823,
+      "LYG_per_1000": 71.36666666666666,
+      "LYG_per_colo": 49.03352876511542,
+      "ly_lost_mean": 0.14545
+    },
+    "K3|a1.0|fixed": {
+      "n": 30000,
+      "crc_mortality": 0.9866666666666666,
+      "crc_mortality_se": 0.05706616396856828,
+      "crc_incidence": 2.4633333333333334,
+      "mean_colo": 2.5888333333333335,
+      "mean_recommended": 2.5965333333333334,
+      "attendance_rate": 1.0,
+      "LYG_per_1000": 91.65833333333332,
+      "LYG_per_colo": 35.405266207429335,
+      "ly_lost_mean": 0.12515833333333334
+    },
+    "K3|a1.0|recall": {
+      "n": 30000,
+      "crc_mortality": 0.9866666666666666,
+      "crc_mortality_se": 0.05706616396856828,
+      "crc_incidence": 2.4633333333333334,
+      "mean_colo": 2.5888333333333335,
+      "mean_recommended": 2.5965333333333334,
+      "attendance_rate": 1.0,
+      "LYG_per_1000": 91.65833333333332,
+      "LYG_per_colo": 35.405266207429335,
+      "ly_lost_mean": 0.12515833333333334
+    },
+    "K3|a1.0|pbvi": {
+      "n": 30000,
+      "crc_mortality": 0.9400000000000001,
+      "crc_mortality_se": 0.05571340472557334,
+      "crc_incidence": 2.6766666666666667,
+      "mean_colo": 2.3104,
+      "mean_recommended": 2.3120333333333334,
+      "attendance_rate": 1.0,
+      "LYG_per_1000": 78.36666666666667,
+      "LYG_per_colo": 33.919090489381354,
+      "ly_lost_mean": 0.13845
+    },
+    "K3|a0.75|fixed": {
+      "n": 30000,
+      "crc_mortality": 1.1133333333333333,
+      "crc_mortality_se": 0.06057983496693346,
+      "crc_incidence": 2.7,
+      "mean_colo": 1.9387666666666667,
+      "mean_recommended": 2.5962666666666667,
+      "attendance_rate": 0.7494350862777321,
+      "LYG_per_1000": 79.79999999999998,
+      "LYG_per_colo": 41.16018774822481,
+      "ly_lost_mean": 0.13701666666666668
+    },
+    "K3|a0.75|recall": {
+      "n": 30000,
+      "crc_mortality": 0.9666666666666667,
+      "crc_mortality_se": 0.056490534134097485,
+      "crc_incidence": 2.4033333333333333,
+      "mean_colo": 2.5787666666666667,
+      "mean_recommended": 3.4527666666666668,
+      "attendance_rate": 0.7491190639390634,
+      "LYG_per_1000": 91.34166666666665,
+      "LYG_per_colo": 35.42067913602109,
+      "ly_lost_mean": 0.125475
+    },
+    "K3|a0.75|pbvi": {
+      "n": 30000,
+      "crc_mortality": 0.8566666666666667,
+      "crc_mortality_se": 0.05320890278773054,
+      "crc_incidence": 2.5733333333333333,
+      "mean_colo": 2.2837,
+      "mean_recommended": 3.0504,
+      "attendance_rate": 0.7491913628813708,
+      "LYG_per_1000": 90.09166666666665,
+      "LYG_per_colo": 39.44986936404372,
+      "ly_lost_mean": 0.126725
+    },
+    "K3|a0.5|fixed": {
+      "n": 30000,
+      "crc_mortality": 1.2933333333333332,
+      "crc_mortality_se": 0.06523416224600578,
+      "crc_incidence": 3.173333333333334,
+      "mean_colo": 1.2976333333333334,
+      "mean_recommended": 2.596,
+      "attendance_rate": 0.5019388803287108,
+      "LYG_per_1000": 59.63333333333332,
+      "LYG_per_colo": 45.9554573711115,
+      "ly_lost_mean": 0.15718333333333334
+    },
+    "K3|a0.5|recall": {
+      "n": 30000,
+      "crc_mortality": 0.9566666666666666,
+      "crc_mortality_se": 0.05620041934680154,
+      "crc_incidence": 2.4533333333333336,
+      "mean_colo": 2.5540333333333334,
+      "mean_recommended": 5.1313,
+      "attendance_rate": 0.4995290342278435,
+      "LYG_per_1000": 92.95833333333333,
+      "LYG_per_colo": 36.39667976142311,
+      "ly_lost_mean": 0.12385833333333333
+    },
+    "K3|a0.5|pbvi": {
+      "n": 30000,
+      "crc_mortality": 0.9133333333333333,
+      "crc_mortality_se": 0.054924849353345837,
+      "crc_incidence": 2.6566666666666667,
+      "mean_colo": 2.1998,
+      "mean_recommended": 4.404833333333333,
+      "attendance_rate": 0.4997691929320065,
+      "LYG_per_1000": 86.51666666666665,
+      "LYG_per_colo": 39.329332969663895,
+      "ly_lost_mean": 0.1303
+    },
+    "K3|a0.25|fixed": {
+      "n": 30000,
+      "crc_mortality": 1.4733333333333332,
+      "crc_mortality_se": 0.06956231286589827,
+      "crc_incidence": 3.65,
+      "mean_colo": 0.6403333333333333,
+      "mean_recommended": 2.5950333333333333,
+      "attendance_rate": 0.24826912949095067,
+      "LYG_per_1000": 29.950000000000003,
+      "LYG_per_colo": 46.772514315460704,
+      "ly_lost_mean": 0.18686666666666665
+    },
+    "K3|a0.25|recall": {
+      "n": 30000,
+      "crc_mortality": 0.9366666666666668,
+      "crc_mortality_se": 0.05561547006086595,
+      "crc_incidence": 2.466666666666667,
+      "mean_colo": 2.4263333333333335,
+      "mean_recommended": 9.793733333333334,
+      "attendance_rate": 0.24890406110029542,
+      "LYG_per_1000": 93.74166666666666,
+      "LYG_per_colo": 38.63511471355955,
+      "ly_lost_mean": 0.123075
+    },
+    "K3|a0.25|pbvi": {
+      "n": 30000,
+      "crc_mortality": 0.9866666666666666,
+      "crc_mortality_se": 0.05706616396856828,
+      "crc_incidence": 2.76,
+      "mean_colo": 1.8744333333333334,
+      "mean_recommended": 7.559033333333334,
+      "attendance_rate": 0.24816224296757522,
+      "LYG_per_1000": 77.725,
+      "LYG_per_colo": 41.46586523927231,
+      "ly_lost_mean": 0.13909166666666667
+    }
+  },
+  "subgroup": {
+    "K2|fixed|all": {
+      "n": 30000,
+      "crc_mortality": 1.37,
+      "crc_mortality_se": 0.06711373536852076,
+      "crc_incidence": 3.35,
+      "mean_colo": 1.0272666666666668,
+      "mean_recommended": 1.6654333333333333,
+      "attendance_rate": 0.6209595100374277,
+      "LYG_per_1000": 43.966666666666654,
+      "LYG_per_colo": 42.799662534882195,
+      "ly_lost_mean": 0.17285
+    },
+    "K2|fixed|low_adh": {
+      "n": 11999,
+      "crc_mortality": 1.6418034836236353,
+      "crc_mortality_se": 0.11601427653103838,
+      "crc_incidence": 3.800316693057755,
+      "mean_colo": 0.33169430785898824,
+      "mean_recommended": 1.6573881156763064,
+      "attendance_rate": 0.20143812540855835,
+      "LYG_per_1000": -1.4723574186737975,
+      "LYG_per_colo": -4.438898659966557,
+      "ly_lost_mean": 0.21828902408534046
+    },
+    "K2|fixed|high_adh": {
+      "n": 18001,
+      "crc_mortality": 1.1888228431753791,
+      "crc_mortality_se": 0.08078400026032463,
+      "crc_incidence": 3.049830564968613,
+      "mean_colo": 1.490917171268263,
+      "mean_recommended": 1.6707960668851731,
+      "attendance_rate": 0.8983574943476527,
+      "LYG_per_1000": 74.25514230690885,
+      "LYG_per_colo": 49.80500844573613,
+      "ly_lost_mean": 0.1425615243597578
+    },
+    "K2|recall|all": {
+      "n": 30000,
+      "crc_mortality": 1.1533333333333333,
+      "crc_mortality_se": 0.06164602063053628,
+      "crc_incidence": 2.87,
+      "mean_colo": 1.5954666666666666,
+      "mean_recommended": 4.1533,
+      "attendance_rate": 0.3867205996837856,
+      "LYG_per_1000": 60.899999999999984,
+      "LYG_per_colo": 38.17065017549724,
+      "ly_lost_mean": 0.15591666666666668
+    },
+    "K2|recall|low_adh": {
+      "n": 11999,
+      "crc_mortality": 1.1500958413201101,
+      "crc_mortality_se": 0.09734210062835895,
+      "crc_incidence": 2.8169014084507045,
+      "mean_colo": 1.5022085173764481,
+      "mean_recommended": 7.59438286523877,
+      "attendance_rate": 0.1991440329218107,
+      "LYG_per_1000": 33.55139456065781,
+      "LYG_per_colo": 22.334711974110018,
+      "ly_lost_mean": 0.18326527210600885
+    },
+    "K2|recall|high_adh": {
+      "n": 18001,
+      "crc_mortality": 1.1554913615910227,
+      "crc_mortality_se": 0.07965689475368401,
+      "crc_incidence": 2.905394144769735,
+      "mean_colo": 1.6576301316593522,
+      "mean_recommended": 1.859563357591245,
+      "attendance_rate": 0.897353169624186,
+      "LYG_per_1000": 79.12987148862099,
+      "LYG_per_colo": 47.736747768580265,
+      "ly_lost_mean": 0.13768679517804566
+    },
+    "K2|pbvi|all": {
+      "n": 30000,
+      "crc_mortality": 1.16,
+      "crc_mortality_se": 0.06182184671584723,
+      "crc_incidence": 2.9266666666666667,
+      "mean_colo": 1.5466666666666666,
+      "mean_recommended": 3.8331,
+      "attendance_rate": 0.40376370735609995,
+      "LYG_per_1000": 61.266666666666666,
+      "LYG_per_colo": 39.61206896551724,
+      "ly_lost_mean": 0.15555
+    },
+    "K2|pbvi|low_adh": {
+      "n": 11999,
+      "crc_mortality": 1.2001000083340279,
+      "crc_mortality_se": 0.09941056521833813,
+      "crc_incidence": 2.8752396033002747,
+      "mean_colo": 1.3544462038503209,
+      "mean_recommended": 6.781731810984248,
+      "attendance_rate": 0.19981812372502272,
+      "LYG_per_1000": 30.030267800094435,
+      "LYG_per_colo": 22.171620928706197,
+      "ly_lost_mean": 0.18678639886657222
+    },
+    "K2|pbvi|high_adh": {
+      "n": 18001,
+      "crc_mortality": 1.1332703738681185,
+      "crc_mortality_se": 0.07889611159497613,
+      "crc_incidence": 2.9609466140769958,
+      "mean_colo": 1.6747958446752957,
+      "mean_recommended": 1.8676184656407977,
+      "attendance_rate": 0.8974092031291829,
+      "LYG_per_1000": 82.08804047923263,
+      "LYG_per_colo": 49.013759342797755,
+      "ly_lost_mean": 0.13472862618743403
+    },
+    "K3|fixed|all": {
+      "n": 30000,
+      "crc_mortality": 1.1900000000000002,
+      "crc_mortality_se": 0.0626066608793842,
+      "crc_incidence": 2.9233333333333333,
+      "mean_colo": 1.6014666666666666,
+      "mean_recommended": 2.595666666666667,
+      "attendance_rate": 0.6194041350969565,
+      "LYG_per_1000": 63.06666666666666,
+      "LYG_per_colo": 39.38056781283823,
+      "ly_lost_mean": 0.15375
+    },
+    "K3|fixed|low_adh": {
+      "n": 11999,
+      "crc_mortality": 1.5001250104175348,
+      "crc_mortality_se": 0.11097550672748326,
+      "crc_incidence": 3.5502958579881656,
+      "mean_colo": 0.512126010500875,
+      "mean_recommended": 2.584632052671056,
+      "attendance_rate": 0.19930351787959888,
+      "LYG_per_1000": 17.154194794010593,
+      "LYG_per_colo": 33.49604285326821,
+      "ly_lost_mean": 0.19966247187265607
+    },
+    "K3|fixed|high_adh": {
+      "n": 18001,
+      "crc_mortality": 0.9832787067385145,
+      "crc_mortality_se": 0.07354553905148614,
+      "crc_incidence": 2.505416365757458,
+      "mean_colo": 2.3275929115049165,
+      "mean_recommended": 2.603022054330315,
+      "attendance_rate": 0.8974539556523038,
+      "LYG_per_1000": 93.67073032979648,
+      "LYG_per_colo": 40.24360525708648,
+      "ly_lost_mean": 0.12314593633687017
+    },
+    "K3|recall|all": {
+      "n": 30000,
+      "crc_mortality": 0.9266666666666666,
+      "crc_mortality_se": 0.05532058565692431,
+      "crc_incidence": 2.3633333333333333,
+      "mean_colo": 2.4856,
+      "mean_recommended": 6.403566666666666,
+      "attendance_rate": 0.38964743606427665,
+      "LYG_per_1000": 95.48333333333332,
+      "LYG_per_colo": 38.41460143761399,
+      "ly_lost_mean": 0.12133333333333333
+    },
+    "K3|recall|low_adh": {
+      "n": 11999,
+      "crc_mortality": 0.9167430619218268,
+      "crc_mortality_se": 0.08701007118698809,
+      "crc_incidence": 2.358529877489791,
+      "mean_colo": 2.3268605717143096,
+      "mean_recommended": 11.66330527543962,
+      "attendance_rate": 0.20043158887586818,
+      "LYG_per_1000": 91.41038280967858,
+      "LYG_per_colo": 39.28485613658071,
+      "ly_lost_mean": 0.12540628385698807
+    },
+    "K3|recall|high_adh": {
+      "n": 18001,
+      "crc_mortality": 0.9332814843619799,
+      "crc_mortality_se": 0.07166943177113203,
+      "crc_incidence": 2.366535192489306,
+      "mean_colo": 2.5914115882450974,
+      "mean_recommended": 2.8975612465974114,
+      "attendance_rate": 0.8973331543932974,
+      "LYG_per_1000": 98.19825657833823,
+      "LYG_per_colo": 37.893732135711424,
+      "ly_lost_mean": 0.11861841008832842
+    },
+    "K3|pbvi|all": {
+      "n": 30000,
+      "crc_mortality": 0.9400000000000001,
+      "crc_mortality_se": 0.055713404725573346,
+      "crc_incidence": 2.71,
+      "mean_colo": 2.073933333333333,
+      "mean_recommended": 5.0021,
+      "attendance_rate": 0.4149190673250568,
+      "LYG_per_1000": 72.3,
+      "LYG_per_colo": 34.86129415924652,
+      "ly_lost_mean": 0.14451666666666665
+    },
+    "K3|pbvi|low_adh": {
+      "n": 11999,
+      "crc_mortality": 1.0500875072922744,
+      "crc_mortality_se": 0.09306063772295771,
+      "crc_incidence": 2.7752312692724392,
+      "mean_colo": 1.722643553629469,
+      "mean_recommended": 8.647387282273522,
+      "attendance_rate": 0.199325366229761,
+      "LYG_per_1000": 43.09385643248048,
+      "LYG_per_colo": 25.016119174326718,
+      "ly_lost_mean": 0.17372281023418618
+    },
+    "K3|pbvi|high_adh": {
+      "n": 18001,
+      "crc_mortality": 0.8666185211932671,
+      "crc_mortality_se": 0.06908562499538425,
+      "crc_incidence": 2.666518526748514,
+      "mean_colo": 2.308093994778068,
+      "mean_recommended": 2.5722459863340927,
+      "attendance_rate": 0.898041163639505,
+      "LYG_per_1000": 91.7680582560228,
+      "LYG_per_colo": 39.75923790956644,
+      "ly_lost_mean": 0.12504860841064386
+    }
+  },
+  "paired_pbvi_minus_fixed": {
+    "K2|a1.0": {
+      "d_mort_pp": 0.013333333333333334,
+      "se": 0.05011176400289226
+    },
+    "K2|a0.75": {
+      "d_mort_pp": -0.19,
+      "se": 0.06244138556188271
+    },
+    "K2|a0.5": {
+      "d_mort_pp": -0.20666666666666667,
+      "se": 0.07163854199372195
+    },
+    "K2|a0.25": {
+      "d_mort_pp": -0.5033333333333333,
+      "se": 0.0747036150067535
+    },
+    "K3|a1.0": {
+      "d_mort_pp": -0.04666666666666667,
+      "se": 0.06733061602621221
+    },
+    "K3|a0.75": {
+      "d_mort_pp": -0.25666666666666665,
+      "se": 0.06673460931105357
+    },
+    "K3|a0.5": {
+      "d_mort_pp": -0.38,
+      "se": 0.07020458880640434
+    },
+    "K3|a0.25": {
+      "d_mort_pp": -0.4866666666666667,
+      "se": 0.0714379899575611
+    }
+  },
+  "paired_pbvi_minus_fixed_lowadh": {
+    "K2": {
+      "d_mort_pp": -0.44170347528960746,
+      "se": 0.11389950422805277
+    },
+    "K3": {
+      "d_mort_pp": -0.4500375031252604,
+      "se": 0.11049161844108531
+    }
+  }
+}

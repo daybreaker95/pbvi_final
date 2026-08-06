@@ -1,0 +1,27 @@
+{
+  "n": 200000,
+  "seed": 999,
+  "policy": {
+    "n": 200000,
+    "crc_death_per_100k": 835.5,
+    "incidence_per_100k": 2622.5,
+    "avg_colonoscopies_per_person": 3.26707,
+    "total_cost_usd": 457878786.0,
+    "cost_per_person_usd": 2289.39393,
+    "screening_colo_total": 649695.0,
+    "followup_colo_total": 0.0
+  },
+  "no_screen": {
+    "n": 200000,
+    "crc_death_per_100k": 1844.0000000000002,
+    "incidence_per_100k": 5104.5,
+    "avg_colonoscopies_per_person": 0.04855,
+    "total_cost_usd": 525818215.25,
+    "cost_per_person_usd": 2629.09107625,
+    "screening_colo_total": 0.0,
+    "followup_colo_total": 0.0
+  },
+  "mortality_reduction_pct": 54.690889370932766,
+  "incidence_reduction_pct": 48.62376334606719,
+  "cost_increase_pct": -12.920706677629676
+}

@@ -1,0 +1,58 @@
+{
+  "no_screen": {
+    "n": 300000,
+    "qaly_mean": 32.32119501722999,
+    "qaly_sd": 11.539132274520817,
+    "qaly_disc3pct_mean": 18.551319914994906,
+    "qaly_disc3pct_sd": 5.078503327786911,
+    "life_years": 37.133989166666666,
+    "life_years_disc3pct": 21.74950908925417,
+    "cost_per_person_usd": 2699.127896666667,
+    "cost_per_person_disc3pct_usd": 998.9556328004559
+  },
+  "q10y": {
+    "n": 300000,
+    "qaly_mean": 32.426357283609995,
+    "qaly_sd": 11.554684379091446,
+    "qaly_disc3pct_mean": 18.584743322402016,
+    "qaly_disc3pct_sd": 5.081804636238341,
+    "life_years": 37.221424166666665,
+    "life_years_disc3pct": 21.775290364908987,
+    "cost_per_person_usd": 4624.3451475,
+    "cost_per_person_disc3pct_usd": 2355.184669125393
+  },
+  "q5y": {
+    "n": 300000,
+    "qaly_mean": 32.466010127696656,
+    "qaly_sd": 11.560839946444004,
+    "qaly_disc3pct_mean": 18.59714257480109,
+    "qaly_disc3pct_sd": 5.0821884246461675,
+    "life_years": 37.259407499999995,
+    "life_years_disc3pct": 21.78721221794498,
+    "cost_per_person_usd": 7227.5907025,
+    "cost_per_person_disc3pct_usd": 3695.395894201266
+  },
+  "policy": {
+    "n": 300000,
+    "qaly_mean": 32.452198741986656,
+    "qaly_sd": 11.555968059675068,
+    "qaly_disc3pct_mean": 18.593364009749756,
+    "qaly_disc3pct_sd": 5.081736740435503,
+    "life_years": 37.244667500000006,
+    "life_years_disc3pct": 21.783254092468237,
+    "cost_per_person_usd": 5327.624659166667,
+    "cost_per_person_disc3pct_usd": 2842.9652574861984
+  },
+  "delta_qaly_q10y_vs_noscreen": 0.10516226638000603,
+  "delta_qaly_disc3pct_q10y_vs_noscreen": 0.033423407407109806,
+  "delta_lyg_disc3pct_q10y_vs_noscreen": 0.02578127565481836,
+  "delta_cost_disc3pct_q10y_vs_noscreen": 1356.2290363249372,
+  "delta_qaly_q5y_vs_noscreen": 0.1448151104666664,
+  "delta_qaly_disc3pct_q5y_vs_noscreen": 0.04582265980618416,
+  "delta_lyg_disc3pct_q5y_vs_noscreen": 0.03770312869081138,
+  "delta_cost_disc3pct_q5y_vs_noscreen": 2696.44026140081,
+  "delta_qaly_policy_vs_noscreen": 0.13100372475666688,
+  "delta_qaly_disc3pct_policy_vs_noscreen": 0.04204409475484994,
+  "delta_lyg_disc3pct_policy_vs_noscreen": 0.0337450032140687,
+  "delta_cost_disc3pct_policy_vs_noscreen": 1844.0096246857424
+}

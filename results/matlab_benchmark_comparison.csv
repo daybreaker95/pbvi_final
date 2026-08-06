@@ -1,0 +1,88 @@
+scenario,metric,CMOST,matrix
+No screening,Avg age at death (all),78.09814525,78.08591462174255
+No screening,Avg age male,75.47348287628714,
+No screening,Avg age female,80.71615990923509,
+No screening,Screening colo /100k,0.0,0.0
+No screening,Symptom colo /100k (approx),5265.6,5269.670124019692
+No screening,Follow-up colo /100k,0,0.0
+No screening,CRC deaths /100k,2211.0,2213.637953476284
+No screening,Years lost to CRC /100k,28273.85,
+No screening,Colonoscopy deaths /100k,0.4,
+No screening,Years lost to colo /100k,10.4,
+No screening,All CRC cases /100k,5265.6,5269.670124019692
+No screening,Detected: screening /100k,0.0,0.0
+No screening,Detected: symptoms /100k,5265.6,5269.670124019692
+No screening,Stage I % (screening),0.0,0.0
+No screening,Stage II % (screening),0.0,0.0
+No screening,Stage III % (screening),0.0,0.0
+No screening,Stage IV % (screening),0.0,0.0
+No screening,Stage I % (symptoms),16.54322394408994,16.547975420968434
+No screening,Stage II % (symptoms),36.58082649650562,36.56806389445649
+No screening,Stage III % (symptoms),26.599058037070797,26.605736915415886
+No screening,Stage IV % (symptoms),20.27689152233364,20.2782237691592
+No screening,Stage I % (all),16.54322394408994,16.547975420968434
+No screening,Stage II % (all),36.58082649650562,36.56806389445649
+No screening,Stage III % (all),26.599058037070797,26.605736915415886
+No screening,Stage IV % (all),20.27689152233364,20.2782237691592
+No screening,Dwell time median (yr),15.5,11.505542757272487
+No screening,Dwell time mean (yr),18.102202364199268,16.724303251587692
+No screening,Dwell time LQ (yr),9.25,4.775231693824186
+No screening,Dwell time UQ (yr),24.25,23.011085514544973
+"Screen q10y (50,60,70)",Avg age at death (all),78.21701425,78.30874386989649
+"Screen q10y (50,60,70)",Avg age male,75.63581927218537,
+"Screen q10y (50,60,70)",Avg age female,80.7904566531936,
+"Screen q10y (50,60,70)",Screening colo /100k,258023.9,258186.46123574817
+"Screen q10y (50,60,70)",Symptom colo /100k (approx),2398.6,2344.6867097620548
+"Screen q10y (50,60,70)",Follow-up colo /100k,0,0.0
+"Screen q10y (50,60,70)",CRC deaths /100k,1171.6,1111.7964380543967
+"Screen q10y (50,60,70)",Years lost to CRC /100k,14984.775,
+"Screen q10y (50,60,70)",Colonoscopy deaths /100k,8.6,
+"Screen q10y (50,60,70)",Years lost to colo /100k,193.675,
+"Screen q10y (50,60,70)",All CRC cases /100k,2962.1,2885.3697102071155
+"Screen q10y (50,60,70)",Detected: screening /100k,563.5,540.6830004450607
+"Screen q10y (50,60,70)",Detected: symptoms /100k,2398.6,2344.6867097620548
+"Screen q10y (50,60,70)",Stage I % (screening),42.307009760425906,42.9502980125531
+"Screen q10y (50,60,70)",Stage II % (screening),34.17923691215616,33.69643493941465
+"Screen q10y (50,60,70)",Stage III % (screening),15.652173913043478,15.882642409747158
+"Screen q10y (50,60,70)",Stage IV % (screening),7.861579414374446,7.470624638285102
+"Screen q10y (50,60,70)",Stage I % (symptoms),17.134995413991494,18.8573996523212
+"Screen q10y (50,60,70)",Stage II % (symptoms),37.684482614858666,38.265500205289705
+"Screen q10y (50,60,70)",Stage III % (symptoms),25.63578754273326,25.49305344930135
+"Screen q10y (50,60,70)",Stage IV % (symptoms),19.544734428416575,17.384046693087754
+"Screen q10y (50,60,70)",Stage I % (all),21.923635258769117,23.37211418916057
+"Screen q10y (50,60,70)",Stage II % (all),37.01765639242429,37.409313246494285
+"Screen q10y (50,60,70)",Stage III % (all),23.736538266770197,23.69217993974908
+"Screen q10y (50,60,70)",Stage IV % (all),17.322170082036394,15.526392624596062
+"Screen q10y (50,60,70)",Dwell time median (yr),10.25,11.505542757272487
+"Screen q10y (50,60,70)",Dwell time mean (yr),11.444946357989837,16.724303251587692
+"Screen q10y (50,60,70)",Dwell time LQ (yr),6.25,4.775231693824186
+"Screen q10y (50,60,70)",Dwell time UQ (yr),15.5,23.011085514544973
+Screen q5y (50-75),Avg age at death (all),78.24040425,78.37064673785062
+Screen q5y (50-75),Avg age male,75.6559731724883,
+Screen q5y (50-75),Avg age female,80.82338845123365,
+Screen q5y (50-75),Screening colo /100k,499631.7,500546.55277500313
+Screen q5y (50-75),Symptom colo /100k (approx),1592.3,1624.488428139682
+Screen q5y (50-75),Follow-up colo /100k,0,0.0
+Screen q5y (50-75),CRC deaths /100k,870.9,841.2020452175423
+Screen q5y (50-75),Years lost to CRC /100k,11838.475,
+Screen q5y (50-75),Colonoscopy deaths /100k,17.0,
+Screen q5y (50-75),Years lost to colo /100k,336.85,
+Screen q5y (50-75),All CRC cases /100k,2375.5,2355.4842421040707
+Screen q5y (50-75),Detected: screening /100k,783.2,730.995813964389
+Screen q5y (50-75),Detected: symptoms /100k,1592.3,1624.488428139682
+Screen q5y (50-75),Stage I % (screening),44.25434116445352,45.69437552352039
+Screen q5y (50-75),Stage II % (screening),34.027068437180795,33.7359247425428
+Screen q5y (50-75),Stage III % (screening),14.989785495403472,14.81583976087571
+Screen q5y (50-75),Stage IV % (screening),6.728804902962207,5.753859973061099
+Screen q5y (50-75),Stage I % (symptoms),18.131005463794512,20.513963292186155
+Screen q5y (50-75),Stage II % (symptoms),38.943666394523646,39.21219177691644
+Screen q5y (50-75),Stage III % (symptoms),24.624756641336432,24.594372125580843
+Screen q5y (50-75),Stage IV % (symptoms),18.300571500345413,15.679472805316566
+Screen q5y (50-75),Stage I % (all),26.74384340138918,28.328397201776188
+Screen q5y (50-75),Stage II % (all),37.32266891180804,37.5126990752788
+Screen q5y (50-75),Stage III % (all),21.44811618606609,21.55972383647591
+Screen q5y (50-75),Stage IV % (all),14.485371500736687,12.599179886469095
+Screen q5y (50-75),Dwell time median (yr),9.25,11.505542757272487
+Screen q5y (50-75),Dwell time mean (yr),10.110645431684828,16.724303251587692
+Screen q5y (50-75),Dwell time LQ (yr),5.75,4.775231693824186
+Screen q5y (50-75),Dwell time UQ (yr),13.75,23.011085514544973

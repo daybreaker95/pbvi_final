@@ -1,0 +1,156 @@
+{
+  "No screening": {
+    "life_years": 78.11293333333333,
+    "crc_incidence": 4.156666666666667,
+    "crc_mortality": 1.71,
+    "mean_colo": 0.0,
+    "ly_lost_to_crc": 0.21681666666666666,
+    "LYG_per_1000": 0.0,
+    "inc_reduction": 0.0,
+    "mort_reduction": 0.0,
+    "LYG_per_colo": 0.0
+  },
+  "Guideline q10y 45-75": {
+    "life_years": 78.21659166666667,
+    "crc_incidence": 2.2533333333333334,
+    "crc_mortality": 0.8733333333333333,
+    "mean_colo": 3.3751333333333333,
+    "ly_lost_to_crc": 0.11315833333333333,
+    "LYG_per_1000": 103.65833333333333,
+    "inc_reduction": 1.9033333333333335,
+    "mort_reduction": 0.8366666666666668,
+    "LYG_per_colo": 30.712366918837773
+  },
+  "Best fixed x1": {
+    "life_years": 78.1684,
+    "crc_incidence": 3.3833333333333333,
+    "crc_mortality": 1.3566666666666667,
+    "mean_colo": 0.8932333333333333,
+    "ly_lost_to_crc": 0.16135,
+    "LYG_per_1000": 55.46666666666666,
+    "inc_reduction": 0.7733333333333335,
+    "mort_reduction": 0.35333333333333344,
+    "LYG_per_colo": 62.09650333992611
+  },
+  "Best fixed x2": {
+    "life_years": 78.18013333333333,
+    "crc_incidence": 2.8000000000000003,
+    "crc_mortality": 1.1199999999999999,
+    "mean_colo": 1.6561666666666666,
+    "ly_lost_to_crc": 0.14961666666666668,
+    "LYG_per_1000": 67.19999999999999,
+    "inc_reduction": 1.3566666666666667,
+    "mort_reduction": 0.5900000000000001,
+    "LYG_per_colo": 40.57562644661366
+  },
+  "Best fixed x3": {
+    "life_years": 78.20459166666667,
+    "crc_incidence": 2.4633333333333334,
+    "crc_mortality": 0.9866666666666666,
+    "mean_colo": 2.5888333333333335,
+    "ly_lost_to_crc": 0.12515833333333334,
+    "LYG_per_1000": 91.65833333333332,
+    "inc_reduction": 1.6933333333333336,
+    "mort_reduction": 0.7233333333333335,
+    "LYG_per_colo": 35.405266207429335
+  },
+  "Best fixed x4": {
+    "life_years": 78.216275,
+    "crc_incidence": 2.2333333333333334,
+    "crc_mortality": 0.8333333333333334,
+    "mean_colo": 3.241,
+    "ly_lost_to_crc": 0.113475,
+    "LYG_per_1000": 103.34166666666665,
+    "inc_reduction": 1.9233333333333336,
+    "mort_reduction": 0.8766666666666667,
+    "LYG_per_colo": 31.88573485549727
+  },
+  "Zaika fixed x1": {
+    "life_years": 78.16146666666667,
+    "crc_incidence": 3.58,
+    "crc_mortality": 1.3933333333333333,
+    "mean_colo": 0.9123666666666667,
+    "ly_lost_to_crc": 0.16828333333333334,
+    "LYG_per_1000": 48.53333333333332,
+    "inc_reduction": 0.576666666666667,
+    "mort_reduction": 0.31666666666666665,
+    "LYG_per_colo": 53.194987395418494
+  },
+  "Zaika fixed x2": {
+    "life_years": 78.18575833333334,
+    "crc_incidence": 2.8533333333333335,
+    "crc_mortality": 1.16,
+    "mean_colo": 1.7842333333333333,
+    "ly_lost_to_crc": 0.14399166666666666,
+    "LYG_per_1000": 72.825,
+    "inc_reduction": 1.3033333333333335,
+    "mort_reduction": 0.5500000000000002,
+    "LYG_per_colo": 40.81584994488763
+  },
+  "Zaika fixed x3": {
+    "life_years": 78.19335833333334,
+    "crc_incidence": 2.5733333333333333,
+    "crc_mortality": 1.0566666666666666,
+    "mean_colo": 2.635466666666667,
+    "ly_lost_to_crc": 0.13639166666666666,
+    "LYG_per_1000": 80.425,
+    "inc_reduction": 1.5833333333333335,
+    "mort_reduction": 0.6533333333333333,
+    "LYG_per_colo": 30.516417079834056
+  },
+  "Zaika fixed x4": {
+    "life_years": 78.21263333333333,
+    "crc_incidence": 2.34,
+    "crc_mortality": 0.9233333333333333,
+    "mean_colo": 3.5058666666666665,
+    "ly_lost_to_crc": 0.11711666666666666,
+    "LYG_per_1000": 99.7,
+    "inc_reduction": 1.8166666666666669,
+    "mort_reduction": 0.7866666666666667,
+    "LYG_per_colo": 28.438046702669812
+  },
+  "PBVI adaptive x1": {
+    "life_years": 78.15145833333334,
+    "crc_incidence": 3.3666666666666663,
+    "crc_mortality": 1.3066666666666666,
+    "mean_colo": 0.7581333333333333,
+    "ly_lost_to_crc": 0.17829166666666665,
+    "LYG_per_1000": 38.525000000000006,
+    "inc_reduction": 0.7900000000000005,
+    "mort_reduction": 0.4033333333333333,
+    "LYG_per_colo": 50.81559971860711
+  },
+  "PBVI adaptive x2": {
+    "life_years": 78.18169166666667,
+    "crc_incidence": 2.9266666666666667,
+    "crc_mortality": 1.1333333333333333,
+    "mean_colo": 1.6736,
+    "ly_lost_to_crc": 0.14805833333333332,
+    "LYG_per_1000": 68.75833333333334,
+    "inc_reduction": 1.2300000000000002,
+    "mort_reduction": 0.5766666666666667,
+    "LYG_per_colo": 41.084090184831105
+  },
+  "PBVI adaptive x3": {
+    "life_years": 78.1913,
+    "crc_incidence": 2.6766666666666667,
+    "crc_mortality": 0.9400000000000001,
+    "mean_colo": 2.3104,
+    "ly_lost_to_crc": 0.13845,
+    "LYG_per_1000": 78.36666666666667,
+    "inc_reduction": 1.48,
+    "mort_reduction": 0.77,
+    "LYG_per_colo": 33.919090489381354
+  },
+  "PBVI adaptive x4": {
+    "life_years": 78.20443333333333,
+    "crc_incidence": 2.3266666666666667,
+    "crc_mortality": 0.8533333333333334,
+    "mean_colo": 3.1231333333333335,
+    "ly_lost_to_crc": 0.12531666666666666,
+    "LYG_per_1000": 91.5,
+    "inc_reduction": 1.83,
+    "mort_reduction": 0.8566666666666667,
+    "LYG_per_colo": 29.29750037355647
+  }
+}

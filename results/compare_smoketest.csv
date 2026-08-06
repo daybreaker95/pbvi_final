@@ -1,0 +1,55 @@
+scenario,metric,CMOST,matrix9state,diff_pct
+No screening,Avg age at death,77.0322,78.34373540186526,+1.7%
+No screening,Avg age at CRC death,72.88,76.15856649160612,+4.5%
+No screening,CRC deaths /100k,2000.0,1410.282008912533,-29.5%
+No screening,Incidence /100k,3800.0,4348.150247481761,+14.4%
+No screening,Screen-detected /100k,0.0,0.0,
+No screening,Symptom-detected /100k,3800.0,4348.150247481761,+14.4%
+No screening,Stage I % (all),17.36842105263158,12.365842918180828,-28.8%
+No screening,Stage II % (all),38.94736842105263,36.93577978146489,-5.2%
+No screening,Stage III % (all),23.157894736842106,28.230199466019105,+21.9%
+No screening,Stage IV % (all),20.526315789473685,22.46817783433519,+9.5%
+No screening,Stage I % (screen),0.0,0.0,
+No screening,Stage II % (screen),0.0,0.0,
+No screening,Stage III % (screen),0.0,0.0,
+No screening,Stage IV % (screen),0.0,0.0,
+No screening,Stage I % (symptom),17.36842105263158,12.365842918180828,-28.8%
+No screening,Stage II % (symptom),38.94736842105263,36.93577978146489,-5.2%
+No screening,Stage III % (symptom),23.157894736842106,28.230199466019105,+21.9%
+No screening,Stage IV % (symptom),20.526315789473685,22.46817783433519,+9.5%
+"Screen q10y (50,60,70)",Avg age at death,77.3006,78.34750919651607,+1.4%
+"Screen q10y (50,60,70)",Avg age at CRC death,78.875,74.97818293898405,-4.9%
+"Screen q10y (50,60,70)",CRC deaths /100k,640.0,734.3988954623376,+14.7%
+"Screen q10y (50,60,70)",Incidence /100k,1980.0000000000002,1835.2169658321743,-7.3%
+"Screen q10y (50,60,70)",Screen-detected /100k,360.0,423.39681560592527,+17.6%
+"Screen q10y (50,60,70)",Symptom-detected /100k,1620.0,1411.8201502262489,-12.9%
+"Screen q10y (50,60,70)",Stage I % (all),22.22222222222222,20.848479162140315,-6.2%
+"Screen q10y (50,60,70)",Stage II % (all),50.505050505050505,38.35780858686772,-24.1%
+"Screen q10y (50,60,70)",Stage III % (all),17.171717171717173,24.376579690778257,+42.0%
+"Screen q10y (50,60,70)",Stage IV % (all),10.1010101010101,16.417132560213698,+62.5%
+"Screen q10y (50,60,70)",Stage I % (screen),22.22222222222222,44.153216990945126,+98.7%
+"Screen q10y (50,60,70)",Stage II % (screen),72.22222222222223,33.59429326366582,-53.5%
+"Screen q10y (50,60,70)",Stage III % (screen),0.0,14.590923408697543,
+"Screen q10y (50,60,70)",Stage IV % (screen),5.555555555555555,7.6615663366915,+37.9%
+"Screen q10y (50,60,70)",Stage I % (symptom),22.22222222222222,13.859521125477036,-37.6%
+"Screen q10y (50,60,70)",Stage II % (symptom),45.67901234567901,39.786359680015465,-12.9%
+"Screen q10y (50,60,70)",Stage III % (symptom),20.987654320987655,27.31124223103392,+30.1%
+"Screen q10y (50,60,70)",Stage IV % (symptom),11.11111111111111,19.04287696347358,+71.4%
+Screen q5y (50-75),Avg age at death,77.5002,78.34723148582857,+1.1%
+Screen q5y (50-75),Avg age at CRC death,72.53488372093024,74.79292279334061,+3.1%
+Screen q5y (50-75),CRC deaths /100k,860.0,639.9453935968356,-25.6%
+Screen q5y (50-75),Incidence /100k,2000.0,1399.5342986529674,-30.0%
+Screen q5y (50-75),Screen-detected /100k,680.0,527.5486786022975,-22.4%
+Screen q5y (50-75),Symptom-detected /100k,1320.0,871.9856200506699,-33.9%
+Screen q5y (50-75),Stage I % (all),31.0,27.292302176930985,-12.0%
+Screen q5y (50-75),Stage II % (all),39.0,38.23353830382707,-2.0%
+Screen q5y (50-75),Stage III % (all),16.0,21.611557404648046,+35.1%
+Screen q5y (50-75),Stage IV % (all),14.0,12.862602114593896,-8.1%
+Screen q5y (50-75),Stage I % (screen),52.94117647058823,47.708346914269505,-9.9%
+Screen q5y (50-75),Stage II % (screen),26.470588235294116,32.2022610899751,+21.7%
+Screen q5y (50-75),Stage III % (screen),14.705882352941176,13.82588699098385,-6.0%
+Screen q5y (50-75),Stage IV % (screen),5.882352941176471,6.263505004771531,+6.5%
+Screen q5y (50-75),Stage I % (symptom),19.696969696969695,14.940656489422434,-24.1%
+Screen q5y (50-75),Stage II % (symptom),45.45454545454545,41.882442885839396,-7.9%
+Screen q5y (50-75),Stage III % (symptom),16.666666666666668,26.321864598157592,+57.9%
+Screen q5y (50-75),Stage IV % (symptom),18.181818181818183,16.855036026580578,-7.3%

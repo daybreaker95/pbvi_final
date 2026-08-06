@@ -1,0 +1,186 @@
+{
+  "V1_markov_consistency": {
+    "max_abs_state_discrepancy": 2.220446049250313e-16,
+    "mean_total_variation": 5.099047364858035e-17,
+    "max_total_variation": 1.2696007439805257e-16,
+    "note": "Exact agreement (~1e-16) is expected for the DIRECT 1-year MLE matrix: it reproduces the yearly-snapshot cohort marginal by construction, verifying the estimator + cohort propagation (per Krijkamp 2018). The CONSUMED matrix is the quarterly-composed P = P_quarter^4, which removes annual-discretization artifacts (CRC-incidence and stage-IV undercount); its metric fidelity vs the microsim is quantified in SCREENING_VALIDATION.md."
+  },
+  "V1b_markov_property": {
+    "Early Adenoma": {
+      "n_stayer": 298937,
+      "n_newcomer": 35539,
+      "tv_distance": 0.08897447206164517,
+      "stayer_dist": [
+        0.04554471343460328,
+        0.9162231506973041,
+        0.021225207986967153,
+        0.000692453593901056,
+        6.690372887932909e-06,
+        0.016307783914336467
+      ],
+      "newcomer_dist": [
+        0.12414530515771406,
+        0.8285826838121501,
+        0.03159908832550156,
+        0.0005627620360730465,
+        0.0,
+        0.0151101606685613
+      ]
+    },
+    "Advanced Adenoma": {
+      "n_stayer": 68183,
+      "n_newcomer": 7392,
+      "tv_distance": 0.01288080451049962,
+      "stayer_dist": [
+        0.0,
+        0.0305794699558541,
+        0.9319185134124341,
+        0.01969699191880674,
+        0.0002346625991816142,
+        0.017570362113723363
+      ],
+      "newcomer_dist": [
+        0.0,
+        0.04085497835497835,
+        0.9345238095238095,
+        0.007575757575757576,
+        0.0,
+        0.017045454545454544
+      ]
+    },
+    "Preclinical Cancer": {
+      "n_stayer": 4264,
+      "n_newcomer": 2037,
+      "tv_distance": 0.3194301298399865,
+      "stayer_dist": [
+        0.0,
+        0.0,
+        0.0,
+        0.5966228893058161,
+        0.3592870544090056,
+        0.04409005628517824
+      ],
+      "newcomer_dist": [
+        0.0,
+        0.0,
+        0.0,
+        0.9160530191458026,
+        0.06725576828669612,
+        0.016691212567501227
+      ]
+    }
+  },
+  "V2_mc_convergence": {
+    "Ns": [
+      1000,
+      2000,
+      5000,
+      10000,
+      20000,
+      50000,
+      100000
+    ],
+    "estimates_pct": {
+      "AA\u2192PreCa": [
+        1.956521739130435,
+        1.7543859649122806,
+        1.7709118311981915,
+        1.4740673339399455,
+        1.711603938529493,
+        1.8764690016568415,
+        1.8261434908979655
+      ],
+      "EA\u2192AA": [
+        2.13946117274168,
+        2.0359540827377085,
+        2.08248926343084,
+        2.283381829938571,
+        2.2546690694626474,
+        2.1964732223112,
+        2.239022733874168
+      ],
+      "PreCa\u2192ClinCa": [
+        25.0,
+        32.758620689655174,
+        28.365384615384613,
+        26.31578947368421,
+        25.839793281653744,
+        26.041666666666668,
+        26.46507266760431
+      ],
+      "Norm\u2192EA": [
+        2.5559105431309903,
+        2.5484457004440855,
+        2.586083140214516,
+        2.711275122754582,
+        2.58352165149942,
+        2.6419790869676105,
+        2.6303915387459473
+      ]
+    },
+    "se_pct": {
+      "AA\u2192PreCa": [
+        0.6457624354495429,
+        0.43473212963451935,
+        0.25601656526532957,
+        0.16257362517110496,
+        0.1244222151548941,
+        0.08422935943145086,
+        0.05855057164638703
+      ],
+      "EA\u2192AA": [
+        0.2880124958525829,
+        0.2078439602546306,
+        0.12854239620694058,
+        0.09495952445147998,
+        0.0671795604872605,
+        0.04189754139196531,
+        0.02992461325479229
+      ],
+      "PreCa\u2192ClinCa": [
+        6.5279120983386685,
+        6.162644471939888,
+        3.125533352300854,
+        2.3811259387308636,
+        1.5734737534757206,
+        0.9549507820613121,
+        0.675418502594633
+      ],
+      "Norm\u2192EA": [
+        0.16021292889025474,
+        0.11194999554099956,
+        0.07187791033867454,
+        0.051783730885987124,
+        0.03579047906913068,
+        0.022908525065684707,
+        0.01615146592776824
+      ]
+    }
+  },
+  "V3_natural_history": {
+    "cum_crc_incidence_lifetime_pct": 4.556666666666667,
+    "cum_crc_incidence_age80_pct": 3.1666666666666665,
+    "adv_adenoma_prev_60_pct": 3.6117075375748673,
+    "any_adenoma_prev_60_pct": 21.444230986552153,
+    "mean_sojourn_years_fromT": 3.473523780504358,
+    "frac_preclinical_surface_clinical": 0.9045497153865599,
+    "mean_dwell_years_adenoma_to_cancer": 15.704688908926961,
+    "median_dwell_years": 13.5,
+    "frac_adenoma_progress_to_cancer_pct": 7.17059280352058
+  },
+  "literature_targets": {
+    "cum_crc_incidence_40_100_pct": "6.7-7.2 (CISNET); 7.1 (CRC-AIM)",
+    "adv_adenoma_prevalence_50_65_pct": "5-9 (screening colonoscopy cohorts)",
+    "any_adenoma_prevalence_50_65_pct": "25-30",
+    "mean_sojourn_years": "1.9 (CRC-SPIN); 2-5 (models)",
+    "frac_preclinical_surface_clinical_pct": "87 (CRC-SPIN)",
+    "mean_dwell_years_adenoma_to_cancer": "25.4 (CRC-SPIN, progressing adenomas)",
+    "frac_adenoma_progress_pct": "7.4 (CRC-SPIN)",
+    "refs": [
+      "Krijkamp 2018 NIHMS931782 (verification method)",
+      "Rutter et al. CRC-SPIN",
+      "CRC-AIM (Piscitello 2020)",
+      "Prakash 2017 CMOST"
+    ]
+  }
+}

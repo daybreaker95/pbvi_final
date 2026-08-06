@@ -1,0 +1,1148 @@
+{
+  "config": {
+    "n": 40000,
+    "n_budget": 20000,
+    "seed": 90210,
+    "risk_threshold": 3.511910398818647,
+    "best_fixed": {
+      "1": [
+        58
+      ],
+      "2": [
+        58,
+        70
+      ],
+      "3": [
+        52,
+        58,
+        70
+      ],
+      "4": [
+        52,
+        58,
+        70,
+        76
+      ],
+      "6": [
+        46,
+        52,
+        58,
+        64,
+        70,
+        76
+      ]
+    }
+  },
+  "strata": {
+    "K2|all": {
+      "ref": {
+        "n": 40000,
+        "mean_colo": 0.0,
+        "crc_mortality": 1.6725,
+        "crc_mortality_se": 0.06412036633772832,
+        "crc_incidence": 4.1075,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 40000,
+        "mean_colo": 1.65715,
+        "crc_mortality": 1.0975000000000001,
+        "crc_mortality_se": 0.05209323551460074,
+        "crc_incidence": 2.7575,
+        "mort_reduction": 0.575,
+        "LYG_per_1000": 60.43124999999999,
+        "mortred_per_colo": 0.3469812630117974
+      },
+      "pbvi": {
+        "n": 40000,
+        "mean_colo": 1.67445,
+        "crc_mortality": 1.1075,
+        "crc_mortality_se": 0.05232737856623138,
+        "crc_incidence": 2.875,
+        "mort_reduction": 0.5650000000000002,
+        "LYG_per_1000": 65.20625,
+        "mortred_per_colo": 0.3374242288512647
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": 0.01,
+        "se": 0.04257396873173017
+      }
+    },
+    "K2|risk_Q1": {
+      "ref": {
+        "n": 9913,
+        "mean_colo": 0.0,
+        "crc_mortality": 0.6052658125693533,
+        "crc_mortality_se": 0.0779065753240363,
+        "crc_incidence": 1.4929890043377383,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 9913,
+        "mean_colo": 1.6596388580651669,
+        "crc_mortality": 0.6254413396549985,
+        "crc_mortality_se": 0.07918633655822926,
+        "crc_incidence": 1.4627257137092706,
+        "mort_reduction": -0.020175527085645184,
+        "LYG_per_1000": -5.724805810551806,
+        "mortred_per_colo": -0.012156576707999071
+      },
+      "pbvi": {
+        "n": 9913,
+        "mean_colo": 1.6780994653485322,
+        "crc_mortality": 0.6456168667406436,
+        "crc_mortality_se": 0.08044523095346429,
+        "crc_incidence": 1.4627257137092706,
+        "mort_reduction": -0.04035105417129026,
+        "LYG_per_1000": -10.062544133965497,
+        "mortred_per_colo": -0.024045686804929387
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": 0.02017552708564511,
+        "se": 0.031901274783647265
+      }
+    },
+    "K2|risk_Q2": {
+      "ref": {
+        "n": 10027,
+        "mean_colo": 0.0,
+        "crc_mortality": 0.8078188889997009,
+        "crc_mortality_se": 0.0893988375687406,
+        "crc_incidence": 1.8948838137030017,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 10027,
+        "mean_colo": 1.6601176822579036,
+        "crc_mortality": 0.6382766530368006,
+        "crc_mortality_se": 0.07953351691565694,
+        "crc_incidence": 1.6455569961105014,
+        "mort_reduction": 0.1695422359629003,
+        "LYG_per_1000": 9.424553704996509,
+        "mortred_per_colo": 0.10212663702991719
+      },
+      "pbvi": {
+        "n": 10027,
+        "mean_colo": 1.6770719058541936,
+        "crc_mortality": 0.6681958711479007,
+        "crc_mortality_se": 0.08136398395332377,
+        "crc_incidence": 1.7652338685549016,
+        "mort_reduction": 0.1396230178518002,
+        "LYG_per_1000": 7.405006482497257,
+        "mortred_per_colo": 0.0832540437678402
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": 0.02991921811110003,
+        "se": 0.033077240083413395
+      }
+    },
+    "K2|risk_Q3": {
+      "ref": {
+        "n": 9847,
+        "mean_colo": 0.0,
+        "crc_mortality": 1.6147049862902405,
+        "crc_mortality_se": 0.12702282685077212,
+        "crc_incidence": 4.021529399817203,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 9847,
+        "mean_colo": 1.6609119528790495,
+        "crc_mortality": 1.1170914999492232,
+        "crc_mortality_se": 0.1059192931728032,
+        "crc_incidence": 2.6708642226058696,
+        "mort_reduction": 0.4976134863410173,
+        "LYG_per_1000": 43.18574185030974,
+        "mortred_per_colo": 0.29960256802201146
+      },
+      "pbvi": {
+        "n": 9847,
+        "mean_colo": 1.6782776480146238,
+        "crc_mortality": 1.14755763176602,
+        "crc_mortality_se": 0.10733739203115439,
+        "crc_incidence": 2.8841271453234487,
+        "mort_reduction": 0.4671473545242204,
+        "LYG_per_1000": 54.128160861176,
+        "mortred_per_colo": 0.2783492678204041
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": 0.030466131816796995,
+        "se": 0.08060931668756317
+      }
+    },
+    "K2|risk_Q4": {
+      "ref": {
+        "n": 10213,
+        "mean_colo": 0.0,
+        "crc_mortality": 3.6130422011162246,
+        "crc_mortality_se": 0.18466740679516142,
+        "crc_incidence": 8.900421032018016,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 10213,
+        "mean_colo": 1.648193478899442,
+        "crc_mortality": 1.9876627827278959,
+        "crc_mortality_se": 0.13811992146018065,
+        "crc_incidence": 5.189464408107314,
+        "mort_reduction": 1.6253794183883288,
+        "LYG_per_1000": 191.34926074610792,
+        "mortred_per_colo": 0.9861581417453812
+      },
+      "pbvi": {
+        "n": 10213,
+        "mean_colo": 1.664643101928914,
+        "crc_mortality": 1.9484970136101047,
+        "crc_mortality_se": 0.13677968422303743,
+        "crc_incidence": 5.326544600019583,
+        "mort_reduction": 1.66454518750612,
+        "LYG_per_1000": 205.69372368549887,
+        "mortred_per_colo": 0.9999411799305925
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": -0.03916576911779105,
+        "se": 0.14053998076217156
+      }
+    },
+    "K2|low_class": {
+      "ref": {
+        "n": 30112,
+        "mean_colo": 0.0,
+        "crc_mortality": 1.0261689691817215,
+        "crc_mortality_se": 0.058077383180930135,
+        "crc_incidence": 2.497343251859724,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 30112,
+        "mean_colo": 1.6602683315621678,
+        "crc_mortality": 0.800345377258236,
+        "crc_mortality_se": 0.05134890786094355,
+        "crc_incidence": 1.9427470775770457,
+        "mort_reduction": 0.22582359192348556,
+        "LYG_per_1000": 14.512486716259293,
+        "mortred_per_colo": 0.13601632195863497
+      },
+      "pbvi": {
+        "n": 30112,
+        "mean_colo": 1.6779689160467588,
+        "crc_mortality": 0.8235919234856535,
+        "crc_mortality_se": 0.052083197384316327,
+        "crc_incidence": 2.0456960680127523,
+        "mort_reduction": 0.20257704569606805,
+        "LYG_per_1000": 17.036397449521775,
+        "mortred_per_colo": 0.12072753181467336
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": 0.02324654622741764,
+        "se": 0.030975845852146838
+      }
+    },
+    "K2|high_class": {
+      "ref": {
+        "n": 9888,
+        "mean_colo": 0.0,
+        "crc_mortality": 3.640776699029126,
+        "crc_mortality_se": 0.18836985340538204,
+        "crc_incidence": 9.010922330097088,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 9888,
+        "mean_colo": 1.647653721682848,
+        "crc_mortality": 2.0024271844660197,
+        "crc_mortality_se": 0.1408814324646852,
+        "crc_incidence": 5.238673139158577,
+        "mort_reduction": 1.6383495145631062,
+        "LYG_per_1000": 200.26800161812298,
+        "mortred_per_colo": 0.9943530567149517
+      },
+      "pbvi": {
+        "n": 9888,
+        "mean_colo": 1.6637338187702266,
+        "crc_mortality": 1.9720873786407769,
+        "crc_mortality_se": 0.13983171597626823,
+        "crc_incidence": 5.400485436893203,
+        "mort_reduction": 1.668689320388349,
+        "LYG_per_1000": 211.89826051779937,
+        "mortred_per_colo": 1.0029785423378514
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": -0.03033980582524272,
+        "se": 0.14409886144528766
+      }
+    },
+    "K2|NH_no_crc": {
+      "ref": {
+        "n": 38357,
+        "mean_colo": 0.0,
+        "crc_mortality": 0.0,
+        "crc_mortality_se": 0.0,
+        "crc_incidence": 0.0,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 38357,
+        "mean_colo": 1.6557342857887738,
+        "crc_mortality": 0.4510258883645749,
+        "crc_mortality_se": 0.03421389157330552,
+        "crc_incidence": 1.2331517063378263,
+        "mort_reduction": -0.4510258883645749,
+        "LYG_per_1000": -44.092342988242045,
+        "mortred_per_colo": -0.2724023366766915
+      },
+      "pbvi": {
+        "n": 38357,
+        "mean_colo": 1.6723935657116042,
+        "crc_mortality": 0.49795343744297,
+        "crc_mortality_se": 0.03594129483301256,
+        "crc_incidence": 1.4573611074901582,
+        "mort_reduction": -0.49795343744297,
+        "LYG_per_1000": -49.21526709596684,
+        "mortred_per_colo": -0.297748955540313
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": 0.04692754907839508,
+        "se": 0.03297687938674278
+      }
+    },
+    "K2|NH_would_crc": {
+      "ref": {
+        "n": 1643,
+        "mean_colo": 0.0,
+        "crc_mortality": 40.71819841752891,
+        "crc_mortality_se": 1.2124627295359582,
+        "crc_incidence": 100.0,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 1643,
+        "mean_colo": 1.6902008520998173,
+        "crc_mortality": 16.18989653073646,
+        "crc_mortality_se": 0.9090413708989836,
+        "crc_incidence": 38.344491783323186,
+        "mort_reduction": 24.528301886792452,
+        "LYG_per_1000": 2500.6086427267196,
+        "mortred_per_colo": 14.512063377745768
+      },
+      "pbvi": {
+        "n": 1643,
+        "mean_colo": 1.7224589166159465,
+        "crc_mortality": 15.337796713329277,
+        "crc_mortality_se": 0.889282396692925,
+        "crc_incidence": 35.97078514911747,
+        "mort_reduction": 25.380401704199635,
+        "LYG_per_1000": 2736.457699330493,
+        "mortred_per_colo": 14.734982332155477
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": -0.852099817407182,
+        "se": 0.6938521882191313
+      }
+    },
+    "K3|all": {
+      "ref": {
+        "n": 40000,
+        "mean_colo": 0.0,
+        "crc_mortality": 1.6725,
+        "crc_mortality_se": 0.06412036633772832,
+        "crc_incidence": 4.1075,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 40000,
+        "mean_colo": 2.590125,
+        "crc_mortality": 0.9724999999999999,
+        "crc_mortality_se": 0.0490679761698721,
+        "crc_incidence": 2.435,
+        "mort_reduction": 0.7000000000000002,
+        "LYG_per_1000": 86.89375,
+        "mortred_per_colo": 0.2702572269678105
+      },
+      "pbvi": {
+        "n": 40000,
+        "mean_colo": 2.312325,
+        "crc_mortality": 0.9225000000000001,
+        "crc_mortality_se": 0.04780200800750151,
+        "crc_incidence": 2.59,
+        "mort_reduction": 0.75,
+        "LYG_per_1000": 74.48125,
+        "mortred_per_colo": 0.3243488696441893
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": -0.05,
+        "se": 0.05787936809028985
+      }
+    },
+    "K3|risk_Q1": {
+      "ref": {
+        "n": 9913,
+        "mean_colo": 0.0,
+        "crc_mortality": 0.6052658125693533,
+        "crc_mortality_se": 0.0779065753240363,
+        "crc_incidence": 1.4929890043377383,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 9913,
+        "mean_colo": 2.58952890144255,
+        "crc_mortality": 0.5346514677695955,
+        "crc_mortality_se": 0.07324713451312422,
+        "crc_incidence": 1.3315847876525775,
+        "mort_reduction": 0.07061434479975781,
+        "LYG_per_1000": 11.701805709674161,
+        "mortred_per_colo": 0.027269185820023342
+      },
+      "pbvi": {
+        "n": 9913,
+        "mean_colo": 2.3458085342479573,
+        "crc_mortality": 0.5649147583980632,
+        "crc_mortality_se": 0.07528017827875967,
+        "crc_incidence": 1.4021991324523353,
+        "mort_reduction": 0.040351054171290146,
+        "LYG_per_1000": -7.818016745687481,
+        "mortred_per_colo": 0.017201341704652928
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": 0.03026329062846767,
+        "se": 0.07879133985741854
+      }
+    },
+    "K3|risk_Q2": {
+      "ref": {
+        "n": 10027,
+        "mean_colo": 0.0,
+        "crc_mortality": 0.8078188889997009,
+        "crc_mortality_se": 0.0893988375687406,
+        "crc_incidence": 1.8948838137030017,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 10027,
+        "mean_colo": 2.5914032113294105,
+        "crc_mortality": 0.6981150892590007,
+        "crc_mortality_se": 0.08315309308073739,
+        "crc_incidence": 1.6256108507031015,
+        "mort_reduction": 0.10970379974070021,
+        "LYG_per_1000": 4.612546125461248,
+        "mortred_per_colo": 0.042333743842364574
+      },
+      "pbvi": {
+        "n": 10027,
+        "mean_colo": 2.3337987433928395,
+        "crc_mortality": 0.6482497257405007,
+        "crc_mortality_se": 0.08014844151791471,
+        "crc_incidence": 1.7153685050364016,
+        "mort_reduction": 0.15956916325920023,
+        "LYG_per_1000": 7.729131345367499,
+        "mortred_per_colo": 0.06837314644673306
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": -0.04986536351850005,
+        "se": 0.09195042388982215
+      }
+    },
+    "K3|risk_Q3": {
+      "ref": {
+        "n": 9847,
+        "mean_colo": 0.0,
+        "crc_mortality": 1.6147049862902405,
+        "crc_mortality_se": 0.12702282685077212,
+        "crc_incidence": 4.021529399817203,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 9847,
+        "mean_colo": 2.5937849091093734,
+        "crc_mortality": 0.8936731999593784,
+        "crc_mortality_se": 0.09484406105759513,
+        "crc_incidence": 2.335736772621103,
+        "mort_reduction": 0.7210317863308621,
+        "LYG_per_1000": 78.55184320097491,
+        "mortred_per_colo": 0.27798441721154216
+      },
+      "pbvi": {
+        "n": 9847,
+        "mean_colo": 2.3068955011678685,
+        "crc_mortality": 0.8936731999593784,
+        "crc_mortality_se": 0.0948440610575951,
+        "crc_incidence": 2.609931958972276,
+        "mort_reduction": 0.7210317863308621,
+        "LYG_per_1000": 78.60262008733623,
+        "mortred_per_colo": 0.3125550272935375
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": 0.0,
+        "se": 0.11579499584310567
+      }
+    },
+    "K3|risk_Q4": {
+      "ref": {
+        "n": 10213,
+        "mean_colo": 0.0,
+        "crc_mortality": 3.6130422011162246,
+        "crc_mortality_se": 0.18466740679516142,
+        "crc_incidence": 8.900421032018016,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 10213,
+        "mean_colo": 2.5859199060021543,
+        "crc_mortality": 1.7428767257417017,
+        "crc_mortality_se": 0.12949707369995112,
+        "crc_incidence": 4.396357583472046,
+        "mort_reduction": 1.870165475374523,
+        "LYG_per_1000": 248.70263389797321,
+        "mortred_per_colo": 0.7232109049602424
+      },
+      "pbvi": {
+        "n": 10213,
+        "mean_colo": 2.2639772838539116,
+        "crc_mortality": 1.566630764711642,
+        "crc_mortality_se": 0.12288506332945935,
+        "crc_incidence": 4.582394986781553,
+        "mort_reduction": 2.0464114364045827,
+        "LYG_per_1000": 215.9257808675218,
+        "mortred_per_colo": 0.9039010466222647
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": -0.17624596103005974,
+        "se": 0.15788035993113325
+      }
+    },
+    "K3|low_class": {
+      "ref": {
+        "n": 30112,
+        "mean_colo": 0.0,
+        "crc_mortality": 1.0261689691817215,
+        "crc_mortality_se": 0.058077383180930135,
+        "crc_incidence": 2.497343251859724,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 30112,
+        "mean_colo": 2.591757438894793,
+        "crc_mortality": 0.7140010626992561,
+        "crc_mortality_se": 0.04852112307052917,
+        "crc_incidence": 1.7800212539851221,
+        "mort_reduction": 0.3121679064824654,
+        "LYG_per_1000": 30.942813496280543,
+        "mortred_per_colo": 0.12044642056302292
+      },
+      "pbvi": {
+        "n": 30112,
+        "mean_colo": 2.328739373007439,
+        "crc_mortality": 0.7007173219978746,
+        "crc_mortality_se": 0.04807086012392214,
+        "crc_incidence": 1.9128586609989375,
+        "mort_reduction": 0.3254516471838469,
+        "LYG_per_1000": 26.285201912858657,
+        "mortred_per_colo": 0.13975443149893754
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": -0.013283740701381509,
+        "se": 0.055570744253437804
+      }
+    },
+    "K3|high_class": {
+      "ref": {
+        "n": 9888,
+        "mean_colo": 0.0,
+        "crc_mortality": 3.640776699029126,
+        "crc_mortality_se": 0.18836985340538204,
+        "crc_incidence": 9.010922330097088,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 9888,
+        "mean_colo": 2.5851537216828477,
+        "crc_mortality": 1.7597087378640777,
+        "crc_mortality_se": 0.13223089848151506,
+        "crc_incidence": 4.429611650485437,
+        "mort_reduction": 1.8810679611650483,
+        "LYG_per_1000": 257.28155339805824,
+        "mortred_per_colo": 0.7276425944761755
+      },
+      "pbvi": {
+        "n": 9888,
+        "mean_colo": 2.2623381877022655,
+        "crc_mortality": 1.59789644012945,
+        "crc_mortality_se": 0.12610846480420437,
+        "crc_incidence": 4.65210355987055,
+        "mort_reduction": 2.042880258899676,
+        "LYG_per_1000": 221.25303398058253,
+        "mortred_per_colo": 0.9029950827000446
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": -0.16181229773462782,
+        "se": 0.16181229773462782
+      }
+    },
+    "K3|NH_no_crc": {
+      "ref": {
+        "n": 38357,
+        "mean_colo": 0.0,
+        "crc_mortality": 0.0,
+        "crc_mortality_se": 0.0,
+        "crc_incidence": 0.0,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 38357,
+        "mean_colo": 2.585030111843992,
+        "crc_mortality": 0.5553093307610084,
+        "crc_mortality_se": 0.03794387064348464,
+        "crc_incidence": 1.4078264723518523,
+        "mort_reduction": -0.5553093307610084,
+        "LYG_per_1000": -45.36981515759835,
+        "mortred_per_colo": -0.21481735482179234
+      },
+      "pbvi": {
+        "n": 38357,
+        "mean_colo": 2.30761008420888,
+        "crc_mortality": 0.49273926532314827,
+        "crc_mortality_se": 0.03575356206960979,
+        "crc_incidence": 1.4834319680892665,
+        "mort_reduction": -0.49273926532314827,
+        "LYG_per_1000": -50.877284459159995,
+        "mortred_per_colo": -0.21352795634539556
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": -0.0625700654378601,
+        "se": 0.04590197335283648
+      }
+    },
+    "K3|NH_would_crc": {
+      "ref": {
+        "n": 1643,
+        "mean_colo": 0.0,
+        "crc_mortality": 40.71819841752891,
+        "crc_mortality_se": 1.2124627295359582,
+        "crc_incidence": 100.0,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 1643,
+        "mean_colo": 2.7090687766281194,
+        "crc_mortality": 10.712111990261716,
+        "crc_mortality_se": 0.7632156216299809,
+        "crc_incidence": 26.41509433962264,
+        "mort_reduction": 30.006086427267192,
+        "LYG_per_1000": 3174.6804625684726,
+        "mortred_per_colo": 11.076162660076387
+      },
+      "pbvi": {
+        "n": 1643,
+        "mean_colo": 2.4223980523432744,
+        "crc_mortality": 10.955569080949482,
+        "crc_mortality_se": 0.7707868127590134,
+        "crc_incidence": 28.423615337796715,
+        "mort_reduction": 29.76262933657943,
+        "LYG_per_1000": 3001.065124771759,
+        "mortred_per_colo": 12.28643216080402
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": 0.24345709068776628,
+        "se": 0.9152495087321233
+      }
+    },
+    "K4|all": {
+      "ref": {
+        "n": 40000,
+        "mean_colo": 0.0,
+        "crc_mortality": 1.6725,
+        "crc_mortality_se": 0.06412036633772832,
+        "crc_incidence": 4.1075,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 40000,
+        "mean_colo": 3.242,
+        "crc_mortality": 0.8075000000000001,
+        "crc_mortality_se": 0.04474928665595023,
+        "crc_incidence": 2.2025,
+        "mort_reduction": 0.865,
+        "LYG_per_1000": 98.51875,
+        "mortred_per_colo": 0.2668106107341147
+      },
+      "pbvi": {
+        "n": 40000,
+        "mean_colo": 3.12395,
+        "crc_mortality": 0.8325000000000001,
+        "crc_mortality_se": 0.04543099375019028,
+        "crc_incidence": 2.2775,
+        "mort_reduction": 0.84,
+        "LYG_per_1000": 87.41875,
+        "mortred_per_colo": 0.2688903471566446
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": 0.025,
+        "se": 0.049371503052194406
+      }
+    },
+    "K4|risk_Q1": {
+      "ref": {
+        "n": 9913,
+        "mean_colo": 0.0,
+        "crc_mortality": 0.6052658125693533,
+        "crc_mortality_se": 0.0779065753240363,
+        "crc_incidence": 1.4929890043377383,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 9913,
+        "mean_colo": 3.2470493291637244,
+        "crc_mortality": 0.4438615958841925,
+        "crc_mortality_se": 0.06676935176381063,
+        "crc_incidence": 1.3618480782810451,
+        "mort_reduction": 0.1614042166851608,
+        "LYG_per_1000": 15.055987087662668,
+        "mortred_per_colo": 0.04970796570150364
+      },
+      "pbvi": {
+        "n": 9913,
+        "mean_colo": 3.163320891758297,
+        "crc_mortality": 0.47412488651266016,
+        "crc_mortality_se": 0.06899755981933371,
+        "crc_incidence": 1.4021991324523353,
+        "mort_reduction": 0.13114092605669314,
+        "LYG_per_1000": 3.3541813779884992,
+        "mortred_per_colo": 0.04145672555647679
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": 0.03026329062846767,
+        "se": 0.04622927253309788
+      }
+    },
+    "K4|risk_Q2": {
+      "ref": {
+        "n": 10027,
+        "mean_colo": 0.0,
+        "crc_mortality": 0.8078188889997009,
+        "crc_mortality_se": 0.0893988375687406,
+        "crc_incidence": 1.8948838137030017,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 10027,
+        "mean_colo": 3.243841627605465,
+        "crc_mortality": 0.4687344170739005,
+        "crc_mortality_se": 0.06821491377817214,
+        "crc_incidence": 1.4460955420365014,
+        "mort_reduction": 0.3390844719258004,
+        "LYG_per_1000": 19.77161663508527,
+        "mortred_per_colo": 0.10453175920801822
+      },
+      "pbvi": {
+        "n": 10027,
+        "mean_colo": 3.150294205644759,
+        "crc_mortality": 0.4687344170739005,
+        "crc_mortality_se": 0.06821491377817214,
+        "crc_incidence": 1.5258801236661017,
+        "mort_reduction": 0.3390844719258004,
+        "LYG_per_1000": 26.40370998304577,
+        "mortred_per_colo": 0.107635811067494
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": 0.0,
+        "se": 0.064636121343101
+      }
+    },
+    "K4|risk_Q3": {
+      "ref": {
+        "n": 9847,
+        "mean_colo": 0.0,
+        "crc_mortality": 1.6147049862902405,
+        "crc_mortality_se": 0.12702282685077212,
+        "crc_incidence": 4.021529399817203,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 9847,
+        "mean_colo": 3.244846146034325,
+        "crc_mortality": 0.9749162181375038,
+        "crc_mortality_se": 0.09902077956589816,
+        "crc_incidence": 2.244338377170712,
+        "mort_reduction": 0.6397887681527367,
+        "LYG_per_1000": 78.01868589418096,
+        "mortred_per_colo": 0.19717075613420124
+      },
+      "pbvi": {
+        "n": 9847,
+        "mean_colo": 3.1166852848583324,
+        "crc_mortality": 0.8632070681425815,
+        "crc_mortality_se": 0.09322770878189272,
+        "crc_incidence": 2.1630953589925865,
+        "mort_reduction": 0.751497918147659,
+        "LYG_per_1000": 75.50523001929521,
+        "mortred_per_colo": 0.24112088628217654
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": -0.1117091499949223,
+        "se": 0.10306490807383918
+      }
+    },
+    "K4|risk_Q4": {
+      "ref": {
+        "n": 10213,
+        "mean_colo": 0.0,
+        "crc_mortality": 3.6130422011162246,
+        "crc_mortality_se": 0.18466740679516142,
+        "crc_incidence": 8.900421032018016,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 10213,
+        "mean_colo": 3.232546754136884,
+        "crc_mortality": 1.3316361500048957,
+        "crc_mortality_se": 0.11342958639512817,
+        "crc_incidence": 3.72074806619015,
+        "mort_reduction": 2.281406051111329,
+        "LYG_per_1000": 276.6082443943993,
+        "mortred_per_colo": 0.7057611922214819
+      },
+      "pbvi": {
+        "n": 10213,
+        "mean_colo": 3.066875550768628,
+        "crc_mortality": 1.5078821110349554,
+        "crc_mortality_se": 0.12059492437750671,
+        "crc_incidence": 3.9753255654557917,
+        "mort_reduction": 2.1051600900812693,
+        "LYG_per_1000": 240.40438656614123,
+        "mortred_per_colo": 0.6864184917949047
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": 0.17624596103005974,
+        "se": 0.14654168610947377
+      }
+    },
+    "K4|low_class": {
+      "ref": {
+        "n": 30112,
+        "mean_colo": 0.0,
+        "crc_mortality": 1.0261689691817215,
+        "crc_mortality_se": 0.058077383180930135,
+        "crc_incidence": 2.497343251859724,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 30112,
+        "mean_colo": 3.24538390010627,
+        "crc_mortality": 0.6376195536663124,
+        "crc_mortality_se": 0.04587005044754109,
+        "crc_incidence": 1.7003188097768331,
+        "mort_reduction": 0.3885494155154091,
+        "LYG_per_1000": 36.264612114771516,
+        "mortred_per_colo": 0.11972371450498848
+      },
+      "pbvi": {
+        "n": 30112,
+        "mean_colo": 3.143165515409139,
+        "crc_mortality": 0.6010892667375133,
+        "crc_mortality_se": 0.04454487142528737,
+        "crc_incidence": 1.7003188097768331,
+        "mort_reduction": 0.42507970244420823,
+        "LYG_per_1000": 35.45928533475026,
+        "mortred_per_colo": 0.13523936310712434
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": -0.03653028692879915,
+        "se": 0.043427073333360246
+      }
+    },
+    "K4|high_class": {
+      "ref": {
+        "n": 9888,
+        "mean_colo": 0.0,
+        "crc_mortality": 3.640776699029126,
+        "crc_mortality_se": 0.18836985340538204,
+        "crc_incidence": 9.010922330097088,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 9888,
+        "mean_colo": 3.23169498381877,
+        "crc_mortality": 1.3248381877022655,
+        "crc_mortality_se": 0.11498814699916526,
+        "crc_incidence": 3.731796116504854,
+        "mort_reduction": 2.3159385113268605,
+        "LYG_per_1000": 288.1017394822006,
+        "mortred_per_colo": 0.7166327648255358
+      },
+      "pbvi": {
+        "n": 9888,
+        "mean_colo": 3.06543284789644,
+        "crc_mortality": 1.5372168284789645,
+        "crc_mortality_se": 0.12372895694257126,
+        "crc_incidence": 4.035194174757282,
+        "mort_reduction": 2.1035598705501615,
+        "LYG_per_1000": 245.65129449838184,
+        "mortred_per_colo": 0.6862195242651181
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": 0.21237864077669902,
+        "se": 0.14965503566309998
+      }
+    },
+    "K4|NH_no_crc": {
+      "ref": {
+        "n": 38357,
+        "mean_colo": 0.0,
+        "crc_mortality": 0.0,
+        "crc_mortality_se": 0.0,
+        "crc_incidence": 0.0,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 38357,
+        "mean_colo": 3.2315613838412807,
+        "crc_mortality": 0.36499204838751725,
+        "crc_mortality_se": 0.03079151279963833,
+        "crc_incidence": 1.0662981985035327,
+        "mort_reduction": -0.36499204838751725,
+        "LYG_per_1000": -32.08019396720286,
+        "mortred_per_colo": -0.11294603599751518
+      },
+      "pbvi": {
+        "n": 38357,
+        "mean_colo": 3.116979951508199,
+        "crc_mortality": 0.40670542534609067,
+        "crc_mortality_se": 0.03249663388217305,
+        "crc_incidence": 1.2096879317986287,
+        "mort_reduction": -0.40670542534609067,
+        "LYG_per_1000": -39.51690695309852,
+        "mortred_per_colo": -0.13048060355643287
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": 0.041713376958573405,
+        "se": 0.03778015842392433
+      }
+    },
+    "K4|NH_would_crc": {
+      "ref": {
+        "n": 1643,
+        "mean_colo": 0.0,
+        "crc_mortality": 40.71819841752891,
+        "crc_mortality_se": 1.2124627295359582,
+        "crc_incidence": 100.0,
+        "mort_reduction": 0.0,
+        "LYG_per_1000": 0.0,
+        "mortred_per_colo": 0.0
+      },
+      "fixed": {
+        "n": 1643,
+        "mean_colo": 3.4856968959220938,
+        "crc_mortality": 11.138161898965308,
+        "crc_mortality_se": 0.7763862457329587,
+        "crc_incidence": 28.72793670115642,
+        "mort_reduction": 29.580036518563602,
+        "LYG_per_1000": 3147.443700547779,
+        "mortred_per_colo": 8.486118386589837
+      },
+      "pbvi": {
+        "n": 1643,
+        "mean_colo": 3.286670724284845,
+        "crc_mortality": 10.772976262933657,
+        "crc_mortality_se": 0.7651198662318072,
+        "crc_incidence": 27.20632988435788,
+        "mort_reduction": 29.945222154595253,
+        "LYG_per_1000": 3050.821667681071,
+        "mortred_per_colo": 9.11111111111111
+      },
+      "paired_pbvi_minus_fixed_mort": {
+        "d_pp": -0.36518563603164944,
+        "se": 0.8167788055913338
+      }
+    }
+  },
+  "budget": {
+    "K1": {
+      "schedule": [
+        58
+      ],
+      "fixed": {
+        "n": 20000,
+        "mean_colo": 0.893,
+        "crc_mortality": 1.39,
+        "crc_mortality_se": 0.08278730389911454,
+        "crc_incidence": 3.4450000000000003,
+        "mort_reduction": 0.43000000000000016,
+        "LYG_per_1000": 57.02500000000002,
+        "mortred_per_colo": 0.4815229563269878
+      },
+      "pbvi": {
+        "n": 20000,
+        "mean_colo": 0.75735,
+        "crc_mortality": 1.365,
+        "crc_mortality_se": 0.08204983460536612,
+        "crc_incidence": 3.375,
+        "mort_reduction": 0.45500000000000007,
+        "LYG_per_1000": 43.5875,
+        "mortred_per_colo": 0.6007790321515812
+      }
+    },
+    "K2": {
+      "schedule": [
+        58,
+        70
+      ],
+      "fixed": {
+        "n": 20000,
+        "mean_colo": 1.65445,
+        "crc_mortality": 1.21,
+        "crc_mortality_se": 0.07731166700241779,
+        "crc_incidence": 2.86,
+        "mort_reduction": 0.6100000000000001,
+        "LYG_per_1000": 63.225,
+        "mortred_per_colo": 0.3687025899845871
+      },
+      "pbvi": {
+        "n": 20000,
+        "mean_colo": 1.671,
+        "crc_mortality": 1.21,
+        "crc_mortality_se": 0.07731166700241779,
+        "crc_incidence": 2.9850000000000003,
+        "mort_reduction": 0.6100000000000001,
+        "LYG_per_1000": 71.67500000000001,
+        "mortred_per_colo": 0.365050867743866
+      }
+    },
+    "K3": {
+      "schedule": [
+        52,
+        58,
+        70
+      ],
+      "fixed": {
+        "n": 20000,
+        "mean_colo": 2.5864,
+        "crc_mortality": 0.935,
+        "crc_mortality_se": 0.0680552740499684,
+        "crc_incidence": 2.46,
+        "mort_reduction": 0.885,
+        "LYG_per_1000": 112.76250000000002,
+        "mortred_per_colo": 0.3421744509743273
+      },
+      "pbvi": {
+        "n": 20000,
+        "mean_colo": 2.30645,
+        "crc_mortality": 1.0,
+        "crc_mortality_se": 0.0703579953692231,
+        "crc_incidence": 2.715,
+        "mort_reduction": 0.8200000000000001,
+        "LYG_per_1000": 81.5875,
+        "mortred_per_colo": 0.3555247241431638
+      }
+    },
+    "K4": {
+      "schedule": [
+        52,
+        58,
+        70,
+        76
+      ],
+      "fixed": {
+        "n": 20000,
+        "mean_colo": 3.2386,
+        "crc_mortality": 0.8049999999999999,
+        "crc_mortality_se": 0.06318859382767981,
+        "crc_incidence": 2.1999999999999997,
+        "mort_reduction": 1.0150000000000001,
+        "LYG_per_1000": 123.97500000000002,
+        "mortred_per_colo": 0.3134070277280307
+      },
+      "pbvi": {
+        "n": 20000,
+        "mean_colo": 3.1198,
+        "crc_mortality": 0.865,
+        "crc_mortality_se": 0.06548131901662495,
+        "crc_incidence": 2.395,
+        "mort_reduction": 0.9550000000000001,
+        "LYG_per_1000": 105.21250000000002,
+        "mortred_per_colo": 0.30610936598499905
+      }
+    },
+    "K6": {
+      "schedule": [
+        46,
+        52,
+        58,
+        64,
+        70,
+        76
+      ],
+      "fixed": {
+        "n": 20000,
+        "mean_colo": 5.03825,
+        "crc_mortality": 0.815,
+        "crc_mortality_se": 0.06357665333707396,
+        "crc_incidence": 2.165,
+        "mort_reduction": 1.0050000000000001,
+        "LYG_per_1000": 129.85000000000002,
+        "mortred_per_colo": 0.1994740237185531
+      },
+      "pbvi": {
+        "n": 20000,
+        "mean_colo": 4.5241,
+        "crc_mortality": 0.7100000000000001,
+        "crc_mortality_se": 0.059371468303911996,
+        "crc_incidence": 2.0500000000000003,
+        "mort_reduction": 1.1099999999999999,
+        "LYG_per_1000": 120.12500000000001,
+        "mortred_per_colo": 0.2453526668287615
+      }
+    }
+  }
+}

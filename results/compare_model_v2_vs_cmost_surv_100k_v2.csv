@@ -1,0 +1,55 @@
+scenario,metric,CMOST,matrix9state,diff_pct
+No screening,Avg age at death,77.74539,78.31315393458766,+0.7%
+No screening,Avg age at CRC death,75.48936170212765,75.05313798836097,-0.6%
+No screening,CRC deaths /100k,1880.0,1539.158435283847,-18.1%
+No screening,Incidence /100k,3938.0,4348.150247481761,+10.4%
+No screening,Screen-detected /100k,0.0,0.0,
+No screening,Symptom-detected /100k,3938.0,4348.150247481761,+10.4%
+No screening,Stage I % (all),15.972574911122397,12.365842918180828,-22.6%
+No screening,Stage II % (all),37.582529202640934,36.93577978146489,-1.7%
+No screening,Stage III % (all),27.755205688166583,28.230199466019105,+1.7%
+No screening,Stage IV % (all),18.689690198070085,22.46817783433519,+20.2%
+No screening,Stage I % (screen),0.0,0.0,
+No screening,Stage II % (screen),0.0,0.0,
+No screening,Stage III % (screen),0.0,0.0,
+No screening,Stage IV % (screen),0.0,0.0,
+No screening,Stage I % (symptom),15.972574911122397,12.365842918180828,-22.6%
+No screening,Stage II % (symptom),37.582529202640934,36.93577978146489,-1.7%
+No screening,Stage III % (symptom),27.755205688166583,28.230199466019105,+1.7%
+No screening,Stage IV % (symptom),18.689690198070085,22.46817783433519,+20.2%
+"Screen q10y (50,60,70)",Avg age at death,77.83262,78.33143982044777,+0.6%
+"Screen q10y (50,60,70)",Avg age at CRC death,74.87055837563452,73.84440085178682,-1.4%
+"Screen q10y (50,60,70)",CRC deaths /100k,788.0,793.879735010536,+0.7%
+"Screen q10y (50,60,70)",Incidence /100k,1839.0,1835.2169658321743,-0.2%
+"Screen q10y (50,60,70)",Screen-detected /100k,343.0,423.39681560592527,+23.4%
+"Screen q10y (50,60,70)",Symptom-detected /100k,1496.0,1411.8201502262489,-5.6%
+"Screen q10y (50,60,70)",Stage I % (all),27.40619902120718,20.848479162140315,-23.9%
+"Screen q10y (50,60,70)",Stage II % (all),37.24850462207721,38.35780858686772,+3.0%
+"Screen q10y (50,60,70)",Stage III % (all),21.75095160413268,24.376579690778257,+12.1%
+"Screen q10y (50,60,70)",Stage IV % (all),13.594344752582925,16.417132560213698,+20.8%
+"Screen q10y (50,60,70)",Stage I % (screen),45.77259475218659,44.153216990945126,-3.5%
+"Screen q10y (50,60,70)",Stage II % (screen),36.44314868804665,33.59429326366582,-7.8%
+"Screen q10y (50,60,70)",Stage III % (screen),13.119533527696793,14.590923408697543,+11.2%
+"Screen q10y (50,60,70)",Stage IV % (screen),4.664723032069971,7.6615663366915,+64.2%
+"Screen q10y (50,60,70)",Stage I % (symptom),23.1951871657754,13.859521125477036,-40.2%
+"Screen q10y (50,60,70)",Stage II % (symptom),37.4331550802139,39.786359680015465,+6.3%
+"Screen q10y (50,60,70)",Stage III % (symptom),23.72994652406417,27.31124223103392,+15.1%
+"Screen q10y (50,60,70)",Stage IV % (symptom),15.641711229946525,19.04287696347358,+21.7%
+Screen q5y (50-75),Avg age at death,77.95214,78.33361206288224,+0.5%
+Screen q5y (50-75),Avg age at CRC death,73.58064516129032,73.67108331556679,+0.1%
+Screen q5y (50-75),CRC deaths /100k,682.0,686.9922061687433,+0.7%
+Screen q5y (50-75),Incidence /100k,1699.0000000000002,1399.5342986529674,-17.6%
+Screen q5y (50-75),Screen-detected /100k,669.0,527.5486786022975,-21.1%
+Screen q5y (50-75),Symptom-detected /100k,1030.0,871.9856200506699,-15.3%
+Screen q5y (50-75),Stage I % (all),30.3708063566804,27.292302176930985,-10.1%
+Screen q5y (50-75),Stage II % (all),37.25721012360212,38.23353830382707,+2.6%
+Screen q5y (50-75),Stage III % (all),21.42436727486757,21.611557404648046,+0.9%
+Screen q5y (50-75),Stage IV % (all),10.947616244849911,12.862602114593896,+17.5%
+Screen q5y (50-75),Stage I % (screen),44.39461883408072,47.708346914269505,+7.5%
+Screen q5y (50-75),Stage II % (screen),33.482810164424514,32.2022610899751,-3.8%
+Screen q5y (50-75),Stage III % (screen),16.292974588938716,13.82588699098385,-15.1%
+Screen q5y (50-75),Stage IV % (screen),5.829596412556054,6.263505004771531,+7.4%
+Screen q5y (50-75),Stage I % (symptom),21.262135922330096,14.940656489422434,-29.7%
+Screen q5y (50-75),Stage II % (symptom),39.70873786407767,41.882442885839396,+5.5%
+Screen q5y (50-75),Stage III % (symptom),24.75728155339806,26.321864598157592,+6.3%
+Screen q5y (50-75),Stage IV % (symptom),14.271844660194175,16.855036026580578,+18.1%

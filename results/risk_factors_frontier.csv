@@ -1,0 +1,13 @@
+policy,mean_colo,colo_high,colo_low,crc_mortality,crc_mort_high,crc_mort_low,LYG_per_1000
+Fixed population x1,0.893,0.888,0.894,1.360,2.882,0.861,56.9
+Fixed population x2,1.655,1.643,1.658,1.148,2.121,0.829,65.8
+Fixed population x3,2.587,2.579,2.589,0.964,1.781,0.696,97.9
+Fixed population x4,3.238,3.225,3.242,0.828,1.376,0.648,108.3
+RiskStrat fixed 4/2,2.031,2.403,1.908,1.008,1.732,0.770,84.6
+RiskStrat fixed 4/1,1.449,2.010,1.264,1.140,2.186,0.797,79.9
+PBVI cost c=0.03 flat prior,3.673,4.359,3.448,0.836,1.554,0.600,96.6
+PBVI cost c=0.03 +FH/PA (AUC0.67),3.178,4.220,2.836,0.808,1.328,0.638,95.9
+PBVI cost c=0.06 flat prior,2.049,2.544,1.886,1.048,1.603,0.866,77.9
+PBVI cost c=0.06 +FH/PA (AUC0.67),1.353,2.068,1.119,1.048,1.927,0.760,70.2
+PBVI cost c=0.1 flat prior,0.851,0.959,0.816,1.296,2.817,0.797,41.3
+PBVI cost c=0.1 +FH/PA (AUC0.67),0.318,0.754,0.176,1.556,3.060,1.063,22.1
