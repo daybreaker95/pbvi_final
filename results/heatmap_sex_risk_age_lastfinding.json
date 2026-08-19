@@ -1,0 +1,2015 @@
+[
+  {
+    "age": 40,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 187278,
+      "M_high": 0.0,
+      "M_high_n": 62293,
+      "F_low": 0.0,
+      "F_low_n": 187941,
+      "F_high": 0.0,
+      "F_high_n": 62488
+    },
+    "normal": {
+      "M_low": null,
+      "M_low_n": 0,
+      "M_high": null,
+      "M_high_n": 0,
+      "F_low": null,
+      "F_low_n": 0,
+      "F_high": null,
+      "F_high_n": 0
+    },
+    "polyp": {
+      "M_low": null,
+      "M_low_n": 0,
+      "M_high": null,
+      "M_high_n": 0,
+      "F_low": null,
+      "F_low_n": 0,
+      "F_high": null,
+      "F_high_n": 0
+    }
+  },
+  {
+    "age": 41,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 186792,
+      "M_high": 0.0,
+      "M_high_n": 62128,
+      "F_low": 0.0,
+      "F_low_n": 187725,
+      "F_high": 0.0,
+      "F_high_n": 62409
+    },
+    "normal": {
+      "M_low": null,
+      "M_low_n": 0,
+      "M_high": null,
+      "M_high_n": 0,
+      "F_low": null,
+      "F_low_n": 0,
+      "F_high": null,
+      "F_high_n": 0
+    },
+    "polyp": {
+      "M_low": null,
+      "M_low_n": 0,
+      "M_high": null,
+      "M_high_n": 0,
+      "F_low": null,
+      "F_low_n": 0,
+      "F_high": null,
+      "F_high_n": 0
+    }
+  },
+  {
+    "age": 42,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 186318,
+      "M_high": 0.0,
+      "M_high_n": 61954,
+      "F_low": 0.0,
+      "F_low_n": 187478,
+      "F_high": 0.0,
+      "F_high_n": 62316
+    },
+    "normal": {
+      "M_low": null,
+      "M_low_n": 0,
+      "M_high": null,
+      "M_high_n": 0,
+      "F_low": null,
+      "F_low_n": 0,
+      "F_high": null,
+      "F_high_n": 0
+    },
+    "polyp": {
+      "M_low": null,
+      "M_low_n": 0,
+      "M_high": null,
+      "M_high_n": 0,
+      "F_low": null,
+      "F_low_n": 0,
+      "F_high": null,
+      "F_high_n": 0
+    }
+  },
+  {
+    "age": 43,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 185784,
+      "M_high": 0.0,
+      "M_high_n": 61795,
+      "F_low": 0.0,
+      "F_low_n": 187193,
+      "F_high": 0.0,
+      "F_high_n": 62189
+    },
+    "normal": {
+      "M_low": null,
+      "M_low_n": 0,
+      "M_high": null,
+      "M_high_n": 0,
+      "F_low": null,
+      "F_low_n": 0,
+      "F_high": null,
+      "F_high_n": 0
+    },
+    "polyp": {
+      "M_low": null,
+      "M_low_n": 0,
+      "M_high": null,
+      "M_high_n": 0,
+      "F_low": null,
+      "F_low_n": 0,
+      "F_high": null,
+      "F_high_n": 0
+    }
+  },
+  {
+    "age": 44,
+    "never": {
+      "M_low": 99.97,
+      "M_low_n": 185213,
+      "M_high": 99.91,
+      "M_high_n": 61587,
+      "F_low": 0.0,
+      "F_low_n": 186829,
+      "F_high": 0.0,
+      "F_high_n": 62082
+    },
+    "normal": {
+      "M_low": null,
+      "M_low_n": 0,
+      "M_high": null,
+      "M_high_n": 0,
+      "F_low": null,
+      "F_low_n": 0,
+      "F_high": null,
+      "F_high_n": 0
+    },
+    "polyp": {
+      "M_low": null,
+      "M_low_n": 0,
+      "M_high": null,
+      "M_high_n": 0,
+      "F_low": null,
+      "F_low_n": 0,
+      "F_high": null,
+      "F_high_n": 0
+    }
+  },
+  {
+    "age": 45,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 106,
+      "M_high": 0.0,
+      "M_high_n": 116,
+      "F_low": 0.0,
+      "F_low_n": 186497,
+      "F_high": 0.0,
+      "F_high_n": 61953
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 177478,
+      "M_high": 0.0,
+      "M_high_n": 45622,
+      "F_low": null,
+      "F_low_n": 0,
+      "F_high": null,
+      "F_high_n": 0
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 6965,
+      "M_high": 0.0,
+      "M_high_n": 15617,
+      "F_low": null,
+      "F_low_n": 0,
+      "F_high": null,
+      "F_high_n": 0
+    }
+  },
+  {
+    "age": 46,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 103,
+      "M_high": 0.0,
+      "M_high_n": 110,
+      "F_low": 0.0,
+      "F_low_n": 186096,
+      "F_high": 0.0,
+      "F_high_n": 61832
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 176826,
+      "M_high": 0.0,
+      "M_high_n": 45460,
+      "F_low": null,
+      "F_low_n": 0,
+      "F_high": null,
+      "F_high_n": 0
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 6936,
+      "M_high": 0.0,
+      "M_high_n": 15544,
+      "F_low": null,
+      "F_low_n": 0,
+      "F_high": null,
+      "F_high_n": 0
+    }
+  },
+  {
+    "age": 47,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 98,
+      "M_high": 0.0,
+      "M_high_n": 101,
+      "F_low": 0.0,
+      "F_low_n": 185631,
+      "F_high": 0.0,
+      "F_high_n": 61692
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 176103,
+      "M_high": 0.0,
+      "M_high_n": 45282,
+      "F_low": null,
+      "F_low_n": 0,
+      "F_high": null,
+      "F_high_n": 0
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 6907,
+      "M_high": 0.0,
+      "M_high_n": 15475,
+      "F_low": null,
+      "F_low_n": 0,
+      "F_high": null,
+      "F_high_n": 0
+    }
+  },
+  {
+    "age": 48,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 94,
+      "M_high": 0.0,
+      "M_high_n": 97,
+      "F_low": 0.0,
+      "F_low_n": 185157,
+      "F_high": 0.0,
+      "F_high_n": 61509
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 175396,
+      "M_high": 0.0,
+      "M_high_n": 45099,
+      "F_low": null,
+      "F_low_n": 0,
+      "F_high": null,
+      "F_high_n": 0
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 6870,
+      "M_high": 0.0,
+      "M_high_n": 15400,
+      "F_low": null,
+      "F_low_n": 0,
+      "F_high": null,
+      "F_high_n": 0
+    }
+  },
+  {
+    "age": 49,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 92,
+      "M_high": 0.0,
+      "M_high_n": 92,
+      "F_low": 0.0,
+      "F_low_n": 184672,
+      "F_high": 0.0,
+      "F_high_n": 61356
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 174494,
+      "M_high": 0.0,
+      "M_high_n": 44895,
+      "F_low": null,
+      "F_low_n": 0,
+      "F_high": null,
+      "F_high_n": 0
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 6829,
+      "M_high": 0.0,
+      "M_high_n": 15349,
+      "F_low": null,
+      "F_low_n": 0,
+      "F_high": null,
+      "F_high_n": 0
+    }
+  },
+  {
+    "age": 50,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 88,
+      "M_high": 0.0,
+      "M_high_n": 83,
+      "F_low": 0.0,
+      "F_low_n": 184202,
+      "F_high": 0.0,
+      "F_high_n": 61156
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 173695,
+      "M_high": 0.0,
+      "M_high_n": 44698,
+      "F_low": null,
+      "F_low_n": 0,
+      "F_high": null,
+      "F_high_n": 0
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 6804,
+      "M_high": 0.0,
+      "M_high_n": 15282,
+      "F_low": null,
+      "F_low_n": 0,
+      "F_high": null,
+      "F_high_n": 0
+    }
+  },
+  {
+    "age": 51,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 81,
+      "M_high": 0.0,
+      "M_high_n": 79,
+      "F_low": 99.95,
+      "F_low_n": 183621,
+      "F_high": 99.68,
+      "F_high_n": 60950
+    },
+    "normal": {
+      "M_low": 99.97,
+      "M_low_n": 172734,
+      "M_high": 99.89,
+      "M_high_n": 44459,
+      "F_low": null,
+      "F_low_n": 0,
+      "F_high": null,
+      "F_high_n": 0
+    },
+    "polyp": {
+      "M_low": 99.08,
+      "M_low_n": 6766,
+      "M_high": 99.5,
+      "M_high_n": 15196,
+      "F_low": null,
+      "F_low_n": 0,
+      "F_high": null,
+      "F_high_n": 0
+    }
+  },
+  {
+    "age": 52,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 80,
+      "M_high": 0.0,
+      "M_high_n": 72,
+      "F_low": 0.0,
+      "F_low_n": 107,
+      "F_high": 0.0,
+      "F_high_n": 238
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 169297,
+      "M_high": 0.0,
+      "M_high_n": 42029,
+      "F_low": 0.0,
+      "F_low_n": 177055,
+      "F_high": 0.0,
+      "F_high_n": 46714
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 9129,
+      "M_high": 0.0,
+      "M_high_n": 17234,
+      "F_low": 0.0,
+      "F_low_n": 5870,
+      "F_high": 0.0,
+      "F_high_n": 13755
+    }
+  },
+  {
+    "age": 53,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 76,
+      "M_high": 0.0,
+      "M_high_n": 71,
+      "F_low": 0.0,
+      "F_low_n": 101,
+      "F_high": 0.0,
+      "F_high_n": 224
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 168331,
+      "M_high": 0.0,
+      "M_high_n": 41802,
+      "F_low": 0.0,
+      "F_low_n": 176469,
+      "F_high": 0.0,
+      "F_high_n": 46538
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 9077,
+      "M_high": 0.0,
+      "M_high_n": 17155,
+      "F_low": 0.0,
+      "F_low_n": 5842,
+      "F_high": 0.0,
+      "F_high_n": 13708
+    }
+  },
+  {
+    "age": 54,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 73,
+      "M_high": 0.0,
+      "M_high_n": 67,
+      "F_low": 0.0,
+      "F_low_n": 94,
+      "F_high": 0.0,
+      "F_high_n": 214
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 167189,
+      "M_high": 0.0,
+      "M_high_n": 41545,
+      "F_low": 0.0,
+      "F_low_n": 175807,
+      "F_high": 0.0,
+      "F_high_n": 46324
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 9021,
+      "M_high": 0.0,
+      "M_high_n": 17036,
+      "F_low": 0.0,
+      "F_low_n": 5819,
+      "F_high": 0.0,
+      "F_high_n": 13657
+    }
+  },
+  {
+    "age": 55,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 73,
+      "M_high": 0.0,
+      "M_high_n": 62,
+      "F_low": 0.0,
+      "F_low_n": 85,
+      "F_high": 0.0,
+      "F_high_n": 209
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 166078,
+      "M_high": 0.0,
+      "M_high_n": 41255,
+      "F_low": 0.0,
+      "F_low_n": 175019,
+      "F_high": 0.0,
+      "F_high_n": 46151
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 8958,
+      "M_high": 0.0,
+      "M_high_n": 16919,
+      "F_low": 0.0,
+      "F_low_n": 5790,
+      "F_high": 0.0,
+      "F_high_n": 13595
+    }
+  },
+  {
+    "age": 56,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 70,
+      "M_high": 0.0,
+      "M_high_n": 60,
+      "F_low": 0.0,
+      "F_low_n": 80,
+      "F_high": 0.0,
+      "F_high_n": 196
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 164765,
+      "M_high": 0.0,
+      "M_high_n": 40926,
+      "F_low": 0.0,
+      "F_low_n": 174201,
+      "F_high": 0.0,
+      "F_high_n": 45938
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 8869,
+      "M_high": 0.0,
+      "M_high_n": 16774,
+      "F_low": 0.0,
+      "F_low_n": 5763,
+      "F_high": 0.0,
+      "F_high_n": 13532
+    }
+  },
+  {
+    "age": 57,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 68,
+      "M_high": 0.0,
+      "M_high_n": 56,
+      "F_low": 0.0,
+      "F_low_n": 76,
+      "F_high": 0.0,
+      "F_high_n": 190
+    },
+    "normal": {
+      "M_low": 3.75,
+      "M_low_n": 163428,
+      "M_high": 26.33,
+      "M_high_n": 40602,
+      "F_low": 0.0,
+      "F_low_n": 173345,
+      "F_high": 0.0,
+      "F_high_n": 45728
+    },
+    "polyp": {
+      "M_low": 98.72,
+      "M_low_n": 8797,
+      "M_high": 98.98,
+      "M_high_n": 16634,
+      "F_low": 0.0,
+      "F_low_n": 5735,
+      "F_high": 0.0,
+      "F_high_n": 13471
+    }
+  },
+  {
+    "age": 58,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 63,
+      "M_high": 0.0,
+      "M_high_n": 53,
+      "F_low": 0.0,
+      "F_low_n": 75,
+      "F_high": 0.0,
+      "F_high_n": 182
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 169696,
+      "M_high": 0.0,
+      "M_high_n": 47586,
+      "F_low": 0.0,
+      "F_low_n": 172518,
+      "F_high": 0.0,
+      "F_high_n": 45512
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 1067,
+      "M_high": 0.0,
+      "M_high_n": 9271,
+      "F_low": 0.0,
+      "F_low_n": 5711,
+      "F_high": 0.0,
+      "F_high_n": 13397
+    }
+  },
+  {
+    "age": 59,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 61,
+      "M_high": 0.0,
+      "M_high_n": 51,
+      "F_low": 0.0,
+      "F_low_n": 71,
+      "F_high": 0.0,
+      "F_high_n": 177
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 167969,
+      "M_high": 0.0,
+      "M_high_n": 47215,
+      "F_low": 0.0,
+      "F_low_n": 171542,
+      "F_high": 0.0,
+      "F_high_n": 45231
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 1056,
+      "M_high": 0.0,
+      "M_high_n": 9198,
+      "F_low": 0.0,
+      "F_low_n": 5693,
+      "F_high": 0.0,
+      "F_high_n": 13329
+    }
+  },
+  {
+    "age": 60,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 59,
+      "M_high": 0.0,
+      "M_high_n": 48,
+      "F_low": 0.0,
+      "F_low_n": 68,
+      "F_high": 0.0,
+      "F_high_n": 172
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 166320,
+      "M_high": 0.0,
+      "M_high_n": 46678,
+      "F_low": 0.0,
+      "F_low_n": 170502,
+      "F_high": 0.0,
+      "F_high_n": 44958
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 1039,
+      "M_high": 0.0,
+      "M_high_n": 9085,
+      "F_low": 98.83,
+      "F_low_n": 5661,
+      "F_high": 98.74,
+      "F_high_n": 13237
+    }
+  },
+  {
+    "age": 61,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 58,
+      "M_high": 0.0,
+      "M_high_n": 45,
+      "F_low": 0.0,
+      "F_low_n": 67,
+      "F_high": 0.0,
+      "F_high_n": 168
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 164588,
+      "M_high": 0.0,
+      "M_high_n": 46110,
+      "F_low": 0.0,
+      "F_low_n": 174576,
+      "F_high": 0.0,
+      "F_high_n": 54540
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 1031,
+      "M_high": 0.0,
+      "M_high_n": 8984,
+      "F_low": 0.0,
+      "F_low_n": 310,
+      "F_high": 0.0,
+      "F_high_n": 3221
+    }
+  },
+  {
+    "age": 62,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 56,
+      "M_high": 0.0,
+      "M_high_n": 43,
+      "F_low": 0.0,
+      "F_low_n": 65,
+      "F_high": 0.0,
+      "F_high_n": 164
+    },
+    "normal": {
+      "M_low": 0.16,
+      "M_low_n": 162485,
+      "M_high": 5.39,
+      "M_high_n": 45496,
+      "F_low": 96.84,
+      "F_low_n": 173221,
+      "F_high": 81.45,
+      "F_high_n": 54110
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 1024,
+      "M_high": 0.0,
+      "M_high_n": 8871,
+      "F_low": 0.0,
+      "F_low_n": 309,
+      "F_high": 0.0,
+      "F_high_n": 3196
+    }
+  },
+  {
+    "age": 63,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 55,
+      "M_high": 0.0,
+      "M_high_n": 42,
+      "F_low": 0.0,
+      "F_low_n": 62,
+      "F_high": 0.0,
+      "F_high_n": 157
+    },
+    "normal": {
+      "M_low": 91.72,
+      "M_low_n": 160230,
+      "M_high": 63.33,
+      "M_high_n": 43881,
+      "F_low": 3.22,
+      "F_low_n": 162096,
+      "F_high": 24.4,
+      "F_high_n": 39992
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 1026,
+      "M_high": 0.0,
+      "M_high_n": 9742,
+      "F_low": 0.0,
+      "F_low_n": 9877,
+      "F_high": 0.0,
+      "F_high_n": 16839
+    }
+  },
+  {
+    "age": 64,
+    "never": {
+      "M_low": 100.0,
+      "M_low_n": 54,
+      "M_high": 100.0,
+      "M_high_n": 41,
+      "F_low": 100.0,
+      "F_low_n": 60,
+      "F_high": 100.0,
+      "F_high_n": 156
+    },
+    "normal": {
+      "M_low": 9.14,
+      "M_low_n": 140267,
+      "M_high": 49.94,
+      "M_high_n": 28900,
+      "F_low": 0.13,
+      "F_low_n": 160459,
+      "F_high": 0.49,
+      "F_high_n": 37669
+    },
+    "polyp": {
+      "M_low": 6.34,
+      "M_low_n": 18610,
+      "M_high": 36.97,
+      "M_high_n": 23879,
+      "F_low": 2.33,
+      "F_low_n": 9961,
+      "F_high": 2.04,
+      "F_high_n": 18616
+    }
+  },
+  {
+    "age": 65,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 52,
+      "M_high": 0.0,
+      "M_high_n": 40,
+      "F_low": 0.0,
+      "F_low_n": 59,
+      "F_high": 0.0,
+      "F_high_n": 154
+    },
+    "normal": {
+      "M_low": 0.17,
+      "M_low_n": 137817,
+      "M_high": 5.33,
+      "M_high_n": 26194,
+      "F_low": 0.0,
+      "F_low_n": 158877,
+      "F_high": 0.0,
+      "F_high_n": 37368
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 18739,
+      "M_high": 0.0,
+      "M_high_n": 25694,
+      "F_low": 0.0,
+      "F_low_n": 9839,
+      "F_high": 0.0,
+      "F_high_n": 18471
+    }
+  },
+  {
+    "age": 66,
+    "never": {
+      "M_low": 100.0,
+      "M_low_n": 52,
+      "M_high": 100.0,
+      "M_high_n": 39,
+      "F_low": 0.0,
+      "F_low_n": 58,
+      "F_high": 0.0,
+      "F_high_n": 148
+    },
+    "normal": {
+      "M_low": 0.27,
+      "M_low_n": 135332,
+      "M_high": 0.9,
+      "M_high_n": 25199,
+      "F_low": 0.0,
+      "F_low_n": 157141,
+      "F_high": 0.0,
+      "F_high_n": 36948
+    },
+    "polyp": {
+      "M_low": 1.66,
+      "M_low_n": 18429,
+      "M_high": 1.89,
+      "M_high_n": 25815,
+      "F_low": 0.0,
+      "F_low_n": 9736,
+      "F_high": 0.0,
+      "F_high_n": 18273
+    }
+  },
+  {
+    "age": 67,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 50,
+      "M_high": 0.0,
+      "M_high_n": 39,
+      "F_low": 0.0,
+      "F_low_n": 57,
+      "F_high": 0.0,
+      "F_high_n": 145
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 132777,
+      "M_high": 0.0,
+      "M_high_n": 24757,
+      "F_low": 0.0,
+      "F_low_n": 155258,
+      "F_high": 0.0,
+      "F_high_n": 36465
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 18099,
+      "M_high": 0.0,
+      "M_high_n": 25342,
+      "F_low": 0.0,
+      "F_low_n": 9621,
+      "F_high": 0.0,
+      "F_high_n": 18015
+    }
+  },
+  {
+    "age": 68,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 49,
+      "M_high": 0.0,
+      "M_high_n": 39,
+      "F_low": 0.0,
+      "F_low_n": 56,
+      "F_high": 0.0,
+      "F_high_n": 142
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 130225,
+      "M_high": 0.0,
+      "M_high_n": 24246,
+      "F_low": 3.12,
+      "F_low_n": 153247,
+      "F_high": 20.51,
+      "F_high_n": 35949
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 17749,
+      "M_high": 0.0,
+      "M_high_n": 24766,
+      "F_low": 96.15,
+      "F_low_n": 9501,
+      "F_high": 87.72,
+      "F_high_n": 17775
+    }
+  },
+  {
+    "age": 69,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 46,
+      "M_high": 0.0,
+      "M_high_n": 35,
+      "F_low": 0.0,
+      "F_low_n": 50,
+      "F_high": 0.0,
+      "F_high_n": 139
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 127381,
+      "M_high": 0.0,
+      "M_high_n": 23756,
+      "F_low": 0.0,
+      "F_low_n": 159288,
+      "F_high": 0.0,
+      "F_high_n": 44772
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 17338,
+      "M_high": 0.0,
+      "M_high_n": 24232,
+      "F_low": 14.97,
+      "F_low_n": 1049,
+      "F_high": 21.93,
+      "F_high_n": 8254
+    }
+  },
+  {
+    "age": 70,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 45,
+      "M_high": 0.0,
+      "M_high_n": 34,
+      "F_low": 0.0,
+      "F_low_n": 48,
+      "F_high": 0.0,
+      "F_high_n": 134
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 124494,
+      "M_high": 0.0,
+      "M_high_n": 23144,
+      "F_low": 0.0,
+      "F_low_n": 156922,
+      "F_high": 0.0,
+      "F_high_n": 45358
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 16960,
+      "M_high": 0.0,
+      "M_high_n": 23669,
+      "F_low": 0.0,
+      "F_low_n": 883,
+      "F_high": 0.0,
+      "F_high_n": 6820
+    }
+  },
+  {
+    "age": 71,
+    "never": {
+      "M_low": 100.0,
+      "M_low_n": 44,
+      "M_high": 100.0,
+      "M_high_n": 33,
+      "F_low": 0.0,
+      "F_low_n": 46,
+      "F_high": 0.0,
+      "F_high_n": 130
+    },
+    "normal": {
+      "M_low": 100.0,
+      "M_low_n": 121270,
+      "M_high": 100.0,
+      "M_high_n": 22585,
+      "F_low": 0.0,
+      "F_low_n": 154351,
+      "F_high": 0.0,
+      "F_high_n": 44547
+    },
+    "polyp": {
+      "M_low": 100.0,
+      "M_low_n": 16496,
+      "M_high": 100.0,
+      "M_high_n": 23094,
+      "F_low": 0.0,
+      "F_low_n": 866,
+      "F_high": 0.0,
+      "F_high_n": 6718
+    }
+  },
+  {
+    "age": 72,
+    "never": {
+      "M_low": 100.0,
+      "M_low_n": 39,
+      "M_high": 100.0,
+      "M_high_n": 32,
+      "F_low": 100.0,
+      "F_low_n": 43,
+      "F_high": 100.0,
+      "F_high_n": 126
+    },
+    "normal": {
+      "M_low": 1.08,
+      "M_low_n": 115477,
+      "M_high": 23.29,
+      "M_high_n": 18937,
+      "F_low": 91.75,
+      "F_low_n": 151498,
+      "F_high": 61.24,
+      "F_high_n": 43639
+    },
+    "polyp": {
+      "M_low": 3.21,
+      "M_low_n": 18523,
+      "M_high": 2.73,
+      "M_high_n": 25575,
+      "F_low": 23.21,
+      "F_low_n": 840,
+      "F_high": 5.4,
+      "F_high_n": 6606
+    }
+  },
+  {
+    "age": 73,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 37,
+      "M_high": 0.0,
+      "M_high_n": 31,
+      "F_low": 0.0,
+      "F_low_n": 42,
+      "F_high": 0.0,
+      "F_high_n": 125
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 111936,
+      "M_high": 0.0,
+      "M_high_n": 16657,
+      "F_low": 8.92,
+      "F_low_n": 137525,
+      "F_high": 51.66,
+      "F_high_n": 32070
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 17996,
+      "M_high": 0.0,
+      "M_high_n": 26451,
+      "F_low": 5.29,
+      "F_low_n": 11880,
+      "F_high": 35.81,
+      "F_high_n": 17093
+    }
+  },
+  {
+    "age": 74,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 34,
+      "M_high": 0.0,
+      "M_high_n": 29,
+      "F_low": 0.0,
+      "F_low_n": 41,
+      "F_high": 0.0,
+      "F_high_n": 119
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 108308,
+      "M_high": 0.0,
+      "M_high_n": 16119,
+      "F_low": 0.0,
+      "F_low_n": 134263,
+      "F_high": 0.0,
+      "F_high_n": 30853
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 17383,
+      "M_high": 0.0,
+      "M_high_n": 25574,
+      "F_low": 0.0,
+      "F_low_n": 11734,
+      "F_high": 0.0,
+      "F_high_n": 17262
+    }
+  },
+  {
+    "age": 75,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 34,
+      "M_high": 0.0,
+      "M_high_n": 27,
+      "F_low": 0.0,
+      "F_low_n": 38,
+      "F_high": 0.0,
+      "F_high_n": 116
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 104382,
+      "M_high": 0.0,
+      "M_high_n": 15552,
+      "F_low": 0.0,
+      "F_low_n": 130978,
+      "F_high": 0.0,
+      "F_high_n": 30066
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 16731,
+      "M_high": 0.0,
+      "M_high_n": 24695,
+      "F_low": 0.0,
+      "F_low_n": 11416,
+      "F_high": 0.0,
+      "F_high_n": 16802
+    }
+  },
+  {
+    "age": 76,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 31,
+      "M_high": 0.0,
+      "M_high_n": 26,
+      "F_low": 0.0,
+      "F_low_n": 36,
+      "F_high": 0.0,
+      "F_high_n": 111
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 100362,
+      "M_high": 0.0,
+      "M_high_n": 14948,
+      "F_low": 0.0,
+      "F_low_n": 127427,
+      "F_high": 0.0,
+      "F_high_n": 29321
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 16092,
+      "M_high": 0.0,
+      "M_high_n": 23625,
+      "F_low": 0.0,
+      "F_low_n": 11072,
+      "F_high": 0.0,
+      "F_high_n": 16375
+    }
+  },
+  {
+    "age": 77,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 31,
+      "M_high": 0.0,
+      "M_high_n": 24,
+      "F_low": 0.0,
+      "F_low_n": 33,
+      "F_high": 0.0,
+      "F_high_n": 104
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 96172,
+      "M_high": 0.0,
+      "M_high_n": 14248,
+      "F_low": 1.65,
+      "F_low_n": 123817,
+      "F_high": 26.6,
+      "F_high_n": 28470
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 15351,
+      "M_high": 0.0,
+      "M_high_n": 22538,
+      "F_low": 0.46,
+      "F_low_n": 10732,
+      "F_high": 14.3,
+      "F_high_n": 15905
+    }
+  },
+  {
+    "age": 78,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 30,
+      "M_high": 0.0,
+      "M_high_n": 23,
+      "F_low": 0.0,
+      "F_low_n": 31,
+      "F_high": 0.0,
+      "F_high_n": 98
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 91797,
+      "M_high": 0.0,
+      "M_high_n": 13572,
+      "F_low": 0.0,
+      "F_low_n": 119897,
+      "F_high": 0.0,
+      "F_high_n": 27129
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 14611,
+      "M_high": 0.0,
+      "M_high_n": 21453,
+      "F_low": 0.0,
+      "F_low_n": 10456,
+      "F_high": 0.0,
+      "F_high_n": 15894
+    }
+  },
+  {
+    "age": 79,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 29,
+      "M_high": 0.0,
+      "M_high_n": 22,
+      "F_low": 0.0,
+      "F_low_n": 31,
+      "F_high": 0.0,
+      "F_high_n": 90
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 87311,
+      "M_high": 0.0,
+      "M_high_n": 12863,
+      "F_low": 0.0,
+      "F_low_n": 115505,
+      "F_high": 0.0,
+      "F_high_n": 26198
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 13877,
+      "M_high": 0.0,
+      "M_high_n": 20261,
+      "F_low": 0.0,
+      "F_low_n": 10071,
+      "F_high": 0.0,
+      "F_high_n": 15373
+    }
+  },
+  {
+    "age": 80,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 28,
+      "M_high": 0.0,
+      "M_high_n": 19,
+      "F_low": 100.0,
+      "F_low_n": 30,
+      "F_high": 100.0,
+      "F_high_n": 84
+    },
+    "normal": {
+      "M_low": 3.32,
+      "M_low_n": 82368,
+      "M_high": 36.75,
+      "M_high_n": 12114,
+      "F_low": 7.56,
+      "F_low_n": 111041,
+      "F_high": 25.91,
+      "F_high_n": 25159
+    },
+    "polyp": {
+      "M_low": 17.42,
+      "M_low_n": 13073,
+      "M_high": 73.3,
+      "M_high_n": 19027,
+      "F_low": 98.91,
+      "F_low_n": 9667,
+      "F_high": 83.5,
+      "F_high_n": 14729
+    }
+  },
+  {
+    "age": 81,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 26,
+      "M_high": 0.0,
+      "M_high_n": 18,
+      "F_low": 0.0,
+      "F_low_n": 28,
+      "F_high": 0.0,
+      "F_high_n": 76
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 78819,
+      "M_high": 0.0,
+      "M_high_n": 13107,
+      "F_low": 0.0,
+      "F_low_n": 113610,
+      "F_high": 0.0,
+      "F_high_n": 28557
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 10810,
+      "M_high": 0.0,
+      "M_high_n": 16040,
+      "F_low": 0.0,
+      "F_low_n": 1753,
+      "F_high": 0.0,
+      "F_high_n": 9419
+    }
+  },
+  {
+    "age": 82,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 26,
+      "M_high": 0.0,
+      "M_high_n": 17,
+      "F_low": 0.0,
+      "F_low_n": 24,
+      "F_high": 0.0,
+      "F_high_n": 71
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 73412,
+      "M_high": 0.0,
+      "M_high_n": 12142,
+      "F_low": 0.0,
+      "F_low_n": 108200,
+      "F_high": 0.0,
+      "F_high_n": 27252
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 10028,
+      "M_high": 0.0,
+      "M_high_n": 14764,
+      "F_low": 0.0,
+      "F_low_n": 1672,
+      "F_high": 0.0,
+      "F_high_n": 9008
+    }
+  },
+  {
+    "age": 83,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 25,
+      "M_high": 0.0,
+      "M_high_n": 16,
+      "F_low": 0.0,
+      "F_low_n": 23,
+      "F_high": 0.0,
+      "F_high_n": 69
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 68340,
+      "M_high": 0.0,
+      "M_high_n": 11258,
+      "F_low": 0.0,
+      "F_low_n": 102642,
+      "F_high": 0.0,
+      "F_high_n": 25946
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 9323,
+      "M_high": 0.0,
+      "M_high_n": 13665,
+      "F_low": 0.0,
+      "F_low_n": 1581,
+      "F_high": 0.0,
+      "F_high_n": 8534
+    }
+  },
+  {
+    "age": 84,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 24,
+      "M_high": 0.0,
+      "M_high_n": 16,
+      "F_low": 0.0,
+      "F_low_n": 20,
+      "F_high": 0.0,
+      "F_high_n": 63
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 62680,
+      "M_high": 0.0,
+      "M_high_n": 10383,
+      "F_low": 0.0,
+      "F_low_n": 96682,
+      "F_high": 0.0,
+      "F_high_n": 24519
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 8514,
+      "M_high": 0.0,
+      "M_high_n": 12661,
+      "F_low": 0.0,
+      "F_low_n": 1494,
+      "F_high": 0.0,
+      "F_high_n": 8075
+    }
+  },
+  {
+    "age": 85,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 19,
+      "M_high": 0.0,
+      "M_high_n": 13,
+      "F_low": 0.0,
+      "F_low_n": 17,
+      "F_high": 0.0,
+      "F_high_n": 56
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 57136,
+      "M_high": 0.0,
+      "M_high_n": 9439,
+      "F_low": 0.0,
+      "F_low_n": 90494,
+      "F_high": 0.0,
+      "F_high_n": 22792
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 7791,
+      "M_high": 0.0,
+      "M_high_n": 11551,
+      "F_low": 0.0,
+      "F_low_n": 1392,
+      "F_high": 0.0,
+      "F_high_n": 7498
+    }
+  },
+  {
+    "age": 86,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 16,
+      "M_high": 0.0,
+      "M_high_n": 11,
+      "F_low": 0.0,
+      "F_low_n": 17,
+      "F_high": 0.0,
+      "F_high_n": 48
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 51958,
+      "M_high": 0.0,
+      "M_high_n": 8499,
+      "F_low": 0.0,
+      "F_low_n": 84171,
+      "F_high": 0.0,
+      "F_high_n": 21208
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 7068,
+      "M_high": 0.0,
+      "M_high_n": 10469,
+      "F_low": 0.0,
+      "F_low_n": 1286,
+      "F_high": 0.0,
+      "F_high_n": 6971
+    }
+  },
+  {
+    "age": 87,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 16,
+      "M_high": 0.0,
+      "M_high_n": 10,
+      "F_low": 0.0,
+      "F_low_n": 15,
+      "F_high": 0.0,
+      "F_high_n": 45
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 46660,
+      "M_high": 0.0,
+      "M_high_n": 7572,
+      "F_low": 0.0,
+      "F_low_n": 77357,
+      "F_high": 0.0,
+      "F_high_n": 19493
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 6296,
+      "M_high": 0.0,
+      "M_high_n": 9200,
+      "F_low": 0.0,
+      "F_low_n": 1155,
+      "F_high": 0.0,
+      "F_high_n": 6458
+    }
+  },
+  {
+    "age": 88,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 15,
+      "M_high": 0.0,
+      "M_high_n": 9,
+      "F_low": 0.0,
+      "F_low_n": 14,
+      "F_high": 0.0,
+      "F_high_n": 40
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 41450,
+      "M_high": 0.0,
+      "M_high_n": 6772,
+      "F_low": 0.0,
+      "F_low_n": 70788,
+      "F_high": 0.0,
+      "F_high_n": 17813
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 5551,
+      "M_high": 0.0,
+      "M_high_n": 8164,
+      "F_low": 0.0,
+      "F_low_n": 1050,
+      "F_high": 0.0,
+      "F_high_n": 5922
+    }
+  },
+  {
+    "age": 89,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 13,
+      "M_high": 0.0,
+      "M_high_n": 7,
+      "F_low": 0.0,
+      "F_low_n": 13,
+      "F_high": 0.0,
+      "F_high_n": 36
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 36493,
+      "M_high": 0.0,
+      "M_high_n": 5942,
+      "F_low": 0.0,
+      "F_low_n": 63961,
+      "F_high": 0.0,
+      "F_high_n": 16035
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 4877,
+      "M_high": 0.0,
+      "M_high_n": 7173,
+      "F_low": 0.0,
+      "F_low_n": 954,
+      "F_high": 0.0,
+      "F_high_n": 5342
+    }
+  },
+  {
+    "age": 90,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 11,
+      "M_high": 0.0,
+      "M_high_n": 5,
+      "F_low": 0.0,
+      "F_low_n": 10,
+      "F_high": 0.0,
+      "F_high_n": 29
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 31815,
+      "M_high": 0.0,
+      "M_high_n": 5153,
+      "F_low": 0.0,
+      "F_low_n": 57522,
+      "F_high": 0.0,
+      "F_high_n": 14411
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 4247,
+      "M_high": 0.0,
+      "M_high_n": 6227,
+      "F_low": 0.0,
+      "F_low_n": 855,
+      "F_high": 0.0,
+      "F_high_n": 4834
+    }
+  },
+  {
+    "age": 91,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 8,
+      "M_high": 0.0,
+      "M_high_n": 4,
+      "F_low": 0.0,
+      "F_low_n": 10,
+      "F_high": 0.0,
+      "F_high_n": 26
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 27271,
+      "M_high": 0.0,
+      "M_high_n": 4425,
+      "F_low": 0.0,
+      "F_low_n": 50951,
+      "F_high": 0.0,
+      "F_high_n": 12733
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 3614,
+      "M_high": 0.0,
+      "M_high_n": 5344,
+      "F_low": 0.0,
+      "F_low_n": 742,
+      "F_high": 0.0,
+      "F_high_n": 4239
+    }
+  },
+  {
+    "age": 92,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 8,
+      "M_high": 0.0,
+      "M_high_n": 3,
+      "F_low": 0.0,
+      "F_low_n": 9,
+      "F_high": 0.0,
+      "F_high_n": 21
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 23040,
+      "M_high": 0.0,
+      "M_high_n": 3852,
+      "F_low": 0.0,
+      "F_low_n": 44874,
+      "F_high": 0.0,
+      "F_high_n": 11175
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 3041,
+      "M_high": 0.0,
+      "M_high_n": 4617,
+      "F_low": 0.0,
+      "F_low_n": 652,
+      "F_high": 0.0,
+      "F_high_n": 3697
+    }
+  },
+  {
+    "age": 93,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 6,
+      "M_high": 0.0,
+      "M_high_n": 3,
+      "F_low": 0.0,
+      "F_low_n": 8,
+      "F_high": 0.0,
+      "F_high_n": 16
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 19264,
+      "M_high": 0.0,
+      "M_high_n": 3244,
+      "F_low": 0.0,
+      "F_low_n": 38821,
+      "F_high": 0.0,
+      "F_high_n": 9701
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 2565,
+      "M_high": 0.0,
+      "M_high_n": 3836,
+      "F_low": 0.0,
+      "F_low_n": 559,
+      "F_high": 0.0,
+      "F_high_n": 3185
+    }
+  },
+  {
+    "age": 94,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 4,
+      "M_high": 0.0,
+      "M_high_n": 3,
+      "F_low": 0.0,
+      "F_low_n": 7,
+      "F_high": 0.0,
+      "F_high_n": 14
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 15750,
+      "M_high": 0.0,
+      "M_high_n": 2673,
+      "F_low": 0.0,
+      "F_low_n": 32906,
+      "F_high": 0.0,
+      "F_high_n": 8223
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 2086,
+      "M_high": 0.0,
+      "M_high_n": 3174,
+      "F_low": 0.0,
+      "F_low_n": 476,
+      "F_high": 0.0,
+      "F_high_n": 2736
+    }
+  },
+  {
+    "age": 95,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 3,
+      "M_high": 0.0,
+      "M_high_n": 3,
+      "F_low": 0.0,
+      "F_low_n": 5,
+      "F_high": 0.0,
+      "F_high_n": 9
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 12720,
+      "M_high": 0.0,
+      "M_high_n": 2203,
+      "F_low": 0.0,
+      "F_low_n": 27684,
+      "F_high": 0.0,
+      "F_high_n": 6935
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 1663,
+      "M_high": 0.0,
+      "M_high_n": 2651,
+      "F_low": 0.0,
+      "F_low_n": 403,
+      "F_high": 0.0,
+      "F_high_n": 2339
+    }
+  },
+  {
+    "age": 96,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 3,
+      "M_high": 0.0,
+      "M_high_n": 2,
+      "F_low": 0.0,
+      "F_low_n": 4,
+      "F_high": 0.0,
+      "F_high_n": 7
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 10082,
+      "M_high": 0.0,
+      "M_high_n": 1748,
+      "F_low": 0.0,
+      "F_low_n": 23031,
+      "F_high": 0.0,
+      "F_high_n": 5751
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 1325,
+      "M_high": 0.0,
+      "M_high_n": 2080,
+      "F_low": 0.0,
+      "F_low_n": 341,
+      "F_high": 0.0,
+      "F_high_n": 1871
+    }
+  },
+  {
+    "age": 97,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 3,
+      "M_high": 0.0,
+      "M_high_n": 2,
+      "F_low": 0.0,
+      "F_low_n": 4,
+      "F_high": 0.0,
+      "F_high_n": 4
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 7851,
+      "M_high": 0.0,
+      "M_high_n": 1365,
+      "F_low": 0.0,
+      "F_low_n": 18854,
+      "F_high": 0.0,
+      "F_high_n": 4660
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 1010,
+      "M_high": 0.0,
+      "M_high_n": 1620,
+      "F_low": 0.0,
+      "F_low_n": 271,
+      "F_high": 0.0,
+      "F_high_n": 1522
+    }
+  },
+  {
+    "age": 98,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 2,
+      "M_high": null,
+      "M_high_n": 0,
+      "F_low": 0.0,
+      "F_low_n": 3,
+      "F_high": 0.0,
+      "F_high_n": 3
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 6018,
+      "M_high": 0.0,
+      "M_high_n": 1058,
+      "F_low": 0.0,
+      "F_low_n": 15029,
+      "F_high": 0.0,
+      "F_high_n": 3652
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 799,
+      "M_high": 0.0,
+      "M_high_n": 1238,
+      "F_low": 0.0,
+      "F_low_n": 213,
+      "F_high": 0.0,
+      "F_high_n": 1197
+    }
+  },
+  {
+    "age": 99,
+    "never": {
+      "M_low": 0.0,
+      "M_low_n": 2,
+      "M_high": null,
+      "M_high_n": 0,
+      "F_low": 0.0,
+      "F_low_n": 3,
+      "F_high": 0.0,
+      "F_high_n": 3
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 4503,
+      "M_high": 0.0,
+      "M_high_n": 791,
+      "F_low": 0.0,
+      "F_low_n": 11714,
+      "F_high": 0.0,
+      "F_high_n": 2949
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 609,
+      "M_high": 0.0,
+      "M_high_n": 950,
+      "F_low": 0.0,
+      "F_low_n": 169,
+      "F_high": 0.0,
+      "F_high_n": 972
+    }
+  },
+  {
+    "age": 100,
+    "never": {
+      "M_low": null,
+      "M_low_n": 0,
+      "M_high": null,
+      "M_high_n": 0,
+      "F_low": 0.0,
+      "F_low_n": 2,
+      "F_high": 0.0,
+      "F_high_n": 2
+    },
+    "normal": {
+      "M_low": 0.0,
+      "M_low_n": 3368,
+      "M_high": 0.0,
+      "M_high_n": 602,
+      "F_low": 0.0,
+      "F_low_n": 8861,
+      "F_high": 0.0,
+      "F_high_n": 2239
+    },
+    "polyp": {
+      "M_low": 0.0,
+      "M_low_n": 478,
+      "M_high": 0.0,
+      "M_high_n": 730,
+      "F_low": 0.0,
+      "F_low_n": 131,
+      "F_high": 0.0,
+      "F_high_n": 730
+    }
+  }
+]

@@ -1,0 +1,407 @@
+{
+  "n": 1000000,
+  "seed": 20260812,
+  "baseline_death_rate_pct": 1.8925999999999998,
+  "sweep": [
+    {
+      "cutoff_pct": 1,
+      "n_high": 10050,
+      "frac_high": 0.01005,
+      "death_rate_high_pct": 19.223880597014926,
+      "death_rate_low_pct": 1.716652356179605,
+      "rr": 11.198470399561566
+    },
+    {
+      "cutoff_pct": 2,
+      "n_high": 21890,
+      "frac_high": 0.02189,
+      "death_rate_high_pct": 17.52855185015989,
+      "death_rate_low_pct": 1.5426690249562933,
+      "rr": 11.362483829385573
+    },
+    {
+      "cutoff_pct": 3,
+      "n_high": 31875,
+      "frac_high": 0.031875,
+      "death_rate_high_pct": 16.12235294117647,
+      "death_rate_low_pct": 1.424092963202066,
+      "rr": 11.321137985911706
+    },
+    {
+      "cutoff_pct": 4,
+      "n_high": 40180,
+      "frac_high": 0.04018,
+      "death_rate_high_pct": 14.778496764559481,
+      "death_rate_low_pct": 1.353170386114063,
+      "rr": 10.921386483338068
+    },
+    {
+      "cutoff_pct": 5,
+      "n_high": 50135,
+      "frac_high": 0.050135,
+      "death_rate_high_pct": 13.006881420165554,
+      "death_rate_low_pct": 1.3059750596137347,
+      "rr": 9.959517468896053
+    },
+    {
+      "cutoff_pct": 6,
+      "n_high": 60221,
+      "frac_high": 0.060221,
+      "death_rate_high_pct": 11.285099882100928,
+      "death_rate_low_pct": 1.290728990539265,
+      "rr": 8.74319858376004
+    },
+    {
+      "cutoff_pct": 7,
+      "n_high": 71850,
+      "frac_high": 0.07185,
+      "death_rate_high_pct": 9.912317327766178,
+      "death_rate_low_pct": 1.2717771911867692,
+      "rr": 7.794067543007607
+    },
+    {
+      "cutoff_pct": 8,
+      "n_high": 81755,
+      "frac_high": 0.081755,
+      "death_rate_high_pct": 9.062442664057244,
+      "death_rate_low_pct": 1.2542404260300901,
+      "rr": 7.22544296609989
+    },
+    {
+      "cutoff_pct": 9,
+      "n_high": 91815,
+      "frac_high": 0.091815,
+      "death_rate_high_pct": 8.363557152970648,
+      "death_rate_low_pct": 1.2384040696554115,
+      "rr": 6.753496179399527
+    },
+    {
+      "cutoff_pct": 10,
+      "n_high": 101606,
+      "frac_high": 0.101606,
+      "death_rate_high_pct": 7.808593980670434,
+      "death_rate_low_pct": 1.223516630787828,
+      "rr": 6.38209059376859
+    },
+    {
+      "cutoff_pct": 11,
+      "n_high": 111406,
+      "frac_high": 0.111406,
+      "death_rate_high_pct": 7.35059153007917,
+      "death_rate_low_pct": 1.208313357956502,
+      "rr": 6.083348728768902
+    },
+    {
+      "cutoff_pct": 12,
+      "n_high": 120911,
+      "frac_high": 0.120911,
+      "death_rate_high_pct": 6.9894385126249885,
+      "death_rate_low_pct": 1.1915744594688364,
+      "rr": 5.8657169571598935
+    },
+    {
+      "cutoff_pct": 13,
+      "n_high": 131416,
+      "frac_high": 0.131416,
+      "death_rate_high_pct": 6.631612589030256,
+      "death_rate_low_pct": 1.1755915374909047,
+      "rr": 5.641085681157826
+    },
+    {
+      "cutoff_pct": 14,
+      "n_high": 141306,
+      "frac_high": 0.141306,
+      "death_rate_high_pct": 6.359956406663553,
+      "death_rate_low_pct": 1.1574553915597408,
+      "rr": 5.49477453130451
+    },
+    {
+      "cutoff_pct": 15,
+      "n_high": 151141,
+      "frac_high": 0.151141,
+      "death_rate_high_pct": 6.0929860196769905,
+      "death_rate_low_pct": 1.1447130795573823,
+      "rr": 5.32271896642687
+    },
+    {
+      "cutoff_pct": 16,
+      "n_high": 161066,
+      "frac_high": 0.161066,
+      "death_rate_high_pct": 5.872747817664808,
+      "death_rate_low_pct": 1.1284558737636095,
+      "rr": 5.2042334611437715
+    },
+    {
+      "cutoff_pct": 17,
+      "n_high": 171141,
+      "frac_high": 0.171141,
+      "death_rate_high_pct": 5.670178390917431,
+      "death_rate_low_pct": 1.1126138462633572,
+      "rr": 5.096268044803113
+    },
+    {
+      "cutoff_pct": 18,
+      "n_high": 181386,
+      "frac_high": 0.181386,
+      "death_rate_high_pct": 5.4838851951087735,
+      "death_rate_low_pct": 1.0968539507020403,
+      "rr": 4.999649398717868
+    },
+    {
+      "cutoff_pct": 19,
+      "n_high": 191236,
+      "frac_high": 0.191236,
+      "death_rate_high_pct": 5.323788408040327,
+      "death_rate_low_pct": 1.081279582177248,
+      "rr": 4.9236002378963155
+    },
+    {
+      "cutoff_pct": 20,
+      "n_high": 201051,
+      "frac_high": 0.201051,
+      "death_rate_high_pct": 5.17679593734923,
+      "death_rate_low_pct": 1.0661506554235627,
+      "rr": 4.855595136592193
+    },
+    {
+      "cutoff_pct": 21,
+      "n_high": 211316,
+      "frac_high": 0.211316,
+      "death_rate_high_pct": 5.044104563781256,
+      "death_rate_low_pct": 1.0482018146684857,
+      "rr": 4.812150192066356
+    },
+    {
+      "cutoff_pct": 22,
+      "n_high": 221396,
+      "frac_high": 0.221396,
+      "death_rate_high_pct": 4.9237565267665175,
+      "death_rate_low_pct": 1.030690826145255,
+      "rr": 4.777142089428683
+    },
+    {
+      "cutoff_pct": 23,
+      "n_high": 231801,
+      "frac_high": 0.231801,
+      "death_rate_high_pct": 4.8075720122001195,
+      "death_rate_low_pct": 1.0130187620655584,
+      "rr": 4.745787730917656
+    },
+    {
+      "cutoff_pct": 24,
+      "n_high": 241587,
+      "frac_high": 0.241587,
+      "death_rate_high_pct": 4.702653702392927,
+      "death_rate_low_pct": 0.9974776276250539,
+      "rr": 4.714545541828059
+    },
+    {
+      "cutoff_pct": 25,
+      "n_high": 251441,
+      "frac_high": 0.251441,
+      "death_rate_high_pct": 4.609033530728879,
+      "death_rate_low_pct": 0.9801498612667806,
+      "rr": 4.702376353726153
+    },
+    {
+      "cutoff_pct": 26,
+      "n_high": 261566,
+      "frac_high": 0.261566,
+      "death_rate_high_pct": 4.5284937644800936,
+      "death_rate_low_pct": 0.958921176435538,
+      "rr": 4.722488016494976
+    },
+    {
+      "cutoff_pct": 27,
+      "n_high": 271641,
+      "frac_high": 0.271641,
+      "death_rate_high_pct": 4.4499909807429665,
+      "death_rate_low_pct": 0.9388227508687336,
+      "rr": 4.739969261104075
+    },
+    {
+      "cutoff_pct": 28,
+      "n_high": 281837,
+      "frac_high": 0.281837,
+      "death_rate_high_pct": 4.368482491652976,
+      "death_rate_low_pct": 0.9209608403663236,
+      "rr": 4.74339657038551
+    },
+    {
+      "cutoff_pct": 29,
+      "n_high": 290031,
+      "frac_high": 0.290031,
+      "death_rate_high_pct": 4.298506021770087,
+      "death_rate_low_pct": 0.9097580316887075,
+      "rr": 4.72488933545454
+    },
+    {
+      "cutoff_pct": 30,
+      "n_high": 301882,
+      "frac_high": 0.301882,
+      "death_rate_high_pct": 4.209260572011581,
+      "death_rate_low_pct": 0.8908236143459989,
+      "rr": 4.72513357776424
+    },
+    {
+      "cutoff_pct": 31,
+      "n_high": 310146,
+      "frac_high": 0.310146,
+      "death_rate_high_pct": 4.152882835825708,
+      "death_rate_low_pct": 0.8764173288840826,
+      "rr": 4.7384764072539
+    },
+    {
+      "cutoff_pct": 32,
+      "n_high": 321701,
+      "frac_high": 0.321701,
+      "death_rate_high_pct": 4.072415068650704,
+      "death_rate_low_pct": 0.8587658245110195,
+      "rr": 4.742171791675029
+    },
+    {
+      "cutoff_pct": 33,
+      "n_high": 330061,
+      "frac_high": 0.330061,
+      "death_rate_high_pct": 4.021074892216893,
+      "death_rate_low_pct": 0.8439574349306429,
+      "rr": 4.76454703257321
+    },
+    {
+      "cutoff_pct": 34,
+      "n_high": 340182,
+      "frac_high": 0.340182,
+      "death_rate_high_pct": 3.9484746400456223,
+      "death_rate_low_pct": 0.8326538530321997,
+      "rr": 4.742036112205356
+    },
+    {
+      "cutoff_pct": 35,
+      "n_high": 350406,
+      "frac_high": 0.350406,
+      "death_rate_high_pct": 3.8794997802549047,
+      "death_rate_low_pct": 0.8208203893508869,
+      "rr": 4.726368680147983
+    },
+    {
+      "cutoff_pct": 36,
+      "n_high": 360487,
+      "frac_high": 0.360487,
+      "death_rate_high_pct": 3.8170585901849443,
+      "death_rate_low_pct": 0.8078021869766525,
+      "rr": 4.725239237678947
+    },
+    {
+      "cutoff_pct": 37,
+      "n_high": 370482,
+      "frac_high": 0.370482,
+      "death_rate_high_pct": 3.7515992679806307,
+      "death_rate_low_pct": 0.7985474601202824,
+      "rr": 4.6980291783979125
+    },
+    {
+      "cutoff_pct": 38,
+      "n_high": 380532,
+      "frac_high": 0.380532,
+      "death_rate_high_pct": 3.688520282131332,
+      "death_rate_low_pct": 0.78938702241278,
+      "rr": 4.672638613765505
+    },
+    {
+      "cutoff_pct": 39,
+      "n_high": 390172,
+      "frac_high": 0.390172,
+      "death_rate_high_pct": 3.631987943778641,
+      "death_rate_low_pct": 0.7797280544678171,
+      "rr": 4.658018809208499
+    },
+    {
+      "cutoff_pct": 40,
+      "n_high": 400282,
+      "frac_high": 0.400282,
+      "death_rate_high_pct": 3.5732308722350745,
+      "death_rate_low_pct": 0.7708623052834832,
+      "rr": 4.635368531765248
+    },
+    {
+      "cutoff_pct": 41,
+      "n_high": 410567,
+      "frac_high": 0.410567,
+      "death_rate_high_pct": 3.519279435512353,
+      "death_rate_low_pct": 0.7595434934928991,
+      "rr": 4.633413972553837
+    },
+    {
+      "cutoff_pct": 42,
+      "n_high": 420302,
+      "frac_high": 0.420302,
+      "death_rate_high_pct": 3.4663170767686093,
+      "death_rate_low_pct": 0.7515982459832533,
+      "rr": 4.611928108259375
+    },
+    {
+      "cutoff_pct": 43,
+      "n_high": 430302,
+      "frac_high": 0.430302,
+      "death_rate_high_pct": 3.414346203364149,
+      "death_rate_low_pct": 0.743200783573051,
+      "rr": 4.59411006935321
+    },
+    {
+      "cutoff_pct": 44,
+      "n_high": 440592,
+      "frac_high": 0.440592,
+      "death_rate_high_pct": 3.3591168246359446,
+      "death_rate_low_pct": 0.7375654263078111,
+      "rr": 4.554330646233506
+    },
+    {
+      "cutoff_pct": 45,
+      "n_high": 450403,
+      "frac_high": 0.450403,
+      "death_rate_high_pct": 3.3081484803609214,
+      "death_rate_low_pct": 0.732536749654747,
+      "rr": 4.516017089818483
+    },
+    {
+      "cutoff_pct": 46,
+      "n_high": 460042,
+      "frac_high": 0.460042,
+      "death_rate_high_pct": 3.260137117915321,
+      "death_rate_low_pct": 0.7274639879398027,
+      "rr": 4.4815099743261735
+    },
+    {
+      "cutoff_pct": 47,
+      "n_high": 472177,
+      "frac_high": 0.472177,
+      "death_rate_high_pct": 3.2040950745165477,
+      "death_rate_low_pct": 0.7193699403019573,
+      "rr": 4.454029693222406
+    },
+    {
+      "cutoff_pct": 48,
+      "n_high": 481993,
+      "frac_high": 0.481993,
+      "death_rate_high_pct": 3.162909004902561,
+      "death_rate_low_pct": 0.7106081578048173,
+      "rr": 4.450988875040915
+    },
+    {
+      "cutoff_pct": 49,
+      "n_high": 490027,
+      "frac_high": 0.490027,
+      "death_rate_high_pct": 3.1279909066235123,
+      "death_rate_low_pct": 0.7055275475368303,
+      "rr": 4.433548934473353
+    },
+    {
+      "cutoff_pct": 50,
+      "n_high": 500488,
+      "frac_high": 0.500488,
+      "death_rate_high_pct": 3.0849890506865303,
+      "death_rate_low_pct": 0.6978811319848172,
+      "rr": 4.420507890667039
+    }
+  ]
+}

@@ -1,0 +1,490 @@
+[
+  {
+    "age": 40,
+    "n_alive": 500000,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 41,
+    "n_alive": 499054,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 42,
+    "n_alive": 498066,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 43,
+    "n_alive": 496961,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 44,
+    "n_alive": 495711,
+    "M_low": 99.97,
+    "M_high": 99.91,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 45,
+    "n_alive": 494354,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 46,
+    "n_alive": 492907,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 47,
+    "n_alive": 491289,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 48,
+    "n_alive": 489622,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 49,
+    "n_alive": 487779,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 50,
+    "n_alive": 486008,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 51,
+    "n_alive": 483886,
+    "M_low": 99.89,
+    "M_high": 99.66,
+    "F_low": 99.95,
+    "F_high": 99.68
+  },
+  {
+    "age": 52,
+    "n_alive": 481580,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 53,
+    "n_alive": 479394,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 54,
+    "n_alive": 476846,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 55,
+    "n_alive": 474194,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 56,
+    "n_alive": 471174,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 57,
+    "n_alive": 468130,
+    "M_low": 8.59,
+    "M_high": 47.4,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 58,
+    "n_alive": 465131,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 59,
+    "n_alive": 461593,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 60,
+    "n_alive": 457827,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 3.17,
+    "F_high": 22.39
+  },
+  {
+    "age": 61,
+    "n_alive": 453698,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 62,
+    "n_alive": 449040,
+    "M_low": 0.16,
+    "M_high": 4.51,
+    "F_low": 96.63,
+    "F_high": 76.69
+  },
+  {
+    "age": 63,
+    "n_alive": 443999,
+    "M_low": 91.1,
+    "M_high": 51.79,
+    "F_low": 3.03,
+    "F_high": 17.12
+  },
+  {
+    "age": 64,
+    "n_alive": 438672,
+    "M_low": 8.84,
+    "M_high": 44.12,
+    "F_low": 0.29,
+    "F_high": 1.27
+  },
+  {
+    "age": 65,
+    "n_alive": 433304,
+    "M_low": 0.15,
+    "M_high": 2.69,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 66,
+    "n_alive": 427170,
+    "M_low": 0.47,
+    "M_high": 1.48,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 67,
+    "n_alive": 420625,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 68,
+    "n_alive": 413744,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 8.55,
+    "F_high": 42.63
+  },
+  {
+    "age": 69,
+    "n_alive": 406340,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.1,
+    "F_high": 3.4
+  },
+  {
+    "age": 70,
+    "n_alive": 398511,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 71,
+    "n_alive": 390180,
+    "M_low": 100.0,
+    "M_high": 100.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 72,
+    "n_alive": 381335,
+    "M_low": 1.41,
+    "M_high": 11.54,
+    "F_low": 91.38,
+    "F_high": 54.02
+  },
+  {
+    "age": 73,
+    "n_alive": 371843,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 8.63,
+    "F_high": 46.03
+  },
+  {
+    "age": 74,
+    "n_alive": 361719,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 75,
+    "n_alive": 350837,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 76,
+    "n_alive": 339426,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 77,
+    "n_alive": 327425,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 1.55,
+    "F_high": 22.14
+  },
+  {
+    "age": 78,
+    "n_alive": 314991,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 79,
+    "n_alive": 301631,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 80,
+    "n_alive": 287339,
+    "M_low": 5.25,
+    "M_high": 59.05,
+    "F_low": 14.9,
+    "F_high": 47.29
+  },
+  {
+    "age": 81,
+    "n_alive": 272263,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 82,
+    "n_alive": 256616,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 83,
+    "n_alive": 241422,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 84,
+    "n_alive": 225131,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 85,
+    "n_alive": 208198,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 86,
+    "n_alive": 191722,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 87,
+    "n_alive": 174277,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 88,
+    "n_alive": 157588,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 89,
+    "n_alive": 140846,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 90,
+    "n_alive": 125119,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 91,
+    "n_alive": 109367,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 92,
+    "n_alive": 94989,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 93,
+    "n_alive": 81208,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 94,
+    "n_alive": 68052,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 95,
+    "n_alive": 56618,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 96,
+    "n_alive": 46245,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 97,
+    "n_alive": 37166,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 98,
+    "n_alive": 29212,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 99,
+    "n_alive": 22665,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  },
+  {
+    "age": 100,
+    "n_alive": 17143,
+    "M_low": 0.0,
+    "M_high": 0.0,
+    "F_low": 0.0,
+    "F_high": 0.0
+  }
+]

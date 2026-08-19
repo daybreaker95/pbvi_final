@@ -153,7 +153,8 @@ class CRCScreeningPOMDP9:
                  transitions9_npz=None, stratified_npz=None,
                  age_min=40, age_max=80, life_max=100, gamma=0.97,
                  use_risk_classes=True, use_future_costs=False,
-                 wtp=WTP_DEFAULT, sex: int | None = None):
+                 wtp=WTP_DEFAULT, sex: int | None = None,
+                 sex_risk_npz=None, colo_penalty_qaly=0.0):
         """sex: None = sex-pooled (legacy, ~50/50 mixed dynamics+mortality),
         1 = male-only, 2 = female-only. CMOST bakes sex into polyp onset
         (new_polyp_female), adenoma progression (gender_progression) and
@@ -162,7 +163,20 @@ class CRCScreeningPOMDP9:
         -- not just a reward/mortality tweak. CRC-specific post-diagnosis
         mortality (mortality_matrix) has no gender axis, so T_detected only
         needs its OTHER-DEATH component swapped to the sex-specific life
-        table; the CRC-death component is reused unchanged."""
+        table; the CRC-death component is reused unchanged.
+
+        sex_risk_npz: override path for the sex x risk-class transitions file
+        (defaults to results/transitions_9state_sex_risk.npz) -- lets a caller
+        point at an alternate risk-threshold definition (e.g. a top-10%-high
+        re-estimate) without touching the default file on disk.
+
+        colo_penalty_qaly: fixed QALY "shadow price" subtracted from the
+        SCREEN reward on top of PROC_DISUTIL/comp_disutil -- a budget lever
+        (lambda) independent of wtp/$-cost, used to trade FEWER, better-
+        targeted colonoscopies for a higher deaths-averted-per-colonoscopy
+        ratio (see marginal-efficiency analysis: the policy's own uncapped
+        volume already extends past the point where its OWN marginal
+        colonoscopies are cheaper than q10y's average one)."""
         transitions9_npz = transitions9_npz or os.path.join(RES, 'transitions_9state.npz')
         stratified_npz = stratified_npz or os.path.join(RES, 'transitions_stratified.npz')
         self.age_min, self.age_max, self.life_max = age_min, age_max, life_max
@@ -170,9 +184,10 @@ class CRCScreeningPOMDP9:
         self.wtp = wtp
         self.NC = NC_LOCAL
         self.sex = sex
+        self.colo_penalty_qaly = colo_penalty_qaly
 
         # ---- undetected-world severity dynamics, per risk class ----
-        sex_risk_npz = os.path.join(RES, 'transitions_9state_sex_risk.npz')
+        sex_risk_npz = sex_risk_npz or os.path.join(RES, 'transitions_9state_sex_risk.npz')
         stratified9_npz = os.path.join(RES, 'transitions_9state_stratified.npz')
         if sex is not None and use_risk_classes and os.path.exists(sex_risk_npz):
             zz = np.load(sex_risk_npz, allow_pickle=True)
@@ -394,7 +409,7 @@ class CRCScreeningPOMDP9:
     def _qaly_undetected(self, age, s, action):
         """(utility, cost) for one year in undetected state s, action a.
         Returns (E_u, ann_cost)."""
-        du = PROC_DISUTIL + self.comp_disutil if action == SCREEN else 0.0
+        du = PROC_DISUTIL + self.comp_disutil + self.colo_penalty_qaly if action == SCREEN else 0.0
         cost = self._colo_action_cost(s) if action == SCREEN else 0.0
         if s in (NORMAL, EARLY_POLYP, ADV_POLYP):
             return age_weight(age) - du, cost

@@ -1,0 +1,67 @@
+{
+  "sex": "M",
+  "cases": {
+    "low": {
+      "age": 55,
+      "pre": {
+        "Normal": 0.8301209747987282,
+        "Early polyp": 0.09505656239495083,
+        "Advanced polyp": 0.008406536208564819,
+        "Undetected cancer": 0.0008609223489320961
+      },
+      "findings": [
+        {
+          "finding": "Normal (clean scope)",
+          "p_obs": 0.8585,
+          "post": {
+            "Normal": 0.9428523341792694,
+            "Early polyp": 0.04737902145091913,
+            "Advanced polyp": 0.0014831841532719674,
+            "Undetected cancer": 0.0004102076119512009
+          }
+        },
+        {
+          "finding": "Polyp found",
+          "p_obs": 0.0675,
+          "post": {
+            "Normal": 0.9721439389270924,
+            "Early polyp": 0.01945748979789245,
+            "Advanced polyp": 0.00012654395875215035,
+            "Undetected cancer": 0.0003491624989717876
+          }
+        }
+      ]
+    },
+    "high": {
+      "age": 55,
+      "pre": {
+        "Normal": 0.426393563389642,
+        "Early polyp": 0.42553406341606215,
+        "Advanced polyp": 0.07710139198449734,
+        "Undetected cancer": 0.0038875666180336593
+      },
+      "findings": [
+        {
+          "finding": "Normal (clean scope)",
+          "p_obs": 0.5571,
+          "post": {
+            "Normal": 0.6788694097447311,
+            "Early polyp": 0.2923919766723596,
+            "Advanced polyp": 0.019664170065408382,
+            "Undetected cancer": 0.0010249452522750882
+          }
+        },
+        {
+          "finding": "Polyp found",
+          "p_obs": 0.3022,
+          "post": {
+            "Normal": 0.8718326625924434,
+            "Early polyp": 0.11769818688425811,
+            "Advanced polyp": 0.0013901443731503553,
+            "Undetected cancer": 0.0006340333269709653
+          }
+        }
+      ]
+    }
+  }
+}

@@ -55,12 +55,14 @@ MAP18TO13 = {
     15: CRC_DEATH, 16: OTHER_DEATH, 17: OTHER_DEATH,
 }
 
-RISK_THRESHOLD = 3.5150943204057215   # CRCEngine individual_risk, top-25% cut
-                                       # (same threshold used to build
-                                       # transitions_9state_stratified.npz --
-                                       # updated for the tau-phase-marginalized
-                                       # matrix, see
-                                       # transitions/build_dsymp_from_undetected_tauphase.py)
+RISK_THRESHOLD = 3.974249328225908    # CRCEngine individual_risk, top-10% cut
+                                       # (must match transitions_9state_sex_risk.npz's
+                                       # own risk_threshold field exactly -- this is
+                                       # what SexAwareEngineHook uses to classify each
+                                       # simulated individual's risk_class, and it has
+                                       # to line up with whatever threshold the loaded
+                                       # policy was actually TRAINED on, or risk_class
+                                       # routing silently mismatches the policy)
 
 
 class EngineHook13:
@@ -175,7 +177,7 @@ class FixedScheduleHook:
         pass
 
 
-def train_policy(sex=None):
+def train_policy(sex=None, age_min=40, age_max=80, sex_risk_npz=None, colo_penalty_qaly=0.0):
     # PBS alone (no DBBU): confirmed via ablation to converge to the same
     # policy/clinical outcome as plain FiVI while giving the tightest final
     # gap and clearest convergence trajectory (DBBU can shift the learned
@@ -184,14 +186,17 @@ def train_policy(sex=None):
     # sex: None (pooled), 1 (male), 2 (female) -- see SexAwareEngineHook,
     # which trains one policy per sex and routes each simulated individual
     # to their own via CMOST's own gender_arr (1=male, 2=female).
-    pomdp = CRCScreeningPOMDP9(age_min=40, age_max=80, gamma=0.97, sex=sex)
+    # sex_risk_npz/colo_penalty_qaly: see CRCScreeningPOMDP9's own docstring --
+    # both default to the original (top-25%-high, lambda=0) behavior.
+    pomdp = CRCScreeningPOMDP9(age_min=age_min, age_max=age_max, gamma=0.97, sex=sex,
+                                sex_risk_npz=sex_risk_npz, colo_penalty_qaly=colo_penalty_qaly)
     solver = FiVI(pomdp, seed=0, max_sawtooth_points=300)
     solver.solve(max_iters=50, time_limit=300, precision=1e-3, verbose=False,
                  n_stochastic_trajectories=0, use_pbs=True, dbbu_interval=1)
     return pomdp, solver
 
 
-def run_cohort(p, n, seed, policy_hook, hook_age_max=80):
+def run_cohort(p, n, seed, policy_hook, hook_age_max=80, hook_age_min=40):
     # p must come from a SINGLE np.random.seed(seed) + prepare_simulation_params(n)
     # call made by the CALLER, before any risk_class/sex_arr used to build
     # policy_hook is derived from it -- previously this function drew its
@@ -217,7 +222,7 @@ def run_cohort(p, n, seed, policy_hook, hook_age_max=80):
     with contextlib.redirect_stdout(io.StringIO()):
         out = NumberCrunching_policy(*args, state_recorder=sr, policy_hook=policy_hook,
                                       n_colo_recorder=ncr,
-                                      policy_hook_age_min=40, policy_hook_age_max=hook_age_max)
+                                      policy_hook_age_min=hook_age_min, policy_hook_age_max=hook_age_max)
     Money = out[22]
     Number = out[23]
     TumorRecord = out[12]
@@ -311,6 +316,20 @@ def main():
     ap.add_argument('--scenario', required=True, choices=['no_screen', 'q10y', 'q5y', 'policy'])
     ap.add_argument('-n', type=int, default=10_000_000)
     ap.add_argument('--seed', type=int, default=999)
+    # policy-only knobs (all default to the original age_min=40/age_max=80/
+    # top-25%/lambda=0 behavior -- passing none of these reproduces
+    # final_algorithm/csv/02_policy_vs_schedules_final.csv exactly)
+    ap.add_argument('--age-min', type=int, default=40)
+    ap.add_argument('--age-max', type=int, default=80)
+    ap.add_argument('--risk-npz', type=str, default=None,
+                     help='override transitions_9state_sex_risk.npz path (e.g. the '
+                          'top25pct backup, or the current top-10-pct file)')
+    ap.add_argument('--risk-threshold', type=float, default=RISK_THRESHOLD,
+                     help='must match --risk-npz\'s own risk_threshold field, or '
+                          'risk_class routing silently mismatches the loaded policy')
+    ap.add_argument('--lam', type=float, default=0.0, help='colo_penalty_qaly (lambda)')
+    ap.add_argument('--tag', type=str, default=None,
+                     help='output filename suffix, e.g. results/cmost_4way_policy_<tag>.json')
     a = ap.parse_args()
 
     t0 = time.time()
@@ -319,7 +338,7 @@ def main():
     # for why this must not be two separate prepare_simulation_params calls.
     np.random.seed(a.seed)
     p = BNH.prepare_simulation_params(a.n)
-    risk_class = (np.asarray(p['individual_risk']) >= RISK_THRESHOLD).astype(int)
+    risk_class = (np.asarray(p['individual_risk']) >= a.risk_threshold).astype(int)
     sex_arr = np.asarray(p['gender_arr']).astype(int)  # 1=male, 2=female
 
     if a.scenario == 'no_screen':
@@ -331,23 +350,30 @@ def main():
     else:  # policy -- one FiVI policy per sex (sex is observable at t=0,
         # unlike risk_class which stays latent/belief-tracked), each with
         # its own CMOST-original sex x risk transition dynamics
-        print('training FiVI policy (male)...', flush=True)
-        pomdp_m, solver_m = train_policy(sex=1)
+        print(f'training FiVI policy (male) age={a.age_min}-{a.age_max} '
+              f'risk_npz={a.risk_npz} lam={a.lam} ...', flush=True)
+        pomdp_m, solver_m = train_policy(sex=1, age_min=a.age_min, age_max=a.age_max,
+                                          sex_risk_npz=a.risk_npz, colo_penalty_qaly=a.lam)
         print(f'  male gap={solver_m.gap_history[-1]["gap"]:.4f}  ({time.time()-t0:.1f}s)', flush=True)
         print('training FiVI policy (female)...', flush=True)
-        pomdp_f, solver_f = train_policy(sex=2)
+        pomdp_f, solver_f = train_policy(sex=2, age_min=a.age_min, age_max=a.age_max,
+                                          sex_risk_npz=a.risk_npz, colo_penalty_qaly=a.lam)
         print(f'  female gap={solver_f.gap_history[-1]["gap"]:.4f}  ({time.time()-t0:.1f}s)', flush=True)
         hook = SexAwareEngineHook(pomdp_m, solver_m, pomdp_f, solver_f, risk_class, sex_arr, seed=a.seed)
 
     print(f'[{a.scenario}] running N={a.n:,} ...', flush=True)
     t1 = time.time()
-    _, sr, ncr, money, number, tumor_record, death_year = run_cohort(p, a.n, a.seed, hook)
+    _, sr, ncr, money, number, tumor_record, death_year = run_cohort(
+        p, a.n, a.seed, hook, hook_age_max=a.age_max, hook_age_min=a.age_min)
     stats = summarize(sr, ncr, money, number, tumor_record, death_year, a.n)
     print(f'[{a.scenario}] done ({time.time()-t1:.0f}s): {stats}', flush=True)
 
-    out_path = os.path.join(PBVI_ROOT, 'results', f'cmost_4way_{a.scenario}.json')
+    suffix = f'_{a.tag}' if a.tag else ''
+    out_path = os.path.join(PBVI_ROOT, 'results', f'cmost_4way_{a.scenario}{suffix}.json')
     with open(out_path, 'w') as f:
         json.dump({'scenario': a.scenario, 'n': a.n, 'seed': a.seed,
+                    'age_min': a.age_min, 'age_max': a.age_max,
+                    'risk_npz': a.risk_npz, 'risk_threshold': a.risk_threshold, 'lam': a.lam,
                     'elapsed_sec': time.time() - t0, **stats}, f, indent=2)
     print('saved', out_path)
 

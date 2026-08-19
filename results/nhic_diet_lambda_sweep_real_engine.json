@@ -1,0 +1,48 @@
+[
+  {
+    "lam": 0.0,
+    "age_min": 40,
+    "age_max": 80,
+    "risk_npz": "/Users/llnnseoii/Library/Mobile Documents/iCloud~md~obsidian/Documents/NHIS_kcure/kcure_gastric_colon_cancer/PBVI_journal_inseo/th_simplified_code/CMOST-pbvi_thlee/python/pbvi_thlee/results/transitions_9state_sex_risk_nhicdiet20pct.npz",
+    "high_frac": 0.2,
+    "seed": 999,
+    "elapsed_sec": 477.9569311141968,
+    "n": 200000,
+    "crc_death_per_100k": 774.5,
+    "incidence_per_100k": 2280.5,
+    "screen_detected_per_100k": 716.0,
+    "symptom_detected_per_100k": 1564.5,
+    "surveillance_detected_per_100k": 0.0,
+    "baseline_detected_per_100k": 0.0,
+    "stage_pct_all": [
+      26.419644814733612,
+      36.439377329532995,
+      21.68384126288095,
+      15.457136592852445
+    ],
+    "stage_pct_screen": [
+      46.71787709497207,
+      33.5195530726257,
+      12.918994413407821,
+      6.843575418994413
+    ],
+    "stage_pct_symptom": [
+      17.13007350591243,
+      37.77564717162033,
+      25.69511025886865,
+      19.399169063598592
+    ],
+    "avg_age_at_death": 77.23039125,
+    "life_years": 37.23039125,
+    "life_years_disc3pct": 21.780125646588882,
+    "avg_colonoscopies_per_person": 3.563965,
+    "total_cost_usd": 1106912583.75,
+    "cost_per_person_usd": 5534.56291875,
+    "total_cost_disc3pct_usd": 569837332.3814489,
+    "cost_per_person_disc3pct_usd": 2849.1866619072443,
+    "screening_colo_total": 709498.0,
+    "followup_colo_total": 0.0,
+    "mortality_reduction_pct": 58.90156540196338,
+    "per_colo_death_avoided": 311.4508700281849
+  }
+]

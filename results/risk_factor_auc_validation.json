@@ -1,0 +1,42 @@
+{
+  "n": 100000,
+  "seed": 20260809,
+  "auc_composite": 0.7437779443384392,
+  "auc_mapped": 0.7472522909023573,
+  "crc_death_rate_pct": 1.9529999999999998,
+  "crc_death_rate_top10_pct": 7.814992025518341,
+  "crc_death_rate_bottom90_pct": 1.2993508803130003,
+  "rr_top_vs_bottom": 6.014535522256922,
+  "risk_factors": {
+    "family_history": {
+      "hr": 1.53,
+      "prevalence_male": 0.175,
+      "prevalence_female": 0.175
+    },
+    "obesity": {
+      "hr": 1.25,
+      "prevalence_male": 0.496,
+      "prevalence_female": 0.277
+    },
+    "current_smoker": {
+      "hr": 1.093,
+      "prevalence_male": 0.324,
+      "prevalence_female": 0.063
+    },
+    "physical_inactive": {
+      "hr": 1.4925373134328357,
+      "prevalence_male": 0.45599999999999996,
+      "prevalence_female": 0.496
+    },
+    "diabetes": {
+      "hr": 1.51,
+      "prevalence_male": 0.113,
+      "prevalence_female": 0.12
+    },
+    "high_risk_drinking": {
+      "hr": 2.24,
+      "prevalence_male": 0.199,
+      "prevalence_female": 0.077
+    }
+  }
+}

@@ -1,0 +1,386 @@
+[
+  {
+    "sex": "M",
+    "risk": "low",
+    "age": 45,
+    "finding": "clear",
+    "p_obs": 0.96108,
+    "next_age": 74
+  },
+  {
+    "sex": "M",
+    "risk": "low",
+    "age": 45,
+    "finding": "polyp_found",
+    "p_obs": 0.02318,
+    "next_age": 74
+  },
+  {
+    "sex": "M",
+    "risk": "low",
+    "age": 51,
+    "finding": "clear",
+    "p_obs": 0.90535,
+    "next_age": 74
+  },
+  {
+    "sex": "M",
+    "risk": "low",
+    "age": 51,
+    "finding": "polyp_found",
+    "p_obs": 0.049,
+    "next_age": 74
+  },
+  {
+    "sex": "M",
+    "risk": "low",
+    "age": 55,
+    "finding": "clear",
+    "p_obs": 0.85849,
+    "next_age": 74
+  },
+  {
+    "sex": "M",
+    "risk": "low",
+    "age": 55,
+    "finding": "polyp_found",
+    "p_obs": 0.06751,
+    "next_age": 74
+  },
+  {
+    "sex": "M",
+    "risk": "low",
+    "age": 62,
+    "finding": "clear",
+    "p_obs": 0.75961,
+    "next_age": 74
+  },
+  {
+    "sex": "M",
+    "risk": "low",
+    "age": 62,
+    "finding": "polyp_found",
+    "p_obs": 0.09595,
+    "next_age": 74
+  },
+  {
+    "sex": "M",
+    "risk": "low",
+    "age": 65,
+    "finding": "clear",
+    "p_obs": 0.70948,
+    "next_age": 74
+  },
+  {
+    "sex": "M",
+    "risk": "low",
+    "age": 65,
+    "finding": "polyp_found",
+    "p_obs": 0.1047,
+    "next_age": null
+  },
+  {
+    "sex": "M",
+    "risk": "low",
+    "age": 72,
+    "finding": "clear",
+    "p_obs": 0.56962,
+    "next_age": null
+  },
+  {
+    "sex": "M",
+    "risk": "low",
+    "age": 72,
+    "finding": "polyp_found",
+    "p_obs": 0.11322,
+    "next_age": null
+  },
+  {
+    "sex": "M",
+    "risk": "high",
+    "age": 45,
+    "finding": "clear",
+    "p_obs": 0.83403,
+    "next_age": 51
+  },
+  {
+    "sex": "M",
+    "risk": "high",
+    "age": 45,
+    "finding": "polyp_found",
+    "p_obs": 0.14171,
+    "next_age": 51
+  },
+  {
+    "sex": "M",
+    "risk": "high",
+    "age": 51,
+    "finding": "clear",
+    "p_obs": 0.65804,
+    "next_age": 57
+  },
+  {
+    "sex": "M",
+    "risk": "high",
+    "age": 51,
+    "finding": "polyp_found",
+    "p_obs": 0.25673,
+    "next_age": 57
+  },
+  {
+    "sex": "M",
+    "risk": "high",
+    "age": 55,
+    "finding": "clear",
+    "p_obs": 0.5571,
+    "next_age": 57
+  },
+  {
+    "sex": "M",
+    "risk": "high",
+    "age": 55,
+    "finding": "polyp_found",
+    "p_obs": 0.3022,
+    "next_age": 61
+  },
+  {
+    "sex": "M",
+    "risk": "high",
+    "age": 62,
+    "finding": "clear",
+    "p_obs": 0.39534,
+    "next_age": 64
+  },
+  {
+    "sex": "M",
+    "risk": "high",
+    "age": 62,
+    "finding": "polyp_found",
+    "p_obs": 0.34082,
+    "next_age": 71
+  },
+  {
+    "sex": "M",
+    "risk": "high",
+    "age": 65,
+    "finding": "clear",
+    "p_obs": 0.33302,
+    "next_age": 71
+  },
+  {
+    "sex": "M",
+    "risk": "high",
+    "age": 65,
+    "finding": "polyp_found",
+    "p_obs": 0.33976,
+    "next_age": 71
+  },
+  {
+    "sex": "M",
+    "risk": "high",
+    "age": 72,
+    "finding": "clear",
+    "p_obs": 0.21991,
+    "next_age": 80
+  },
+  {
+    "sex": "M",
+    "risk": "high",
+    "age": 72,
+    "finding": "polyp_found",
+    "p_obs": 0.29308,
+    "next_age": 80
+  },
+  {
+    "sex": "F",
+    "risk": "low",
+    "age": 45,
+    "finding": "clear",
+    "p_obs": 0.98117,
+    "next_age": 62
+  },
+  {
+    "sex": "F",
+    "risk": "low",
+    "age": 45,
+    "finding": "polyp_found",
+    "p_obs": 0.01011,
+    "next_age": 62
+  },
+  {
+    "sex": "F",
+    "risk": "low",
+    "age": 51,
+    "finding": "clear",
+    "p_obs": 0.95114,
+    "next_age": 72
+  },
+  {
+    "sex": "F",
+    "risk": "low",
+    "age": 51,
+    "finding": "polyp_found",
+    "p_obs": 0.0232,
+    "next_age": 72
+  },
+  {
+    "sex": "F",
+    "risk": "low",
+    "age": 55,
+    "finding": "clear",
+    "p_obs": 0.92451,
+    "next_age": 72
+  },
+  {
+    "sex": "F",
+    "risk": "low",
+    "age": 55,
+    "finding": "polyp_found",
+    "p_obs": 0.03264,
+    "next_age": 72
+  },
+  {
+    "sex": "F",
+    "risk": "low",
+    "age": 62,
+    "finding": "clear",
+    "p_obs": 0.86017,
+    "next_age": null
+  },
+  {
+    "sex": "F",
+    "risk": "low",
+    "age": 62,
+    "finding": "polyp_found",
+    "p_obs": 0.05095,
+    "next_age": null
+  },
+  {
+    "sex": "F",
+    "risk": "low",
+    "age": 65,
+    "finding": "clear",
+    "p_obs": 0.82605,
+    "next_age": null
+  },
+  {
+    "sex": "F",
+    "risk": "low",
+    "age": 65,
+    "finding": "polyp_found",
+    "p_obs": 0.05725,
+    "next_age": null
+  },
+  {
+    "sex": "F",
+    "risk": "low",
+    "age": 72,
+    "finding": "clear",
+    "p_obs": 0.72111,
+    "next_age": null
+  },
+  {
+    "sex": "F",
+    "risk": "low",
+    "age": 72,
+    "finding": "polyp_found",
+    "p_obs": 0.06915,
+    "next_age": null
+  },
+  {
+    "sex": "F",
+    "risk": "high",
+    "age": 45,
+    "finding": "clear",
+    "p_obs": 0.91075,
+    "next_age": 53
+  },
+  {
+    "sex": "F",
+    "risk": "high",
+    "age": 45,
+    "finding": "polyp_found",
+    "p_obs": 0.07534,
+    "next_age": 54
+  },
+  {
+    "sex": "F",
+    "risk": "high",
+    "age": 51,
+    "finding": "clear",
+    "p_obs": 0.80082,
+    "next_age": 55
+  },
+  {
+    "sex": "F",
+    "risk": "high",
+    "age": 51,
+    "finding": "polyp_found",
+    "p_obs": 0.1509,
+    "next_age": 60
+  },
+  {
+    "sex": "F",
+    "risk": "high",
+    "age": 55,
+    "finding": "clear",
+    "p_obs": 0.72662,
+    "next_age": 60
+  },
+  {
+    "sex": "F",
+    "risk": "high",
+    "age": 55,
+    "finding": "polyp_found",
+    "p_obs": 0.19177,
+    "next_age": 63
+  },
+  {
+    "sex": "F",
+    "risk": "high",
+    "age": 62,
+    "finding": "clear",
+    "p_obs": 0.59319,
+    "next_age": 63
+  },
+  {
+    "sex": "F",
+    "risk": "high",
+    "age": 62,
+    "finding": "polyp_found",
+    "p_obs": 0.24407,
+    "next_age": 68
+  },
+  {
+    "sex": "F",
+    "risk": "high",
+    "age": 65,
+    "finding": "clear",
+    "p_obs": 0.53502,
+    "next_age": 68
+  },
+  {
+    "sex": "F",
+    "risk": "high",
+    "age": 65,
+    "finding": "polyp_found",
+    "p_obs": 0.2594,
+    "next_age": 72
+  },
+  {
+    "sex": "F",
+    "risk": "high",
+    "age": 72,
+    "finding": "clear",
+    "p_obs": 0.40324,
+    "next_age": 73
+  },
+  {
+    "sex": "F",
+    "risk": "high",
+    "age": 72,
+    "finding": "polyp_found",
+    "p_obs": 0.26591,
+    "next_age": 77
+  }
+]

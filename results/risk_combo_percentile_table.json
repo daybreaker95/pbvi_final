@@ -1,0 +1,707 @@
+[
+  {
+    "factors": [
+      "가족력",
+      "비만",
+      "흡연",
+      "운동부족",
+      "당뇨",
+      "고위험음주"
+    ],
+    "n_factors": 6,
+    "composite_rr": 10.535,
+    "percentile_top_male": 0.03,
+    "percentile_top_female": 0.0
+  },
+  {
+    "factors": [
+      "가족력",
+      "비만",
+      "운동부족",
+      "당뇨",
+      "고위험음주"
+    ],
+    "n_factors": 5,
+    "composite_rr": 9.6386,
+    "percentile_top_male": 0.08,
+    "percentile_top_female": 0.01
+  },
+  {
+    "factors": [
+      "가족력",
+      "흡연",
+      "운동부족",
+      "당뇨",
+      "고위험음주"
+    ],
+    "n_factors": 5,
+    "composite_rr": 8.428,
+    "percentile_top_male": 0.11,
+    "percentile_top_female": 0.01
+  },
+  {
+    "factors": [
+      "가족력",
+      "운동부족",
+      "당뇨",
+      "고위험음주"
+    ],
+    "n_factors": 4,
+    "composite_rr": 7.7109,
+    "percentile_top_male": 0.17,
+    "percentile_top_female": 0.06
+  },
+  {
+    "factors": [
+      "가족력",
+      "비만",
+      "흡연",
+      "당뇨",
+      "고위험음주"
+    ],
+    "n_factors": 5,
+    "composite_rr": 7.0704,
+    "percentile_top_male": 0.17,
+    "percentile_top_female": 0.06
+  },
+  {
+    "factors": [
+      "가족력",
+      "비만",
+      "흡연",
+      "운동부족",
+      "고위험음주"
+    ],
+    "n_factors": 5,
+    "composite_rr": 6.9768,
+    "percentile_top_male": 0.43,
+    "percentile_top_female": 0.07
+  },
+  {
+    "factors": [
+      "비만",
+      "흡연",
+      "운동부족",
+      "당뇨",
+      "고위험음주"
+    ],
+    "n_factors": 5,
+    "composite_rr": 6.8856,
+    "percentile_top_male": 0.6,
+    "percentile_top_female": 0.08
+  },
+  {
+    "factors": [
+      "가족력",
+      "비만",
+      "당뇨",
+      "고위험음주"
+    ],
+    "n_factors": 4,
+    "composite_rr": 6.4688,
+    "percentile_top_male": 0.6,
+    "percentile_top_female": 0.08
+  },
+  {
+    "factors": [
+      "가족력",
+      "비만",
+      "운동부족",
+      "고위험음주"
+    ],
+    "n_factors": 4,
+    "composite_rr": 6.3832,
+    "percentile_top_male": 1.16,
+    "percentile_top_female": 0.27
+  },
+  {
+    "factors": [
+      "비만",
+      "운동부족",
+      "당뇨",
+      "고위험음주"
+    ],
+    "n_factors": 4,
+    "composite_rr": 6.2997,
+    "percentile_top_male": 1.43,
+    "percentile_top_female": 0.36
+  },
+  {
+    "factors": [
+      "가족력",
+      "흡연",
+      "당뇨",
+      "고위험음주"
+    ],
+    "n_factors": 4,
+    "composite_rr": 5.6564,
+    "percentile_top_male": 1.47,
+    "percentile_top_female": 0.37
+  },
+  {
+    "factors": [
+      "가족력",
+      "흡연",
+      "운동부족",
+      "고위험음주"
+    ],
+    "n_factors": 4,
+    "composite_rr": 5.5814,
+    "percentile_top_male": 1.7,
+    "percentile_top_female": 0.39
+  },
+  {
+    "factors": [
+      "흡연",
+      "운동부족",
+      "당뇨",
+      "고위험음주"
+    ],
+    "n_factors": 4,
+    "composite_rr": 5.5085,
+    "percentile_top_male": 1.83,
+    "percentile_top_female": 0.4
+  },
+  {
+    "factors": [
+      "가족력",
+      "당뇨",
+      "고위험음주"
+    ],
+    "n_factors": 3,
+    "composite_rr": 5.1751,
+    "percentile_top_male": 1.83,
+    "percentile_top_female": 0.4
+  },
+  {
+    "factors": [
+      "가족력",
+      "운동부족",
+      "고위험음주"
+    ],
+    "n_factors": 3,
+    "composite_rr": 5.1065,
+    "percentile_top_male": 2.42,
+    "percentile_top_female": 0.84
+  },
+  {
+    "factors": [
+      "운동부족",
+      "당뇨",
+      "고위험음주"
+    ],
+    "n_factors": 3,
+    "composite_rr": 5.0398,
+    "percentile_top_male": 2.67,
+    "percentile_top_female": 1.06
+  },
+  {
+    "factors": [
+      "가족력",
+      "비만",
+      "흡연",
+      "운동부족",
+      "당뇨"
+    ],
+    "n_factors": 5,
+    "composite_rr": 4.7031,
+    "percentile_top_male": 2.8,
+    "percentile_top_female": 1.09
+  },
+  {
+    "factors": [
+      "가족력",
+      "비만",
+      "흡연",
+      "고위험음주"
+    ],
+    "n_factors": 4,
+    "composite_rr": 4.6824,
+    "percentile_top_male": 3.03,
+    "percentile_top_female": 1.11
+  },
+  {
+    "factors": [
+      "비만",
+      "흡연",
+      "당뇨",
+      "고위험음주"
+    ],
+    "n_factors": 4,
+    "composite_rr": 4.6212,
+    "percentile_top_male": 3.03,
+    "percentile_top_female": 1.11
+  },
+  {
+    "factors": [
+      "비만",
+      "흡연",
+      "운동부족",
+      "고위험음주"
+    ],
+    "n_factors": 4,
+    "composite_rr": 4.56,
+    "percentile_top_male": 4.22,
+    "percentile_top_female": 1.16
+  },
+  {
+    "factors": [
+      "가족력",
+      "비만",
+      "운동부족",
+      "당뇨"
+    ],
+    "n_factors": 4,
+    "composite_rr": 4.3029,
+    "percentile_top_male": 4.48,
+    "percentile_top_female": 1.43
+  },
+  {
+    "factors": [
+      "가족력",
+      "비만",
+      "고위험음주"
+    ],
+    "n_factors": 3,
+    "composite_rr": 4.284,
+    "percentile_top_male": 4.48,
+    "percentile_top_female": 1.43
+  },
+  {
+    "factors": [
+      "비만",
+      "당뇨",
+      "고위험음주"
+    ],
+    "n_factors": 3,
+    "composite_rr": 4.228,
+    "percentile_top_male": 5.08,
+    "percentile_top_female": 1.59
+  },
+  {
+    "factors": [
+      "비만",
+      "운동부족",
+      "고위험음주"
+    ],
+    "n_factors": 3,
+    "composite_rr": 4.172,
+    "percentile_top_male": 7.73,
+    "percentile_top_female": 2.44
+  },
+  {
+    "factors": [
+      "가족력",
+      "흡연",
+      "운동부족",
+      "당뇨"
+    ],
+    "n_factors": 4,
+    "composite_rr": 3.7625,
+    "percentile_top_male": 7.86,
+    "percentile_top_female": 2.51
+  },
+  {
+    "factors": [
+      "가족력",
+      "흡연",
+      "고위험음주"
+    ],
+    "n_factors": 3,
+    "composite_rr": 3.7459,
+    "percentile_top_male": 8.13,
+    "percentile_top_female": 2.52
+  },
+  {
+    "factors": [
+      "흡연",
+      "당뇨",
+      "고위험음주"
+    ],
+    "n_factors": 3,
+    "composite_rr": 3.697,
+    "percentile_top_male": 8.13,
+    "percentile_top_female": 2.52
+  },
+  {
+    "factors": [
+      "흡연",
+      "운동부족",
+      "고위험음주"
+    ],
+    "n_factors": 3,
+    "composite_rr": 3.648,
+    "percentile_top_male": 9.41,
+    "percentile_top_female": 2.65
+  },
+  {
+    "factors": [
+      "가족력",
+      "운동부족",
+      "당뇨"
+    ],
+    "n_factors": 3,
+    "composite_rr": 3.4423,
+    "percentile_top_male": 9.67,
+    "percentile_top_female": 3.31
+  },
+  {
+    "factors": [
+      "가족력",
+      "고위험음주"
+    ],
+    "n_factors": 2,
+    "composite_rr": 3.4272,
+    "percentile_top_male": 9.67,
+    "percentile_top_female": 3.31
+  },
+  {
+    "factors": [
+      "당뇨",
+      "고위험음주"
+    ],
+    "n_factors": 2,
+    "composite_rr": 3.3824,
+    "percentile_top_male": 10.22,
+    "percentile_top_female": 3.73
+  },
+  {
+    "factors": [
+      "운동부족",
+      "고위험음주"
+    ],
+    "n_factors": 2,
+    "composite_rr": 3.3376,
+    "percentile_top_male": 12.92,
+    "percentile_top_female": 5.9
+  },
+  {
+    "factors": [
+      "가족력",
+      "비만",
+      "흡연",
+      "당뇨"
+    ],
+    "n_factors": 4,
+    "composite_rr": 3.1564,
+    "percentile_top_male": 12.92,
+    "percentile_top_female": 5.9
+  },
+  {
+    "factors": [
+      "가족력",
+      "비만",
+      "흡연",
+      "운동부족"
+    ],
+    "n_factors": 4,
+    "composite_rr": 3.1146,
+    "percentile_top_male": 13.98,
+    "percentile_top_female": 6.02
+  },
+  {
+    "factors": [
+      "비만",
+      "흡연",
+      "운동부족",
+      "당뇨"
+    ],
+    "n_factors": 4,
+    "composite_rr": 3.0739,
+    "percentile_top_male": 14.58,
+    "percentile_top_female": 6.13
+  },
+  {
+    "factors": [
+      "비만",
+      "흡연",
+      "고위험음주"
+    ],
+    "n_factors": 3,
+    "composite_rr": 3.0604,
+    "percentile_top_male": 15.86,
+    "percentile_top_female": 6.19
+  },
+  {
+    "factors": [
+      "가족력",
+      "비만",
+      "당뇨"
+    ],
+    "n_factors": 3,
+    "composite_rr": 2.8879,
+    "percentile_top_male": 16.13,
+    "percentile_top_female": 6.44
+  },
+  {
+    "factors": [
+      "가족력",
+      "비만",
+      "운동부족"
+    ],
+    "n_factors": 3,
+    "composite_rr": 2.8496,
+    "percentile_top_male": 17.97,
+    "percentile_top_female": 8.29
+  },
+  {
+    "factors": [
+      "비만",
+      "운동부족",
+      "당뇨"
+    ],
+    "n_factors": 3,
+    "composite_rr": 2.8124,
+    "percentile_top_male": 19.14,
+    "percentile_top_female": 9.46
+  },
+  {
+    "factors": [
+      "비만",
+      "고위험음주"
+    ],
+    "n_factors": 2,
+    "composite_rr": 2.8,
+    "percentile_top_male": 19.14,
+    "percentile_top_female": 9.46
+  },
+  {
+    "factors": [
+      "가족력",
+      "흡연",
+      "당뇨"
+    ],
+    "n_factors": 3,
+    "composite_rr": 2.5252,
+    "percentile_top_male": 22.0,
+    "percentile_top_female": 10.26
+  },
+  {
+    "factors": [
+      "가족력",
+      "흡연",
+      "운동부족"
+    ],
+    "n_factors": 3,
+    "composite_rr": 2.4917,
+    "percentile_top_male": 22.91,
+    "percentile_top_female": 10.59
+  },
+  {
+    "factors": [
+      "흡연",
+      "운동부족",
+      "당뇨"
+    ],
+    "n_factors": 3,
+    "composite_rr": 2.4591,
+    "percentile_top_male": 23.42,
+    "percentile_top_female": 10.8
+  },
+  {
+    "factors": [
+      "흡연",
+      "고위험음주"
+    ],
+    "n_factors": 2,
+    "composite_rr": 2.4483,
+    "percentile_top_male": 23.42,
+    "percentile_top_female": 10.8
+  },
+  {
+    "factors": [
+      "가족력",
+      "당뇨"
+    ],
+    "n_factors": 2,
+    "composite_rr": 2.3103,
+    "percentile_top_male": 24.7,
+    "percentile_top_female": 10.92
+  },
+  {
+    "factors": [
+      "가족력",
+      "운동부족"
+    ],
+    "n_factors": 2,
+    "composite_rr": 2.2797,
+    "percentile_top_male": 27.01,
+    "percentile_top_female": 16.3
+  },
+  {
+    "factors": [
+      "운동부족",
+      "당뇨"
+    ],
+    "n_factors": 2,
+    "composite_rr": 2.2499,
+    "percentile_top_male": 28.23,
+    "percentile_top_female": 19.24
+  },
+  {
+    "factors": [
+      "고위험음주"
+    ],
+    "n_factors": 1,
+    "composite_rr": 2.24,
+    "percentile_top_male": 30.86,
+    "percentile_top_female": 21.09
+  },
+  {
+    "factors": [
+      "가족력",
+      "비만",
+      "흡연"
+    ],
+    "n_factors": 3,
+    "composite_rr": 2.0904,
+    "percentile_top_male": 30.86,
+    "percentile_top_female": 21.09
+  },
+  {
+    "factors": [
+      "비만",
+      "흡연",
+      "당뇨"
+    ],
+    "n_factors": 3,
+    "composite_rr": 2.063,
+    "percentile_top_male": 32.5,
+    "percentile_top_female": 21.29
+  },
+  {
+    "factors": [
+      "비만",
+      "흡연",
+      "운동부족"
+    ],
+    "n_factors": 3,
+    "composite_rr": 2.0357,
+    "percentile_top_male": 36.86,
+    "percentile_top_female": 21.87
+  },
+  {
+    "factors": [
+      "가족력",
+      "비만"
+    ],
+    "n_factors": 2,
+    "composite_rr": 1.9125,
+    "percentile_top_male": 39.12,
+    "percentile_top_female": 23.87
+  },
+  {
+    "factors": [
+      "비만",
+      "당뇨"
+    ],
+    "n_factors": 2,
+    "composite_rr": 1.8875,
+    "percentile_top_male": 40.46,
+    "percentile_top_female": 25.09
+  },
+  {
+    "factors": [
+      "비만",
+      "운동부족"
+    ],
+    "n_factors": 2,
+    "composite_rr": 1.8625,
+    "percentile_top_male": 49.28,
+    "percentile_top_female": 33.73
+  },
+  {
+    "factors": [
+      "가족력",
+      "흡연"
+    ],
+    "n_factors": 2,
+    "composite_rr": 1.6723,
+    "percentile_top_male": 50.51,
+    "percentile_top_female": 34.09
+  },
+  {
+    "factors": [
+      "흡연",
+      "당뇨"
+    ],
+    "n_factors": 2,
+    "composite_rr": 1.6504,
+    "percentile_top_male": 51.17,
+    "percentile_top_female": 34.27
+  },
+  {
+    "factors": [
+      "흡연",
+      "운동부족"
+    ],
+    "n_factors": 2,
+    "composite_rr": 1.6286,
+    "percentile_top_male": 55.48,
+    "percentile_top_female": 35.89
+  },
+  {
+    "factors": [
+      "가족력"
+    ],
+    "n_factors": 1,
+    "composite_rr": 1.53,
+    "percentile_top_male": 57.88,
+    "percentile_top_female": 40.73
+  },
+  {
+    "factors": [
+      "당뇨"
+    ],
+    "n_factors": 1,
+    "composite_rr": 1.51,
+    "percentile_top_male": 59.23,
+    "percentile_top_female": 43.83
+  },
+  {
+    "factors": [
+      "운동부족"
+    ],
+    "n_factors": 1,
+    "composite_rr": 1.49,
+    "percentile_top_male": 68.28,
+    "percentile_top_female": 66.36
+  },
+  {
+    "factors": [
+      "비만",
+      "흡연"
+    ],
+    "n_factors": 2,
+    "composite_rr": 1.3662,
+    "percentile_top_male": 73.26,
+    "percentile_top_female": 66.94
+  },
+  {
+    "factors": [
+      "비만"
+    ],
+    "n_factors": 1,
+    "composite_rr": 1.25,
+    "percentile_top_male": 83.85,
+    "percentile_top_female": 75.49
+  },
+  {
+    "factors": [
+      "흡연"
+    ],
+    "n_factors": 1,
+    "composite_rr": 1.093,
+    "percentile_top_male": 89.09,
+    "percentile_top_female": 77.02
+  },
+  {
+    "factors": [
+      "없음"
+    ],
+    "n_factors": 0,
+    "composite_rr": 1.0,
+    "percentile_top_male": 100.0,
+    "percentile_top_female": 100.0
+  }
+]

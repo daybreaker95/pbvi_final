@@ -1,0 +1,44 @@
+{
+  "scenario": "q10y",
+  "n": 1000000,
+  "seed": 999,
+  "age_min": 40,
+  "age_max": 80,
+  "high_frac": 0.2,
+  "lam": 0.0,
+  "elapsed_sec": 38246.426871061325,
+  "crc_death_per_100k": 1033.3999999999999,
+  "incidence_per_100k": 2720.2000000000003,
+  "screen_detected_per_100k": 515.1,
+  "symptom_detected_per_100k": 2205.1,
+  "surveillance_detected_per_100k": 0.0,
+  "baseline_detected_per_100k": 0.0,
+  "stage_pct_all": [
+    21.024189397838395,
+    36.88331740313212,
+    24.821704286449524,
+    17.270788912579956
+  ],
+  "stage_pct_screen": [
+    41.991846243447874,
+    33.46922927586876,
+    16.77344205008736,
+    7.765482430596
+  ],
+  "stage_pct_symptom": [
+    16.126252777651807,
+    37.680830801324205,
+    26.70173688268106,
+    19.49117953834293
+  ],
+  "avg_age_at_death": 77.214763,
+  "life_years": 37.214763000000005,
+  "life_years_disc3pct": 21.76594252407875,
+  "avg_colonoscopies_per_person": 2.608695,
+  "total_cost_usd": 4633171328.5,
+  "cost_per_person_usd": 4633.1713285,
+  "total_cost_disc3pct_usd": 2355038559.9708357,
+  "cost_per_person_disc3pct_usd": 2355.0385599708356,
+  "screening_colo_total": 2585432.0,
+  "followup_colo_total": 0.0
+}
