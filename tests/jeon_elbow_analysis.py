@@ -84,30 +84,29 @@ FAMILY_HISTORY_HR = {'m': 1.67, 'f': 1.46}  # Table S7, separate term
 # Prevalences re-sourced to US/Western population statistics, matching the
 # Jeon 2018 (Western-cohort) HRs above -- these previously reused Korean
 # NHIC-cohort prevalences, a source mismatch.
-#   BMI>=25:   NHANES 2011-2012, age-adjusted, sex-specific (CDC/NCHS;
-#              most recent period with an official sex-specific BMI>=25
-#              breakdown found -- more recent NHANES releases report only
-#              the pooled-sex combined figure, ~72% as of Aug2021-Aug2023).
-#   Diabetes:  CDC NCHS Data Brief #516 (Aug 2021-Aug 2023), DIAGNOSED
-#              diabetes by sex (matches Jeon's own "self-reported type 2
-#              diabetes" variable definition -- not the "total" figure,
-#              which would also include undiagnosed cases Jeon's variable
-#              cannot capture either).
-#   Family history: kept at Jeon 2018's own validation-cohort controls
-#              value (Table S3) -- cross-checked against independent HPFS
-#              (men, 9.4%) / NHS (women, 10.0%) cohort estimates found via
-#              search and found consistent, so not replaced.
-#   Alcohol:   abstinence tier from NHIS 2018 (real, sex-specific: men 28%,
-#              women 38%); no US survey was found reporting Jeon's exact
-#              g/day tier boundaries (<1 / 1-28 / >28 g/day) by sex, so the
-#              remaining (non-abstinent) mass is split into moderate/heavy
-#              using Jeon 2018's OWN controls' internal ratio between those
-#              two tiers -- a hybrid, not a purely independent US figure.
-BMI_OBESE_PREV = {'m': 0.711, 'f': 0.655}
-DIABETES_PREV = {'m': 0.129, 'f': 0.097}
+#   BMI>=25, diabetes, alcohol: self-computed, weighted (WTMEC2YR),
+#              sex-specific, from RAW NHANES August 2021-August 2023
+#              microdata (DEMO_L/BMX_L/DIQ_L/ALQ_L, downloaded directly
+#              from wwwn.cdc.gov as XPT files) -- ONE single survey cycle
+#              for all three, not a patchwork of different years/surveys.
+#              Diabetes = DIQ010==1 (doctor-diagnosed), matching Jeon's own
+#              "self-reported type 2 diabetes" variable definition.
+#              Alcohol g/day per respondent = (ALQ121 frequency category
+#              converted to days/week) x (ALQ130 drinks on a drinking day)
+#              x 14g ethanol/standard US drink, then bucketed at Jeon's
+#              exact <1 / 1-28 / >28 g/day boundaries.
+#   Family history: NHANES has no family-history-of-cancer question in any
+#              cycle (confirmed by inspecting the Aug2021-2023 Medical
+#              Conditions file, MCQ_L -- no such variable exists), so this
+#              stays at Jeon 2018's own validation-cohort controls value
+#              (Table S3), cross-checked against independent HPFS (men,
+#              9.4%) / NHS (women, 10.0%) cohort estimates and found
+#              consistent.
+BMI_OBESE_PREV = {'m': 0.736, 'f': 0.693}
+DIABETES_PREV = {'m': 0.120, 'f': 0.107}
 FAMILY_HISTORY_PREV = {'m': 0.100, 'f': 0.130}
-ALCOHOL_PREV_M = {'abstinent': 0.28, 'moderate': 0.528, 'heavy': 0.192}
-ALCOHOL_PREV_F = {'abstinent': 0.38, 'moderate': 0.565, 'heavy': 0.055}
+ALCOHOL_PREV_M = {'abstinent': 0.275, 'moderate': 0.599, 'heavy': 0.126}
+ALCOHOL_PREV_F = {'abstinent': 0.424, 'moderate': 0.533, 'heavy': 0.043}
 
 DIET_BETA = {
     'm': {'fiber': 0.045, 'calcium': 0.043, 'folate': -0.020, 'processed_meat': 0.060,

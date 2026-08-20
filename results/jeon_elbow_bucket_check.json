@@ -2,8 +2,8 @@
   "n": 5000,
   "seed": 20260819,
   "high_frac": 0.2,
-  "baseline_death_rate_pct": 2.2399999999999998,
-  "death_rate_high_pct": 6.293706293706294,
-  "death_rate_low_pct": 1.2253063265816453,
-  "rr": 5.1364349935778515
+  "baseline_death_rate_pct": 1.94,
+  "death_rate_high_pct": 5.583250249252243,
+  "death_rate_low_pct": 1.0257693269952466,
+  "rr": 5.442988108844199
 }
