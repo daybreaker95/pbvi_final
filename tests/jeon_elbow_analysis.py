@@ -81,10 +81,33 @@ ALCOHOL_HR = {                              # reference = 1-28 g/day
 }
 FAMILY_HISTORY_HR = {'m': 1.67, 'f': 1.46}  # Table S7, separate term
 
-BMI_OBESE_PREV = {'m': 0.496, 'f': 0.277}
-DIABETES_PREV = {'m': 0.113, 'f': 0.120}    # reused NHIC glucose>=126 prevalence as proxy
-FAMILY_HISTORY_PREV = {'m': 0.175, 'f': 0.175}
-ALCOHOL_PREV = {'abstinent': 0.548, 'moderate': 0.377, 'heavy': 0.075}
+# Prevalences re-sourced to US/Western population statistics, matching the
+# Jeon 2018 (Western-cohort) HRs above -- these previously reused Korean
+# NHIC-cohort prevalences, a source mismatch.
+#   BMI>=25:   NHANES 2011-2012, age-adjusted, sex-specific (CDC/NCHS;
+#              most recent period with an official sex-specific BMI>=25
+#              breakdown found -- more recent NHANES releases report only
+#              the pooled-sex combined figure, ~72% as of Aug2021-Aug2023).
+#   Diabetes:  CDC NCHS Data Brief #516 (Aug 2021-Aug 2023), DIAGNOSED
+#              diabetes by sex (matches Jeon's own "self-reported type 2
+#              diabetes" variable definition -- not the "total" figure,
+#              which would also include undiagnosed cases Jeon's variable
+#              cannot capture either).
+#   Family history: kept at Jeon 2018's own validation-cohort controls
+#              value (Table S3) -- cross-checked against independent HPFS
+#              (men, 9.4%) / NHS (women, 10.0%) cohort estimates found via
+#              search and found consistent, so not replaced.
+#   Alcohol:   abstinence tier from NHIS 2018 (real, sex-specific: men 28%,
+#              women 38%); no US survey was found reporting Jeon's exact
+#              g/day tier boundaries (<1 / 1-28 / >28 g/day) by sex, so the
+#              remaining (non-abstinent) mass is split into moderate/heavy
+#              using Jeon 2018's OWN controls' internal ratio between those
+#              two tiers -- a hybrid, not a purely independent US figure.
+BMI_OBESE_PREV = {'m': 0.711, 'f': 0.655}
+DIABETES_PREV = {'m': 0.129, 'f': 0.097}
+FAMILY_HISTORY_PREV = {'m': 0.100, 'f': 0.130}
+ALCOHOL_PREV_M = {'abstinent': 0.28, 'moderate': 0.528, 'heavy': 0.192}
+ALCOHOL_PREV_F = {'abstinent': 0.38, 'moderate': 0.565, 'heavy': 0.055}
 
 DIET_BETA = {
     'm': {'fiber': 0.045, 'calcium': 0.043, 'folate': -0.020, 'processed_meat': 0.060,
@@ -108,11 +131,16 @@ def assign_profiles(n, seed):
     diabetes[is_m] = rng.random(int(is_m.sum())) < DIABETES_PREV['m']
     diabetes[~is_m] = rng.random(int((~is_m).sum())) < DIABETES_PREV['f']
 
-    family_hist = rng.random(n) < FAMILY_HISTORY_PREV['m']
+    family_hist = np.empty(n, dtype=bool)
+    family_hist[is_m] = rng.random(int(is_m.sum())) < FAMILY_HISTORY_PREV['m']
+    family_hist[~is_m] = rng.random(int((~is_m).sum())) < FAMILY_HISTORY_PREV['f']
 
     alc_names = np.array(['abstinent', 'moderate', 'heavy'])
-    alc_p = np.array([ALCOHOL_PREV[a] for a in alc_names])
-    alcohol_cat = rng.choice(alc_names, size=n, p=alc_p)
+    alcohol_cat = np.empty(n, dtype=alc_names.dtype)
+    alc_p_m = np.array([ALCOHOL_PREV_M[a] for a in alc_names])
+    alc_p_f = np.array([ALCOHOL_PREV_F[a] for a in alc_names])
+    alcohol_cat[is_m] = rng.choice(alc_names, size=int(is_m.sum()), p=alc_p_m)
+    alcohol_cat[~is_m] = rng.choice(alc_names, size=int((~is_m).sum()), p=alc_p_f)
 
     diet_q = {f: rng.integers(0, 4, size=n) for f in DIET_FACTORS}
 
