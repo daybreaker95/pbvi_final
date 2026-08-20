@@ -31,8 +31,13 @@ import contextlib
 import warnings
 
 PBVI_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-CMOST_PY = os.path.abspath(os.path.join(
-    PBVI_ROOT, '..', '..', '..', '..', 'cmost_experiment_final', 'CMOST_experiment', 'python'))
+CMOST_PY = os.path.join(PBVI_ROOT, 'cmost_engine')  # self-contained copy of the
+                                                     # real-engine dependency closure
+                                                     # (NumberCrunching_policy.py,
+                                                     # build_natural_history_transition_matrix.py,
+                                                     # NumberCrunching_100000.py, state34.py,
+                                                     # settings/CMOST13.py) -- previously an
+                                                     # external sibling path outside this repo
 sys.path.insert(0, PBVI_ROOT)
 sys.path.insert(0, CMOST_PY)
 warnings.filterwarnings('ignore', category=RuntimeWarning)

@@ -24,8 +24,7 @@ import contextlib
 import warnings
 
 PBVI_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-CMOST_PY = os.path.abspath(os.path.join(
-    PBVI_ROOT, '..', '..', '..', '..', 'cmost_experiment_final', 'CMOST_experiment', 'python'))
+CMOST_PY = os.path.join(PBVI_ROOT, 'cmost_engine')  # self-contained real-engine copy
 sys.path.insert(0, PBVI_ROOT)
 sys.path.insert(0, CMOST_PY)
 sys.path.insert(0, os.path.dirname(__file__))
