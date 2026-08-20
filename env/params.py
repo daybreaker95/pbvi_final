@@ -16,7 +16,12 @@ import importlib.util
 import numpy as np
 
 _ENV_DIR = os.path.dirname(os.path.abspath(__file__))
-_PKG_DIR = os.path.abspath(os.path.join(_ENV_DIR, '..', '..'))  # .../python
+_PKG_DIR = os.path.abspath(os.path.join(_ENV_DIR, '..', 'fast_engine_deps'))  # vendored
+                            # calculate_sub.py + Evaluation.py + settings/CMOST13.py +
+                            # NumberCrunching_100000_fastengine.py (renamed on import to
+                            # avoid a sys.modules collision with cmost_engine's own,
+                            # differently-versioned NumberCrunching_100000.py when both
+                            # are imported in the same process -- see tests/*_4way_eval.py)
 if _PKG_DIR not in sys.path:
     sys.path.insert(0, _PKG_DIR)
 
