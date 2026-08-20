@@ -97,14 +97,25 @@ FAMILY_HISTORY_HR = {'m': 1.67, 'f': 1.46}  # Table S7, separate term
 #              exact <1 / 1-28 / >28 g/day boundaries.
 #   Family history: NHANES has no family-history-of-cancer question in any
 #              cycle (confirmed by inspecting the Aug2021-2023 Medical
-#              Conditions file, MCQ_L -- no such variable exists), so this
-#              stays at Jeon 2018's own validation-cohort controls value
-#              (Table S3), cross-checked against independent HPFS (men,
-#              9.4%) / NHS (women, 10.0%) cohort estimates and found
-#              consistent.
+#              Conditions file, MCQ_L -- no such variable exists). Kumerow
+#              et al. 2022 (Prev Med 159:107062), analyzing the 2015 NHIS
+#              (n=27,999, a clean nationally representative household
+#              survey -- not an occupational cohort like HPFS/NHS, and not
+#              enriched-sampled like an earlier 2005/2010 NHIS analysis
+#              considered and rejected), reports first-degree-relative
+#              colorectal cancer family history at 5.0% overall (Table 2)
+#              -- about half of Jeon 2018's own controls value (10.0%/
+#              13.0%) previously used here. That paper's tables report sex
+#              split only for "any cancer site" (male 33.6% / female
+#              37.4%, Table 1), not CRC specifically; applying that same
+#              male:female ratio to the 5.0% CRC figure (the paper's own
+#              text confirms women over-report family history across most
+#              specific cancer types, not just in aggregate) gives the
+#              sex-specific estimate below -- a derived split, not a
+#              directly reported one.
 BMI_OBESE_PREV = {'m': 0.736, 'f': 0.693}
 DIABETES_PREV = {'m': 0.120, 'f': 0.107}
-FAMILY_HISTORY_PREV = {'m': 0.100, 'f': 0.130}
+FAMILY_HISTORY_PREV = {'m': 0.047, 'f': 0.053}
 ALCOHOL_PREV_M = {'abstinent': 0.275, 'moderate': 0.599, 'heavy': 0.126}
 ALCOHOL_PREV_F = {'abstinent': 0.424, 'moderate': 0.533, 'heavy': 0.043}
 
