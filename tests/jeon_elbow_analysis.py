@@ -102,20 +102,20 @@ FAMILY_HISTORY_HR = {'m': 1.67, 'f': 1.46}  # Table S7, separate term
 #              (n=27,999, a clean nationally representative household
 #              survey -- not an occupational cohort like HPFS/NHS, and not
 #              enriched-sampled like an earlier 2005/2010 NHIS analysis
-#              considered and rejected), reports first-degree-relative
-#              colorectal cancer family history at 5.0% overall (Table 2)
-#              -- about half of Jeon 2018's own controls value (10.0%/
-#              13.0%) previously used here. That paper's tables report sex
-#              split only for "any cancer site" (male 33.6% / female
-#              37.4%, Table 1), not CRC specifically; applying that same
-#              male:female ratio to the 5.0% CRC figure (the paper's own
-#              text confirms women over-report family history across most
-#              specific cancer types, not just in aggregate) gives the
-#              sex-specific estimate below -- a derived split, not a
-#              directly reported one.
+#              considered and rejected), reports first-degree-relative (any
+#              number, i.e. "1 FDR" 4.6% + "2+ FDR" 0.4%) colorectal cancer
+#              family history at 5.0% overall (Table 2) -- matching Jeon
+#              2018's own variable definition ("yes/no... a first-degree
+#              relative with colorectal cancer", Supplementary Note), about
+#              half of Jeon's own controls value (10.0%/13.0%) previously
+#              used here. No sex-specific CRC breakdown is reported (only
+#              for "any cancer site" family history); rather than apply
+#              that unrelated ratio to CRC as an unverified extrapolation,
+#              use the reported 5.0% for both sexes -- the male/female HR
+#              difference (1.67/1.46) already carries the sex distinction.
 BMI_OBESE_PREV = {'m': 0.736, 'f': 0.693}
 DIABETES_PREV = {'m': 0.120, 'f': 0.107}
-FAMILY_HISTORY_PREV = {'m': 0.047, 'f': 0.053}
+FAMILY_HISTORY_PREV = {'m': 0.050, 'f': 0.050}
 ALCOHOL_PREV_M = {'abstinent': 0.275, 'moderate': 0.599, 'heavy': 0.126}
 ALCOHOL_PREV_F = {'abstinent': 0.424, 'moderate': 0.533, 'heavy': 0.043}
 
