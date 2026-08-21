@@ -207,6 +207,46 @@ python tests/jeon_lambda_sweep_real_engine.py
 python tests/jeon_policy_inrepo_eval.py -n 200000
 ```
 
+### 5a. Efficiency vs the fixed schedules, with and without follow-up
+
+`tests/surv_fair_compare.py` runs the same 4-way comparison as a proper
+efficiency question -- does the policy buy more mortality reduction per
+colonoscopy than q10y/q5y -- with CMOST's post-diagnosis follow-up either
+fully off (primary) or fully on (sensitivity), in every arm.
+
+Both follow-up streams move together on purpose. `Polyp_Surveillance` and
+`Cancer_Surveillance` are both triggered BY A FINDING, so both scale with how
+often an arm looks; switching one on and the other off leaves the larger and
+more endogenous of the two running and matches no practice pattern. Neither
+flag touches survival after diagnosis -- `Detected_MortTime` comes from stage
+at diagnosis alone in every arm -- so the flags only decide which
+colonoscopies land on the budget axis lambda prices. That script's docstring
+has the full argument.
+
+```bash
+# one arm per process; --surveillance switches BOTH streams on
+python tests/surv_fair_compare.py --arm no_screen -n 200000 --seed 999
+python tests/surv_fair_compare.py --arm q10y      -n 200000 --seed 999
+python tests/surv_fair_compare.py --arm q5y       -n 200000 --seed 999
+python tests/surv_fair_compare.py --arm policy --lam 0.002 -n 200000 --seed 999
+#   ...repeated over lambda in [-0.008, +0.010] x {surveillance on, off}
+#      x seeds {999, 1000, 1001}; ~6 processes in parallel on 8 cores
+
+python tests/surv_fair_report.py     # tables, frontier + risk-targeting figures
+```
+
+Results: `results/survfair/` (per-run JSON, `report.txt`, `summary.csv`),
+figures in `paper/figures/surv_fair_*.png`, write-up in
+`paper/results_surv_fair.md`. Headline: with follow-up off the policy
+strictly dominates both schedules on both axes; with it on the q10y result
+survives and the q5y margin narrows to ~5%, because CMOST's finding-triggered
+follow-up is itself risk-adaptive.
+
+Note that `tests/indivrisk_*.py` are older, currently BROKEN drafts of this
+comparison -- they import a `RiskDisclosedEngineHook` and a
+`train_policy(known_risk_class=...)` that no version in this history defines.
+`surv_fair_compare.py` supersedes them.
+
 ## 6. Method summary
 
 * **Environment.** `env/cmost_individual.py` re-implements every quarterly
