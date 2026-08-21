@@ -143,9 +143,31 @@ class SexAwareEngineHook:
     CRCScreeningPOMDP9's sex=1/2 convention exactly -- no remapping needed."""
 
     def __init__(self, pomdp_m, solver_m, pomdp_f, solver_f, risk_class, sex_arr,
-                 seed=0, observe_risk=True):
+                 seed=0, observe_risk=True, screen_min_gap=1,
+                 react_to_external_colo=False):
         self.pm, self.sm = pomdp_m, solver_m
         self.pf, self.sf = pomdp_f, solver_f
+        # screen_min_gap: never order a scope within this many years of one the
+        # patient already had for another reason (surveillance follow-up or
+        # symptoms). 1 = "not twice in the same year", which is all that is
+        # needed because CMOST fires surveillance immediately BEFORE the policy
+        # decision in the same q==1 slot -- without it the policy arm would be
+        # charged two colonoscopies where the fixed arms (min_gap=interval) are
+        # charged one. The policy own clock is its belief, not a fixed
+        # interval, so it gets the minimal version of the same rule rather than
+        # a full-interval reset.
+        # react_to_external_colo: fold a surveillance scope finding into the
+        # belief. The policy is still TRAINED in a surveillance-free world --
+        # this only says the clinician knows a colonoscopy happened and what it
+        # showed. Applied to "Foll" only: those always land at q==1 right
+        # before the decision, so the year single belief transition can be
+        # swapped from WAIT to SCREEN exactly. Symptom scopes can fire in any
+        # quarter, and the model WAIT dynamics already carry the symptomatic-
+        # diagnosis transition, so they only reset last_colo.
+        self.screen_min_gap = int(screen_min_gap or 0)
+        self.react_to_external_colo = bool(react_to_external_colo)
+        self.last_colo = np.full(len(risk_class), -10_000, dtype=np.int32)
+        self._pending = {}      # z -> (year, observation) from a "Foll" scope
         self.risk_class = np.asarray(risk_class).astype(int)
         self.sex_arr = np.asarray(sex_arr).astype(int)
         self.observe_risk = observe_risk
@@ -172,11 +194,12 @@ class SexAwareEngineHook:
     def decide_one(self, z, y):
         self._cur_z = z
         self._cur_y = y
+        if self.screen_min_gap and y - int(self.last_colo[z]) < self.screen_min_gap:
+            return 0
         _, s = self._pair(z)
         return int(s.best_action(y, self.belief[z]))
 
-    def obs(self, a, s_true_18):
-        z, y = self._cur_z, self._cur_y
+    def _sample_obs(self, z, y, a, s_true_18):
         p, _ = self._pair(z)
         r = int(self.risk_class[z])
         local13 = MAP18TO13[int(s_true_18)]
@@ -189,7 +212,19 @@ class SexAwareEngineHook:
         p_o = p_o / tot if tot > 1e-300 else np.full(NO, 1.0 / NO)
         return int(self.rng.choice(NO, p=p_o))
 
+    def obs(self, a, s_true_18):
+        return self._sample_obs(self._cur_z, self._cur_y, a, s_true_18)
+
     def step_update(self, z, a, o, y):
+        if a == 1:
+            self.last_colo[z] = y
+        pend = self._pending.pop(z, None)
+        if pend is not None and pend[0] == y:
+            # A surveillance scope already carried this year transition.
+            # Replace the policy update (necessarily WAIT -- see decide_one)
+            # with the SCREEN one it actually got; applying both would age the
+            # belief two years in one.
+            a, o = 1, pend[1]
         p, _ = self._pair(z)
         age = min(y, p.life_max)
         M = p.M[age][a][o]
@@ -198,22 +233,69 @@ class SexAwareEngineHook:
         if tot > 1e-300:
             self.belief[z] = bn / tot
 
+    def note_colonoscopy(self, z, y, kind, s_true_18):
+        self.last_colo[z] = y
+        if kind != "Foll" or not self.react_to_external_colo:
+            return
+        # Surveillance can fire at any age -- CMOST keys it on Last_Polyp /
+        # Last_Cancer, not on the screening window -- but the POMDP is only
+        # built from age_min up, and the hook only decides inside
+        # [age_min, age_max] anyway. Outside the window there is no belief to
+        # correct, so record the clock and stop.
+        p, _ = self._pair(z)
+        if y < p.age_min:
+            return
+        self._pending[z] = (y, self._sample_obs(z, y, 1, s_true_18))
+
 
 class FixedScheduleHook:
     """SCREEN iff the current year is in a fixed age set -- 100% adherence,
-    exact ages, no belief tracking needed."""
+    exact ages, no belief tracking needed.
 
-    def __init__(self, screen_ages):
+    min_gap: None (default) = screen on every scheduled age no matter what
+    else happened. An integer turns on the guideline convention that a
+    colonoscopy the patient already had -- symptom-triggered or surveillance
+    follow-up -- RESETS the screening clock: the scheduled exam is skipped if
+    one happened within min_gap years. Only meaningful with surveillance ON;
+    with it OFF the only external scopes are symptom-triggered diagnoses. Set
+    it to the schedule own interval (10 for q10y, 5 for q5y) so a
+    surveillance scope substitutes for exactly one screening round, which is
+    what the guidelines say."""
+
+    def __init__(self, screen_ages, min_gap=None):
         self.screen_ages = set(int(a) for a in screen_ages)
+        self.min_gap = min_gap
+        self.last_colo = {}
 
     def decide_one(self, z, y):
-        return 1 if y in self.screen_ages else 0
+        if y not in self.screen_ages:
+            return 0
+        if self.min_gap is not None:
+            if y - self.last_colo.get(z, -10_000) < self.min_gap:
+                return 0
+        return 1
 
     def obs(self, a, s_true_18):
         return 0
 
     def step_update(self, z, a, o, y):
-        pass
+        if self.min_gap is not None and a == 1:
+            self.last_colo[z] = y
+
+    def note_colonoscopy(self, z, y, kind, s_true_18):
+        """Called by NumberCrunching_policy for every colonoscopy this hook
+        did NOT order -- kind is "Symp" (symptom-triggered) or "Foll"
+        (surveillance follow-up). Only the clock matters here."""
+        if self.min_gap is not None:
+            self.last_colo[z] = y
+
+
+class SurveillanceAwareFixedScheduleHook(FixedScheduleHook):
+    """FixedScheduleHook with min_gap required rather than optional -- the
+    surveillance-ON comparator arms."""
+
+    def __init__(self, screen_ages, min_gap):
+        super().__init__(screen_ages, min_gap=int(min_gap))
 
 
 def train_policy(sex=None, age_min=40, age_max=80, sex_risk_npz=None, colo_penalty_qaly=0.0,
@@ -239,7 +321,8 @@ def train_policy(sex=None, age_min=40, age_max=80, sex_risk_npz=None, colo_penal
     return pomdp, solver
 
 
-def run_cohort(p, n, seed, policy_hook, hook_age_max=80, hook_age_min=40):
+def run_cohort(p, n, seed, policy_hook, hook_age_max=80, hook_age_min=40,
+               surveillance=False):
     # p must come from a SINGLE np.random.seed(seed) + prepare_simulation_params(n)
     # call made by the CALLER, before any risk_class/sex_arr used to build
     # policy_hook is derived from it -- previously this function drew its
@@ -249,10 +332,15 @@ def run_cohort(p, n, seed, policy_hook, hook_age_max=80, hook_age_min=40):
     # direct comparison), so the hook's risk_class/sex_arr for individual z
     # did not correspond to individual z's actual simulated risk/sex. Fixed
     # by requiring exactly one p, shared by hook construction and the sim.
-    # surveillance OFF (prepare_simulation_params already leaves it off by
-    # default -- kept explicit here for clarity/symmetry across all 4 runs)
-    p['flag']['Polyp_Surveillance'] = False
-    p['flag']['Cancer_Surveillance'] = False
+    # surveillance: OFF by default (prepare_simulation_params leaves it off
+    # too -- kept explicit here for symmetry across all arms). Both streams
+    # move together on purpose: post-polypectomy and post-resection follow-up
+    # are both DOWNSTREAM of a finding, so both scale with how often an arm
+    # looks. Turning one on and the other off gives a colonoscopy-budget axis
+    # that is neither the clean decision problem (all off) nor guideline
+    # practice (all on).
+    p['flag']['Polyp_Surveillance'] = bool(surveillance)
+    p['flag']['Cancer_Surveillance'] = bool(surveillance)
     sr = np.zeros((100, n), dtype=np.int8)
     ncr = np.zeros(n, dtype=np.int32)
     args = [p['p'], p['stage_variables'], p['location'], p['cost'], p['cost_stage'],
@@ -273,7 +361,7 @@ def run_cohort(p, n, seed, policy_hook, hook_age_max=80, hook_age_min=40):
     return p, sr, ncr, Money, Number, TumorRecord, DeathYear
 
 
-def summarize(sr, ncr, Money, Number, TumorRecord, DeathYear, n):
+def summarize(sr, ncr, Money, Number, TumorRecord, DeathYear, n, risk_class=None):
     win = sr[39:100]
     crc_death = (win == 15).any(axis=0)
 
@@ -330,7 +418,7 @@ def summarize(sr, ncr, Money, Number, TumorRecord, DeathYear, n):
     stage_pct_symptom = stage_pct(nz & (detect == 2))
 
     total_cost = float(Money['AllCost'].sum())
-    return {
+    out = {
         'n': n,
         'crc_death_per_100k': float(crc_death.mean() * 100_000),
         'incidence_per_100k': float(total_detected / n * 100_000),
@@ -351,7 +439,60 @@ def summarize(sr, ncr, Money, Number, TumorRecord, DeathYear, n):
         'cost_per_person_disc3pct_usd': total_cost_disc / n,
         'screening_colo_total': float(Number['Screening_Colonoscopy'].sum()),
         'followup_colo_total': float(Number['Follow_Up_Colonoscopy'].sum()),
+        'symptom_colo_total': float(Number['Symptoms_Colonoscopy'].sum()),
     }
+    if risk_class is not None:
+        out['by_risk'] = _by_risk(sr, ncr, TumorRecord, DeathYear,
+                                  np.asarray(risk_class).astype(int))
+    return out
+
+
+def _by_risk(sr, ncr, TumorRecord, DeathYear, risk_class):
+    """Per-risk-class split of the outcomes that can be attributed to an
+    individual: CRC death, diagnosed incidence, colonoscopy volume, life
+    years. Money is only ever accumulated per YEAR by the engine, never per
+    patient, so cost cannot be split this way and is left out -- the budget
+    axis the lambda sweep actually prices is colonoscopy count anyway.
+
+    TumorRecord PatientNumber is 1-based and 0 where the (year, slot) cell
+    holds no tumour, which is exactly the cells Stage != 0 already excludes.
+    """
+    DISC = 0.97
+    disc_factors = DISC ** np.arange(0, 100 - 39)
+    win = sr[39:100]
+    crc_death = (win == 15).any(axis=0)
+    DeathYear_corr = np.where(DeathYear == 0, 101, DeathYear)
+
+    stage = TumorRecord['Stage']
+    detect = TumorRecord['Detection']
+    pnum = TumorRecord['PatientNumber'].astype(np.int64)
+    nz = stage != 0
+    ev_owner = pnum[nz] - 1                   # 0-based individual per tumour
+    ev_detect = detect[nz]
+
+    out = {}
+    for r, label in ((0, 'low_risk'), (1, 'high_risk')):
+        m = risk_class == r
+        nr = int(m.sum())
+        if nr == 0:
+            continue
+        ev = m[ev_owner]
+        n_ev = int(ev.sum())
+        avg_age = float(DeathYear_corr[m].sum() / nr - 1)
+        out[label] = {
+            'n': nr,
+            'share': nr / len(risk_class),
+            'crc_death_per_100k': float(crc_death[m].mean() * 100_000),
+            'incidence_per_100k': float(n_ev / nr * 100_000),
+            'screen_detected_per_100k': float(int((ev & (ev_detect == 1)).sum()) / nr * 100_000),
+            'symptom_detected_per_100k': float(int((ev & (ev_detect == 2)).sum()) / nr * 100_000),
+            'surveillance_detected_per_100k': float(int((ev & (ev_detect == 3)).sum()) / nr * 100_000),
+            'avg_colonoscopies_per_person': float(ncr[m].mean()),
+            'avg_age_at_death': avg_age,
+            'life_years': avg_age - 40.0,
+            'life_years_disc3pct': float(np.sum((win[:, m] < 15).mean(axis=1) * disc_factors)),
+        }
+    return out
 
 
 def main():

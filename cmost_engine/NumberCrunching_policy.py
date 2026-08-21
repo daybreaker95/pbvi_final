@@ -846,6 +846,12 @@ def NumberCrunching_policy(p, StageVariables, Location, Cost, CostStage, risc,
         # Normal
         return _SR_IDX['Normal']
 
+    # Optional hook callback for colonoscopies the POLICY did not order --
+    # symptom-triggered and surveillance follow-up. Hooks that don't define it
+    # (the plain fixed-schedule and belief hooks) are unaffected, so this is
+    # backwards compatible with every existing caller.
+    _note_colo = getattr(policy_hook, 'note_colonoscopy', None) if policy_hook is not None else None
+
     while np.sum(Included) > 0 and y < 100:
         y += 1
         yi = y - 1  # 0-based year index for arrays
@@ -1165,6 +1171,11 @@ def NumberCrunching_policy(p, StageVariables, Location, Cost, CostStage, risc,
                             Number_Symptoms_Colonoscopy[yi] += 1
                             if n_colo_recorder is not None:
                                 n_colo_recorder[z] += 1
+                            # State BEFORE the scope, for policy_hook.note_colonoscopy
+                            # (see the surveillance block below for what the callback
+                            # is for). Captured here because Colonoscopy() mutates it.
+                            _ext_s_true = (_pomdp_state_idx(z)
+                                           if _note_colo is not None else 0)
                             Colonoscopy(z, y, q, 'Symp', Gender,
                                         Polyp_Polyps, Polyp_PolypYear, Polyp_PolypLocation,
                                         Polyp_EarlyProgression, Polyp_AdvProgression,
@@ -1191,6 +1202,8 @@ def NumberCrunching_policy(p, StageVariables, Location, Cost, CostStage, risc,
                                         Money_FollowUp, Money_Other,
                                         StageVariables, Cost, Location, risc,
                                         ColoReachMatrix, MortalityMatrix, CostStage)
+                            if _note_colo is not None:
+                                _note_colo(z, y, 'Symp', _ext_s_true)
                             break
 
                     #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1246,6 +1259,13 @@ def NumberCrunching_policy(p, StageVariables, Location, Cost, CostStage, risc,
                             Number_Follow_Up_Colonoscopy[yi] += 1
                             if n_colo_recorder is not None:
                                 n_colo_recorder[z] += 1
+                            # State BEFORE the scope, for policy_hook.note_colonoscopy.
+                            # Surveillance fires ahead of the policy decision in the
+                            # same q==1 slot, so a hook that does not hear about it
+                            # would (a) not know a colonoscopy already happened this
+                            # year and (b) carry a belief that ignores what it found.
+                            _ext_s_true = (_pomdp_state_idx(z)
+                                           if _note_colo is not None else 0)
                             Colonoscopy(z, y, q, 'Foll', Gender,
                                         Polyp_Polyps, Polyp_PolypYear, Polyp_PolypLocation,
                                         Polyp_EarlyProgression, Polyp_AdvProgression,
@@ -1272,6 +1292,8 @@ def NumberCrunching_policy(p, StageVariables, Location, Cost, CostStage, risc,
                                         Money_FollowUp, Money_Other,
                                         StageVariables, Cost, Location, risc,
                                         ColoReachMatrix, MortalityMatrix, CostStage)
+                            if _note_colo is not None:
+                                _note_colo(z, y, 'Foll', _ext_s_true)
 
                         # ── PBVI 정책 결정 (CMOST-in-the-loop) ──────────────
                         # 매년 q==1 에 한 번, [policy_hook_age_min, policy_hook_age_max]
