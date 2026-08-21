@@ -338,6 +338,83 @@ def make_figure(agg):
     print('saved', out)
 
 
+def make_risk_figure(agg):
+    """The mechanism behind the frontier: the policy does not screen better,
+    it screens a different set of people. Panel (a) plots each arm's high-risk
+    against its low-risk colonoscopy volume -- a uniform schedule sits on the
+    diagonal by construction, and distance above it is exactly the risk
+    reallocation. Panel (b) shows what that buys, per stratum."""
+    try:
+        import matplotlib
+        matplotlib.use('Agg')
+        import matplotlib.pyplot as plt
+    except ImportError:
+        return
+    panels = [s_ for s_ in ('nosurv', 'surv') if any(k[0] == s_ for k in agg)]
+    fig, axes = plt.subplots(2, len(panels), figsize=(6.6 * len(panels), 9.4), squeeze=False)
+    titles = {'nosurv': 'Primary: surveillance OFF', 'surv': 'Sensitivity: surveillance ON'}
+
+    for col, surv in enumerate(panels):
+        # ---- (a) where the volume goes
+        ax = axes[0][col]
+        hx, hy, lams = [], [], []
+        for lam in sorted(l for (sv, a, l) in agg if sv == surv and a == 'policy'):
+            e = agg[(surv, 'policy', lam)]
+            hx.append(e['by_risk']['low_risk']['avg_colonoscopies_per_person'])
+            hy.append(e['by_risk']['high_risk']['avg_colonoscopies_per_person'])
+            lams.append(lam)
+        ax.plot(hx, hy, 'o-', color='#1f77b4', ms=4, lw=1.3, label='PBVI policy')
+        for xi, yi, lam in zip(hx, hy, lams):
+            ax.annotate(f'{lam:+.3f}', (xi, yi), fontsize=6.5, color='#1f77b4',
+                        xytext=(4, 3), textcoords='offset points')
+        for arm, c, m in (('no_screen', '#7f7f7f', 's'), ('q10y', '#d62728', '^'),
+                          ('q5y', '#2ca02c', 'v')):
+            e = agg.get((surv, arm, None))
+            if e:
+                ax.plot([e['by_risk']['low_risk']['avg_colonoscopies_per_person']],
+                        [e['by_risk']['high_risk']['avg_colonoscopies_per_person']],
+                        m, color=c, ms=9, label=arm)
+        top = max(max(hx + hy), 6)
+        ax.plot([0, top], [0, top], ls='--', lw=0.9, color='#999999',
+                label='uniform (high = low)')
+        ax.set_xlabel('colonoscopies per person, LOW risk (bottom 80%)')
+        ax.set_ylabel('colonoscopies per person, HIGH risk (top 20%)')
+        ax.set_title(titles[surv] + ' -- volume allocation', fontsize=10.5)
+        ax.grid(alpha=0.25)
+        ax.legend(fontsize=8)
+
+        # ---- (b) what it buys, per stratum
+        ax = axes[1][col]
+        for risk, c in (('high_risk', '#b5651d'), ('low_risk', '#1f77b4')):
+            x, y, lm = policy_curve(agg, surv, 'crc_death_per_100k', risk=risk)
+            err = [agg[(surv, 'policy', l)]['by_risk'][risk]['crc_death_per_100k_sem']
+                   for l in lm]
+            ax.errorbar(x, y, yerr=err, fmt='o-', color=c, ms=4, lw=1.3, capsize=2,
+                        label=f'policy, {risk.replace("_", " ")}')
+        for arm, m in (('q10y', '^'), ('q5y', 'v')):
+            e = agg.get((surv, arm, None))
+            if not e:
+                continue
+            for risk, c in (('high_risk', '#b5651d'), ('low_risk', '#1f77b4')):
+                r = e['by_risk'][risk]
+                ax.plot([r['avg_colonoscopies_per_person']], [r['crc_death_per_100k']],
+                        m, color=c, ms=10, mec='k', mew=0.7,
+                        label=f'{arm}, {risk.replace("_", " ")}')
+        ax.set_xlabel("colonoscopies per person within that stratum")
+        ax.set_ylabel('CRC deaths per 100,000 in that stratum')
+        ax.set_title(titles[surv] + ' -- outcome per stratum', fontsize=10.5)
+        ax.grid(alpha=0.25)
+        ax.legend(fontsize=7.5, ncol=2)
+
+    fig.suptitle('How the PBVI policy buys its advantage: it moves colonoscopies '
+                 'from low-risk to high-risk people', fontsize=12.5)
+    fig.tight_layout()
+    os.makedirs(FIGDIR, exist_ok=True)
+    out = os.path.join(FIGDIR, 'surv_fair_risk_targeting.png')
+    fig.savefig(out, dpi=160)
+    print('saved', out)
+
+
 def write_csv(agg):
     import csv
     path = os.path.join(RES, 'summary.csv')
@@ -374,6 +451,7 @@ def main():
         f.write(txt + '\n')
     write_csv(agg)
     make_figure(agg)
+    make_risk_figure(agg)
 
 
 if __name__ == '__main__':

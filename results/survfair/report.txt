@@ -1,0 +1,239 @@
+PBVI vs fixed-schedule colonoscopy screening in CMOST
+26 arm-points, 3 seeds x 200,000 individuals each, ages 40-80
+risk label: top 20% of CMOST individual_risk, disclosed to the agent at t=0
+
+============================================================================================================
+PRIMARY -- both surveillance streams OFF
+============================================================================================================
+(+- is the empirical SEM across seeds; [..] is the binomial SE on the pooled cohort, for comparison)
+
+-- WHOLE COHORT --
+arm                            colo/pp      CRC death/100k  incid/100k       LY   LY(3%)
+no_screen                 0.050+-0.001    1912.8+-35.9 [17.7]      4721.3  37.0794  21.7202
+q10y                      2.607+-0.000    1025.5+-12.0 [13.0]      2695.0  37.1891  21.7555
+q5y                       5.020+-0.002     795.3+-10.6 [11.5]      2245.7  37.2248  21.7656
+policy lam=-0.0080        5.204+-0.003     690.0+-3.8  [10.7]      2008.8  37.2472  21.7744
+policy lam=-0.0060        4.445+-0.004     735.8+-5.4  [11.0]      2094.3  37.2200  21.7640
+policy lam=-0.0040        3.255+-0.000     817.5+-10.8 [11.6]      2288.2  37.2453  21.7758
+policy lam=-0.0030        3.091+-0.001     829.5+-15.3 [11.7]      2296.0  37.2322  21.7701
+policy lam=-0.0020        2.691+-0.001     834.8+-10.5 [11.7]      2342.8  37.1994  21.7595
+policy lam=-0.0010        2.615+-0.002     863.7+-5.9  [11.9]      2365.2  37.2397  21.7742
+policy lam=+0.0000        2.608+-0.002     867.5+-15.8 [12.0]      2416.0  37.2345  21.7714
+policy lam=+0.0020        2.196+-0.001     900.3+-8.6  [12.2]      2467.5  37.2128  21.7650
+policy lam=+0.0050        1.850+-0.002     956.5+-12.8 [12.6]      2566.8  37.2037  21.7630
+policy lam=+0.0100        1.717+-0.002    1033.5+-15.9 [13.1]      2671.3  37.2020  21.7631
+
+-- HIGH RISK (top 20% of individual_risk) --
+arm                            colo/pp      CRC death/100k  incid/100k       LY   LY(3%)
+no_screen                 0.135+-0.001    5230.5+-127.3[64.1]     12853.1  36.5356  21.5361
+q10y                      2.626+-0.001    2308.4+-45.4 [43.2]      5969.1  36.9900  21.6839
+q5y                       5.022+-0.006    1588.1+-12.1 [36.0]      4376.0  37.0499  21.7015
+policy lam=-0.0080       10.192+-0.013     967.1+-11.0 [28.2]      2996.5  37.1367  21.7270
+policy lam=-0.0060        9.287+-0.014    1038.2+-32.8 [29.2]      3145.5  37.1701  21.7438
+policy lam=-0.0040        8.074+-0.005    1092.1+-17.7 [29.9]      3376.4  37.1203  21.7271
+policy lam=-0.0030        7.272+-0.004    1137.7+-17.6 [30.5]      3475.1  37.1119  21.7250
+policy lam=-0.0020        7.113+-0.003    1161.7+-11.3 [30.8]      3591.9  37.0994  21.7250
+policy lam=-0.0010        6.865+-0.008    1132.7+-20.8 [30.5]      3495.1  37.1871  21.7532
+policy lam=+0.0000        7.064+-0.008    1152.7+-39.9 [30.7]      3641.8  37.0958  21.7190
+policy lam=+0.0020        6.474+-0.004    1194.9+-28.1 [31.3]      3623.5  37.1537  21.7410
+policy lam=+0.0050        5.752+-0.006    1362.9+-30.3 [33.4]      3986.8  37.0882  21.7196
+policy lam=+0.0100        5.098+-0.001    1677.5+-15.4 [37.0]      4439.6  37.0410  21.7080
+
+-- LOW RISK (bottom 80%) --
+arm                            colo/pp      CRC death/100k  incid/100k       LY   LY(3%)
+no_screen                 0.028+-0.000    1076.7+-15.6 [14.9]      2672.0  37.2165  21.7665
+q10y                      2.602+-0.001     702.2+-12.4 [12.1]      1869.9  37.2393  21.7735
+q5y                       5.020+-0.002     595.5+-10.2 [11.1]      1708.8  37.2689  21.7818
+policy lam=-0.0080        3.947+-0.002     620.2+-6.3  [11.3]      1759.9  37.2749  21.7863
+policy lam=-0.0060        3.225+-0.001     659.6+-3.7  [11.7]      1829.4  37.2325  21.7691
+policy lam=-0.0040        2.040+-0.001     748.3+-10.0 [12.4]      2013.9  37.2768  21.7881
+policy lam=-0.0030        2.038+-0.001     751.8+-22.2 [12.5]      1998.8  37.2625  21.7815
+policy lam=-0.0020        1.576+-0.002     752.5+-15.2 [12.5]      2028.0  37.2246  21.7682
+policy lam=-0.0010        1.544+-0.001     795.9+-2.4  [12.8]      2080.4  37.2529  21.7795
+policy lam=+0.0000        1.485+-0.000     795.7+-14.2 [12.8]      2107.1  37.2695  21.7846
+policy lam=+0.0020        1.118+-0.002     826.1+-6.3  [13.1]      2176.2  37.2276  21.7711
+policy lam=+0.0050        0.867+-0.001     854.1+-12.1 [13.3]      2208.9  37.2328  21.7739
+policy lam=+0.0100        0.865+-0.000     871.2+-16.0 [13.4]      2225.7  37.2426  21.7770
+
+-- EFFICIENCY vs THE FIXED SCHEDULES (whole cohort) --
+
+  q10y: 2.607 colonoscopies/person, 1025.5+-12.0 CRC deaths/100k
+    matched budget : policy reaches 867.5 deaths/100k at the same 2.607 colo/pp  (+158.0/100k, +15.4%)
+    matched effect : policy needs 1.731 colo/pp for the same 1025.5 deaths/100k  (-0.876, -33.6%)
+    dominance      : 2 lambda(s) better on BOTH axes; best lam=+0.0020 -> 2.196 colo/pp, 900.3 deaths/100k (-0.411 colo, -125.2 deaths)
+    disc. LY       : policy 21.7714 vs q10y 21.7555 at matched budget (+0.0159 LY)
+    per-colo yield : q10y averts 887 deaths/100k with 2.607 colo/pp = 340.3 per colonoscopy-unit
+
+  q5y: 5.020 colonoscopies/person, 795.3+-10.6 CRC deaths/100k
+    matched budget : policy reaches 701.1 deaths/100k at the same 5.020 colo/pp  (+94.2/100k, +11.8%)
+    matched effect : policy needs 3.578 colo/pp for the same 795.3 deaths/100k  (-1.443, -28.7%)
+    dominance      : 1 lambda(s) better on BOTH axes; best lam=-0.0060 -> 4.445 colo/pp, 735.8 deaths/100k (-0.575 colo, -59.5 deaths)
+    disc. LY       : policy 21.7758 vs q5y 21.7656 at matched budget (+0.0102 LY)
+    per-colo yield : q5y averts 1118 deaths/100k with 5.020 colo/pp = 222.6 per colonoscopy-unit
+
+    policy lam=+0.0100: averts 879 deaths/100k with 1.717 colo/pp = 512.1 per colonoscopy-unit
+    policy lam=+0.0050: averts 956 deaths/100k with 1.850 colo/pp = 517.0 per colonoscopy-unit
+    policy lam=+0.0020: averts 1012 deaths/100k with 2.196 colo/pp = 461.0 per colonoscopy-unit
+    policy lam=+0.0000: averts 1045 deaths/100k with 2.608 colo/pp = 400.9 per colonoscopy-unit
+    policy lam=-0.0010: averts 1049 deaths/100k with 2.615 colo/pp = 401.2 per colonoscopy-unit
+    policy lam=-0.0020: averts 1078 deaths/100k with 2.691 colo/pp = 400.6 per colonoscopy-unit
+    policy lam=-0.0030: averts 1083 deaths/100k with 3.091 colo/pp = 350.4 per colonoscopy-unit
+    policy lam=-0.0040: averts 1095 deaths/100k with 3.255 colo/pp = 336.5 per colonoscopy-unit
+    policy lam=-0.0060: averts 1177 deaths/100k with 4.445 colo/pp = 264.8 per colonoscopy-unit
+    policy lam=-0.0080: averts 1223 deaths/100k with 5.204 colo/pp = 235.0 per colonoscopy-unit
+
+-- WHERE EACH ARM SPENDS ITS COLONOSCOPIES --
+arm                     high colo/pp  low colo/pp   ratio  high death  low death  high LY(3%)  low LY(3%)
+no_screen                      0.135        0.028    4.80      5230.5     1076.7      21.5361     21.7665
+q10y                           2.626        2.602    1.01      2308.4      702.2      21.6839     21.7735
+q5y                            5.022        5.020    1.00      1588.1      595.5      21.7015     21.7818
+policy lam=-0.0080            10.192        3.947    2.58       967.1      620.2      21.7270     21.7863
+policy lam=-0.0060             9.287        3.225    2.88      1038.2      659.6      21.7438     21.7691
+policy lam=-0.0040             8.074        2.040    3.96      1092.1      748.3      21.7271     21.7881
+policy lam=-0.0030             7.272        2.038    3.57      1137.7      751.8      21.7250     21.7815
+policy lam=-0.0020             7.113        1.576    4.51      1161.7      752.5      21.7250     21.7682
+policy lam=-0.0010             6.865        1.544    4.45      1132.7      795.9      21.7532     21.7795
+policy lam=+0.0000             7.064        1.485    4.76      1152.7      795.7      21.7190     21.7846
+policy lam=+0.0020             6.474        1.118    5.79      1194.9      826.1      21.7410     21.7711
+policy lam=+0.0050             5.752        0.867    6.64      1362.9      854.1      21.7196     21.7739
+policy lam=+0.0100             5.098        0.865    5.89      1677.5      871.2      21.7080     21.7770
+
+-- COLONOSCOPY VOLUME BY SOURCE (per person) --
+arm                     screening  follow-up   symptom    total  surv-detected/100k
+no_screen                   0.000      0.000     0.050    0.050                 0.0
+q10y                        2.584      0.000     0.023    2.607                 0.0
+q5y                         5.005      0.000     0.016    5.020                 0.0
+policy lam=-0.0080          5.190      0.000     0.014    5.204                 0.0
+policy lam=-0.0060          4.430      0.000     0.015    4.445                 0.0
+policy lam=-0.0040          3.237      0.000     0.018    3.255                 0.0
+policy lam=-0.0030          3.073      0.000     0.018    3.091                 0.0
+policy lam=-0.0020          2.673      0.000     0.018    2.691                 0.0
+policy lam=-0.0010          2.596      0.000     0.019    2.615                 0.0
+policy lam=+0.0000          2.588      0.000     0.019    2.608                 0.0
+policy lam=+0.0020          2.176      0.000     0.020    2.196                 0.0
+policy lam=+0.0050          1.828      0.000     0.022    1.850                 0.0
+policy lam=+0.0100          1.693      0.000     0.024    1.717                 0.0
+
+============================================================================================================
+SENSITIVITY -- both surveillance streams ON
+============================================================================================================
+(+- is the empirical SEM across seeds; [..] is the binomial SE on the pooled cohort, for comparison)
+
+-- WHOLE COHORT --
+arm                            colo/pp      CRC death/100k  incid/100k       LY   LY(3%)
+no_screen                 0.167+-0.000    1819.5+-2.6  [17.3]      4552.8  37.1257  21.7407
+q10y                      3.125+-0.002     823.5+-7.6  [11.7]      2314.8  37.2768  21.7869
+q5y                       5.333+-0.001     659.8+-6.7  [10.5]      2025.2  37.2592  21.7819
+policy lam=-0.0080        5.585+-0.005     604.3+-6.6  [10.0]      1917.8  37.2722  21.7851
+policy lam=-0.0060        4.858+-0.003     679.7+-14.8 [10.6]      2006.2  37.2677  21.7861
+policy lam=-0.0040        3.645+-0.002     754.3+-2.7  [11.2]      2152.7  37.2552  21.7822
+policy lam=-0.0030        3.578+-0.000     733.7+-2.3  [11.0]      2139.0  37.2596  21.7824
+policy lam=-0.0020        3.182+-0.003     757.5+-6.0  [11.2]      2175.8  37.2296  21.7701
+policy lam=-0.0010        3.103+-0.002     764.7+-8.4  [11.2]      2191.7  37.2556  21.7817
+policy lam=+0.0000        3.118+-0.003     788.7+-9.7  [11.4]      2221.2  37.2572  21.7818
+policy lam=+0.0020        2.680+-0.000     816.8+-6.1  [11.6]      2281.5  37.2860  21.7932
+policy lam=+0.0050        2.357+-0.003     852.5+-13.5 [11.9]      2336.3  37.2510  21.7806
+policy lam=+0.0100        2.251+-0.002     848.8+-16.6 [11.8]      2360.3  37.2724  21.7871
+
+-- HIGH RISK (top 20% of individual_risk) --
+arm                            colo/pp      CRC death/100k  incid/100k       LY   LY(3%)
+no_screen                 0.475+-0.002    4814.9+-27.4 [61.6]     12256.3  36.6891  21.5931
+q10y                      4.298+-0.007    1338.1+-23.4 [33.1]      4069.7  37.1455  21.7305
+q5y                       6.015+-0.011    1054.1+-24.7 [29.4]      3451.1  37.0959  21.7156
+policy lam=-0.0080       11.157+-0.013     738.7+-43.3 [24.6]      2600.0  37.2062  21.7551
+policy lam=-0.0060       10.178+-0.007     798.2+-12.0 [25.6]      2726.6  37.1249  21.7318
+policy lam=-0.0040        9.196+-0.009     862.0+-22.2 [26.6]      2892.3  37.1365  21.7401
+policy lam=-0.0030        8.867+-0.012     817.2+-4.4  [25.9]      2803.8  37.1640  21.7463
+policy lam=-0.0020        8.752+-0.012     801.5+-9.2  [25.7]      2776.3  37.1491  21.7369
+policy lam=-0.0010        8.423+-0.003     849.6+-45.9 [26.4]      2863.2  37.1738  21.7512
+policy lam=+0.0000        8.586+-0.001     837.9+-8.5  [26.2]      2885.7  37.2246  21.7649
+policy lam=+0.0020        7.920+-0.006     838.8+-5.9  [26.2]      2835.2  37.2229  21.7690
+policy lam=+0.0050        7.361+-0.007     940.6+-9.6  [27.8]      3062.8  37.1281  21.7382
+policy lam=+0.0100        6.839+-0.008     934.0+-36.1 [27.7]      3105.1  37.1396  21.7358
+
+-- LOW RISK (bottom 80%) --
+arm                            colo/pp      CRC death/100k  incid/100k       LY   LY(3%)
+no_screen                 0.089+-0.001    1064.6+-4.2  [14.8]      2611.5  37.2357  21.7779
+q10y                      2.829+-0.001     693.8+-5.1  [12.0]      1872.6  37.3099  21.8011
+q5y                       5.161+-0.002     560.5+-9.0  [10.8]      1665.8  37.3003  21.7985
+policy lam=-0.0080        4.181+-0.002     570.5+-10.9 [10.9]      1745.9  37.2889  21.7926
+policy lam=-0.0060        3.518+-0.001     649.8+-15.5 [11.6]      1824.6  37.3037  21.7998
+policy lam=-0.0040        2.246+-0.002     727.2+-3.9  [12.3]      1966.3  37.2851  21.7928
+policy lam=-0.0030        2.245+-0.001     712.6+-2.1  [12.2]      1971.5  37.2837  21.7915
+policy lam=-0.0020        1.778+-0.000     746.4+-6.3  [12.4]      2024.5  37.2499  21.7785
+policy lam=-0.0010        1.762+-0.000     743.3+-3.2  [12.4]      2022.4  37.2761  21.7894
+policy lam=+0.0000        1.739+-0.001     776.2+-12.6 [12.7]      2053.7  37.2654  21.7860
+policy lam=+0.0020        1.359+-0.001     811.3+-8.3  [13.0]      2142.0  37.3020  21.7994
+policy lam=+0.0050        1.096+-0.001     830.3+-14.4 [13.1]      2153.3  37.2819  21.7912
+policy lam=+0.0100        1.095+-0.001     827.4+-12.4 [13.1]      2172.7  37.3058  21.7999
+
+-- EFFICIENCY vs THE FIXED SCHEDULES (whole cohort) --
+
+  q10y: 3.125 colonoscopies/person, 823.5+-7.6 CRC deaths/100k
+    matched budget : policy reaches 763.9 deaths/100k at the same 3.125 colo/pp  (+59.6/100k, +7.2%)
+    matched effect : policy needs 2.613 colo/pp for the same 823.5 deaths/100k  (-0.512, -16.4%)
+    dominance      : 3 lambda(s) better on BOTH axes; best lam=-0.0010 -> 3.103 colo/pp, 764.7 deaths/100k (-0.022 colo, -58.8 deaths)
+    disc. LY       : policy 21.7932 vs q10y 21.7869 at matched budget (+0.0063 LY)
+    per-colo yield : q10y averts 996 deaths/100k with 3.125 colo/pp = 318.8 per colonoscopy-unit
+
+  q5y: 5.333 colonoscopies/person, 659.8+-6.7 CRC deaths/100k
+    matched budget : policy reaches 630.5 deaths/100k at the same 5.333 colo/pp  (+29.4/100k, +4.5%)
+    matched effect : policy needs 5.050 colo/pp for the same 659.8 deaths/100k  (-0.283, -5.3%)
+    dominance      : no lambda is better on both axes
+    disc. LY       : policy 21.7932 vs q5y 21.7819 at matched budget (+0.0114 LY)
+    per-colo yield : q5y averts 1160 deaths/100k with 5.333 colo/pp = 217.5 per colonoscopy-unit
+
+    policy lam=+0.0100: averts 971 deaths/100k with 2.251 colo/pp = 431.1 per colonoscopy-unit
+    policy lam=+0.0050: averts 967 deaths/100k with 2.357 colo/pp = 410.2 per colonoscopy-unit
+    policy lam=+0.0020: averts 1003 deaths/100k with 2.680 colo/pp = 374.1 per colonoscopy-unit
+    policy lam=-0.0010: averts 1055 deaths/100k with 3.103 colo/pp = 340.0 per colonoscopy-unit
+    policy lam=+0.0000: averts 1031 deaths/100k with 3.118 colo/pp = 330.7 per colonoscopy-unit
+    policy lam=-0.0020: averts 1062 deaths/100k with 3.182 colo/pp = 333.7 per colonoscopy-unit
+    policy lam=-0.0030: averts 1086 deaths/100k with 3.578 colo/pp = 303.5 per colonoscopy-unit
+    policy lam=-0.0040: averts 1065 deaths/100k with 3.645 colo/pp = 292.2 per colonoscopy-unit
+    policy lam=-0.0060: averts 1140 deaths/100k with 4.858 colo/pp = 234.6 per colonoscopy-unit
+    policy lam=-0.0080: averts 1215 deaths/100k with 5.585 colo/pp = 217.6 per colonoscopy-unit
+
+-- WHERE EACH ARM SPENDS ITS COLONOSCOPIES --
+arm                     high colo/pp  low colo/pp   ratio  high death  low death  high LY(3%)  low LY(3%)
+no_screen                      0.475        0.089    5.36      4814.9     1064.6      21.5931     21.7779
+q10y                           4.298        2.829    1.52      1338.1      693.8      21.7305     21.8011
+q5y                            6.015        5.161    1.17      1054.1      560.5      21.7156     21.7985
+policy lam=-0.0080            11.157        4.181    2.67       738.7      570.5      21.7551     21.7926
+policy lam=-0.0060            10.178        3.518    2.89       798.2      649.8      21.7318     21.7998
+policy lam=-0.0040             9.196        2.246    4.09       862.0      727.2      21.7401     21.7928
+policy lam=-0.0030             8.867        2.245    3.95       817.2      712.6      21.7463     21.7915
+policy lam=-0.0020             8.752        1.778    4.92       801.5      746.4      21.7369     21.7785
+policy lam=-0.0010             8.423        1.762    4.78       849.6      743.3      21.7512     21.7894
+policy lam=+0.0000             8.586        1.739    4.94       837.9      776.2      21.7649     21.7860
+policy lam=+0.0020             7.920        1.359    5.83       838.8      811.3      21.7690     21.7994
+policy lam=+0.0050             7.361        1.096    6.71       940.6      830.3      21.7382     21.7912
+policy lam=+0.0100             6.839        1.095    6.24       934.0      827.4      21.7358     21.7999
+
+-- COLONOSCOPY VOLUME BY SOURCE (per person) --
+arm                     screening  follow-up   symptom    total  surv-detected/100k
+no_screen                   0.000      0.119     0.047    0.167                34.2
+q10y                        2.368      0.738     0.018    3.125               218.7
+q5y                         4.417      0.904     0.013    5.333               249.0
+policy lam=-0.0080          4.857      0.716     0.012    5.585               205.0
+policy lam=-0.0060          4.136      0.709     0.013    4.858               202.3
+policy lam=-0.0040          2.899      0.730     0.015    3.645               226.5
+policy lam=-0.0030          2.801      0.761     0.016    3.578               220.0
+policy lam=-0.0020          2.415      0.751     0.016    3.182               213.3
+policy lam=-0.0010          2.332      0.755     0.016    3.103               224.0
+policy lam=+0.0000          2.362      0.739     0.016    3.118               217.3
+policy lam=+0.0020          1.927      0.735     0.018    2.680               213.3
+policy lam=+0.0050          1.619      0.719     0.019    2.357               220.2
+policy lam=+0.0100          1.515      0.717     0.019    2.251               213.5
+
+============================================================================================================
+DOES THE CONCLUSION SURVIVE TURNING SURVEILLANCE ON?
+============================================================================================================
+
+  vs q10y
+    primary   (surveillance off)   matched-budget deaths   867.5 vs 1025.5   matched-effect colo  1.731 vs 2.607   dominating lambdas 2
+    sensitivity (surveillance on)  matched-budget deaths   763.9 vs 823.5   matched-effect colo  2.613 vs 3.125   dominating lambdas 3
+
+  vs q5y
+    primary   (surveillance off)   matched-budget deaths   701.1 vs 795.3   matched-effect colo  3.578 vs 5.020   dominating lambdas 1
+    sensitivity (surveillance on)  matched-budget deaths   630.5 vs 659.8   matched-effect colo  5.050 vs 5.333   dominating lambdas 0

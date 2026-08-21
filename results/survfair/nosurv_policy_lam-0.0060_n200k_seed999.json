@@ -1,0 +1,77 @@
+{
+  "arm": "policy",
+  "lam": -0.006,
+  "surveillance": false,
+  "n": 200000,
+  "seed": 999,
+  "age_min": 40,
+  "age_max": 80,
+  "risk_def": "cmost_individual_risk_top20pct_disclosed",
+  "risk_threshold": 3.6169798111920985,
+  "high_frac": 0.2,
+  "risk_npz": "C:\\Users\\daybr\\Git_Works\\pbvi_final\\results\\transitions_9state_sex_risk_top20pct.npz",
+  "elapsed_sec": 577.7916088104248,
+  "crc_death_per_100k": 738.5,
+  "incidence_per_100k": 2102.5,
+  "screen_detected_per_100k": 645.5,
+  "symptom_detected_per_100k": 1457.0,
+  "surveillance_detected_per_100k": 0.0,
+  "baseline_detected_per_100k": 0.0,
+  "stage_pct_all": [
+    24.63733650416171,
+    37.3602853745541,
+    22.140309155766943,
+    15.862068965517242
+  ],
+  "stage_pct_screen": [
+    43.14484895429899,
+    35.16653756777692,
+    15.259488768396592,
+    6.429124709527498
+  ],
+  "stage_pct_symptom": [
+    16.437886067261495,
+    38.33218943033631,
+    25.188743994509267,
+    20.041180507892932
+  ],
+  "avg_age_at_death": 77.210545,
+  "life_years": 37.210544999999996,
+  "life_years_disc3pct": 21.764463522695543,
+  "avg_colonoscopies_per_person": 4.443585,
+  "total_cost_usd": 1303794930.75,
+  "cost_per_person_usd": 6518.97465375,
+  "total_cost_disc3pct_usd": 689532774.3246983,
+  "cost_per_person_disc3pct_usd": 3447.6638716234916,
+  "screening_colo_total": 885619.0,
+  "followup_colo_total": 0.0,
+  "symptom_colo_total": 3098.0,
+  "by_risk": {
+    "low_risk": {
+      "n": 159747,
+      "share": 0.798735,
+      "crc_death_per_100k": 666.0531966171509,
+      "incidence_per_100k": 1827.2643617720523,
+      "screen_detected_per_100k": 460.1025371368477,
+      "symptom_detected_per_100k": 1367.1618246352045,
+      "surveillance_detected_per_100k": 0.0,
+      "avg_colonoscopies_per_person": 3.224924411726042,
+      "avg_age_at_death": 77.23458969495515,
+      "life_years": 37.23458969495515,
+      "life_years_disc3pct": 21.7730713908729
+    },
+    "high_risk": {
+      "n": 40253,
+      "share": 0.201265,
+      "crc_death_per_100k": 1026.0104836906567,
+      "incidence_per_100k": 3194.7929346880974,
+      "screen_detected_per_100k": 1381.2635083099397,
+      "symptom_detected_per_100k": 1813.5294263781584,
+      "surveillance_detected_per_100k": 0.0,
+      "avg_colonoscopies_per_person": 9.279929446252453,
+      "avg_age_at_death": 77.11512185427173,
+      "life_years": 37.115121854271734,
+      "life_years_disc3pct": 21.730302562823546
+    }
+  }
+}
