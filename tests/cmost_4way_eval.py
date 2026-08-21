@@ -45,7 +45,8 @@ warnings.filterwarnings('ignore', category=RuntimeWarning)
 import numpy as np
 
 from pomdp.model_v2 import CRCScreeningPOMDP9, NORMAL, EARLY_POLYP, ADV_POLYP, \
-    CA_STAGES, CRC_DEATH, OTHER_DEATH, DET_CA_STAGES
+    CA_STAGES, CRC_DEATH, OTHER_DEATH, DET_CA_STAGES, \
+    DEFAULT_HIGH_FRAC, RISK_LABELS, risk_class_from_individual_risk
 from pomdp.fivi import FiVI
 
 import build_natural_history_transition_matrix as BNH
@@ -61,23 +62,41 @@ MAP18TO13 = {
 }
 
 RISK_THRESHOLD = 3.974249328225908    # CRCEngine individual_risk, top-10% cut
-                                       # (must match transitions_9state_sex_risk.npz's
-                                       # own risk_threshold field exactly -- this is
-                                       # what SexAwareEngineHook uses to classify each
-                                       # simulated individual's risk_class, and it has
-                                       # to line up with whatever threshold the loaded
-                                       # policy was actually TRAINED on, or risk_class
-                                       # routing silently mismatches the policy)
+                                       # (transitions_9state_sex_risk.npz's own
+                                       # risk_threshold field -- kept only as the
+                                       # legacy explicit --risk-threshold value)
+
+# Current default: the top DEFAULT_HIGH_FRAC (20%) of the population by CMOST's
+# individual_risk is labelled high_risk, everyone else low_risk, and that label
+# is HANDED TO the agent (EngineHook13/SexAwareEngineHook start each person's
+# belief on their own risk block). The cut is recomputed as the cohort's own
+# (1 - high_frac) quantile rather than hardcoded, but it still has to line up
+# with the split the loaded policy's matrices were estimated under -- hence
+# DEFAULT_RISK_NPZ, whose own risk_threshold field main() cross-checks.
+DEFAULT_RISK_NPZ = os.path.join(PBVI_ROOT, 'results',
+                                 'transitions_9state_sex_risk_top20pct.npz')
 
 
 class EngineHook13:
-    def __init__(self, pomdp, solver, risk_class, seed=0):
+    """observe_risk: True (default) = each individual's risk class is given
+    to the agent at t=0, so their belief starts fully on their own risk
+    block (high_risk for the top individual_risk fraction, low_risk for the
+    rest -- see risk_class_from_individual_risk). False = the earlier
+    behaviour, where everyone starts from the same population-prior belief
+    and the class stays latent."""
+
+    def __init__(self, pomdp, solver, risk_class, seed=0, observe_risk=True):
         self.p = pomdp
         self.solver = solver
-        self.risk_class = risk_class
-        n = len(risk_class)
-        b0 = pomdp.initial_belief()
-        self.belief = np.tile(b0, (n, 1))
+        self.risk_class = np.asarray(risk_class).astype(int)
+        n = len(self.risk_class)
+        self.observe_risk = observe_risk
+        if observe_risk and pomdp.n_risk > 1:
+            b0_by_class = np.stack([pomdp.initial_belief(risk_class=r)
+                                    for r in range(pomdp.n_risk)])
+            self.belief = b0_by_class[self.risk_class]
+        else:
+            self.belief = np.tile(pomdp.initial_belief(), (n, 1))
         self.rng = np.random.default_rng(seed + 7)
         self._cur_z = None
         self._cur_y = None
@@ -111,23 +130,38 @@ class EngineHook13:
 
 class SexAwareEngineHook:
     """Like EngineHook13, but routes each individual to their OWN
-    sex-specific (pomdp, solver) pair instead of one pooled pair -- sex is
-    an observable factor (known at t=0, unlike risk_class which stays
-    latent/belief-tracked), so it's handled by a deterministic per-person
-    routing split rather than by expanding the belief-state itself.
+    sex-specific (pomdp, solver) pair instead of one pooled pair. Sex and
+    risk class are BOTH observable at t=0, but they enter differently: sex
+    selects which trained (pomdp, solver) pair the person is routed to,
+    because male/female have entirely separate transition matrices; risk
+    class selects which block of the SHARED belief vector the person starts
+    on (see EngineHook13's docstring), because both classes already live in
+    the same NS-wide state space.
     sex_arr: 1=male, 2=female per individual, using the exact convention
     already produced by build_natural_history_transition_matrix's own
     gender_arr (rand_gender < fraction_female -> 2 else 1), which matches
     CRCScreeningPOMDP9's sex=1/2 convention exactly -- no remapping needed."""
 
-    def __init__(self, pomdp_m, solver_m, pomdp_f, solver_f, risk_class, sex_arr, seed=0):
+    def __init__(self, pomdp_m, solver_m, pomdp_f, solver_f, risk_class, sex_arr,
+                 seed=0, observe_risk=True):
         self.pm, self.sm = pomdp_m, solver_m
         self.pf, self.sf = pomdp_f, solver_f
-        self.risk_class = risk_class
+        self.risk_class = np.asarray(risk_class).astype(int)
         self.sex_arr = np.asarray(sex_arr).astype(int)
-        b0_m = pomdp_m.initial_belief()
-        b0_f = pomdp_f.initial_belief()
-        self.belief = np.where((self.sex_arr == 1)[:, None], b0_m[None, :], b0_f[None, :])
+        self.observe_risk = observe_risk
+        male = (self.sex_arr == 1)[:, None]
+        if observe_risk and pomdp_m.n_risk > 1 and pomdp_f.n_risk > 1:
+            # risk class joins sex as an OBSERVED factor: the belief starts
+            # concentrated on the individual's own risk block instead of split
+            # frac_high / (1-frac_high) across both. The risk axis is
+            # block-diagonal in T, so it stays concentrated for life and the
+            # agent only ever reasons about the clinical state.
+            b0_m = np.stack([pomdp_m.initial_belief(risk_class=r) for r in range(pomdp_m.n_risk)])
+            b0_f = np.stack([pomdp_f.initial_belief(risk_class=r) for r in range(pomdp_f.n_risk)])
+            self.belief = np.where(male, b0_m[self.risk_class], b0_f[self.risk_class])
+        else:
+            self.belief = np.where(male, pomdp_m.initial_belief()[None, :],
+                                    pomdp_f.initial_belief()[None, :])
         self.rng = np.random.default_rng(seed + 7)
         self._cur_z = None
         self._cur_y = None
@@ -182,7 +216,8 @@ class FixedScheduleHook:
         pass
 
 
-def train_policy(sex=None, age_min=40, age_max=80, sex_risk_npz=None, colo_penalty_qaly=0.0):
+def train_policy(sex=None, age_min=40, age_max=80, sex_risk_npz=None, colo_penalty_qaly=0.0,
+                  observe_risk=True):
     # PBS alone (no DBBU): confirmed via ablation to converge to the same
     # policy/clinical outcome as plain FiVI while giving the tightest final
     # gap and clearest convergence trajectory (DBBU can shift the learned
@@ -191,10 +226,13 @@ def train_policy(sex=None, age_min=40, age_max=80, sex_risk_npz=None, colo_penal
     # sex: None (pooled), 1 (male), 2 (female) -- see SexAwareEngineHook,
     # which trains one policy per sex and routes each simulated individual
     # to their own via CMOST's own gender_arr (1=male, 2=female).
-    # sex_risk_npz/colo_penalty_qaly: see CRCScreeningPOMDP9's own docstring --
-    # both default to the original (top-25%-high, lambda=0) behavior.
+    # sex_risk_npz/colo_penalty_qaly/observe_risk: see CRCScreeningPOMDP9's
+    # own docstring. observe_risk=True (the default here and there) makes FiVI
+    # expand its belief set from BOTH risk-degenerate starts, matching the two
+    # beliefs the evaluation hooks actually hand it.
     pomdp = CRCScreeningPOMDP9(age_min=age_min, age_max=age_max, gamma=0.97, sex=sex,
-                                sex_risk_npz=sex_risk_npz, colo_penalty_qaly=colo_penalty_qaly)
+                                sex_risk_npz=sex_risk_npz, colo_penalty_qaly=colo_penalty_qaly,
+                                observe_risk=observe_risk)
     solver = FiVI(pomdp, seed=0, max_sawtooth_points=300)
     solver.solve(max_iters=50, time_limit=300, precision=1e-3, verbose=False,
                  n_stochastic_trajectories=0, use_pbs=True, dbbu_interval=1)
@@ -321,17 +359,30 @@ def main():
     ap.add_argument('--scenario', required=True, choices=['no_screen', 'q10y', 'q5y', 'policy'])
     ap.add_argument('-n', type=int, default=10_000_000)
     ap.add_argument('--seed', type=int, default=999)
-    # policy-only knobs (all default to the original age_min=40/age_max=80/
-    # top-25%/lambda=0 behavior -- passing none of these reproduces
-    # final_algorithm/csv/02_policy_vs_schedules_final.csv exactly)
+    # policy-only knobs. Defaults are age_min=40/age_max=80/lambda=0 and the
+    # current risk convention: high_risk = top 20% by CMOST individual_risk,
+    # handed to the agent. Pre-observed-risk runs (e.g.
+    # final_algorithm/csv/02_policy_vs_schedules_final.csv) need
+    # --latent-risk --risk-npz results/transitions_9state_sex_risk.npz
+    # --risk-threshold 3.974249328225908 to reproduce.
     ap.add_argument('--age-min', type=int, default=40)
     ap.add_argument('--age-max', type=int, default=80)
-    ap.add_argument('--risk-npz', type=str, default=None,
-                     help='override transitions_9state_sex_risk.npz path (e.g. the '
-                          'top25pct backup, or the current top-10-pct file)')
-    ap.add_argument('--risk-threshold', type=float, default=RISK_THRESHOLD,
-                     help='must match --risk-npz\'s own risk_threshold field, or '
-                          'risk_class routing silently mismatches the loaded policy')
+    ap.add_argument('--risk-npz', type=str, default=DEFAULT_RISK_NPZ,
+                     help='sex x risk-class transitions file the policy is trained '
+                          'on; must be the one estimated at --high-frac')
+    ap.add_argument('--high-frac', type=float, default=DEFAULT_HIGH_FRAC,
+                     help='top fraction of the cohort by CMOST individual_risk that '
+                          'is labelled high_risk (the rest low_risk); the label is '
+                          'given to the agent, not inferred')
+    ap.add_argument('--risk-threshold', type=float, default=None,
+                     help='explicit individual_risk cut, overriding the --high-frac '
+                          'quantile; must match --risk-npz\'s own risk_threshold '
+                          'field, or the label handed to the agent describes a '
+                          'different split than the loaded policy was trained on')
+    ap.add_argument('--latent-risk', action='store_true',
+                     help='do NOT tell the agent its risk class -- start every '
+                          'belief from the population prior and let colonoscopy '
+                          'findings move it (pre-observed-risk behaviour)')
     ap.add_argument('--lam', type=float, default=0.0, help='colo_penalty_qaly (lambda)')
     ap.add_argument('--tag', type=str, default=None,
                      help='output filename suffix, e.g. results/cmost_4way_policy_<tag>.json')
@@ -343,8 +394,22 @@ def main():
     # for why this must not be two separate prepare_simulation_params calls.
     np.random.seed(a.seed)
     p = BNH.prepare_simulation_params(a.n)
-    risk_class = (np.asarray(p['individual_risk']) >= a.risk_threshold).astype(int)
+    risk_class, thr = risk_class_from_individual_risk(
+        p['individual_risk'], high_frac=a.high_frac, threshold=a.risk_threshold)
     sex_arr = np.asarray(p['gender_arr']).astype(int)  # 1=male, 2=female
+    observe_risk = not a.latent_risk
+    print(f'risk label: individual_risk >= {thr:.6f} -> {RISK_LABELS[1]} '
+          f'({risk_class.mean():.4f} of cohort), else {RISK_LABELS[0]}; '
+          f'{"GIVEN TO" if observe_risk else "hidden from"} the agent', flush=True)
+    if a.risk_npz and os.path.exists(a.risk_npz):
+        zz = np.load(a.risk_npz, allow_pickle=True)
+        if 'risk_threshold' in zz.files:
+            npz_thr = float(zz['risk_threshold'])
+            if abs(npz_thr - thr) > 0.01 * max(abs(npz_thr), 1e-9):
+                print(f'  WARNING: {os.path.basename(a.risk_npz)} was estimated at '
+                      f'risk_threshold={npz_thr:.6f}, but this cohort is being split '
+                      f'at {thr:.6f} -- the label handed to the agent does not match '
+                      f'the dynamics it was trained with.', flush=True)
 
     if a.scenario == 'no_screen':
         hook = None
@@ -352,19 +417,22 @@ def main():
         hook = FixedScheduleHook([50, 60, 70])
     elif a.scenario == 'q5y':
         hook = FixedScheduleHook([50, 55, 60, 65, 70, 75])
-    else:  # policy -- one FiVI policy per sex (sex is observable at t=0,
-        # unlike risk_class which stays latent/belief-tracked), each with
-        # its own CMOST-original sex x risk transition dynamics
+    else:  # policy -- one FiVI policy per sex (sex picks the trained pair;
+        # risk_class, also observed at t=0, picks the starting belief block
+        # within that pair), each with its own sex x risk transition dynamics
         print(f'training FiVI policy (male) age={a.age_min}-{a.age_max} '
               f'risk_npz={a.risk_npz} lam={a.lam} ...', flush=True)
         pomdp_m, solver_m = train_policy(sex=1, age_min=a.age_min, age_max=a.age_max,
-                                          sex_risk_npz=a.risk_npz, colo_penalty_qaly=a.lam)
+                                          sex_risk_npz=a.risk_npz, colo_penalty_qaly=a.lam,
+                                          observe_risk=observe_risk)
         print(f'  male gap={solver_m.gap_history[-1]["gap"]:.4f}  ({time.time()-t0:.1f}s)', flush=True)
         print('training FiVI policy (female)...', flush=True)
         pomdp_f, solver_f = train_policy(sex=2, age_min=a.age_min, age_max=a.age_max,
-                                          sex_risk_npz=a.risk_npz, colo_penalty_qaly=a.lam)
+                                          sex_risk_npz=a.risk_npz, colo_penalty_qaly=a.lam,
+                                          observe_risk=observe_risk)
         print(f'  female gap={solver_f.gap_history[-1]["gap"]:.4f}  ({time.time()-t0:.1f}s)', flush=True)
-        hook = SexAwareEngineHook(pomdp_m, solver_m, pomdp_f, solver_f, risk_class, sex_arr, seed=a.seed)
+        hook = SexAwareEngineHook(pomdp_m, solver_m, pomdp_f, solver_f, risk_class, sex_arr,
+                                   seed=a.seed, observe_risk=observe_risk)
 
     print(f'[{a.scenario}] running N={a.n:,} ...', flush=True)
     t1 = time.time()
@@ -378,7 +446,9 @@ def main():
     with open(out_path, 'w') as f:
         json.dump({'scenario': a.scenario, 'n': a.n, 'seed': a.seed,
                     'age_min': a.age_min, 'age_max': a.age_max,
-                    'risk_npz': a.risk_npz, 'risk_threshold': a.risk_threshold, 'lam': a.lam,
+                    'risk_npz': a.risk_npz, 'risk_threshold': thr,
+                    'high_frac': a.high_frac, 'observe_risk': observe_risk,
+                    'frac_high_observed': float(risk_class.mean()), 'lam': a.lam,
                     'elapsed_sec': time.time() - t0, **stats}, f, indent=2)
     print('saved', out_path)
 

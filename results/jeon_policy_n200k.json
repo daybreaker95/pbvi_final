@@ -1,0 +1,66 @@
+{
+  "engine": "env/cmost_individual.CRCEngine (in-repo)",
+  "n": 200000,
+  "seed": 999,
+  "high_frac": 0.2,
+  "risk_threshold": 3.6169798111920985,
+  "observe_risk": true,
+  "lam": 0.0,
+  "age_min": 40,
+  "age_max": 80,
+  "elapsed_sec": 474.530615568161,
+  "scenarios": {
+    "no_screen": {
+      "crc_death_pct": 1.8685,
+      "crc_death_pct_high_risk": 5.094034126292191,
+      "crc_death_pct_low_risk": 1.0584592286759877,
+      "avg_age_at_death": 78.1695575,
+      "life_years_from_40": 38.169557499999996,
+      "colo_per_person": 0.0,
+      "colo_per_person_high_risk": 0.0,
+      "colo_per_person_low_risk": 0.0,
+      "incidence_pct": 4.5115,
+      "pct_dx_stage_I_II": 53.651778787542945,
+      "pct_screen_detected": 0.0
+    },
+    "q10y": {
+      "crc_death_pct": 1.0525,
+      "crc_death_pct_high_risk": 2.4137501556856398,
+      "crc_death_pct_low_risk": 0.7106440211441619,
+      "avg_age_at_death": 78.278825,
+      "life_years_from_40": 38.278825,
+      "colo_per_person": 2.58386,
+      "colo_per_person_high_risk": 2.5553618134263294,
+      "colo_per_person_low_risk": 2.5910168590284948,
+      "incidence_pct": 2.7085000000000004,
+      "pct_dx_stage_I_II": 58.50101532213402,
+      "pct_screen_detected": 19.10651652206018
+    },
+    "q5y": {
+      "crc_death_pct": 0.7894999999999999,
+      "crc_death_pct_high_risk": 1.5742931871964132,
+      "crc_death_pct_low_risk": 0.592411873260142,
+      "avg_age_at_death": 78.18659,
+      "life_years_from_40": 38.186589999999995,
+      "colo_per_person": 4.99602,
+      "colo_per_person_high_risk": 4.944675551127164,
+      "colo_per_person_low_risk": 5.008914328610303,
+      "incidence_pct": 2.1385,
+      "pct_dx_stage_I_II": 62.4269347673603,
+      "pct_screen_detected": 33.50479307926116
+    },
+    "policy": {
+      "crc_death_pct": 0.905,
+      "crc_death_pct_high_risk": 1.1284095155062897,
+      "crc_death_pct_low_risk": 0.8488943104688624,
+      "avg_age_at_death": 78.17850625,
+      "life_years_from_40": 38.17850625,
+      "colo_per_person": 2.52903,
+      "colo_per_person_high_risk": 7.893162286710674,
+      "colo_per_person_low_risk": 1.1819148603421852,
+      "incidence_pct": 2.334,
+      "pct_dx_stage_I_II": 60.30419880034275,
+      "pct_screen_detected": 21.18680377035133
+    }
+  }
+}

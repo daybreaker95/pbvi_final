@@ -93,6 +93,29 @@ strategies were evaluated:
 elbow-analysis scripts): the point where the high/low CRC-death-rate ratio
 stops improving with a stricter cutoff.
 
+**(d) What the agent is told.** The resulting label is an **observed input**
+to the POMDP, not something it has to infer: an individual whose CMOST
+`individual_risk` falls in the top `high_frac` of the population is handed
+`high_risk`, everyone else `low_risk`
+(`pomdp/model_v2.py`'s `risk_class_from_individual_risk`). Concretely, the
+agent's belief starts fully concentrated on that person's own risk block
+(`initial_belief(risk_class=...)`) instead of split
+`frac_high` / `1 - frac_high` across both. Because `individual_risk` is a
+fixed-for-life trait, the transition matrices are block-diagonal on the risk
+axis, so the belief stays concentrated: the agent only ever reasons about
+*which clinical state* the person is in, never about which risk class. The
+solver is trained accordingly -- FiVI expands its belief set from **both**
+risk-degenerate starts and reports the worse of the two gaps, since those
+are the only two beliefs a real individual ever begins at.
+
+Risk class therefore joins sex as a fully observed factor, but the two enter
+differently: sex selects which trained (POMDP, solver) *pair* an individual
+is routed to (male and female have entirely separate transition matrices),
+while risk class selects which *block of the shared belief vector* they
+start on. Pass `--latent-risk` to any of the 4-way eval scripts to recover
+the earlier behaviour, where the class stayed hidden and the agent inferred
+it from colonoscopy findings.
+
 ## 3. Absolute-risk validation (independent of CMOST)
 
 Because the CMOST-internal RR at any cutoff is partly a mechanical
@@ -137,6 +160,30 @@ pbvi_thlee/
 
 ## 5. Pipeline (how to reproduce the current risk-stratified policy)
 
+### 5.0 External CMOST dependencies
+
+This repo needs **two separate** external trees, and resolves both at import
+time (`env/params.py`) instead of assuming a fixed relative layout — it was
+originally a subdirectory of the CMOST python package, so the old hardcoded
+`../..` broke as soon as it was checked out standalone.
+
+| what | provides | resolved by | override |
+|---|---|---|---|
+| CMOST python package | `calculate_sub.py`, `settings/CMOST13.py` | `find_cmost_python()` | `$CMOST_PYTHON` |
+| CMOST-in-the-loop experiment harness | `NumberCrunching_policy.py`, `build_natural_history_transition_matrix.py` | `find_cmost_experiment_python()` | `$CMOST_EXPERIMENT_PYTHON` |
+
+Each searches `$ENV_VAR` → the legacy in-tree position → sibling checkouts, and
+raises a message naming every path it tried. The harness is **not** part of
+upstream CMOST: upstream's `NumberCrunching_100000.py` has no `policy_hook`, so
+a plain CMOST clone satisfies the first row only. Everything except the
+`*_4way_eval.py` / `*_lambda_sweep_real_engine.py` scripts runs with just that.
+
+`tests/jeon_policy_inrepo_eval.py` is the fallback for a checkout without the
+harness: the same 4-way comparison (no_screen / q10y / q5y / policy), same risk
+labelling and FiVI training, but driven by this repo's own
+`env/cmost_individual.CRCEngine`. Its numbers are that engine's, so they are
+not drop-in comparable with `results/jeon_4way_*.json`.
+
 ```bash
 # 1. find the risk-score cutoff (RR-vs-cutoff elbow, KOSIS absolute-risk check
 #    is a separate, standalone calculation -- see Section 3 above)
@@ -155,6 +202,9 @@ python tests/jeon_4way_eval.py --scenario policy -n 1000000
 #    other heavy jobs (see that script's docstring: ~15x CPU-contention
 #    slowdown was observed running 4 processes in parallel previously)
 python tests/jeon_lambda_sweep_real_engine.py
+
+# ...or, without the experiment harness, the same 4-way on the in-repo engine
+python tests/jeon_policy_inrepo_eval.py -n 200000
 ```
 
 ## 6. Method summary
@@ -169,7 +219,8 @@ python tests/jeon_lambda_sweep_real_engine.py
   age- and (sex x risk)-specific 9x9 transition matrices are estimated by
   maximum likelihood (`transitions/`).
 
-* **POMDP + solver.** Age, sex, and risk class are observed; the 9 clinical
+* **POMDP + solver.** Age, sex, and risk class are observed (see Section
+  2(d) for how the risk label is defined and delivered); the 9 clinical
   states form the belief. Colonoscopy observations are discriminative, so
   the belief tracks each individual's findings; the FiVI solver
   (`pomdp/fivi.py`) computes a policy by value iteration over the belief

@@ -41,7 +41,10 @@ class PBVI9:
         pts = []
         for idx in trans:
             b = np.zeros(NSf); b[idx] = 1.0; pts.append(b)
-        pts.append(p.initial_belief())
+        # One start belief per OBSERVED risk class (observe_risk), else the
+        # single mixed-prior belief -- these are the beliefs real individuals
+        # actually begin at, so they must be in the backup set.
+        pts.extend(p.initial_belief_set())
         concs = [np.array([8., 1., .4, .1, .05, .02, .01]),
                  np.array([3., 2., 1., .3, .15, .08, .04]),
                  np.array([1., 1., 1., 1., 1., 1., 1.]),
@@ -65,8 +68,9 @@ class PBVI9:
         if not self.Gamma:
             return
         new = []
-        for _ in range(n_rollouts):
-            b = self.p.initial_belief()
+        B1 = self.p.initial_belief_set()
+        for i in range(n_rollouts):
+            b = B1[i % len(B1)]      # rollouts split evenly across the starts
             age = self.p.age_min
             for _ in range(horizon):
                 if age > self.p.age_max:
@@ -233,8 +237,12 @@ class PBVIPolicy9:
         self.pbvi = pbvi
         self.p = pbvi.p
 
-    def reset(self):
-        self.b = self.p.initial_belief()
+    def reset(self, risk_class=None):
+        """risk_class: RISK_LOW/RISK_HIGH when the individual's class is
+        given to the agent (the top-DEFAULT_HIGH_FRAC-by-individual_risk
+        label -- see model_v2.risk_class_from_individual_risk); None keeps
+        the population prior and lets the class stay latent."""
+        self.b = self.p.initial_belief(risk_class=risk_class)
         self._last_a = None
         self._last_age = None
 

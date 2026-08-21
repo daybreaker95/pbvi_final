@@ -307,8 +307,14 @@ class FiVI:
     # CURRENT bounds -- optimistic action choice (trust the upper bound),
     # then the observation branch with the largest current gap.
     # ------------------------------------------------------------------
-    def expand(self, stochastic=False):
-        """stochastic=False: exact Algorithm 3 (pure gap-maximizing
+    def expand(self, stochastic=False, b_start=None):
+        """b_start: belief to start the trajectory from; None = the model's
+        single/first initial belief. solve() drives this over every entry of
+        pomdp.initial_belief_set(), which is one start per OBSERVED risk
+        class when the model hands the agent its risk label (observe_risk),
+        and one mixed-prior start otherwise.
+
+        stochastic=False: exact Algorithm 3 (pure gap-maximizing
         observation choice every step). With FIXED current bounds this
         picks the SAME branch every call -- confirmed empirically (gap
         frozen for 100+ iterations despite thousands of new points added).
@@ -321,7 +327,7 @@ class FiVI:
         Bt without breaking Algorithm 1/2's guarantees), just changes which
         ones get explored."""
         p = self.p
-        b = p.initial_belief()
+        b = p.initial_belief() if b_start is None else np.asarray(b_start, float)
         for t in range(1, self.h):
             M, R = self._MR(t)
             best_a, best_a_val = WAIT, -1e18
@@ -383,11 +389,17 @@ class FiVI:
         import time
         t0 = time.time()
         p = self.p
-        b1 = p.initial_belief()
+        # One start belief per OBSERVED risk class when the agent is told its
+        # class (observe_risk), else the single mixed-prior belief. Both the
+        # expansion trajectories and the reported gap cover ALL of them --
+        # converging only at the population prior would leave the two beliefs
+        # real individuals actually start from unbounded.
+        B1 = p.initial_belief_set()
         for kappa in range(1, max_iters + 1):
-            self.expand(stochastic=False)          # keep the exact gap-guided trajectory
-            for _ in range(n_stochastic_trajectories):
-                self.expand(stochastic=True)        # diversify -- see expand() docstring
+            for b_s in B1:
+                self.expand(stochastic=False, b_start=b_s)   # exact gap-guided trajectory
+                for _ in range(n_stochastic_trajectories):
+                    self.expand(stochastic=True, b_start=b_s)  # diversify -- see expand()
             exact_ub = (dbbu_interval <= 1) or (kappa % dbbu_interval == 0)
             for t in range(self.h, 0, -1):
                 B = np.vstack([self.eye, self.extra_b[t]])
@@ -402,10 +414,14 @@ class FiVI:
                     self.extra_ub[t] = ub_vals[self.p.NS:]
 
             A1, _ = self.Gamma[1]
-            vl = float(np.max(A1 @ b1))
-            vu = self.UB(b1, 1)
-            gap = vu - vl
+            # worst (largest-gap) start belief drives both the report and the
+            # stopping rule -- stopping on the mean would let one start stay
+            # loose while the other carries the average.
+            bounds = [(float(np.max(A1 @ b_s)), self.UB(b_s, 1)) for b_s in B1]
+            per_start = [(u - l, l, u) for l, u in bounds]
+            gap, vl, vu = max(per_start)
             self.gap_history.append({'iter': kappa, 'vl': vl, 'vu': vu, 'gap': gap,
+                                      'gap_per_start': [g for g, _, _ in per_start],
                                       'n_extra': sum(len(v) for v in self.extra_ub.values())})
             if verbose:
                 print(f"  FiVI iter {kappa}: vl={vl:.5f} vu={vu:.5f} gap={gap:.5f} "

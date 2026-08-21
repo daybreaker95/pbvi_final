@@ -41,6 +41,7 @@ from cmost_4way_eval import (
     SexAwareEngineHook, FixedScheduleHook, train_policy, run_cohort, summarize,
 )
 from jeon_elbow_analysis import assign_profiles, bucket_map_to_individual_risk
+from pomdp.model_v2 import RISK_LABELS, risk_class_from_individual_risk
 
 RES = os.path.join(PBVI_ROOT, 'results')
 NHIC_NPZ = os.path.join(RES, 'transitions_9state_sex_risk_jeon20pct.npz')
@@ -67,6 +68,34 @@ def build_nhic_population(p, seed, high_frac=0.20):
     p['individual_risk'] = mapped_risk
     risk_class = risk_class_bool.astype(int)
 
+    # The label handed to the agent is EXACTLY the spec: the top high_frac of
+    # the cohort by CMOST individual_risk is high_risk, the rest low_risk.
+    #
+    # That is very nearly -- but not exactly -- the composite-score bucket the
+    # transition matrices were estimated under. The bucket mapping draws the
+    # high bucket from CMOST's own top-high_frac sub-pool and the low bucket
+    # from the rest, so the two ranges would be disjoint if the pool were
+    # continuous. It is not: the pool holds ~476 distinct values, and the value
+    # sitting on the (1-high_frac) cut appears ~21 times, straddling the split.
+    # People who drew exactly that value therefore land in either bucket while
+    # a single >= cut puts them all on one side. It affects ~0.06% of a cohort,
+    # reported below rather than silently ignored -- if it ever grows beyond a
+    # rounding-level share, the donor-pool split and the label have genuinely
+    # diverged and the high/low dynamics stop matching the label.
+    risk_class, thr = risk_class_from_individual_risk(mapped_risk, high_frac=high_frac)
+    n_disagree = int((risk_class != risk_class_bool.astype(int)).sum())
+    print(f'  risk label: individual_risk >= {thr:.6f} -> {RISK_LABELS[1]} '
+          f'({risk_class.mean():.4f} of cohort), else {RISK_LABELS[0]}; '
+          f'GIVEN TO the agent', flush=True)
+    print(f'  (differs from the composite-score bucket on {n_disagree}/{n} = '
+          f'{100 * n_disagree / n:.3f}% -- the tied value on the pool cut)', flush=True)
+    if n_disagree > 0.01 * n:
+        raise RuntimeError(
+            f'label and composite-score bucket disagree on {100*n_disagree/n:.2f}% of the '
+            f'cohort -- far beyond the tied-boundary-value level, so the top-'
+            f'{high_frac:.0%}-by-individual_risk label no longer describes the split '
+            f'the transition matrices were estimated under')
+
     male = prof_sex == 1
     print(f'  frac_high|male={risk_class[male].mean():.3f}  '
           f'frac_high|female={risk_class[~male].mean():.3f}', flush=True)
@@ -83,6 +112,9 @@ def main():
     ap.add_argument('--high-frac', type=float, default=0.20)
     ap.add_argument('--lam', type=float, default=0.0)
     ap.add_argument('--tag', type=str, default='jeon20pct')
+    ap.add_argument('--latent-risk', action='store_true',
+                     help='do NOT tell the agent its risk class -- start every belief '
+                          'from the population prior (pre-observed-risk behaviour)')
     a = ap.parse_args()
 
     t0 = time.time()
@@ -102,13 +134,16 @@ def main():
         print(f'training FiVI policy (male) age={a.age_min}-{a.age_max} '
               f'risk_npz={NHIC_NPZ} lam={a.lam} ...', flush=True)
         pomdp_m, solver_m = train_policy(sex=1, age_min=a.age_min, age_max=a.age_max,
-                                          sex_risk_npz=NHIC_NPZ, colo_penalty_qaly=a.lam)
+                                          sex_risk_npz=NHIC_NPZ, colo_penalty_qaly=a.lam,
+                                          observe_risk=not a.latent_risk)
         print(f'  male gap={solver_m.gap_history[-1]["gap"]:.4f}  ({time.time()-t0:.1f}s)', flush=True)
         print('training FiVI policy (female)...', flush=True)
         pomdp_f, solver_f = train_policy(sex=2, age_min=a.age_min, age_max=a.age_max,
-                                          sex_risk_npz=NHIC_NPZ, colo_penalty_qaly=a.lam)
+                                          sex_risk_npz=NHIC_NPZ, colo_penalty_qaly=a.lam,
+                                          observe_risk=not a.latent_risk)
         print(f'  female gap={solver_f.gap_history[-1]["gap"]:.4f}  ({time.time()-t0:.1f}s)', flush=True)
-        hook = SexAwareEngineHook(pomdp_m, solver_m, pomdp_f, solver_f, risk_class, sex_arr_nhic, seed=a.seed)
+        hook = SexAwareEngineHook(pomdp_m, solver_m, pomdp_f, solver_f, risk_class,
+                                   sex_arr_nhic, seed=a.seed, observe_risk=not a.latent_risk)
 
     print(f'[{a.scenario}] running N={a.n:,} ...', flush=True)
     t1 = time.time()
@@ -123,6 +158,7 @@ def main():
         json.dump({'scenario': a.scenario, 'n': a.n, 'seed': a.seed,
                     'age_min': a.age_min, 'age_max': a.age_max,
                     'high_frac': a.high_frac, 'lam': a.lam,
+                    'observe_risk': not a.latent_risk,
                     'elapsed_sec': time.time() - t0, **stats}, f, indent=2)
     print('saved', out_path, flush=True)
 

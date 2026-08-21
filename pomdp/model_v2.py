@@ -64,6 +64,42 @@ DET_CA_I, DET_CA_II, DET_CA_III, DET_CA_IV = 9, 10, 11, 12
 DET_CA_STAGES = (DET_CA_I, DET_CA_II, DET_CA_III, DET_CA_IV)
 NC_LOCAL = 13
 
+# ---------------------------------------------------------------------------
+# Risk-class axis. The agent is TOLD which class an individual is in (see
+# CRCScreeningPOMDP9.observe_risk / initial_belief(risk_class=...)): the class
+# is defined by CMOST's own individual_risk trait -- the top
+# DEFAULT_HIGH_FRAC of the population by individual_risk is "high_risk",
+# everyone else is "low_risk". individual_risk is a fixed-for-life
+# multiplicative polyp-rate factor, so the label is fixed for life too and
+# the transition blocks stay block-diagonal on this axis.
+# ---------------------------------------------------------------------------
+RISK_LOW, RISK_HIGH = 0, 1
+RISK_LABELS = ('low_risk', 'high_risk')
+DEFAULT_HIGH_FRAC = 0.20
+
+
+def individual_risk_threshold(individual_risk, high_frac=DEFAULT_HIGH_FRAC):
+    """The individual_risk value at the (1 - high_frac) population quantile,
+    i.e. the cut above which someone counts as high_risk."""
+    return float(np.quantile(np.asarray(individual_risk, float), 1.0 - high_frac))
+
+
+def risk_class_from_individual_risk(individual_risk, high_frac=DEFAULT_HIGH_FRAC,
+                                    threshold=None):
+    """Map CMOST individual_risk values to the POMDP's observed risk label.
+
+    Returns (risk_class, threshold) where risk_class is an int array of
+    RISK_HIGH (1) for the top high_frac by individual_risk and RISK_LOW (0)
+    for the rest. Pass an explicit `threshold` to reuse a cut computed on a
+    different (e.g. larger, or training-time) population instead of this
+    cohort's own quantile -- the label the agent is given has to line up
+    with the split the loaded policy's transition matrices were estimated
+    under, or the high/low dynamics it reasons with are the wrong ones."""
+    x = np.asarray(individual_risk, float)
+    thr = float(threshold) if threshold is not None else individual_risk_threshold(x, high_frac)
+    return (x >= thr).astype(int), thr
+
+
 RES = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'results'))
 
 # ---------------------------------------------------------------------------
@@ -154,7 +190,8 @@ class CRCScreeningPOMDP9:
                  age_min=40, age_max=80, life_max=100, gamma=0.97,
                  use_risk_classes=True, use_future_costs=False,
                  wtp=WTP_DEFAULT, sex: int | None = None,
-                 sex_risk_npz=None, colo_penalty_qaly=0.0):
+                 sex_risk_npz=None, colo_penalty_qaly=0.0,
+                 observe_risk=True):
         """sex: None = sex-pooled (legacy, ~50/50 mixed dynamics+mortality),
         1 = male-only, 2 = female-only. CMOST bakes sex into polyp onset
         (new_polyp_female), adenoma progression (gender_progression) and
@@ -169,6 +206,21 @@ class CRCScreeningPOMDP9:
         (defaults to results/transitions_9state_sex_risk.npz) -- lets a caller
         point at an alternate risk-threshold definition (e.g. a top-10%-high
         re-estimate) without touching the default file on disk.
+
+        observe_risk: True (default) = the risk class is an OBSERVED input,
+        handed to the agent at t=0 exactly like sex is -- callers pass the
+        individual's own label to initial_belief(risk_class=RISK_LOW/
+        RISK_HIGH) and the belief starts fully concentrated on that block.
+        The transition blocks are block-diagonal on the risk axis (risk is
+        fixed for life), so a degenerate risk prior stays degenerate: the
+        agent reasons about WHICH clinical state the person is in, never
+        about which risk class. False = the earlier behaviour, where the
+        class stays latent and initial_belief() splits mass frac_high /
+        (1 - frac_high) across the two blocks for the agent to infer from
+        colonoscopy findings. Only affects anything when n_risk == 2; the
+        flag itself only changes initial_belief_set() (which start beliefs
+        the solver explores from) -- initial_belief()'s own default return
+        value is unchanged either way.
 
         colo_penalty_qaly: fixed QALY "shadow price" subtracted from the
         SCREEN reward on top of PROC_DISUTIL/comp_disutil -- a budget lever
@@ -185,6 +237,7 @@ class CRCScreeningPOMDP9:
         self.NC = NC_LOCAL
         self.sex = sex
         self.colo_penalty_qaly = colo_penalty_qaly
+        self.observe_risk = observe_risk
 
         # ---- undetected-world severity dynamics, per risk class ----
         sex_risk_npz = sex_risk_npz or os.path.join(RES, 'transitions_9state_sex_risk.npz')
@@ -629,14 +682,33 @@ class CRCScreeningPOMDP9:
             self.R_undet[age] = {WAIT: rw_full, SCREEN: rs_full}
 
     # ------------------------------------------------------------------
-    def initial_belief(self, family_history: bool | None = None):
-        """family_history: None = population baseline prior (frac_high).
+    def initial_belief(self, family_history: bool | None = None,
+                       risk_class: int | None = None):
+        """risk_class: RISK_HIGH (1) / RISK_LOW (0) = the individual's risk
+        class is OBSERVED and handed to the agent, so all initial mass goes
+        on that block (P(high) = 1 or 0). This is the observe_risk path:
+        the label comes from CMOST's individual_risk (top DEFAULT_HIGH_FRAC
+        = high_risk, see risk_class_from_individual_risk). None = class
+        latent, use the population prior instead.
+
+        family_history: None = population baseline prior (frac_high).
         True/False = Bayes-updated prior using FH_HIGH_PREV/FH_LOW_PREV
         (P(high risk class | family history status), via Bayes' rule on the
-        population split). Only affects anything when n_risk == 2."""
+        population split). Ignored when risk_class is given -- family
+        history is only ever a noisy PROXY for the class, so a directly
+        observed label supersedes it rather than combining with it.
+
+        Both only affect anything when n_risk == 2."""
         b = np.zeros(self.NS)
         if self.n_risk == 1:
             b[0:self.NC] = self._burnin_dist[0]
+            return b
+        if risk_class is not None:
+            r = int(risk_class)
+            if r not in (RISK_LOW, RISK_HIGH):
+                raise ValueError(f'risk_class must be {RISK_LOW} (low_risk) or '
+                                 f'{RISK_HIGH} (high_risk), got {risk_class!r}')
+            b[r * self.NC:(r + 1) * self.NC] = self._burnin_dist[r]
             return b
         p_high = self.frac_high
         if family_history is not None:
@@ -648,6 +720,17 @@ class CRCScreeningPOMDP9:
         b[0 * self.NC:1 * self.NC] = (1 - p_high) * self._burnin_dist[0]
         b[1 * self.NC:2 * self.NC] = p_high * self._burnin_dist[1]
         return b
+
+    def initial_belief_set(self):
+        """Every belief the agent can actually START from, for solvers that
+        seed their belief-set exploration at t=0. With observe_risk the
+        agent is told its class up front, so there are two genuine starts
+        (low_risk and high_risk), one per risk block -- expanding only from
+        the mixed population prior would explore a belief manifold no real
+        individual is ever on. Without it, there is exactly one start."""
+        if self.n_risk == 1 or not self.observe_risk:
+            return [self.initial_belief()]
+        return [self.initial_belief(risk_class=r) for r in range(self.n_risk)]
 
     # ------------------------------------------------------------------
     # PBVI solver interface (mirrors pomdp/model.py's shape: M[age][action]

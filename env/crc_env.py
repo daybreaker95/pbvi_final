@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import os
 import sys
+import inspect
 from dataclasses import dataclass
 from typing import Optional, Tuple
 
@@ -52,6 +53,13 @@ class EnvConfig:
     discount: float = 0.0      # annual discount rate for life-years (0 = undiscounted)
     screen_disutility: float = 0.0  # life-year-equivalent cost per colonoscopy
     warmup_from: int = 20      # natural-history warm-up start age
+    # individual_risk cut above which a patient is observed as high_risk
+    # (1) rather than low_risk (0). CMOST's individual_risk is a fixed-for-
+    # life trait, so the label is constant across the episode and is handed
+    # to the agent in the observation dict rather than left to be inferred.
+    # None = don't expose it at all (obs['risk_class'] is None), for policies
+    # that are meant to treat the class as latent.
+    risk_threshold: Optional[float] = None
 
 
 class CRCScreeningEnv:
@@ -93,7 +101,19 @@ class CRCScreeningEnv:
             'age': self.age,
             'obs': obs_code,
             'budget_left': min(self.budget_left, 10**6),
+            'risk_class': self.risk_class,
         }
+
+    @property
+    def risk_class(self) -> Optional[int]:
+        """1 = high_risk, 0 = low_risk, None = not exposed (cfg.risk_threshold
+        unset). The cut is a POPULATION quantile -- pass the same
+        (1 - high_frac) quantile of individual_risk the policy's transition
+        matrices were estimated at, e.g. pomdp.model_v2's
+        individual_risk_threshold(pool, high_frac)."""
+        if self.cfg.risk_threshold is None or self.pt is None:
+            return None
+        return int(self.pt.individual_risk >= self.cfg.risk_threshold)
 
     def _info(self) -> dict:
         return {
@@ -176,7 +196,14 @@ class CRCScreeningEnv:
         """
         obs, info = self.reset()
         if hasattr(policy, 'reset'):
-            policy.reset()
+            # hand the observed risk class straight to policies that accept it
+            # (e.g. pomdp.pbvi_v2.PBVIPolicy9), so their belief starts on the
+            # right risk block instead of on the population prior
+            if (obs.get('risk_class') is not None
+                    and 'risk_class' in inspect.signature(policy.reset).parameters):
+                policy.reset(risk_class=obs['risk_class'])
+            else:
+                policy.reset()
         while not self._done:
             a = policy.act(obs)
             obs, r, term, trunc, info = self.step(a)
@@ -195,6 +222,7 @@ class CRCScreeningEnv:
             'stage_at_dx': int(pt.det_stage[0]) if pt.det_stage else 0,
             'gender': pt.gender,
             'individual_risk': pt.individual_risk,
+            'risk_class': self.risk_class,
         }
 
 
