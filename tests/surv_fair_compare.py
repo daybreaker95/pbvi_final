@@ -179,7 +179,8 @@ def main():
           f'crc_death={stats["crc_death_per_100k"]:.1f} '
           f'ly={stats["life_years"]:.4f}', flush=True)
 
-    out_path = a.out or os.path.join(RES, f'{surv}_{label}.json')
+    out_path = a.out or os.path.join(
+        RES, f'{surv}_{label}_n{a.n//1000}k_seed{a.seed}.json')
     with open(out_path, 'w') as f:
         json.dump({'arm': a.arm, 'lam': a.lam, 'surveillance': bool(a.surveillance),
                    'n': a.n, 'seed': a.seed, 'age_min': a.age_min, 'age_max': a.age_max,
