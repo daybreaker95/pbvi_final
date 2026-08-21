@@ -97,27 +97,61 @@ RISK_NPZ = os.path.join(PBVI_ROOT, 'results', 'transitions_9state_sex_risk_top20
 SCHEDULES = {'q10y': ([50, 60, 70], 10), 'q5y': ([50, 55, 60, 65, 70, 75], 5)}
 
 
-def classify_individual_risk(p, high_frac=0.20, verbose=True):
-    """Top-`high_frac` of CMOST's own individual_risk -> 1 (high_risk).
+def classify_individual_risk(p, high_frac=0.20, verbose=True, risk_npz=None,
+                             score_sigma=0.0, noise_seed=7):
+    """Label the top `high_frac` as high_risk.
 
-    The threshold is taken from THIS cohort's empirical quantile and then
-    cross-checked against the risk_threshold stored in the npz the policy
-    trains on: a mismatch there would route individuals to the wrong risk
-    block of the belief, silently, with no error."""
+    score_sigma=0 (default) is the ORACLE label: the cut is taken on CMOST's
+    own individual_risk. That is a risk score that cannot be improved on --
+    prepare_simulation_params draws only individual_risk, gender and an
+    all-zero screening_preference per person, and the engine's sole use of it
+    is `PolypRate = PolypRate * IndividualRisk`, so individual_risk x sex is
+    the complete person-level risk heterogeneity in the model. The threshold
+    is cross-checked against the one stored in the training npz, because a
+    silent mismatch would route people to the wrong risk block of the belief.
+
+    score_sigma>0 models a DEPLOYABLE score instead: risk scores are built
+    log-additively from hazard ratios, so the score is corrupted in log space,
+
+        S_i = log(individual_risk_i) + score_sigma * eps_i,  eps ~ N(0,1)
+
+    and the top `high_frac` by S is labelled high -- ranking on the score the
+    programme actually has, not on the truth it does not. sigma is calibrated
+    to a target c-statistic by transitions/estimate_transitions_noisy_risk.py,
+    which also builds the matching transition matrices; the npz's own
+    risk_threshold then lives on the score scale and is not comparable to this
+    cohort's, so the cross-check is replaced by reporting how far the label
+    lands from the true top `high_frac`."""
     risk = np.asarray(p['individual_risk'], float)
-    thr = float(np.quantile(risk, 1.0 - high_frac))
-    risk_class = (risk >= thr).astype(int)
+    if score_sigma and score_sigma > 0:
+        rng = np.random.default_rng(noise_seed)
+        score = np.log(risk) + score_sigma * rng.standard_normal(len(risk))
+    else:
+        score = risk
+    thr = float(np.quantile(score, 1.0 - high_frac))
+    risk_class = (score >= thr).astype(int)
     if verbose:
-        thr_train = float(np.load(RISK_NPZ, allow_pickle=True)['risk_threshold'])
-        print(f'  individual_risk top-{high_frac:.0%} threshold={thr:.10f} '
-              f'(training npz {thr_train:.10f}, delta={thr - thr_train:+.2e})', flush=True)
-        if abs(thr - thr_train) > 1e-6:
-            print('  WARNING: threshold mismatch vs training npz', flush=True)
+        if score_sigma and score_sigma > 0:
+            true_hi = risk >= np.quantile(risk, 1.0 - high_frac)
+            hit = int((risk_class.astype(bool) & true_hi).sum())
+            print(f'  noisy score sigma={score_sigma:.4f}: labels top-{high_frac:.0%} of '
+                  f'log(individual_risk)+noise; agreement with the true top-'
+                  f'{high_frac:.0%} = {hit / max(true_hi.sum(), 1):.3f}', flush=True)
+        else:
+            thr_train = float(np.load(risk_npz or RISK_NPZ,
+                                      allow_pickle=True)['risk_threshold'])
+            print(f'  individual_risk top-{high_frac:.0%} threshold={thr:.10f} '
+                  f'(training npz {thr_train:.10f}, delta={thr - thr_train:+.2e})',
+                  flush=True)
+            if abs(thr - thr_train) > 1e-6:
+                print('  WARNING: threshold mismatch vs training npz', flush=True)
         print(f'  frac_high={risk_class.mean():.4f}', flush=True)
     return risk_class, thr
 
 
-def build_hook(arm, lam, surveillance, risk_class, sex_arr, age_min, age_max, seed, t0):
+def build_hook(arm, lam, surveillance, risk_class, sex_arr, age_min, age_max, seed, t0,
+               risk_npz=None):
+    risk_npz = risk_npz or RISK_NPZ
     if arm == 'no_screen':
         return None
     if arm in SCHEDULES:
@@ -125,12 +159,13 @@ def build_hook(arm, lam, surveillance, risk_class, sex_arr, age_min, age_max, se
         return FixedScheduleHook(ages, min_gap=interval if surveillance else None)
     # policy: one FiVI policy per sex, each expanded from BOTH risk-degenerate
     # start beliefs (observe_risk), each individual started on their own block
-    print(f'training FiVI policies age={age_min}-{age_max} lam={lam} ...', flush=True)
+    print(f'training FiVI policies age={age_min}-{age_max} lam={lam} '
+          f'npz={os.path.basename(risk_npz)} ...', flush=True)
     pm, sm = train_policy(sex=1, age_min=age_min, age_max=age_max,
-                          sex_risk_npz=RISK_NPZ, colo_penalty_qaly=lam, observe_risk=True)
+                          sex_risk_npz=risk_npz, colo_penalty_qaly=lam, observe_risk=True)
     print(f'  male   gap={sm.gap_history[-1]["gap"]:.4f} ({time.time()-t0:.0f}s)', flush=True)
     pf, sf = train_policy(sex=2, age_min=age_min, age_max=age_max,
-                          sex_risk_npz=RISK_NPZ, colo_penalty_qaly=lam, observe_risk=True)
+                          sex_risk_npz=risk_npz, colo_penalty_qaly=lam, observe_risk=True)
     print(f'  female gap={sf.gap_history[-1]["gap"]:.4f} ({time.time()-t0:.0f}s)', flush=True)
     return SexAwareEngineHook(pm, sm, pf, sf, risk_class, sex_arr, seed=seed,
                               observe_risk=True, screen_min_gap=1,
@@ -149,6 +184,18 @@ def main():
     ap.add_argument('--surveillance', action='store_true',
                     help='turn BOTH Polyp_Surveillance and Cancer_Surveillance on '
                          '(the sensitivity analysis); default is both off (primary)')
+    ap.add_argument('--risk-npz', type=str, default=None,
+                    help='transition matrices the policy trains on; must have been '
+                         'built with the SAME labelling rule used at evaluation, or '
+                         'the policy is trained on one partition and routed on another')
+    ap.add_argument('--score-sigma', type=float, default=0.0,
+                    help='0 = oracle label on individual_risk. >0 models a deployable '
+                         'score: log(individual_risk) + sigma*N(0,1), top high_frac '
+                         'labelled high. Calibrate with '
+                         'transitions/estimate_transitions_noisy_risk.py')
+    ap.add_argument('--noise-seed', type=int, default=7)
+    ap.add_argument('--label-tag', type=str, default=None,
+                    help='filename tag for a non-oracle label, e.g. c063')
     ap.add_argument('--out', type=str, default=None)
     a = ap.parse_args()
 
@@ -159,11 +206,13 @@ def main():
     # does not describe the z the engine actually simulates (see run_cohort).
     np.random.seed(a.seed)
     p = BNH.prepare_simulation_params(a.n)
-    risk_class, thr = classify_individual_risk(p, a.high_frac)
+    risk_class, thr = classify_individual_risk(
+        p, a.high_frac, risk_npz=a.risk_npz, score_sigma=a.score_sigma,
+        noise_seed=a.noise_seed)
     sex_arr = np.asarray(p['gender_arr']).astype(int)
 
     hook = build_hook(a.arm, a.lam, a.surveillance, risk_class, sex_arr,
-                      a.age_min, a.age_max, a.seed, t0)
+                      a.age_min, a.age_max, a.seed, t0, risk_npz=a.risk_npz)
 
     surv = 'surv' if a.surveillance else 'nosurv'
     label = a.arm if a.arm != 'policy' else f'policy_lam{a.lam:+.4f}'
@@ -179,14 +228,18 @@ def main():
           f'crc_death={stats["crc_death_per_100k"]:.1f} '
           f'ly={stats["life_years"]:.4f}', flush=True)
 
+    ltag = f'_{a.label_tag}' if a.label_tag else ''
     out_path = a.out or os.path.join(
-        RES, f'{surv}_{label}_n{a.n//1000}k_seed{a.seed}.json')
+        RES, f'{surv}_{label}{ltag}_n{a.n//1000}k_seed{a.seed}.json')
     with open(out_path, 'w') as f:
         json.dump({'arm': a.arm, 'lam': a.lam, 'surveillance': bool(a.surveillance),
                    'n': a.n, 'seed': a.seed, 'age_min': a.age_min, 'age_max': a.age_max,
-                   'risk_def': 'cmost_individual_risk_top20pct_disclosed',
+                   'risk_def': ('cmost_individual_risk_top20pct_disclosed'
+                                if not a.score_sigma else
+                                f'noisy_score_sigma{a.score_sigma:g}_top20pct_disclosed'),
                    'risk_threshold': thr, 'high_frac': a.high_frac,
-                   'risk_npz': RISK_NPZ, 'elapsed_sec': time.time() - t0,
+                   'score_sigma': a.score_sigma, 'label_tag': a.label_tag or 'oracle',
+                   'risk_npz': a.risk_npz or RISK_NPZ, 'elapsed_sec': time.time() - t0,
                    **stats}, f, indent=2)
     print('saved', out_path, flush=True)
 
