@@ -1,0 +1,48 @@
+{
+  "scenario": "q5y",
+  "n": 200000,
+  "seed": 999,
+  "age_min": 40,
+  "age_max": 80,
+  "risk_def": "cmost_individual_risk_top20pct_disclosed",
+  "risk_npz": "C:\\Users\\daybr\\Git_Works\\pbvi_final\\results\\transitions_9state_sex_risk_top20pct.npz",
+  "risk_threshold": 3.6169798111920985,
+  "high_frac": 0.2,
+  "lam": 0.0,
+  "surveillance": true,
+  "elapsed_sec": 372.09295558929443,
+  "crc_death_per_100k": 665.5,
+  "incidence_per_100k": 2029.9999999999998,
+  "screen_detected_per_100k": 555.5,
+  "symptom_detected_per_100k": 1225.5,
+  "surveillance_detected_per_100k": 249.0,
+  "baseline_detected_per_100k": 0.0,
+  "stage_pct_all": [
+    28.32512315270936,
+    37.389162561576356,
+    20.492610837438423,
+    13.793103448275861
+  ],
+  "stage_pct_screen": [
+    43.924392439243924,
+    33.753375337533754,
+    15.121512151215121,
+    7.200720072007201
+  ],
+  "stage_pct_symptom": [
+    17.01346389228886,
+    40.18767849857201,
+    24.316605467156265,
+    18.482252141982862
+  ],
+  "avg_age_at_death": 77.26619875,
+  "life_years": 37.26619875,
+  "life_years_disc3pct": 21.786791651555845,
+  "avg_colonoscopies_per_person": 5.33288,
+  "total_cost_usd": 1507328050.5,
+  "cost_per_person_usd": 7536.6402525,
+  "total_cost_disc3pct_usd": 759905026.221168,
+  "cost_per_person_disc3pct_usd": 3799.52513110584,
+  "screening_colo_total": 883873.0,
+  "followup_colo_total": 180136.0
+}
