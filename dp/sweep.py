@@ -49,7 +49,9 @@ def _solve_one(job):
         return dict(obj=objective, lam=lam, sex=sex, path=out, **p.meta['eval'], gap=p.meta.get('gap'), cached=True)
     t0 = time.time()
     pol = solve_policy(sex, kernels, weights=OBJECTIVES[objective], lam=lam, cap=cap, rounds=rounds,
-                       rollouts=rollouts, verbose=False, class_known_roots=job.get('class_known_roots', False))
+                       rollouts=rollouts, verbose=False, class_known_roots=job.get('class_known_roots', False),
+                       root_priors=job.get('root_priors'),
+                       root_beliefs=job.get('root_beliefs'), root_weights=job.get('root_weights'))
     pol.meta['solve_sec'] = time.time() - t0
     pol.save(out)
     return dict(obj=objective, lam=lam, sex=sex, path=out, **pol.meta['eval'], gap=pol.meta['gap'],
@@ -57,10 +59,12 @@ def _solve_one(job):
 
 
 def run_sweep(kernels, objective, lams=None, tag='c3', workers=4, cap=600, rounds=6, rollouts=150,
-              class_known_roots=False, force=False):
+              class_known_roots=False, force=False, root_priors=None,
+              root_beliefs=None, root_weights=None):
     lams = lams if lams is not None else DEFAULT_GRIDS[objective]
     jobs = [dict(objective=objective, lam=float(l), sex=s, kernels=kernels, tag=tag, cap=cap, rounds=rounds,
-                 rollouts=rollouts, class_known_roots=class_known_roots, force=force)
+                 rollouts=rollouts, class_known_roots=class_known_roots, force=force,
+                 root_priors=root_priors, root_beliefs=root_beliefs, root_weights=root_weights)
             for l in lams for s in (1, 2)]
     res = []
     t0 = time.time()
@@ -75,10 +79,11 @@ def run_sweep(kernels, objective, lams=None, tag='c3', workers=4, cap=600, round
                 print(f'  {r["obj"]} lam={r["lam"]:.6g} sex={r["sex"]} colos={r["colos"]:.3f} death={r["death"] * 1e5:.0f} '
                       f'inc={r["inc"] * 1e5:.0f} ({time.time() - t0:.0f}s)', flush=True)
     res.sort(key=lambda r: (r['lam'], r['sex']))
-    out = os.path.join(RES, f'sweep_{tag}_{objective}.json')
-    with open(out, 'w') as f:
-        json.dump(dict(kernels=kernels, objective=objective, rows=res), f, indent=1)
-    print('saved', out)
+    if not tag.endswith('cal'):
+        out = os.path.join(RES, f'sweep_{tag}_{objective}.json')
+        with open(out, 'w') as f:
+            json.dump(dict(kernels=kernels, objective=objective, rows=res), f, indent=1)
+        print('saved', out)
     return res
 
 

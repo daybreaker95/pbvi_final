@@ -16,3 +16,7 @@ results/dp/kernels_dbg.npz
 results/dp/nh_kernel_dbg.npz
 results/dp/screen_kernel_dbg.npz
 results/dp/kernels_abl_*.npz
+
+# score-scenario belief tables: deterministic output of
+# dp.run_riskscore.build_deployment, regenerable and ~1 MB each
+results/dp/score_tables/

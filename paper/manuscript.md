@@ -50,12 +50,18 @@ diagnoses averted from 7.22 to 9.00 (**+25 %**). At 4.59 colonoscopies
 (8 % fewer than the 5-yearly schedule's 4.99) mortality was 682.5 vs 775.3
 (−92.8 ± 10.4), an 18 % gain in deaths averted per colonoscopy. The policy also beat the *re-optimised* fixed schedules while using fewer
 colonoscopies than they did (2.29 vs 2.44 and 4.59 vs 4.88 per person; −81.1
-± 9.2 and −42.0 ± 9.7 deaths per 100 000). Making the risk class observable at
-baseline turned the policy into an explicit risk-targeting programme: it
-withheld screening from the lowest-risk half of the population and gave the
-highest-risk 5 % 7.5 colonoscopies each, cutting that group's mortality from
-5535 to 1956 per 100 000 while using **1.66 colonoscopies per person overall** — 6.34 deaths averted per 1000 colonoscopies, nearly twice the
-10-yearly schedule's efficiency. Under imperfect adherence the adaptive
+± 9.2 and −42.0 ± 9.7 deaths per 100 000). Making the risk class observable at baseline turned the policy into an
+explicit risk-targeting programme: it withheld screening from the
+lowest-risk half of the population and gave the highest-risk 5 % 7.5
+colonoscopies each, cutting that group's mortality from 5535 to 1956 per 100
+000 while using **1.66 colonoscopies per person overall** - 6.34 deaths
+averted per 1000 colonoscopies, nearly twice the 10-yearly schedule's
+efficiency. With a baseline score of realistic discrimination instead of
+perfect class knowledge - a polygenic-score-like AUC of 0.60, whose top
+decile carries 1.8 times average risk - the gain shrank to 24 fewer CRC
+deaths per 100 000 at equal colonoscopy volume, and information and
+adaptivity proved nearly additive, with adaptivity worth about three times a
+realistic score. Under imperfect adherence the adaptive
 policy re-planned around no-shows without re-solving and held a 44–53 %
 mortality reduction at every attendance rate, whereas the fixed programme
 decayed from 45 % to 18 %. On life-years the adaptive and fixed schedules
@@ -576,7 +582,139 @@ identical to no screening (713 vs 712 per 100 000). A programme unwilling to
 withhold screening entirely can simply solve at a smaller λ for that class;
 the frontier is continuous.
 
-### 3.6 Robustness to imperfect adherence
+### 3.6 A baseline risk score of realistic discrimination
+
+Section 3.5 gives the risk class away exactly. No instrument does that, so
+we repeated the exercise with a baseline score of finite discrimination: S =
+log(individual_risk) + sigma x N(0, 1), observed once at age 40, with sigma
+calibrated to a target AUC for lifetime CRC (measured within sex, since sex
+is already observed by the policy). The belief is conditioned on the score
+VALUE rather than on a score band - in closed form over CMOST's own
+476-value risk pool, with each atom's age-40 clinical distribution taken
+from the never-screened cohort, so the score is not assumed independent of
+the clinical state given the class. Banding first would have been
+self-defeating: at sigma = 0 even a top decile still mixes half a class, so
+a "perfect" score would have looked less informative than the perfect-class
+arm.
+
+Two properties of this construction are worth stating because they bound
+what the scenario can show. First, the score is a classically unbiased,
+perfectly calibrated measurement of the model's own polyp-rate multiplier -
+the most favourable structure any real instrument could have. Second, its
+discrimination has a ceiling: because CRC remains stochastic given the
+multiplier, even sigma = 0 attains only AUC 0.751 on lifetime CRC. No
+instrument can do better under this model, so we make no claim about AUC-0.8
+scores. We report each level by the risk gradient it induces as well as by
+AUC, because AUC is rank-invariant and hides the tail magnitude that
+targeting actually exploits (Table 7); at AUC 0.60 the top score decile
+carries 1.76 times the population's lifetime CRC risk and the top-to-bottom
+decile ratio is 3.2, which is what published CRC polygenic risk scores
+achieve.
+
+**Table 7.** Score levels: discrimination and the risk gradient each induces
+(lifetime CRC relative risk by score decile), with the value of the score at a
+matched colonoscopy volume. Every level is solved on its own price-volume
+frontier and read at 2.369 colonoscopies per person, the latent-class
+policy's volume, so the levels differ in information and not in budget. The
+control's sigma = 60 is a numerical stand-in for sigma -> infinity, so a
+trace of signal survives it: AUC 0.507 rather than 0.500, and a
+top-to-bottom decile risk ratio of 1.1 rather than 1.0.
+
+| level | sigma | AUC | RR top decile | top/bottom decile | CRC deaths /100k at matched volume | vs uninformative |
+|---|---|---|---|---|---|---|
+| uninformative (control) | 60 | 0.507 | 1.04 | 1.1 | 892 | — |
+| family-history-like | 9.39 | 0.550 | 1.33 | 1.8 | 883 | −9 |
+| **CRC polygenic score** | 4.49 | 0.599 | 1.76 | 3.2 | **867** | **−24** |
+| PRS + lifestyle | 2.63 | 0.650 | 2.32 | 5.4 | 837 | −55 |
+| optimistic upper reference | 1.52 | 0.700 | 3.08 | 8.6 | 787 | −105 |
+| ceiling (risk known exactly) | 0 | 0.751 | 3.94 | 12.0 | 714 | −177 |
+
+The uninformative control is the scenario's wiring check: with sigma large
+the score carries nothing, and the machinery must reproduce the latent-class
+policy. It does, to the resolution of the comparison. Scored on the same
+sex-pooled age-40 belief at the same volume, the control gives 892 per 100
+000 against the latent-class policy's 902 (880 when that policy is scored on
+the model's own sex-specific age-40 prior rather than on the sex-pooled one
+the score arms are built from); in the engine the control gives 945.5 +-
+13.8 at 2.02 colonoscopies per person against about 921 for the latent-class frontier interpolated at that
+volume, a gap of roughly one standard error. So the ladder above measures
+information and not implementation.
+
+The value of a realistic score is therefore real but modest: a CRC polygenic
+score buys 24 fewer CRC deaths per 100 000 at equal colonoscopy volume,
+about one seventh of what perfect knowledge of the latent risk would buy,
+and about a third of what adaptivity itself buys. The engine cannot resolve
+the individual steps of this ladder at 200 000 per arm: the detectable
+difference is ~78 per 100 000, and the deployment prices were interpolated
+rather than re-matched, so the arms do not sit at a common volume. Only the
+two strongest levels separate from the no-score policy, and they do so
+partly by spending more - AUC 0.70 uses 2.46 colonoscopies per person for
+792.0 +- 28.6 and the ceiling 2.67 for 732.0 +- 15.2, against 2.29 and 889.5
++- 19.7 without a score. Read against the latent-class engine frontier at
+those same volumes (871 and 836), the volume-matched engine gaps are about
+-79 and -104 per 100 000: the same ordering as the in-model -105 and -177,
+attenuated as transfers to the engine consistently are. The ladder's
+inference is in-model, and the engine is consistent with its endpoints.
+
+**Information and adaptivity are complements, not substitutes.** The obvious
+alternative to a belief-tracking policy is a risk-tiered FIXED programme, so
+we gave the same score to the fixed-schedule search: for each score band the
+best of the same 2 112 candidate schedules was selected at a common price,
+tuned to the same volume. The resulting 2 x 2 separates the two ingredients
+(Table 8). A realistic score is worth 24-30 CRC deaths per 100 000 whether
+the programme is fixed or adaptive, and adaptivity is worth 74-80 whether or
+not a score is available: the two are close to additive, overlapping by only
+about 5 per 100 000, and responding to findings is worth about three times a
+realistic baseline score. That is the scenario's main message - one
+colonoscopy showing three or more adenomas moves P(high-risk classes) from
+the 0.05 prior to 0.93, whereas the top decile of an AUC-0.60 score reaches
+only 0.14 and even its top 1 % only 0.23.
+
+**Table 8.** Information versus adaptivity, in-model, all four cells read at
+2.369 colonoscopies per person (CRC deaths per 100 000). Neither fixed cell
+is a single attainable schedule at exactly that volume: one price selects
+schedules in discrete steps, so each is interpolated on its own price-volume
+envelope (no score, between 2.367 → 972 and 2.373 → 971; with score, between
+2.343 → 946 and 2.379 → 940). Both fixed cells are built by the same
+band-stratified machinery and differ only in what the bands know. The
+exhaustive fixed search of §3.3 is not on the same footing, because it scores
+schedules on each sex's own age-40 prior rather than on the sex-pooled belief
+the score arms are built from; re-scored on that same belief, its best
+*unisex* schedule gives 980 at this volume and its best score-blind but
+*sex-specific* programme 972 — the no-score cell to within 0.5, which is a
+second wiring check: with an uninformative score the bands carry nothing and
+the fixed arm must collapse to a sex-specific fixed programme, and it does.
+
+| | no score | score (AUC 0.60) | the score buys |
+|---|---|---|---|
+| best fixed schedule | 972 | 942 | −30 |
+| adaptive policy | 892 | 867 | −24 |
+| **adaptivity buys** | **−80** | **−74** | |
+
+The score-stratified fixed programme is itself a reasonable clinical object,
+and worth reporting. At AUC 0.60 it gives men in the bottom three score
+deciles two colonoscopies (66/78, 65/75, 64/75), deciles 4-8 three
+(58/68/78), the 80th-95th percentile four (56/64/72/80) and the top 5 % five
+(48/56/64/72/80); women's bands carry their own lists, from a single
+colonoscopy at 74 in the bottom decile to six (45/52/59/66/73/80) in the top
+percentile. The adaptive policy at the same volume instead gives the bottom
+decile 1.11 colonoscopies and the top 2 % 4.0-4.5, and it places them in
+response to findings rather than by band alone.
+
+In the engine this score-stratified programme is a far stronger comparator
+than any unstratified schedule, and it is the honest limit of what we can
+claim there. At n = 200 000 it reaches 896.0 CRC deaths per 100 000 with
+2.262 colonoscopies per person, against 1034.0 at 2.577 for the 10-yearly
+schedule (paired −138.0 ± 27.1) and 889.5 at 2.289 for the adaptive policy
+(paired +6.5 ± 25.1). The engine therefore cannot separate "a score plus a
+fixed schedule" from "adaptivity without a score" at this sample size,
+although its interval comfortably contains the in-model gap of 50 per 100
+000. What the engine does support is the weaker and more useful statement:
+both routes to targeting beat an unstratified 10-yearly programme by roughly
+140 CRC deaths per 100 000 while using fewer colonoscopies, and the two are
+complementary rather than alternative.
+
+### 3.7 Robustness to imperfect adherence
 
 Fixed schedules assume attendance. We repeated the comparison with each
 invitation attended with probability α, drawn independently per person and
@@ -585,7 +723,7 @@ or the invitation is repeated annually until attended — and for the adaptive
 policy **unchanged** (a no-show yields no observation, so the policy simply
 re-plans at the next annual decision; no re-solving per adherence level).
 
-**Table 7.** Adherence scenarios (engine, n = 200 000 per arm; colonoscopies
+**Table 9.** Adherence scenarios (engine, n = 200 000 per arm; colonoscopies
 per person → CRC deaths per 100 000).
 
 | α | fixed 10-yearly (slot lost) | fixed 10-yearly + annual recall | adaptive policy |
@@ -606,7 +744,7 @@ and at α = 0.3 comparable mortality with 29 % fewer colonoscopies (+35 %).
 Re-planning is automatic because the belief, not a calendar, drives the
 recommendation (Figure 4).
 
-### 3.7 Life-years: an honest null
+### 3.8 Life-years: an honest null
 
 We also swept λ under an undiscounted life-year objective. In the model
 these policies gain 150–200 life-years per 1000 persons over the fixed
@@ -698,7 +836,11 @@ adaptive policy goes beyond guidelines is in the *length* of the interval it
 grants a clean first exam (15–20 years rather than 10) and in its
 willingness to re-examine multi-adenoma patients within one to two years.
 Both are consequences of taking the information content of a colonoscopy
-seriously in a population with strong latent risk heterogeneity.
+seriously in a population with strong latent risk heterogeneity. The same
+logic explains why a baseline risk score adds relatively little on top
+(§3.6): a single colonoscopy is a far stronger signal about a person's risk
+class than any presently achievable baseline score, so the two are
+complements in which the cheaper signal is also the weaker one.
 
 **Limitations.** First, the model structure is justified by its predictive
 accuracy rather than by necessity: the ablation of §3.3 shows that simpler
@@ -721,10 +863,12 @@ higher- or lower-risk) would change the size, though probably not the sign,
 of the adaptive advantage. Fifth, we optimise events per colonoscopy, not
 cost-effectiveness; costs are recorded but a full ICER analysis, and the
 disutility of the surveillance burden the policy imposes on high-risk
-patients, remain future work. Finally, the observed-class results assume a
-perfect classifier; the realistic case of a noisy score is a straightforward
-extension of the same model (an observation on the class at age 40) that we
-have not run.
+patients, remain future work. Finally, the score arm of §3.6 assumes a classically unbiased, perfectly
+calibrated measurement of the model's own risk multiplier - the most
+favourable structure a real instrument could have - so a score correlated
+with risk through a different mechanism, or one that transports poorly
+across ancestries, would buy less than Table 7 implies at the same nominal
+AUC.
 
 **Reproducibility.** The complete pipeline — cohort simulation, kernel estimation, solver, exhaustive fixed-schedule search, λ sweeps, engine evaluation, ablation and reporting — is in `dp/`, with the engine-side instrumentation (quarterly state recorder and findings-carrying policy hook) in `cmost_engine/NumberCrunching_policy.py`; every step is cached and resumable, and the whole analysis is driven by the commands documented in `docs/DP_PLAN.md`.
 
@@ -778,5 +922,6 @@ have not run.
 | 1 | `figures/dp_frontier_c6b.png` | Efficiency frontiers in the engine: CRC deaths and CRC diagnoses versus colonoscopies per person, for the adaptive policy family (both objectives), the guideline schedules, the best fixed schedules and the in-model fixed-schedule frontier. |
 | 2 | `figures/dp_validation_c6b.png` | Model vs engine decision-time prevalence of early adenoma, advanced adenoma and undetected cancer by age in men, under 10-yearly screening (left) and no screening (right). |
 | 3 | `figures/dp_policy_c6b_lam0.001561.png` | Screening ages of the headline policy along canonical observation paths and by known risk class, by sex. |
-| 4 | `figures/dp_adherence_c6b.png` | CRC mortality and colonoscopy use versus attendance probability for the fixed programme (with and without recall) and the adaptive policy. |
-| 5 | `figures/dp_per_colonoscopy_c6b.png` | Deaths and diagnoses averted per 1000 colonoscopies, all headline arms. |
+| 4 | `figures/dp_riskscore_c6b.png` | Value of a baseline risk score against its discrimination, at matched colonoscopy volume (left), and the engine arms on the efficiency plane (right), including the score-stratified fixed programme, which the engine cannot separate from the adaptive no-score policy at this sample size. |
+| 5 | `figures/dp_adherence_c6b.png` | CRC mortality and colonoscopy use versus attendance probability for the fixed programme (with and without recall) and the adaptive policy. |
+| 6 | `figures/dp_per_colonoscopy_c6b.png` | Deaths and diagnoses averted per 1000 colonoscopies, all headline arms. |

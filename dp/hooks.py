@@ -193,7 +193,8 @@ class BeliefPolicyHook:
     wants_info = True
 
     def __init__(self, policies, sex_arr, risk_class=None, observed_class=False,
-                 adherence=1.0, seed=0):
+                 adherence=1.0, seed=0, score_cell=None, cell_beliefs=None,
+                 score_band=None):
         self.adherence = float(adherence)
         self.adh_rng = np.random.default_rng(seed + 4242)
         self.n_missed = None
@@ -209,12 +210,21 @@ class BeliefPolicyHook:
         for sex in (1, 2):
             m = policies[sex].model
             idx = np.where(self.sex_arr == sex)[0]
-            if observed_class and risk_class is not None:
+            if score_cell is not None and cell_beliefs is not None:
+                # a baseline risk score of finite discrimination: each person
+                # starts from the belief conditional on their own score VALUE
+                # (dp/riskscore.beliefs_for_scores), tabulated on a fine
+                # equal-mass grid of the score distribution. Binning first
+                # would discard the tail resolution the scenario is about.
+                self.belief[idx] = np.asarray(cell_beliefs, float)[np.asarray(score_cell)[idx]]
+            elif observed_class and risk_class is not None:
                 for c in range(m.n_class):
                     ii = idx[np.asarray(risk_class)[idx] == c]
                     self.belief[ii] = m.initial_belief(class_known=c)[None, :]
             else:
                 self.belief[idx] = m.initial_belief()[None, :]
+        self.score_band = np.asarray(score_band) if score_band is not None else None
+        self.score_cell = np.asarray(score_cell) if score_cell is not None else None
         self.n_screen = np.zeros(n, dtype=np.int16)
         self.n_missed = np.zeros(n, dtype=np.int16)
         self.n_impossible = 0
@@ -313,3 +323,41 @@ def rule_action_fn(start=52, intervals=(10, 5, 3, 3), age_max=80):
             return SCREEN if y >= start else WAIT
         return SCREEN if tau >= intervals[ol] else WAIT
     return fn
+
+
+class BandFixedScheduleHook:
+    """A risk-stratified FIXED programme: the baseline score puts each person
+    in a band, and the band determines a fixed schedule of ages. No belief, no
+    response to findings - this is the comparator that separates what the SCORE
+    buys from what ADAPTIVITY buys."""
+    wants_info = True
+
+    def __init__(self, band_ages, band, n, sex=None, band_ages_female=None):
+        def _sets(rows):
+            return [set(int(x) for x in ages) for ages in rows]
+        self.band_ages = {1: _sets(band_ages),
+                          2: _sets(band_ages_female if band_ages_female is not None else band_ages)}
+        self.sex = (np.full(n, 1, dtype=np.int8) if sex is None
+                    else np.asarray(sex).astype(np.int8))
+        self.band = np.asarray(band).astype(int)
+        self.diagnosed = np.zeros(n, dtype=bool)
+        self.n_screen = np.zeros(n, dtype=np.int16)
+        self.score_band = self.band
+        self.score_cell = None
+
+    def decide_one(self, z, y, s_true=None):
+        if s_true is not None and s_true in E_D:
+            self.diagnosed[z] = True
+        if self.diagnosed[z]:
+            return WAIT
+        if y in self.band_ages[int(self.sex[z])][self.band[z]]:
+            self.n_screen[z] += 1
+            return SCREEN
+        return WAIT
+
+    def obs(self, a, s_true, info=None):
+        return info_to_obs(a, s_true, info)
+
+    def step_update(self, z, a, o, y):
+        if o == O_EXIT:
+            self.diagnosed[z] = True

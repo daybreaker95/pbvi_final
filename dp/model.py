@@ -198,13 +198,28 @@ class ReducedPOMDP:
         return self._Vnat[(self.age_max + 1,) + mem_key(tau, ol)]
 
     # ------------------------------------------------------------------
-    def initial_belief(self, class_known=None):
+    def initial_belief(self, class_known=None, class_prior=None):
+        """Age-40 belief. class_known: the class is revealed exactly.
+        class_prior: an arbitrary prior over the latent classes (e.g. the
+        posterior implied by a noisy baseline risk score) - the clinical
+        distribution WITHIN each class is kept as estimated, only the class
+        weights are replaced."""
         b = self._b0_joint.copy()
         if class_known is not None:
             m = np.zeros_like(b)
             blk = slice(class_known * self.NC, (class_known + 1) * self.NC)
             m[blk] = b[blk]
             b = m
+        elif class_prior is not None:
+            pri = np.asarray(class_prior, float)
+            assert len(pri) == self.n_class, 'class_prior length != n_class'
+            out = np.zeros_like(b)
+            for c in range(self.n_class):
+                blk = slice(c * self.NC, (c + 1) * self.NC)
+                w = b[blk].sum()
+                if w > 0:
+                    out[blk] = b[blk] / w * pri[c]
+            b = out
         return b / b.sum()
 
     def initial_memory(self):
@@ -256,14 +271,23 @@ def _merge_rows(U, decimals=6, max_rows=50_000):
 
 
 def policy_tree(model: ReducedPOMDP, action_batch, b0=None, prune=1e-12, decimals=6,
-                max_rows=50_000, collect=False):
+                max_rows=50_000, collect=False, weights=None):
     """Propagate the occupancy tree of a policy (vectorised per key).
 
     action_batch(y, tau, ol, Bnorm) -> int array of actions for the rows of Bnorm.
+    b0 may be a single belief or a (k, S) matrix of roots; `weights` then gives
+    the population share of each root (summing to 1), so the returned
+    expectations average over the deployment population rather than over the
+    population prior alone.
     Returns (metrics dict, tree) where tree[(y, tau, ol)] = (U, actions) if collect.
     """
-    b0 = model.initial_belief() if b0 is None else b0
-    nodes = {model.initial_memory(): np.asarray(b0, float)[None, :]}
+    if b0 is None:
+        B0 = model.initial_belief()[None, :]
+    else:
+        B0 = np.atleast_2d(np.asarray(b0, float))
+    if weights is not None:
+        B0 = B0 * np.asarray(weights, float)[:, None]      # occupancy = weight x belief
+    nodes = {model.initial_memory(): B0}
     acc = {m: 0.0 for m in METRICS}
     colos = 0.0; obj = 0.0; n_max = 1
     tree = {}
@@ -306,13 +330,14 @@ def policy_tree(model: ReducedPOMDP, action_batch, b0=None, prune=1e-12, decimal
 
 
 def evaluate_policy(model: ReducedPOMDP, action_fn, b0=None, prune=1e-12, max_nodes=50_000,
-                    action_batch=None):
+                    action_batch=None, weights=None):
     """Exact per-person expectations of a policy. action_fn(y, tau, ol, b) is
     applied row-wise unless a vectorised action_batch is given."""
     if action_batch is None:
         def action_batch(y, tau, ol, B):
             return np.array([action_fn(y, tau, ol, b) for b in B], dtype=np.int8)
-    res, _ = policy_tree(model, action_batch, b0=b0, prune=prune, max_rows=max_nodes)
+    res, _ = policy_tree(model, action_batch, b0=b0, prune=prune, max_rows=max_nodes,
+                         weights=weights)
     return res
 
 

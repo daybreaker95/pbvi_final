@@ -216,3 +216,80 @@ dominance over fixed scheduling is robust to substantial misspecification.
 (Three of the five ablated abstractions were re-solved; paired SEs are
 38-39 over four matched 50k chunks. The full model's row is shown for
 reference and has SE 47.9 at this sample size.)
+
+
+## Baseline risk score of finite discrimination (`results/dp/score_frontier.json`,
+`eval_riskscore_n200000.json`, `eval_scorefixed_0.60_n200000.json`)
+
+Score: S = log(individual_risk) + sigma*N(0,1) observed at 40; the belief is
+conditioned on the score VALUE (closed form over CMOST's 476-value pool, with
+each atom's own age-40 clinical distribution), not on a band. sigma is
+calibrated to a within-sex AUC for lifetime CRC. Ceiling = 0.751 (knowing the
+multiplier exactly still leaves the disease stochastic).
+
+In-model, every level read at 2.369 colonoscopies/person:
+
+| level | sigma | AUC | RR top decile | top/bottom | deaths /100k | vs uninformative |
+|---|---|---|---|---|---|---|
+| uninformative (control) | 60 | 0.507 | 1.04 | 1.1 | 892 | — |
+| family-history-like | 9.39 | 0.550 | 1.33 | 1.8 | 883 | −9 |
+| **CRC PRS** | 4.49 | 0.599 | 1.76 | 3.2 | **867** | **−24** |
+| PRS + lifestyle | 2.63 | 0.650 | 2.32 | 5.4 | 837 | −55 |
+| optimistic | 1.52 | 0.700 | 3.08 | 8.6 | 787 | −105 |
+| ceiling | 0 | 0.751 | 3.94 | 12.0 | 714 | −177 |
+
+Engine (n = 200 000 per arm): q10y 2.577/1034.0; adaptive no score 2.289/889.5;
+score AUC 0.55 2.275/919.5; 0.60 2.298/904.0; 0.65 2.256/869.0; 0.70
+2.457/792.0; ceiling 2.665/732.0; uninformative control 2.023/945.5; perfect
+class 1.665/826.0. These engine arms are NOT volume-matched: the deployment
+price came from an interpolated probe, not from a re-matched frontier, so the
+arms range over 2.02-2.67 colonoscopies/person. Only the two strongest levels
+separate from the no-score policy at this sample size (MDD ~78 per 100 000),
+and part of that separation is extra volume. Read against the latent-class
+engine frontier interpolated at each arm's own volume (871 at 2.457, 836 at
+2.665), the volume-matched engine gaps are -79 (AUC 0.70) and -104 (ceiling),
+against the in-model -105 and -177.
+
+**Information vs adaptivity (in-model, all four cells read at 2.369
+colos/person, CRC deaths/100k):**
+
+| | no score | score AUC 0.60 | score buys |
+|---|---|---|---|
+| best fixed schedule | 972 | 942 | −30 |
+| adaptive policy | 892 | 867 | −24 |
+| **adaptivity buys** | **−80** | **−74** | |
+
+Both fixed cells come from the same band-stratified machinery (the no-score
+one with sigma = CONTROL_SIGMA), so they differ only in what the bands know.
+Neither is a single attainable schedule at exactly 2.369: one price selects
+schedules in discrete steps, so each is interpolated on its own price-volume
+envelope (no score, 2.367 -> 972 and 2.373 -> 971; with score, 2.343 -> 946
+and 2.379 -> 940). The exhaustive fixed search is NOT on the same footing: it scores schedules
+on each sex's own age-40 prior, not the sex-pooled belief the score arms use.
+Re-scored on the pooled belief, the best unisex schedule gives 980.0 at this
+volume ([58,68,78] 2.352/980.4, [58,68,76] 2.402/979.2) and the best
+score-blind SEX-SPECIFIC programme 972.1 - the no-score cell (971.6) to
+within 0.5, i.e. a second wiring check: an uninformative score collapses the
+fixed arm to a sex-specific fixed programme. On its own (sex-specific) prior
+the same unisex search gives 970.3.
+
+Engine, score-stratified fixed (sex-specific band schedules): 2.262 colos /
+896.0 deaths/100k, paired −138.0 ± 27.1 vs q10y and +6.5 ± 25.1 vs the
+adaptive no-score policy (2.289/889.5). At n = 200 000 the engine cannot
+separate "score + fixed" from "adaptive, no score", though the interval
+contains the in-model gap of 50.
+
+Nearly additive: a realistic score is worth 24-30 deaths/100k whether the
+programme is fixed or adaptive, and adaptivity 74-80 either way, the two
+overlapping by about 5. One colonoscopy showing >=3 adenomas moves
+P(high-risk classes) from 0.05 to 0.93; the top DECILE of an AUC-0.60 score
+reaches 0.14 and its top 1 % only 0.23.
+
+Wiring control: with sigma large the score carries nothing and the machinery
+reproduces the latent-class policy to the resolution of the comparison - 892
+for the control against 902 for the latent-class policy when both are scored
+on the same sex-pooled age-40 belief at the same volume (880 for that policy
+on the model's own sex-specific prior), and 945.5 +- 13.8 at 2.023 in the
+engine against ~921 for the latent frontier interpolated at that volume.
+Belief conservation (sum_k w_k b_k = population prior) holds to <0.0011 on the
+14 deployment roots and to <0.0001 on the 2048-cell table, at every level.

@@ -66,6 +66,13 @@ def build_hook(arm: dict, p: dict, seed: int, n: int):
                                             age_hi_first=arm.get('age_hi_first', 70),
                                             max_interval=arm.get('max_interval', 12),
                                             age_max=arm.get('age_max', 80))
+    if kind == 'band_fixed':
+        from .riskscore import assign_cells
+        _, band = assign_cells(np.asarray(p['individual_risk'], float), float(arm['score_sigma']),
+                               arm['score_cell_edges'], arm['score_band_edges'], seed)
+        return H.BandFixedScheduleHook(arm['band_ages'], band, n,
+                                       sex=np.asarray(p['gender_arr']).astype(int),
+                                       band_ages_female=arm.get('band_ages_female'))
     if kind == 'rule':
         return H.FindingRuleHook(n, start=arm.get('start', 52), intervals=tuple(arm.get('intervals', (10, 5, 3, 3))),
                                  age_max=arm.get('age_max', 80))
@@ -77,9 +84,17 @@ def build_hook(arm: dict, p: dict, seed: int, n: int):
         if arm.get('observed_class', False):
             thr = np.asarray(arm['class_thr'], float)
             rc = risk_class_of(np.asarray(p['individual_risk'], float), thr)
+        cell = band = beliefs = None
+        if arm.get('score_sigma') is not None:
+            from .riskscore import assign_cells
+            cell, band = assign_cells(np.asarray(p['individual_risk'], float),
+                                      float(arm['score_sigma']), arm['score_cell_edges'],
+                                      arm['score_band_edges'], seed)
+            beliefs = np.load(arm['score_belief_table'])['beliefs']
         return H.BeliefPolicyHook(pols, sex_arr, risk_class=rc,
                                  observed_class=arm.get('observed_class', False),
-                                 adherence=arm.get('adherence', 1.0), seed=seed)
+                                 adherence=arm.get('adherence', 1.0), seed=seed,
+                                 score_cell=cell, cell_beliefs=beliefs, score_band=band)
     raise ValueError(f'unknown arm kind {kind}')
 
 
@@ -165,6 +180,8 @@ def run_chunk(job: dict) -> str:
         n_policy_colo=n_policy_colo, n_total_colo=n_total_colo,
         risk=risk.astype(np.float32), sex=sex,
     )
+    if getattr(hook, 'score_band', None) is not None:
+        save['score_band'] = np.asarray(hook.score_band, np.int16)
     if job.get('keep_state_recorder', False):
         save['sr'] = sr
     if qr is not None:

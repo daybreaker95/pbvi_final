@@ -153,3 +153,69 @@ if __name__ == '__main__':
     print(frontier_figure(a.tag, a.n_head, a.n_grid, a.objectives.split(',')))
     print(per_colo_figure(a.tag, a.n_head))
     print(validation_figure(a.tag))
+
+
+def riskscore_figure(n=200_000, tag='c6b'):
+    """The value of a baseline risk score as a function of its discrimination:
+    in-model at a common colonoscopy volume (left) and the engine arms on the
+    efficiency plane (right)."""
+    fr = _load(os.path.join(RES, 'score_frontier.json'))
+    ev = _load(os.path.join(RES, f'eval_riskscore_n{n}.json'))
+    if not fr or not ev:
+        return None
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.4))
+    lv = fr['levels']
+    order = [k for k in ('uninformative', '0.55', '0.60', '0.65', '0.70', 'ceiling') if k in lv]
+    # the control's AUC is measured, not the nominal 0.5 that older runs stored
+    from .riskscore import control_auc
+    x = [control_auc(lv[k]['auc']) if k == 'uninformative' else lv[k]['auc'] for k in order]
+    y = [lv[k]['death_at_target'] * 1e5 for k in order]
+    ok = [lv[k]['in_range'] for k in order]
+    axes[0].plot([a for a, o in zip(x, ok) if o], [b for b, o in zip(y, ok) if o],
+                 'o-', color='C1', label=f"adaptive policy at {fr['target_volume']:.2f} colonoscopies/person")
+    for a_, b_, k, o in zip(x, y, order, ok):
+        if o:
+            axes[0].annotate(k, (a_, b_), textcoords='offset points', xytext=(4, 5), fontsize=7)
+    base = lv['uninformative']['death_at_target'] * 1e5 if 'uninformative' in lv else None
+    if base:
+        axes[0].axhline(base, color='gray', ls='--', lw=0.8)
+        axes[0].text(0.745, base - 6, 'no score (latent risk only)', color='gray',
+                     fontsize=8, ha='right', va='top')
+    for a_, lab in ((0.60, 'CRC PRS'), (0.65, 'PRS + lifestyle')):
+        axes[0].axvline(a_, color='C0', lw=0.6, ls=':')
+        axes[0].text(a_ + 0.003, max(y) - 4, lab, rotation=90, fontsize=7, color='C0', va='top')
+    axes[0].set_xlabel('score discrimination (AUC for lifetime CRC, within sex)')
+    axes[0].set_ylabel('CRC deaths per 100,000')
+    axes[0].set_title('Value of a baseline score at matched colonoscopy volume')
+    axes[0].grid(alpha=0.3); axes[0].legend(fontsize=7)
+
+    arms = ev['arms']
+    for k, c, mk, lab in (('q10y', 'k', 's', 'fixed 10-yearly'),
+                          ('dp_death_lam0.001561_q10y', 'C0', 'o', 'adaptive, no score'),
+                          ('dp_death_lam0.001561_obsclass', 'C3', '*', 'adaptive, risk class known')):
+        if k in arms:
+            r = arms[k]
+            axes[1].errorbar([r['colos_per_person']], [r['crc_death_per_100k']],
+                             yerr=[r['crc_death_se']], fmt=mk, ms=9, color=c, label=lab)
+    sc = [(ev['levels'][k]['auc'], arms[f'score_{k}']) for k in order if f'score_{k}' in arms]
+    sc.sort()
+    axes[1].errorbar([r['colos_per_person'] for _, r in sc], [r['crc_death_per_100k'] for _, r in sc],
+                     yerr=[r['crc_death_se'] for _, r in sc], fmt='o-', color='C1', ms=5,
+                     label='adaptive + score (AUC 0.50-0.75)')
+    for auc_v, r in sc:
+        axes[1].annotate(f'{auc_v:.2f}', (r['colos_per_person'], r['crc_death_per_100k']),
+                         textcoords='offset points', xytext=(4, 4), fontsize=7)
+    # the other half of the 2 x 2: the same score driving a FIXED programme
+    sfx = _load(os.path.join(RES, f'eval_scorefixed_0.60_n{n}.json'))
+    if sfx:
+        r = sfx['engine']
+        axes[1].errorbar([r['colos_per_person']], [r['crc_death_per_100k']],
+                         yerr=[r['crc_death_se']], fmt='D', ms=7, color='C2',
+                         label='fixed + score (AUC 0.60)')
+    axes[1].set_xlabel('colonoscopies per person'); axes[1].set_ylabel('CRC deaths per 100,000')
+    axes[1].set_title(f'Engine arms (n = {n:,} each)'); axes[1].grid(alpha=0.3)
+    axes[1].legend(fontsize=7)
+    fig.tight_layout()
+    out = os.path.join(FIG, f'dp_riskscore_{tag}.png')
+    fig.savefig(out, dpi=160); plt.close(fig)
+    return out

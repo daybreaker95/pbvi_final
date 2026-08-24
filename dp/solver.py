@@ -27,11 +27,16 @@ from .model import ReducedPOMDP, evaluate_policy, policy_tree, METRICS, mem_key
 
 
 class Policy:
-    def __init__(self, model: ReducedPOMDP, alphas: dict, acts: dict, meta: dict | None = None):
+    def __init__(self, model: ReducedPOMDP, alphas: dict, acts: dict, meta: dict | None = None,
+                 roots=None, root_weights=None):
         self.model = model
         self.alphas = alphas      # (y, tau, ol) -> (K,S)
         self.acts = acts          # (y, tau, ol) -> (K,)
         self.meta = meta or {}
+        # deployment population this policy is scored over: the population
+        # prior when None, otherwise a weighted set (e.g. the score bands)
+        self.roots = roots
+        self.root_weights = root_weights
 
     def best_action(self, y, tau, ol, b):
         y = int(y)
@@ -61,9 +66,13 @@ class Policy:
     def action_fn(self):
         return lambda y, tau, ol, b: self.best_action(y, tau, ol, b)
 
-    def evaluate(self):
-        """Exact in-model metrics of this policy (vectorised)."""
-        return evaluate_policy(self.model, None, action_batch=self.best_action_batch)
+    def evaluate(self, b0=None, weights=None):
+        """Exact in-model metrics, averaged over the policy's deployment roots
+        (the population prior when none were supplied)."""
+        if b0 is None and self.roots is not None:
+            b0, weights = self.roots, self.root_weights
+        return evaluate_policy(self.model, None, action_batch=self.best_action_batch,
+                               b0=b0, weights=weights)
 
     def save(self, path):
         d = dict(meta=json.dumps(dict(self.meta, sex=self.model.sex, kernels_npz=self.model.kernels_npz,
@@ -92,7 +101,7 @@ def load_policy(path) -> Policy:
 # ----------------------------------------------------------------------
 class PBVISolver:
     def __init__(self, model: ReducedPOMDP, cap=2000, round_decimals=4, seed=0,
-                 ref_screen_prob=0.12, init_beliefs=None, verbose=True):
+                 ref_screen_prob=0.12, init_beliefs=None, verbose=True, root_weights=None):
         self.m = model
         self.cap = cap
         self.dec = round_decimals
@@ -100,6 +109,7 @@ class PBVISolver:
         self.p_ref = ref_screen_prob
         self.verbose = verbose
         self.roots = [model.initial_belief()] if init_beliefs is None else list(init_beliefs)
+        self.root_weights = np.asarray(root_weights, float) if root_weights is not None else None
         self.B = {}       # key -> (n,S)
         self.W = {}       # key -> (n,)
         self.alphas, self.acts = {}, {}
@@ -146,7 +156,8 @@ class PBVISolver:
         m = self.m
         self.B, self.W = {}, {}
         root = (m.age_min,) + m.initial_memory()
-        self._merge_into(root, self.roots, [1.0] * len(self.roots))
+        R, W = self._roots_and_weights()
+        self._merge_into(root, list(R), list(W))
         for y in range(m.age_min, m.age_max):
             for key in self._keys_at(y):
                 B, Wt = self.B[key], self.W[key]
@@ -163,7 +174,9 @@ class PBVISolver:
         """Exact reachable set of the policy (vectorised tree), weighted by
         reach probability, plus optional epsilon-greedy sampled rollouts."""
         m = self.m
-        _, tree = policy_tree(m, policy.best_action_batch, collect=True, prune=prune)
+        R, W = self._roots_and_weights()
+        _, tree = policy_tree(m, policy.best_action_batch, collect=True, prune=prune,
+                              b0=R, weights=W)
         for key, (U, acts) in tree.items():
             mass = U.sum(axis=1)
             self._merge_into(key, U / mass[:, None], mass)
@@ -209,6 +222,11 @@ class PBVISolver:
             best_val[upd] = vals[upd]; best_alpha[upd] = alpha[upd]; best_act[upd] = a
         return best_alpha, best_act
 
+    def _roots_and_weights(self):
+        w = (self.root_weights if self.root_weights is not None
+             else np.full(len(self.roots), 1.0 / len(self.roots)))
+        return np.asarray(self.roots, float), np.asarray(w, float)
+
     def sweep(self):
         m = self.m
         self.alphas, self.acts = {}, {}
@@ -233,7 +251,8 @@ class PBVISolver:
                 _, keep = np.unique(np.round(alphas, 10), axis=0, return_index=True)
                 keep = np.sort(keep)
                 self.alphas[key] = alphas[keep]; self.acts[key] = acts[keep]
-        return Policy(m, dict(self.alphas), dict(self.acts))
+        R, W = self._roots_and_weights()
+        return Policy(m, dict(self.alphas), dict(self.acts), roots=R, root_weights=W)
 
     # -- FIB upper bound -------------------------------------------------
     def fib_bound(self):
@@ -284,11 +303,12 @@ class PBVISolver:
                 break
         pol = best[1]
         UB = self.fib_bound()
-        b0 = self.roots[0]
+        R, W = self._roots_and_weights()
         root = (self.m.age_min,) + self.m.initial_memory()
-        ub0 = max(float(b0 @ v) for v in UB[root].values())
+        ubs = [max(float(b @ v) for v in UB[root].values()) for b in R]
+        ub0 = float(np.dot(W, ubs))
         pol.meta.update(dict(objective=best[0], fib_upper=ub0, gap=ub0 - best[0], eval=best[2],
-                             history=self.history, cap=self.cap))
+                             fib_upper_by_root=ubs, history=self.history, cap=self.cap))
         if self.verbose:
             print(f'  done: obj={best[0]:.6f}  FIB ub={ub0:.6f}  gap={ub0 - best[0]:.6f}', flush=True)
         return pol
@@ -304,10 +324,22 @@ class PBVISolver:
 
 
 def solve_policy(sex, kernels_npz, weights=None, lam=0.0, age_min=40, age_max=80, cap=2000, rounds=8,
-                 rollouts=200, eps=0.1, seed=0, verbose=True, class_known_roots=False):
+                 rollouts=200, eps=0.1, seed=0, verbose=True, class_known_roots=False,
+                 root_priors=None, root_beliefs=None, root_weights=None):
+    """root_priors: list of class-prior vectors to seed the belief set with,
+    e.g. the per-score-band posteriors of a noisy baseline risk score. One
+    alpha-vector set serves every band, so a single solve per sex suffices."""
     m = ReducedPOMDP(sex, kernels_npz, age_min=age_min, age_max=age_max, weights=weights, lam=lam)
     roots = [m.initial_belief()]
     if class_known_roots:
         roots += [m.initial_belief(class_known=c) for c in range(m.n_class)]
-    s = PBVISolver(m, cap=cap, seed=seed, init_beliefs=roots, verbose=verbose)
+    if root_priors is not None:
+        roots += [m.initial_belief(class_prior=pri) for pri in root_priors]
+    if root_beliefs is not None:
+        # an explicit deployment population (the score-band beliefs) REPLACES
+        # the population prior, so the solver refines and scores exactly the
+        # beliefs the policy is deployed from
+        roots = [np.asarray(b, float) for b in root_beliefs]
+    s = PBVISolver(m, cap=cap, seed=seed, init_beliefs=roots, verbose=verbose,
+                   root_weights=root_weights)
     return s.solve(rounds=rounds, rollouts=rollouts, eps=eps)

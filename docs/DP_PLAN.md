@@ -97,3 +97,51 @@ excluded from git for size).
   dominance over fixed schedules survives every coarsening tested.
 * **Manuscript**: `paper/manuscript.md` (rewritten on these results;
   every number machine-verified against `results/dp/`).
+* **Baseline risk score of finite discrimination** (`dp/riskscore.py`,
+  `dp/run_riskscore.py`, `dp/score_frontier.py`, `dp/score_fixed.py`,
+  `dp/report_riskscore.py`): score-conditional beliefs (continuous, not
+  banded), sigma calibrated to a target within-sex AUC, one policy per sex
+  solved over 14 tail-dense score-band roots, each level read at a matched
+  colonoscopy volume off its own price-volume frontier. Adds the
+  score-stratified FIXED comparator that separates information from
+  adaptivity. Design was reviewed by a statistical/clinical/decision-analytic
+  panel first; the panel's fatal findings (band-conditioned beliefs, a
+  population-prior-only PBVI refinement, unmatched volumes, AUC-only
+  anchoring) are all fixed in the shipped code.
+* **Post-hoc verification of the risk-score section** (24-agent fact-check
+  workflow, every claim recomputed from the artefacts) found and fixed:
+  - the score-stratified FIXED arm deployed the MALE band schedules to
+    everyone (`BandFixedScheduleHook` took no sex). Fixed; the corrected
+    engine arm is 2.262 colos / 896.0 deaths per 100 000, versus
+    2.220 / 938.0 before;
+  - its in-model cell was reported at the price-bisection's landing volume
+    (2.343) rather than at the target 2.369. `dp/score_fixed.py` now builds
+    the full price-volume envelope and reads it at the target, exactly as
+    `dp/score_frontier.py` does for the adaptive arms (946 -> 942), and also
+    builds the like-for-like sigma -> infinity comparator (972);
+  - the control's AUC was the hard-coded nominal 0.500. It is now measured
+    (`riskscore.control_auc`, 0.507) and cached, because sigma = 60 is a
+    stand-in for sigma -> infinity, not infinity;
+  - `band_posteriors` sampled the risk pool uniformly rather than by age-40
+    frequency (the same defect fixed earlier in the deployment path; the
+    numbers barely move, 0.1409 vs 0.1419, but the paths now agree);
+  - manuscript arithmetic and transcription: "a fifth" -> "a third" of what
+    adaptivity buys; a bottom-decile colonoscopy count read off the AUC-0.65
+    arm instead of the AUC-0.60 one (0.71 -> 1.11); "top 2 %" -> "top 5 %"
+    for the five-colonoscopy band; "top band ... 0.14" -> top DECILE 0.14,
+    top 1 % 0.23; the engine ladder sentence now states that the arms are not
+    volume-matched and gives the volume-matched gaps (-79, -104).
+  Belief conservation re-verified: max |sum_k w_k b_k - population prior| is
+  0.0011 on the 14 deployment roots and 0.0001 on the 2048-cell table.
+  A second verification round on the corrected text found two more:
+  - the unstratified fixed comparator quoted next to Table 8 was scored on
+    each sex's OWN age-40 prior while every Table 8 cell uses the score arms'
+    sex-pooled belief. Re-scored on the pooled belief the best unisex
+    schedule is 980.0, not 970.3, and the best score-blind SEX-SPECIFIC
+    programme is 972.1 - which reproduces the no-score cell (971.6) to within
+    0.5 and is therefore a second wiring check: an uninformative score must
+    collapse the fixed arm to a sex-specific fixed programme, and it does;
+  - "more than three times" overstated the adaptivity/score ratio, which is
+    2.67 measured from the shared fixed/no-score corner and 3.04 measured
+    with the other ingredient present. Now "about three times", in §3.6 and
+    in the abstract.
