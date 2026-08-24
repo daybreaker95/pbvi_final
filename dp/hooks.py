@@ -45,19 +45,44 @@ class FixedScheduleNoDxHook(FixedScheduleHook):
     """Fixed schedule that (like any real programme) does not re-screen a
     person already diagnosed with CRC. Used for the fair fixed-schedule
     comparators: in the engine a diagnosed patient stays Alive & Included
-    and would otherwise receive pointless 'screening' colonoscopies."""
+    and would otherwise receive pointless 'screening' colonoscopies.
+
+    adherence: probability that a due invitation is attended (drawn from the
+    hook's OWN rng so the engine's global paired stream is untouched).
+    recall: if True, a missed invitation is re-issued every following year
+    until attended (then the next slot is the next scheduled age > y);
+    if False, a missed slot is lost for good (classic fixed programme)."""
     wants_info = True
 
-    def __init__(self, screen_ages, n):
+    def __init__(self, screen_ages, n, adherence=1.0, recall=False, seed=0):
         super().__init__(screen_ages)
         self.diagnosed = np.zeros(n, dtype=bool)
+        self.adherence = float(adherence)
+        self.recall = bool(recall)
+        self.rng = np.random.default_rng(seed + 4242)
+        self.ages_sorted = sorted(self.screen_ages)
+        first = self.ages_sorted[0] if self.ages_sorted else 10**6
+        self.next_due = np.full(n, first, dtype=np.int32)
+        self.n_missed = np.zeros(n, dtype=np.int16)
+
+    def _advance(self, z, y):
+        nxt = [x for x in self.ages_sorted if x > y]
+        self.next_due[z] = nxt[0] if nxt else 10**6
 
     def decide_one(self, z, y, s_true=None):
         if s_true is not None and s_true in E_D:
             self.diagnosed[z] = True
         if self.diagnosed[z]:
             return WAIT
-        return SCREEN if y in self.screen_ages else WAIT
+        due = (y >= self.next_due[z]) if self.recall else (y in self.screen_ages)
+        if not due:
+            return WAIT
+        if self.adherence < 1.0 and self.rng.random() >= self.adherence:
+            self.n_missed[z] += 1
+            if not self.recall:
+                pass                    # slot lost; next chance = next scheduled age
+            return WAIT
+        return SCREEN
 
     def obs(self, a, s_true, info=None):
         if s_true in E_D or (info is not None and info['cancer_detected']):
@@ -65,6 +90,8 @@ class FixedScheduleNoDxHook(FixedScheduleHook):
         return O_NOTEST
 
     def step_update(self, z, a, o, y):
+        if a == SCREEN and self.recall:
+            self._advance(z, y)         # attended: move to the next scheduled slot
         if o == O_EXIT:
             self.diagnosed[z] = True
 
@@ -165,7 +192,11 @@ class BeliefPolicyHook:
     """
     wants_info = True
 
-    def __init__(self, policies, sex_arr, risk_class=None, observed_class=False):
+    def __init__(self, policies, sex_arr, risk_class=None, observed_class=False,
+                 adherence=1.0, seed=0):
+        self.adherence = float(adherence)
+        self.adh_rng = np.random.default_rng(seed + 4242)
+        self.n_missed = None
         self.pol = policies
         self.sex_arr = np.asarray(sex_arr).astype(int)
         n = len(self.sex_arr)
@@ -185,6 +216,7 @@ class BeliefPolicyHook:
             else:
                 self.belief[idx] = m.initial_belief()[None, :]
         self.n_screen = np.zeros(n, dtype=np.int16)
+        self.n_missed = np.zeros(n, dtype=np.int16)
         self.n_impossible = 0
         self._cur = None
         self.log_z, self.log_y, self.log_o = [], [], []
@@ -197,6 +229,11 @@ class BeliefPolicyHook:
             return WAIT
         p = self.pol[self.sex_arr[z]]
         a = int(p.best_action(y, int(self.tau[z]), int(self.ol[z]), self.belief[z]))
+        if a == SCREEN and self.adherence < 1.0 and self.adh_rng.random() >= self.adherence:
+            # no-show: no colonoscopy, no observation; the belief simply takes
+            # the WAIT transition below and the policy re-plans next year
+            self.n_missed[z] += 1
+            return WAIT
         if a == SCREEN:
             self.n_screen[z] += 1
         return a

@@ -126,3 +126,53 @@ colonoscopies per person — twice the per-colonoscopy efficiency of the
 are lower under the DP policies than under the volume-matched fixed
 schedules (9.3 vs 9.9 per 100k at the q10y volume; 15.7 vs 19.4 at the q5y
 volume), so the mortality gain is not bought with procedural harm.
+
+## Additional analyses (2026-08-24 evening)
+
+### Robustness to imperfect adherence (engine, n = 200,000 per arm)
+
+Each due invitation is attended with probability α (independent draws). The
+SAME DP policy as in the headline (λ = 0.001561) is deployed unchanged — a
+no-show simply yields no observation and the policy re-plans at the next
+annual decision. Comparators: the fixed 10-y programme where a missed slot
+is lost, and the fixed 10-y programme with annual re-invitation until
+attended (recall).
+
+| α | fixed 10-y (slot lost) | fixed 10-y + recall | adaptive DP policy |
+|---|---|---|---|
+| 1.0 | 2.58 colos → 1034 deaths | — | 2.29 → **890** |
+| 0.7 | 1.80 → 1246 | 2.56 → 1072 | 2.13 → **935** |
+| 0.5 | 1.29 → 1352 | 2.54 → 1023 | 1.98 → **975** |
+| 0.3 | 0.77 → 1558 | 2.44 → 1030 | 1.73 → 1067 |
+
+The classic fixed programme degrades from a 45 % to an 18 % mortality
+reduction as α falls to 0.3. Annual recall restores the mortality but at an
+undiminished colonoscopy volume. The adaptive policy holds a 44–53 %
+mortality reduction at EVERY adherence level while its volume falls with α:
+at α = 0.5 it achieves lower mortality than the recall-augmented fixed
+programme (975 vs 1023) with 22 % fewer colonoscopies (deaths averted per
+1000 colonoscopies 4.67 vs 3.44, +36 %), and at α = 0.3 comparable
+mortality with 29 % fewer colonoscopies (4.82 vs 3.56 per 1000, +35 %).
+Re-planning around no-shows is automatic — no re-solving per adherence
+level. (Figure dp_adherence_c6b.)
+
+### Life-year objective (engine, n = 200,000 per λ)
+
+A 12-point λ sweep with the undiscounted life-year objective produces
+policies that, in the model, gain ~150–200 life-years per 1000 persons over
+the fixed schedules at matched volume (by shifting colonoscopies to younger
+ages). This advantage does NOT transfer to the engine: population-paired
+engine differences are −11 ± 31 LYG/1000 vs the 10-yearly schedule at
+matched volume and −43 ± 11 vs the 5-yearly schedule; the death-objective
+policies are statistically indistinguishable from the fixed schedules on
+life-years (−2 ± 15 and +13 ± 14 LYG/1000 at 1M) while dominating them on
+deaths and diagnoses per colonoscopy. Life-years depend on the *timing* of
+deaths, which the reduced model (memoryless post-diagnosis survival, exit
+values) represents less faithfully than event counts; we therefore report
+life-years as a secondary, noise-limited endpoint — consistent with the
+LYG-equivalence finding of the earlier 6-state analysis — and base the
+primary claims on CRC deaths and diagnoses. (At the low-λ extreme the
+life-year objective is also numerically ill-conditioned for point-based
+value iteration: policy differences of ~0.05 LY ride on an absolute value
+of ~39.7 LY, and solutions at 10+ colonoscopies/person were demonstrably
+under-converged; the 2.5–7 colonoscopy range shown is converged.)
