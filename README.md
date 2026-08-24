@@ -34,8 +34,12 @@ evaluation, and evaluates everything back inside the real engine with
 population-paired seeds. Result (n = 1M/arm): the DP policy family strictly
 dominates fixed 10-y / 5-y schedules and the best fixed schedules from an
 exhaustive 2112-schedule search, on both CRC deaths and diagnoses per
-colonoscopy. See `docs/DP_PLAN.md`, `paper/dp_methods.md`,
-`paper/dp_results.md`, `results/dp/report_c6b.md`.
+colonoscopy; it is robust to imperfect adherence, and a model-structure
+ablation shows the dominance survives substantial misspecification.
+The manuscript written on these results is `paper/manuscript.md` (the
+earlier six-state version is kept as
+`paper/manuscript_v1_6state_superseded.md`). See also `docs/DP_PLAN.md`,
+`paper/dp_methods.md`, `paper/dp_results.md`, `results/dp/report_c6b.md`.
 
 ## 1. Clinical state discretization
 

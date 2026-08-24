@@ -108,10 +108,10 @@ Population-paired differences (identical chunk seeds; mean ± SE per 100k):
 **Primary claim.** At 1,000,000 persons per arm the adaptive DP policy
 *strictly dominates* both guideline comparators and the exhaustively
 searched best fixed schedules: with 11 % fewer colonoscopies than the
-10-yearly schedule it prevents 13 % more CRC deaths and 7 % more diagnoses
-(deaths averted per 1000 colonoscopies 4.32 vs 3.32, **+30 %**; diagnoses
-averted per 1000 colonoscopies 9.00 vs 7.22, **+25 %**); with 8 % fewer
-colonoscopies than the 5-yearly schedule it prevents 12 % more deaths
+10-yearly schedule it leaves CRC mortality 12.8 % lower and CRC incidence
+7.5 % lower (deaths averted per 1000 colonoscopies 4.32 vs 3.32, **+30 %**;
+diagnoses averted per 1000 colonoscopies 9.00 vs 7.22, **+25 %**); with 8 %
+fewer colonoscopies than the 5-yearly schedule mortality is 12.0 % lower
 (2.63 vs 2.23 deaths averted per 1000 colonoscopies, **+18 %**; diagnoses
 +16 %). Every difference exceeds 4 standard errors of the paired contrast.
 
@@ -176,3 +176,43 @@ life-year objective is also numerically ill-conditioned for point-based
 value iteration: policy differences of ~0.05 LY ride on an absolute value
 of ~39.7 LY, and solutions at 10+ colonoscopies/person were demonstrably
 under-converged; the 2.5–7 colonoscopy range shown is converged.)
+
+
+### Model-structure ablation (`results/dp/ablation.json`)
+
+Each abstraction re-estimated from the same two engine cohorts, then asked
+to predict the engine's outcomes under the guideline schedules (reduction
+versus no screening; engine truth in the first row):
+
+| model structure | 10-y death | 10-y inc | 5-y death | 5-y inc |
+|---|---|---|---|---|
+| **engine** | **45.6 %** | **41.7 %** | **59.3 %** | **52.4 %** |
+| 11 states, memory, 6 classes (used) | 46.2 % | 42.2 % | 61.2 % | 54.1 % |
+| polyp stages pooled | 46.0 % | 42.0 % | 59.4 % | 52.1 % |
+| no (tau, last finding) memory | 54.5 % | 50.6 % | 65.1 % | 58.1 % |
+| pooled *and* no memory | 37.6 % | 31.6 % | 51.7 % | 41.7 % |
+| 3 risk classes | 45.6 % | 41.5 % | 62.7 % | 55.7 % |
+| 1 risk class | 45.2 % | 41.1 % | 63.7 % | 56.7 % |
+
+The memory is the load-bearing part, and its omission errs with a sign that
+depends on the lesion axis (+8.9 pts stage-resolved, -8.0 pts pooled). Note
+that the pooled+memoryless row shares only two coarsenings with the earlier
+six-state analysis (pooled lesion axis, no memory); it keeps six risk
+classes and four undetected cancer stages.
+
+**Policies solved on the ablated models still beat the fixed schedule**
+(engine, n = 200 000 per arm, `results/dp/eval_ablation_policy_n200000.json`):
+
+| policy solved on | colos | deaths /100k | deaths averted /1000 colos | paired vs q10y |
+|---|---|---|---|---|
+| q10y (comparator) | 2.577 | 1034.0 | 3.35 | — |
+| full model | 2.289 | 889.5 | 4.41 | −144.5 ± 47.9 |
+| pooled stages | 2.098 | 909.0 | 4.71 | −125.0 ± 38.8 |
+| no memory | 2.067 | 913.5 | 4.76 | −120.5 ± 38.5 |
+| 1 risk class | 2.461 | 862.0 | 4.21 | −172.0 ± 37.8 |
+
+So the model structure buys *predictive accuracy*, while the per-colonoscopy
+dominance over fixed scheduling is robust to substantial misspecification.
+(Three of the five ablated abstractions were re-solved; paired SEs are
+38-39 over four matched 50k chunks. The full model's row is shown for
+reference and has SE 47.9 at this sample size.)

@@ -53,7 +53,10 @@ class ReducedPOMDP:
         kz = np.load(kernels_npz, allow_pickle=True)
         self.n_class = int(kz['n_class'])
         self.thr = np.asarray(kz['thr'], float)
-        self.S = self.n_class * NC
+        # clinical-axis width is carried by the kernels file so that ablation
+        # variants with a coarser lesion axis (dp/ablate.py) load unchanged
+        self.NC = int(kz['nc']) if 'nc' in kz.files else NC
+        self.S = self.n_class * self.NC
         y0, y1 = int(kz['y0']), int(kz['y1'])
         assert y0 <= age_min and y1 >= life_max, 'kernel age range too small'
         TwA, EwA, KA, XA = kz['Tw'][sx], kz['Ew'][sx], kz['K'][sx], kz['X'][sx]   # [class, mem, age/band, ...]
@@ -89,7 +92,7 @@ class ReducedPOMDP:
             T = np.zeros((self.S, self.S)); E = np.zeros((self.S, NX))
             iy = min(y, self.life_max) - self._y0
             for c in range(self.n_class):
-                blk = slice(c * NC, (c + 1) * NC)
+                blk = slice(c * self.NC, (c + 1) * self.NC)
                 T[blk, blk] = self._TwA[c, m, iy]
                 E[blk, :] = self._EwA[c, m, iy]
             self._Tw_cache[key] = T; self._Ew_cache[key] = E
@@ -109,7 +112,7 @@ class ReducedPOMDP:
             Ko = {o: np.zeros((self.S, self.S)) for o in SCREEN_OBS}
             Xo = np.zeros((self.S, NX))
             for c in range(self.n_class):
-                blk = slice(c * NC, (c + 1) * NC)
+                blk = slice(c * self.NC, (c + 1) * self.NC)
                 for io, o in enumerate(SCREEN_OBS):
                     Ko[o][blk, blk] = self._KA[c, m, b, :, io, :]
                 Xo[blk, :] = self._XA[c, m, b]
@@ -199,7 +202,7 @@ class ReducedPOMDP:
         b = self._b0_joint.copy()
         if class_known is not None:
             m = np.zeros_like(b)
-            blk = slice(class_known * NC, (class_known + 1) * NC)
+            blk = slice(class_known * self.NC, (class_known + 1) * self.NC)
             m[blk] = b[blk]
             b = m
         return b / b.sum()
@@ -217,10 +220,10 @@ class ReducedPOMDP:
         return self.M[key][a][o], self.succ[key][a][o]
 
     def class_marginal(self, b):
-        return np.array([b[c * NC:(c + 1) * NC].sum() for c in range(self.n_class)])
+        return np.array([b[c * self.NC:(c + 1) * self.NC].sum() for c in range(self.n_class)])
 
     def clinical_marginal(self, b):
-        return np.array([b[j::NC].sum() for j in range(NC)])
+        return np.array([b[j::self.NC].sum() for j in range(self.NC)])
 
 
 # ----------------------------------------------------------------------

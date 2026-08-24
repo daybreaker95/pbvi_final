@@ -82,3 +82,18 @@ Reproduce: `python -m dp.run_cohorts` -> `python -m dp.run_pipeline --tag c6b
 --cuts 0.5 0.8 0.95 0.965 0.98 --steps kernels,fixed,sweep,baseline,grid,headline,report
 --objectives death,inc` (policies/runs are cached under `results/dp/`,
 excluded from git for size).
+
+## Follow-up analyses (2026-08-24/25)
+
+* **Adherence** (`dp/run_adherence.py`, `results/dp/eval_adherence_c6b_n200000.json`):
+  the same policy re-plans around no-shows without re-solving; at 50 %
+  attendance it beats a recall-augmented fixed programme on mortality with
+  22 % fewer colonoscopies, while the classic fixed programme collapses.
+* **Life-year objective** (`dp/sweep.py --objective ly`): the in-model gain
+  does not transfer to the engine; reported as a secondary null.
+* **Model-structure ablation** (`dp/ablate.py`, `results/dp/ablation.json`,
+  `dp/_abl_policy.py`): the (tau, last finding) memory is the load-bearing
+  modelling choice for predictive accuracy, while the per-colonoscopy
+  dominance over fixed schedules survives every coarsening tested.
+* **Manuscript**: `paper/manuscript.md` (rewritten on these results;
+  every number machine-verified against `results/dp/`).

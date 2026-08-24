@@ -275,8 +275,8 @@ def finalize(W, Kc):
     for idx in zip(*np.where(np.isnan(Pk[..., 0]))):
         s = idx[-1]
         Pk[idx] = 0.0
-        if s >= 7:
-            Pk[idx + (NO4 * NC + X_D1 + (s - 7),)] = 1.0
+        if s >= NC - 4:
+            Pk[idx + (NO4 * NC + X_D1 + (s - (NC - 4)),)] = 1.0
         else:
             Pk[idx + (0 * NC + s,)] = 1.0
     Tw = Pw[..., :NC]; Ew = Pw[..., NC:]
@@ -329,7 +329,7 @@ def main():
     b0 = occ40.reshape(2, n_class * NC).astype(float); b0 /= b0.sum(axis=1, keepdims=True)
     Vd, Vl = smooth_dx(dx)
     out = os.path.join(RES, f'kernels_{tag}.npz')
-    np.savez_compressed(out, Tw=Tw, Ew=Ew, K=K, X=X, b0=b0, thr=thr, cuts=np.array(cuts), n_class=n_class,
+    np.savez_compressed(out, Tw=Tw, Ew=Ew, K=K, X=X, b0=b0, thr=thr, cuts=np.array(cuts), n_class=n_class, nc=NC,
                         y0=Y0, y1=Y1, bands=np.array(BANDS), Vexit_death=Vd, Vexit_ly=Vl,
                         n_nh=n1, n_screen=n2, W_rowcounts=W.sum(axis=-1), K_rowcounts=Kc.sum(axis=-1),
                         W_level=fw, K_level=fk)
