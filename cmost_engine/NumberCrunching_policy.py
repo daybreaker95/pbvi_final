@@ -593,7 +593,8 @@ def NumberCrunching_policy(p, StageVariables, Location, Cost, CostStage, risc,
                            state_recorder=None,
                            policy_hook=None, action_recorder=None,
                            n_colo_recorder=None, decision_state_recorder=None,
-                           policy_hook_age_min=40, policy_hook_age_max=80):
+                           policy_hook_age_min=40, policy_hook_age_max=80,
+                           quarterly_recorder=None):
     """
     Main simulation function.
     All input arrays use the same conventions as the MATLAB caller.
@@ -862,6 +863,16 @@ def NumberCrunching_policy(p, StageVariables, Location, Cost, CostStage, risc,
         for z in range(n):  # z is 0-based (MATLAB z=1:n)
             for q in range(1, 5):  # q = 1,2,3,4
                 time = y + (q - 1) / 4.0
+
+                # -- quarterly_recorder: quarter-START 18-state snapshot (record
+                #    only, no effect on dynamics). qi = yi*4 + (q-1) = 0..399.
+                #    Identical to NumberCrunching_100000.py's recorder, so the
+                #    dp/ natural-history estimator can use THIS engine (the one
+                #    every policy is evaluated in) instead of a sibling copy.
+                if quarterly_recorder is not None:
+                    qi_ = yi * 4 + (q - 1)
+                    if qi_ < quarterly_recorder.shape[0]:
+                        quarterly_recorder[qi_, z] = _pomdp_state_idx(z)
 
                 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                 #  people die of natural causes     %
@@ -1280,11 +1291,24 @@ def NumberCrunching_policy(p, StageVariables, Location, Cost, CostStage, risc,
                                 and policy_hook_age_min <= y <= policy_hook_age_max
                                 and Alive[z] and Included[z]):
                             s_true = _pomdp_state_idx(z)            # 결정시점(시술 전) 실제 상태
-                            a_pol = policy_hook.decide_one(z, y)
+                            if getattr(policy_hook, 'wants_info', False):
+                                # dp/ hooks also receive the pre-decision state so that an
+                                # already-diagnosed patient (symptomatic diagnosis since the
+                                # previous decision) is never offered a screening colonoscopy
+                                a_pol = policy_hook.decide_one(z, y, s_true)
+                            else:
+                                a_pol = policy_hook.decide_one(z, y)
                             if action_recorder is not None:
                                 action_recorder[yi, z] = a_pol
                             if decision_state_recorder is not None:
                                 decision_state_recorder[yi, z] = s_true
+                            # snapshot BEFORE the procedure so the hook can be
+                            # told what the engine actually found/removed
+                            # (dp/ pipeline: real observations instead of a
+                            # synthetic draw from the model's own kernel)
+                            _er0 = EarlyPolypsRemoved[yi]
+                            _ar0 = AdvancedPolypsRemoved[yi]
+                            _dc0 = DiagnosedCancer[yi, z]
                             if a_pol == 1:
                                 if n_colo_recorder is not None:
                                     n_colo_recorder[z] += 1
@@ -1315,7 +1339,20 @@ def NumberCrunching_policy(p, StageVariables, Location, Cost, CostStage, risc,
                                     Money_FollowUp, Money_Other,
                                     StageVariables, Cost, Location, risc,
                                     ColoReachMatrix, MortalityMatrix, CostStage)
-                            o_pol = policy_hook.obs(a_pol, s_true)
+                            if getattr(policy_hook, 'wants_info', False):
+                                _info = {
+                                    's_pre': s_true,
+                                    's_post': _pomdp_state_idx(z),
+                                    'early_removed': int(EarlyPolypsRemoved[yi] - _er0),
+                                    'adv_removed': int(AdvancedPolypsRemoved[yi] - _ar0),
+                                    'cancer_detected': bool(DiagnosedCancer[yi, z] > _dc0),
+                                    'cancer_stage': int(DiagnosedCancer[yi, z]) if DiagnosedCancer[yi, z] > _dc0 else 0,
+                                    'comp_death': bool(not Included[z]),
+                                    'n_polyps_left': int(_count_nonzero(Polyp_Polyps[z, :])),
+                                }
+                                o_pol = policy_hook.obs(a_pol, s_true, _info)
+                            else:
+                                o_pol = policy_hook.obs(a_pol, s_true)
                             policy_hook.step_update(z, a_pol, o_pol, y)
 
                         # perhaps we do screening?

@@ -5,3 +5,13 @@ results/*_log.txt
 results/*_run.txt
 *BACKUP*
 .DS_Store
+results/dp/runs/
+results/dp/policies/
+results/dp/logs/
+results/dp/kernels_c3.npz
+results/dp/kernels_c3b.npz
+results/dp/kernels_c6.npz
+results/dp/kernels_c8.npz
+results/dp/kernels_dbg.npz
+results/dp/nh_kernel_dbg.npz
+results/dp/screen_kernel_dbg.npz
