@@ -84,12 +84,27 @@ def solve_pbvi_cost(c, budget=8, expansions=4, n_belief=700):
                               gamma=1.0, screen_disutility=c, use_risk_classes=True)
     solver = PBVI(pomdp, n_belief=n_belief, seed=0)
     solver.solve(expansions=0, verbose=False)
-    if os.path.exists(path):
+    if os.path.exists(path) and _cache_matches(path, pomdp.NS):
         solver.load(path)
     else:
         solver.solve(expansions=expansions, verbose=False)
         solver.save(path)
     return pomdp, solver
+
+
+def _cache_matches(path, NS):
+    """True iff a saved alpha-vector cache has this model's hidden-state count.
+
+    The state space has changed since some caches under results/policies/ were
+    written (a 6- vs 7-clinical-state block); loading one of those silently
+    produces alpha vectors of the wrong width and the first q_values() call dies
+    in a matmul.  Check the width and re-solve instead (a solve costs ~2 s)."""
+    try:
+        z = np.load(path, allow_pickle=True)
+        key = next(k for k in z.files if k.startswith('a_'))
+        return z[key].shape[1] == NS
+    except Exception:
+        return False
 
 
 def belief_ph(p, ph):
@@ -128,10 +143,14 @@ def empirical_auc(scores, labels):
 # ---------------------------------------------------------------------------
 def eval_frontier(kind, n, seed, cfg, thr, *, solver=None, p=None,
                   signal='gauss', d=0.0, sched=None, sched_hi=None, sched_lo=None,
-                  tau=None, sig_seed=555):
+                  tau=None, sig_seed=555, post_fn=None):
     """Roll out one policy configuration; return per-patient arrays incl true class.
     kinds: 'fixed' (sched), 'stratified' (sched_hi/lo, tau on baseline p_high),
-           'pbvi_flat' (solver, flat prior), 'pbvi_person' (solver, personalized)."""
+           'pbvi_flat' (solver, flat prior), 'pbvi_person' (solver, personalized).
+
+    post_fn, if given, overrides `signal`: any callable (true_high, rng) ->
+    P(high | baseline observations).  `experiments/risk_panels.py` uses this to
+    plug in named risk-factor/risk-test panels."""
     params = build_params('CMOST13', n_patients=500, seed=777)
     eng = CRCEngine(params, rng=np.random.default_rng(0))
     env = CRCScreeningEnv(eng, cfg)
@@ -146,7 +165,9 @@ def eval_frontier(kind, n, seed, cfg, thr, *, solver=None, p=None,
         obs, info = env.reset()
         true_high = env.pt.individual_risk >= thr
         srng = np.random.default_rng(sig_seed + i)
-        if signal == 'gauss':
+        if post_fn is not None:
+            ph = post_fn(bool(true_high), srng)
+        elif signal == 'gauss':
             ph = gaussian_posterior(true_high, d, srng)
         else:
             ph = concrete_posterior(true_high, srng)
