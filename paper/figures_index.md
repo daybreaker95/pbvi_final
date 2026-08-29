@@ -17,6 +17,7 @@ and `paper/figures/`.
 | `subgroups.png` | `experiments/subgroups.py` | **Fig 7.** Where PBVI helps at matched adherence: it does NOT target high-risk by risk class (flat colonoscopy allocation), but is colonoscopy-efficient and breaks the fixed schedule's saturation in the high-budget/surveillance regime. |
 | `risk_factors.png` | `experiments/risk_factors.py` | **Fig 8.** Adding baseline risk factors (family history + prior adenoma, AUC≈0.67) + a cost-based budget lets PBVI reallocate colonoscopies to high-risk; the frontier orders PBVI+FH/PA < risk-stratified fixed < plain fixed. |
 | `prs_targeting.png` | `experiments/prs_targeting.py` | **Fig 9.** A strong polygenic risk score (AUC≥0.8) + low per-colonoscopy cost turns ON mortality-targeting: high-risk-class CRC mortality drops below the fixed schedule at equal/lower total colonoscopy use. |
+| `auroc_sweep.png` | `experiments/auroc_sweep.py` | **Fig 10.** AUROC swept 0.50→0.85 across four colonoscopy budgets, plus nine named risk-factor / risk-test panels (FH, prior adenoma, E-score, PRS current/genome-wide, microbiome, quantitative f-Hb, multi-target stool DNA, blood cfDNA). Discrimination saturates by ~0.70 at a loose budget; at a tight budget an intermediate classifier (0.60–0.75) is WORSE than uniform screening and only ~0.80+ converts the saving into a mortality gain. |
 
 Numeric results:
 * `results/transitions_cmost13.npz` — marginal transition matrices, SE, bootstrap CI, prevalence.
@@ -28,3 +29,4 @@ Numeric results:
 * `results/subgroups.json`, `results/subgroups_strata.csv`, `results/subgroups_budget.csv` — patient-subgroup and budget-regime analysis (`paper/results_subgroups.md`).
 * `results/risk_factors.json`, `results/risk_factors_frontier.csv`, `results/risk_factors_auc.csv` — baseline-risk-factor targeting + cost-based budget (`paper/results_risk_factors.md`).
 * `results/prs_targeting.json`, `results/prs_targeting.csv` — PRS-strength mortality-targeting by true risk class (`paper/results_prs.md`).
+* `results/auroc_sweep.json`, `results/auroc_sweep_gauss.csv`, `results/auroc_sweep_panels.csv` — AUROC sweep to a 0.85 ceiling x 4 budgets + risk-factor/risk-test panel ladder (`paper/results_auroc_sweep.md`).

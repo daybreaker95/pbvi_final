@@ -131,6 +131,15 @@ pbvi_thlee/
 │   ├── jeon_elbow_analysis.py  current risk-score construction + cutoff sweep
 │   ├── jeon_4way_eval.py       4-way comparison using the Jeon-2018 bucket-mapped score
 │   └── jeon_lambda_sweep_real_engine.py   colo_penalty_qaly (lambda) grid search
+├── experiments/                policy experiments on the true-CMOST environment
+│   ├── risk_factors.py         baseline risk factors + cost budget -> targeting
+│   ├── prs_targeting.py        does a strong PRS turn on mortality-targeting?
+│   ├── risk_panels.py          named risk-factor / risk-test COMBINATIONS and the
+│   │                           AUROC each reaches (FH, prior adenoma, E-score,
+│   │                           PRS current/genome-wide, microbiome, quantitative
+│   │                           f-Hb, multi-target stool DNA, blood cfDNA)
+│   └── auroc_sweep.py          AUROC sweep to a 0.85 ceiling x 4 colonoscopy
+│                               budgets, plus the panel ladder (Section 7)
 ├── results/                    estimated matrices, sweep outputs, 4-way comparison JSON
 └── paper/                      manuscript-adjacent figures + methods/results write-up
 ```
@@ -177,7 +186,37 @@ python tests/jeon_lambda_sweep_real_engine.py
   the reward function — sweeping it traces out the efficiency frontier
   between mortality reduction and colonoscopy volume.
 
-## 7. Key references
+## 7. How much risk discrimination does this actually need?
+
+The risk score above is one classifier at one operating point. A separate
+experiment asks the design question directly: **how discriminating must a risk
+classifier be before risk-stratified screening beats a uniform schedule, and
+which combination of risk factors and emerging tests supplies that much
+discrimination?**
+
+`experiments/auroc_sweep.py` sweeps classifier AUROC on an 11-point grid from
+0.50 to a **0.85 ceiling** (no oracle arm -- no assay perfectly observes a
+lifelong latent adenoma-risk class) across four colonoscopy budgets, in two
+tracks: an abstract calibrated score at each AUROC, and nine named
+risk-factor / risk-test **combinations** from `experiments/risk_panels.py`
+(family history, prior adenoma, lifestyle/environmental E-score, PRS current and
+genome-wide, faecal microbiome, quantitative faecal haemoglobin, multi-target
+stool DNA, blood methylated cfDNA), each rung adding one modality and each
+panel's AUROC *measured* rather than assumed.
+
+Headline: the answer depends on colonoscopy capacity. With ample capacity ~0.70
+suffices; with scarce capacity an intermediate classifier (AUROC 0.60-0.75) can
+leave the high-risk class **worse off than uniform screening**, and only a panel
+reaching ~0.80+ converts the budget saving into a mortality gain. Today's
+FH + prior-adenoma baseline measures 0.67; reaching 0.85 takes the full stack.
+Full write-up: `paper/results_auroc_sweep.md`.
+
+```bash
+python experiments/auroc_sweep.py 50000 --workers 5   # 85 arms, ~20 min
+python -m experiments.risk_panels                     # panel definitions + AUROCs
+```
+
+## 8. Key references
 
 * Prakash et al. (2017) *CMOST*, PLoS ONE — the microsimulation.
 * Shin A, et al. (2014) *PLoS ONE* 9(2):e88079 — Korean NHIC cohort CRC risk

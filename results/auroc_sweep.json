@@ -1,0 +1,2816 @@
+{
+  "config": {
+    "n": 50000,
+    "seed": 90210,
+    "risk_threshold": 3.511910398818647,
+    "costs": [
+      0.02,
+      0.03,
+      0.06,
+      0.1
+    ],
+    "auc_grid": [
+      0.5,
+      0.55,
+      0.6,
+      0.65,
+      0.7,
+      0.725,
+      0.75,
+      0.775,
+      0.8,
+      0.825,
+      0.85
+    ],
+    "auc_ceiling": 0.85,
+    "c_main": 0.03,
+    "panels": [
+      {
+        "name": "P1 FH",
+        "desc": "family history alone",
+        "markers": [
+          "fh"
+        ],
+        "auc_realized": 0.6038451684732175
+      },
+      {
+        "name": "P2 FH+PA",
+        "desc": "+ prior-adenoma history (today's clinical baseline)",
+        "markers": [
+          "fh",
+          "pa"
+        ],
+        "auc_realized": 0.6695352080040693
+      },
+      {
+        "name": "P3 +ENV",
+        "desc": "+ lifestyle/environmental E-score",
+        "markers": [
+          "fh",
+          "pa",
+          "env"
+        ],
+        "auc_realized": 0.7023556904264164
+      },
+      {
+        "name": "P4 +PRS-140",
+        "desc": "+ PRS, current generation (~140 loci)",
+        "markers": [
+          "fh",
+          "pa",
+          "env",
+          "prs_now"
+        ],
+        "auc_realized": 0.7391051323605264
+      },
+      {
+        "name": "P5 PRS-GW",
+        "desc": "PRS upgraded to genome-wide / multi-ancestry",
+        "markers": [
+          "fh",
+          "pa",
+          "env",
+          "prs_next"
+        ],
+        "auc_realized": 0.7652682545246505
+      },
+      {
+        "name": "P6 +microbiome",
+        "desc": "+ faecal microbiome signature",
+        "markers": [
+          "fh",
+          "pa",
+          "env",
+          "prs_next",
+          "microb"
+        ],
+        "auc_realized": 0.7750389177613151
+      },
+      {
+        "name": "P7 +FIT f-Hb",
+        "desc": "+ quantitative faecal haemoglobin as a stratifier",
+        "markers": [
+          "fh",
+          "pa",
+          "env",
+          "prs_next",
+          "microb",
+          "fit_q"
+        ],
+        "auc_realized": 0.8030910251121309
+      },
+      {
+        "name": "P8 +mt-sDNA",
+        "desc": "+ multi-target stool DNA/RNA panel",
+        "markers": [
+          "fh",
+          "pa",
+          "env",
+          "prs_next",
+          "microb",
+          "fit_q",
+          "mtsdna"
+        ],
+        "auc_realized": 0.82627570748746
+      },
+      {
+        "name": "P9 +cfDNA",
+        "desc": "+ blood methylated cell-free DNA score",
+        "markers": [
+          "fh",
+          "pa",
+          "env",
+          "prs_next",
+          "microb",
+          "fit_q",
+          "mtsdna",
+          "cfdna"
+        ],
+        "auc_realized": 0.8461147239916407
+      }
+    ],
+    "markers": {
+      "fh": {
+        "spec": [
+          "bin",
+          0.3,
+          0.1
+        ],
+        "label": "family history (1st-degree)"
+      },
+      "pa": {
+        "spec": [
+          "bin",
+          0.25,
+          0.06
+        ],
+        "label": "prior-adenoma history"
+      },
+      "env": {
+        "spec": [
+          "gauss",
+          0.58
+        ],
+        "label": "lifestyle/environmental E-score"
+      },
+      "prs_now": {
+        "spec": [
+          "gauss",
+          0.62
+        ],
+        "label": "PRS, ~140 loci"
+      },
+      "prs_next": {
+        "spec": [
+          "gauss",
+          0.68
+        ],
+        "label": "PRS, genome-wide/multi-ancestry"
+      },
+      "microb": {
+        "spec": [
+          "gauss",
+          0.59
+        ],
+        "label": "faecal microbiome signature"
+      },
+      "fit_q": {
+        "spec": [
+          "gauss",
+          0.65
+        ],
+        "label": "quantitative faecal haemoglobin"
+      },
+      "mtsdna": {
+        "spec": [
+          "gauss",
+          0.66
+        ],
+        "label": "multi-target stool DNA/RNA"
+      },
+      "cfdna": {
+        "spec": [
+          "gauss",
+          0.655
+        ],
+        "label": "blood methylated cfDNA score"
+      }
+    },
+    "ref_mort": {
+      "overall": 1.6740000000000002,
+      "high": 3.635337739803321,
+      "low": 1.0267595892961643,
+      "frac_high": 0.24812
+    }
+  },
+  "fixed": {
+    "x1": {
+      "total_colo": 0.8946,
+      "colo_high": 0.8914235047557634,
+      "colo_low": 0.8956482417407033,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 0.8946,
+        "crc_mortality": 1.346,
+        "crc_mortality_se": 0.05153463686081359,
+        "crc_incidence": 3.388,
+        "LYG_per_1000": 47.530000000000015
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 0.8914235047557634,
+        "crc_mortality": 2.8373367725294214,
+        "crc_mortality_se": 0.1490756680342384,
+        "crc_incidence": 6.988553925519909,
+        "LYG_per_1000": 136.8491052716428
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 0.8956482417407033,
+        "crc_mortality": 0.8538596584561365,
+        "crc_mortality_se": 0.04745452836246482,
+        "crc_incidence": 2.1998191200723523,
+        "LYG_per_1000": 18.054742778102888
+      },
+      "auc_realized": 0.5027212350875498,
+      "frac_flagged": 0.0
+    },
+    "x2": {
+      "total_colo": 1.65852,
+      "colo_high": 1.649363211349347,
+      "colo_low": 1.6615417353833057,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 1.65852,
+        "crc_mortality": 1.098,
+        "crc_mortality_se": 0.04660398436429199,
+        "crc_incidence": 2.78,
+        "LYG_per_1000": 64.16
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 1.649363211349347,
+        "crc_mortality": 2.1521844268902144,
+        "crc_mortality_se": 0.1302917523873212,
+        "crc_incidence": 5.39255199097211,
+        "LYG_per_1000": 189.28341125261971
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 1.6615417353833057,
+        "crc_mortality": 0.75011969995212,
+        "crc_mortality_se": 0.04450171920299639,
+        "crc_incidence": 1.9178592328563067,
+        "LYG_per_1000": 22.869340852263665
+      },
+      "auc_realized": 0.5027212350875498,
+      "frac_flagged": 0.0
+    },
+    "x3": {
+      "total_colo": 2.59178,
+      "colo_high": 2.588908592616476,
+      "colo_low": 2.592727562908975,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 2.59178,
+        "crc_mortality": 1.004,
+        "crc_mortality_se": 0.044585641607907275,
+        "crc_incidence": 2.4699999999999998,
+        "LYG_per_1000": 83.63500000000002
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 2.588908592616476,
+        "crc_mortality": 1.7813960986619377,
+        "crc_mortality_se": 0.11876233903296482,
+        "crc_incidence": 4.417217475415121,
+        "LYG_per_1000": 252.03530549733998
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 2.592727562908975,
+        "crc_mortality": 0.7474597010161196,
+        "crc_mortality_se": 0.04442334065476255,
+        "crc_incidence": 1.8274192690322926,
+        "LYG_per_1000": 28.062988774804495
+      },
+      "auc_realized": 0.5027212350875498,
+      "frac_flagged": 0.0
+    },
+    "x4": {
+      "total_colo": 3.24448,
+      "colo_high": 3.237949379332581,
+      "colo_low": 3.2466351013459596,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 3.24448,
+        "crc_mortality": 0.8340000000000001,
+        "crc_mortality_se": 0.040670898225134505,
+        "crc_incidence": 2.226,
+        "LYG_per_1000": 95.76
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 3.237949379332581,
+        "crc_mortality": 1.2977591487989681,
+        "crc_mortality_se": 0.10161601783350402,
+        "crc_incidence": 3.6837014347896178,
+        "LYG_per_1000": 287.34080283733675
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 3.2466351013459596,
+        "crc_mortality": 0.6809597276161089,
+        "crc_mortality_se": 0.042415391397064295,
+        "crc_incidence": 1.744959302016279,
+        "LYG_per_1000": 32.53843698462521
+      },
+      "auc_realized": 0.5027212350875498,
+      "frac_flagged": 0.0
+    }
+  },
+  "gauss": {
+    "c0.02|AUC0.500": {
+      "total_colo": 4.08464,
+      "colo_high": 4.720860873770756,
+      "colo_low": 3.87468745012502,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 4.08464,
+        "crc_mortality": 0.714,
+        "crc_mortality_se": 0.03765411579958734,
+        "crc_incidence": 2.1479999999999997,
+        "LYG_per_1000": 91.715
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 4.720860873770756,
+        "crc_mortality": 1.160728679671127,
+        "crc_mortality_se": 0.09616825612665066,
+        "crc_incidence": 3.506367886506529,
+        "LYG_per_1000": 263.8844107689828
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 3.87468745012502,
+        "crc_mortality": 0.5665797733680906,
+        "crc_mortality_se": 0.038711787924767434,
+        "crc_incidence": 1.699739320104272,
+        "LYG_per_1000": 34.89918604032559
+      },
+      "auc_realized": 0.5027212350875498,
+      "frac_flagged": 0.0
+    },
+    "c0.02|AUC0.550": {
+      "total_colo": 4.10484,
+      "colo_high": 4.757053038852169,
+      "colo_low": 3.889610044155982,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 4.10484,
+        "crc_mortality": 0.712,
+        "crc_mortality_se": 0.03760172067589403,
+        "crc_incidence": 2.152,
+        "LYG_per_1000": 92.59500000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 4.757053038852169,
+        "crc_mortality": 1.1768499113332258,
+        "crc_mortality_se": 0.09682589094637266,
+        "crc_incidence": 3.5466709656617765,
+        "LYG_per_1000": 265.5569885539255
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 3.889610044155982,
+        "crc_mortality": 0.5585997765600894,
+        "crc_mortality_se": 0.03843974534828899,
+        "crc_incidence": 1.6917593232962707,
+        "LYG_per_1000": 35.51763579294569
+      },
+      "auc_realized": 0.5498159866510679,
+      "frac_flagged": 0.48498
+    },
+    "c0.02|AUC0.600": {
+      "total_colo": 4.18574,
+      "colo_high": 4.858133161373529,
+      "colo_low": 3.963850614459754,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 4.18574,
+        "crc_mortality": 0.7040000000000001,
+        "crc_mortality_se": 0.037391384600103356,
+        "crc_incidence": 2.1420000000000003,
+        "LYG_per_1000": 95.825
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 4.858133161373529,
+        "crc_mortality": 1.11236498468483,
+        "crc_mortality_se": 0.09416646464656651,
+        "crc_incidence": 3.4499435756891828,
+        "LYG_per_1000": 274.16169595357087
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 3.963850614459754,
+        "crc_mortality": 0.5692397723040911,
+        "crc_mortality_se": 0.03880203523999948,
+        "crc_incidence": 1.7103793158482736,
+        "LYG_per_1000": 36.973985210405914
+      },
+      "auc_realized": 0.599660307886965,
+      "frac_flagged": 0.46748
+    },
+    "c0.02|AUC0.650": {
+      "total_colo": 4.2649,
+      "colo_high": 4.976463001773335,
+      "colo_low": 4.030084587966165,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 4.2649,
+        "crc_mortality": 0.674,
+        "crc_mortality_se": 0.036591546275405985,
+        "crc_incidence": 2.07,
+        "LYG_per_1000": 102.93
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 4.976463001773335,
+        "crc_mortality": 1.015637594712236,
+        "crc_mortality_se": 0.09002316856493578,
+        "crc_incidence": 3.2242463324197965,
+        "LYG_per_1000": 288.26777365790747
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 4.030084587966165,
+        "crc_mortality": 0.5612597754960899,
+        "crc_mortality_se": 0.038530644507583055,
+        "crc_incidence": 1.6890993243602703,
+        "LYG_per_1000": 41.76863329254668
+      },
+      "auc_realized": 0.6495100151597212,
+      "frac_flagged": 0.4487
+    },
+    "c0.02|AUC0.700": {
+      "total_colo": 4.29178,
+      "colo_high": 5.075769788811865,
+      "colo_low": 4.033063786774485,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 4.29178,
+        "crc_mortality": 0.664,
+        "crc_mortality_se": 0.036320909462309495,
+        "crc_incidence": 2.106,
+        "LYG_per_1000": 106.56500000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 5.075769788811865,
+        "crc_mortality": 0.967273899725939,
+        "crc_mortality_se": 0.08787507675852486,
+        "crc_incidence": 3.2161857165887473,
+        "LYG_per_1000": 306.605674673545
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 4.033063786774485,
+        "crc_mortality": 0.5639197744320902,
+        "crc_mortality_se": 0.03862132485385108,
+        "crc_incidence": 1.7396393041442784,
+        "LYG_per_1000": 40.55168377932648
+      },
+      "auc_realized": 0.6993911102483923,
+      "frac_flagged": 0.42954
+    },
+    "c0.02|AUC0.725": {
+      "total_colo": 4.28432,
+      "colo_high": 5.1170401418668385,
+      "colo_low": 4.009522796190882,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 4.28432,
+        "crc_mortality": 0.67,
+        "crc_mortality_se": 0.03648353904122267,
+        "crc_incidence": 2.112,
+        "LYG_per_1000": 106.76500000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 5.1170401418668385,
+        "crc_mortality": 0.9753345155569885,
+        "crc_mortality_se": 0.08823687209788701,
+        "crc_incidence": 3.2161857165887473,
+        "LYG_per_1000": 310.0717394808964
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 4.009522796190882,
+        "crc_mortality": 0.5692397723040911,
+        "crc_mortality_se": 0.038802035239999484,
+        "crc_incidence": 1.7476193009522796,
+        "LYG_per_1000": 39.67388413044634
+      },
+      "auc_realized": 0.7243369709294064,
+      "frac_flagged": 0.41906
+    },
+    "c0.02|AUC0.750": {
+      "total_colo": 4.26342,
+      "colo_high": 5.152587457681767,
+      "colo_low": 3.969995212001915,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 4.26342,
+        "crc_mortality": 0.6799999999999999,
+        "crc_mortality_se": 0.03675294567215411,
+        "crc_incidence": 2.112,
+        "LYG_per_1000": 105.59
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 5.152587457681767,
+        "crc_mortality": 0.9995163630501369,
+        "crc_mortality_se": 0.08931311321559612,
+        "crc_incidence": 3.2323069482508466,
+        "LYG_per_1000": 301.54763823956154
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 3.969995212001915,
+        "crc_mortality": 0.5745597701760919,
+        "crc_mortality_se": 0.038981888593803415,
+        "crc_incidence": 1.742299303080279,
+        "LYG_per_1000": 40.92408363036655
+      },
+      "auc_realized": 0.7492939360231962,
+      "frac_flagged": 0.4096
+    },
+    "c0.02|AUC0.775": {
+      "total_colo": 4.23154,
+      "colo_high": 5.196840238594229,
+      "colo_low": 3.912991434803426,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 4.23154,
+        "crc_mortality": 0.674,
+        "crc_mortality_se": 0.036591546275405985,
+        "crc_incidence": 2.1479999999999997,
+        "LYG_per_1000": 106.045
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 5.196840238594229,
+        "crc_mortality": 0.9753345155569885,
+        "crc_mortality_se": 0.08823687209788701,
+        "crc_incidence": 3.2564887957439947,
+        "LYG_per_1000": 301.46703208125103
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 3.912991434803426,
+        "crc_mortality": 0.5745597701760919,
+        "crc_mortality_se": 0.038981888593803415,
+        "crc_incidence": 1.7821992871202852,
+        "LYG_per_1000": 41.55583337766665
+      },
+      "auc_realized": 0.7742592546200124,
+      "frac_flagged": 0.39976
+    },
+    "c0.02|AUC0.800": {
+      "total_colo": 4.1877,
+      "colo_high": 5.2432693857810735,
+      "colo_low": 3.839362664254934,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 4.1877,
+        "crc_mortality": 0.6799999999999999,
+        "crc_mortality_se": 0.03675294567215411,
+        "crc_incidence": 2.138,
+        "LYG_per_1000": 103.22500000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 5.2432693857810735,
+        "crc_mortality": 1.015637594712236,
+        "crc_mortality_se": 0.09002316856493578,
+        "crc_incidence": 3.296791874899242,
+        "LYG_per_1000": 293.24520393358057
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 3.839362664254934,
+        "crc_mortality": 0.5692397723040911,
+        "crc_mortality_se": 0.03880203523999948,
+        "crc_incidence": 1.755599297760281,
+        "LYG_per_1000": 40.51843379262648
+      },
+      "auc_realized": 0.7992420735483745,
+      "frac_flagged": 0.38964
+    },
+    "c0.02|AUC0.825": {
+      "total_colo": 4.13264,
+      "colo_high": 5.290504594551024,
+      "colo_low": 3.75054529978188,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 4.13264,
+        "crc_mortality": 0.69,
+        "crc_mortality_se": 0.037020337790303885,
+        "crc_incidence": 2.176,
+        "LYG_per_1000": 103.73500000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 5.290504594551024,
+        "crc_mortality": 0.9753345155569885,
+        "crc_mortality_se": 0.08823687209788701,
+        "crc_incidence": 3.320973722392391,
+        "LYG_per_1000": 299.9556666129293
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 3.75054529978188,
+        "crc_mortality": 0.5958397616640954,
+        "crc_mortality_se": 0.03969296385223214,
+        "crc_incidence": 1.7981592807362876,
+        "LYG_per_1000": 38.98228440708623
+      },
+      "auc_realized": 0.8242419897131671,
+      "frac_flagged": 0.37862
+    },
+    "c0.02|AUC0.850": {
+      "total_colo": 4.06856,
+      "colo_high": 5.344349508302434,
+      "colo_low": 3.6475501409799436,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 4.06856,
+        "crc_mortality": 0.7100000000000001,
+        "crc_mortality_se": 0.037549250311077816,
+        "crc_incidence": 2.162,
+        "LYG_per_1000": 102.65500000000002
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 5.344349508302434,
+        "crc_mortality": 0.9914557472190876,
+        "crc_mortality_se": 0.08895587184717768,
+        "crc_incidence": 3.3048524907302914,
+        "LYG_per_1000": 297.7793003385459
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 3.6475501409799436,
+        "crc_mortality": 0.6171197531520988,
+        "crc_mortality_se": 0.04039122465084101,
+        "crc_incidence": 1.7848592860562857,
+        "LYG_per_1000": 38.264084694366126
+      },
+      "auc_realized": 0.8492740977399821,
+      "frac_flagged": 0.36624
+    },
+    "c0.03|AUC0.500": {
+      "total_colo": 3.63816,
+      "colo_high": 4.36143801386426,
+      "colo_low": 3.3994786402085437,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 3.63816,
+        "crc_mortality": 0.7779999999999999,
+        "crc_mortality_se": 0.03929281357327279,
+        "crc_incidence": 2.194,
+        "LYG_per_1000": 87.38
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 4.36143801386426,
+        "crc_mortality": 1.2977591487989681,
+        "crc_mortality_se": 0.10161601783350402,
+        "crc_incidence": 3.6917620506206674,
+        "LYG_per_1000": 256.5290988231501
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 3.3994786402085437,
+        "crc_mortality": 0.606479757408097,
+        "crc_mortality_se": 0.04004365387344799,
+        "crc_incidence": 1.699739320104272,
+        "LYG_per_1000": 31.560887375645052
+      },
+      "auc_realized": 0.5027212350875498,
+      "frac_flagged": 0.0
+    },
+    "c0.03|AUC0.550": {
+      "total_colo": 3.63644,
+      "colo_high": 4.340157988070288,
+      "colo_low": 3.4042134383146245,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 3.63644,
+        "crc_mortality": 0.7799999999999999,
+        "crc_mortality_se": 0.03934288953876093,
+        "crc_incidence": 2.1999999999999997,
+        "LYG_per_1000": 86.73
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 4.340157988070288,
+        "crc_mortality": 1.2977591487989681,
+        "crc_mortality_se": 0.10161601783350402,
+        "crc_incidence": 3.6837014347896178,
+        "LYG_per_1000": 254.35273254876677
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 3.4042134383146245,
+        "crc_mortality": 0.6091397563440974,
+        "crc_mortality_se": 0.04013083581858567,
+        "crc_incidence": 1.7103793158482736,
+        "LYG_per_1000": 31.414587434165032
+      },
+      "auc_realized": 0.5498159866510679,
+      "frac_flagged": 0.48498
+    },
+    "c0.03|AUC0.600": {
+      "total_colo": 3.54604,
+      "colo_high": 4.291391262292439,
+      "colo_low": 3.300074479970208,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 3.54604,
+        "crc_mortality": 0.762,
+        "crc_mortality_se": 0.03888981059798784,
+        "crc_incidence": 2.186,
+        "LYG_per_1000": 88.02
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 4.291391262292439,
+        "crc_mortality": 1.2413348379816218,
+        "crc_mortality_se": 0.09941082851952679,
+        "crc_incidence": 3.6595195872964696,
+        "LYG_per_1000": 254.25197485087864
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 3.300074479970208,
+        "crc_mortality": 0.6038197584720967,
+        "crc_mortality_se": 0.03995627699302395,
+        "crc_incidence": 1.699739320104272,
+        "LYG_per_1000": 33.1635367345853
+      },
+      "auc_realized": 0.599660307886965,
+      "frac_flagged": 0.46748
+    },
+    "c0.03|AUC0.650": {
+      "total_colo": 3.47222,
+      "colo_high": 4.294534902466548,
+      "colo_low": 3.200856519657392,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 3.47222,
+        "crc_mortality": 0.752,
+        "crc_mortality_se": 0.03863573183460471,
+        "crc_incidence": 2.182,
+        "LYG_per_1000": 92.385
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 4.294534902466548,
+        "crc_mortality": 1.2010317588263744,
+        "crc_mortality_se": 0.09780365074426371,
+        "crc_incidence": 3.5547315814928258,
+        "LYG_per_1000": 262.1312268257295
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 3.200856519657392,
+        "crc_mortality": 0.6038197584720967,
+        "crc_mortality_se": 0.03995627699302395,
+        "crc_incidence": 1.7289993084002766,
+        "LYG_per_1000": 36.36883545246582
+      },
+      "auc_realized": 0.6495100151597212,
+      "frac_flagged": 0.4487
+    },
+    "c0.03|AUC0.700": {
+      "total_colo": 3.41216,
+      "colo_high": 4.352410124133484,
+      "colo_low": 3.1018779592488164,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 3.41216,
+        "crc_mortality": 0.77,
+        "crc_mortality_se": 0.039091847787630474,
+        "crc_incidence": 2.194,
+        "LYG_per_1000": 92.2
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 4.352410124133484,
+        "crc_mortality": 1.1849105271642755,
+        "crc_mortality_se": 0.09715295816418468,
+        "crc_incidence": 3.5466709656617765,
+        "LYG_per_1000": 261.5065290988232
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 3.1018779592488164,
+        "crc_mortality": 0.6330797467681013,
+        "crc_mortality_se": 0.04090690596632262,
+        "crc_incidence": 1.7476193009522796,
+        "LYG_per_1000": 36.328935468425804
+      },
+      "auc_realized": 0.6993911102483923,
+      "frac_flagged": 0.42954
+    },
+    "c0.03|AUC0.725": {
+      "total_colo": 3.37626,
+      "colo_high": 4.400290182169917,
+      "colo_low": 3.038330584667766,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 3.37626,
+        "crc_mortality": 0.748,
+        "crc_mortality_se": 0.038533616710507916,
+        "crc_incidence": 2.202,
+        "LYG_per_1000": 94.09
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 4.400290182169917,
+        "crc_mortality": 1.1204256005158795,
+        "crc_mortality_se": 0.09450317978536098,
+        "crc_incidence": 3.4660648073512816,
+        "LYG_per_1000": 272.7712397227148
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 3.038330584667766,
+        "crc_mortality": 0.6250997499601,
+        "crc_mortality_se": 0.040649903889281205,
+        "crc_incidence": 1.7848592860562857,
+        "LYG_per_1000": 35.12528594988562
+      },
+      "auc_realized": 0.7243369709294064,
+      "frac_flagged": 0.41906
+    },
+    "c0.03|AUC0.750": {
+      "total_colo": 3.3355,
+      "colo_high": 4.445107206190553,
+      "colo_low": 2.969330212267915,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 3.3355,
+        "crc_mortality": 0.772,
+        "crc_mortality_se": 0.03914218903203096,
+        "crc_incidence": 2.242,
+        "LYG_per_1000": 91.00000000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 4.445107206190553,
+        "crc_mortality": 1.2171529904884733,
+        "crc_mortality_se": 0.09844982994526143,
+        "crc_incidence": 3.5789134289859748,
+        "LYG_per_1000": 260.3175882637434
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 2.969330212267915,
+        "crc_mortality": 0.6250997499601,
+        "crc_mortality_se": 0.040649903889281205,
+        "crc_incidence": 1.8008192796722882,
+        "LYG_per_1000": 35.12528594988562
+      },
+      "auc_realized": 0.7492939360231962,
+      "frac_flagged": 0.4096
+    },
+    "c0.03|AUC0.775": {
+      "total_colo": 3.28602,
+      "colo_high": 4.502660003224246,
+      "colo_low": 2.8845294461882216,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 3.28602,
+        "crc_mortality": 0.762,
+        "crc_mortality_se": 0.03888981059798784,
+        "crc_incidence": 2.236,
+        "LYG_per_1000": 91.89
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 4.502660003224246,
+        "crc_mortality": 1.160728679671127,
+        "crc_mortality_se": 0.09616825612665066,
+        "crc_incidence": 3.4821860390133805,
+        "LYG_per_1000": 272.3279058520071
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 2.8845294461882216,
+        "crc_mortality": 0.6304197478321009,
+        "crc_mortality_se": 0.040821422998948996,
+        "crc_incidence": 1.824759270096292,
+        "LYG_per_1000": 32.34558706176517
+      },
+      "auc_realized": 0.7742592546200124,
+      "frac_flagged": 0.39976
+    },
+    "c0.03|AUC0.800": {
+      "total_colo": 3.22942,
+      "colo_high": 4.568918265355473,
+      "colo_low": 2.787386285045486,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 3.22942,
+        "crc_mortality": 0.742,
+        "crc_mortality_se": 0.038379918972864024,
+        "crc_incidence": 2.2239999999999998,
+        "LYG_per_1000": 94.47500000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 4.568918265355473,
+        "crc_mortality": 1.1043043688537804,
+        "crc_mortality_se": 0.09382848535036989,
+        "crc_incidence": 3.425761728196034,
+        "LYG_per_1000": 282.5447364178624
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 2.787386285045486,
+        "crc_mortality": 0.6224397510240995,
+        "crc_mortality_se": 0.04056386540795781,
+        "crc_incidence": 1.8274192690322926,
+        "LYG_per_1000": 32.412087035165186
+      },
+      "auc_realized": 0.7992420735483745,
+      "frac_flagged": 0.38964
+    },
+    "c0.03|AUC0.825": {
+      "total_colo": 3.1695,
+      "colo_high": 4.651620183782041,
+      "colo_low": 2.680401127839549,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 3.1695,
+        "crc_mortality": 0.756,
+        "crc_mortality_se": 0.03873756951572775,
+        "crc_incidence": 2.212,
+        "LYG_per_1000": 91.63000000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 4.651620183782041,
+        "crc_mortality": 1.1365468321779784,
+        "crc_mortality_se": 0.09517287121041812,
+        "crc_incidence": 3.393519264871836,
+        "LYG_per_1000": 271.44123811059166
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 2.680401127839549,
+        "crc_mortality": 0.6304197478321009,
+        "crc_mortality_se": 0.040821422998948996,
+        "crc_incidence": 1.8220992711602915,
+        "LYG_per_1000": 32.292387083045156
+      },
+      "auc_realized": 0.8242419897131671,
+      "frac_flagged": 0.37862
+    },
+    "c0.03|AUC0.850": {
+      "total_colo": 3.09816,
+      "colo_high": 4.737062711591165,
+      "colo_low": 2.5573229770708092,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 3.09816,
+        "crc_mortality": 0.736,
+        "crc_mortality_se": 0.03822558441549427,
+        "crc_incidence": 2.244,
+        "LYG_per_1000": 91.25000000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 4.737062711591165,
+        "crc_mortality": 1.096243753022731,
+        "crc_mortality_se": 0.09348922818634678,
+        "crc_incidence": 3.393519264871836,
+        "LYG_per_1000": 269.3051749153635
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 2.5573229770708092,
+        "crc_mortality": 0.6171197531520988,
+        "crc_mortality_se": 0.040391224650841,
+        "crc_incidence": 1.8646592541362983,
+        "LYG_per_1000": 32.491887003245196
+      },
+      "auc_realized": 0.8492740977399821,
+      "frac_flagged": 0.36624
+    },
+    "c0.06|AUC0.500": {
+      "total_colo": 2.02272,
+      "colo_high": 2.505884249556666,
+      "colo_low": 1.8632760546895781,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 2.02272,
+        "crc_mortality": 0.9740000000000001,
+        "crc_mortality_se": 0.04392112317895827,
+        "crc_incidence": 2.566,
+        "LYG_per_1000": 74.78500000000003
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 2.505884249556666,
+        "crc_mortality": 1.5960019345477996,
+        "crc_mortality_se": 0.11251869701041052,
+        "crc_incidence": 4.473641786232468,
+        "LYG_per_1000": 233.53619216508142
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 1.8632760546895781,
+        "crc_mortality": 0.768739692504123,
+        "crc_mortality_se": 0.04504643372780662,
+        "crc_incidence": 1.9364792254083096,
+        "LYG_per_1000": 22.397191041123587
+      },
+      "auc_realized": 0.5027212350875498,
+      "frac_flagged": 0.0
+    },
+    "c0.06|AUC0.550": {
+      "total_colo": 1.56576,
+      "colo_high": 2.028857004675157,
+      "colo_low": 1.4129382348247062,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 1.56576,
+        "crc_mortality": 1.028,
+        "crc_mortality_se": 0.0451099215040368,
+        "crc_incidence": 2.834,
+        "LYG_per_1000": 62.930000000000014
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 2.028857004675157,
+        "crc_mortality": 1.8620022569724326,
+        "crc_mortality_se": 0.1213697098644196,
+        "crc_incidence": 5.158794131871676,
+        "LYG_per_1000": 189.42447202966312
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 1.4129382348247062,
+        "crc_mortality": 0.7527796988881205,
+        "crc_mortality_se": 0.04457995572770474,
+        "crc_incidence": 2.066819173272331,
+        "LYG_per_1000": 21.18689152524339
+      },
+      "auc_realized": 0.5498159866510679,
+      "frac_flagged": 0.48498
+    },
+    "c0.06|AUC0.600": {
+      "total_colo": 1.53016,
+      "colo_high": 2.049653393519265,
+      "colo_low": 1.3587274565090175,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 1.53016,
+        "crc_mortality": 1.046,
+        "crc_mortality_se": 0.045499000903115046,
+        "crc_incidence": 2.856,
+        "LYG_per_1000": 62.2
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 2.049653393519265,
+        "crc_mortality": 1.8620022569724326,
+        "crc_mortality_se": 0.12136970986441958,
+        "crc_incidence": 5.150733516040625,
+        "LYG_per_1000": 192.3262937288409
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 1.3587274565090175,
+        "crc_mortality": 0.7767196893121242,
+        "crc_mortality_se": 0.045277814426310965,
+        "crc_incidence": 2.0987391605043357,
+        "LYG_per_1000": 19.258392296643084
+      },
+      "auc_realized": 0.599660307886965,
+      "frac_flagged": 0.46748
+    },
+    "c0.06|AUC0.650": {
+      "total_colo": 1.52918,
+      "colo_high": 2.121957117523779,
+      "colo_low": 1.3335638665744534,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 1.52918,
+        "crc_mortality": 1.022,
+        "crc_mortality_se": 0.044979448451661345,
+        "crc_incidence": 2.802,
+        "LYG_per_1000": 65.54500000000002
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 2.121957117523779,
+        "crc_mortality": 1.7975173303240368,
+        "crc_mortality_se": 0.1192887238409298,
+        "crc_incidence": 5.045945510236982,
+        "LYG_per_1000": 200.20554570369183
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 1.3335638665744534,
+        "crc_mortality": 0.7660796935681226,
+        "crc_mortality_se": 0.04496903389579083,
+        "crc_incidence": 2.06149917540033,
+        "LYG_per_1000": 21.10709155716338
+      },
+      "auc_realized": 0.6495100151597212,
+      "frac_flagged": 0.4487
+    },
+    "c0.06|AUC0.700": {
+      "total_colo": 1.53496,
+      "colo_high": 2.2296469450266,
+      "colo_low": 1.3057136777145288,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 1.53496,
+        "crc_mortality": 0.98,
+        "crc_mortality_se": 0.04405486144134755,
+        "crc_incidence": 2.732,
+        "LYG_per_1000": 69.84500000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 2.2296469450266,
+        "crc_mortality": 1.7410930195066903,
+        "crc_mortality_se": 0.11743527449593945,
+        "crc_incidence": 4.884733193615992,
+        "LYG_per_1000": 208.00419152023218
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 1.3057136777145288,
+        "crc_mortality": 0.7288397084641166,
+        "crc_mortality_se": 0.04387065004299329,
+        "crc_incidence": 2.0215991913603233,
+        "LYG_per_1000": 24.25254029898388
+      },
+      "auc_realized": 0.6993911102483923,
+      "frac_flagged": 0.42954
+    },
+    "c0.06|AUC0.725": {
+      "total_colo": 1.53386,
+      "colo_high": 2.2921167177172337,
+      "colo_low": 1.2836356865457255,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 1.53386,
+        "crc_mortality": 0.97,
+        "crc_mortality_se": 0.04383172851267092,
+        "crc_incidence": 2.694,
+        "LYG_per_1000": 70.25
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 2.2921167177172337,
+        "crc_mortality": 1.7169111720135417,
+        "crc_mortality_se": 0.1166312492663212,
+        "crc_incidence": 4.820248266967597,
+        "LYG_per_1000": 208.7901015637595
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 1.2836356865457255,
+        "crc_mortality": 0.7235197105921157,
+        "crc_mortality_se": 0.043711416148108084,
+        "crc_incidence": 1.9923392030643188,
+        "LYG_per_1000": 24.531840187263924
+      },
+      "auc_realized": 0.7243369709294064,
+      "frac_flagged": 0.41906
+    },
+    "c0.06|AUC0.750": {
+      "total_colo": 1.5282,
+      "colo_high": 2.3641786232468163,
+      "colo_low": 1.2523274990690003,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 1.5282,
+        "crc_mortality": 0.9520000000000001,
+        "crc_mortality_se": 0.04342708415531447,
+        "crc_incidence": 2.6679999999999997,
+        "LYG_per_1000": 71.92999999999999
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 2.3641786232468163,
+        "crc_mortality": 1.6927293245203934,
+        "crc_mortality_se": 0.11582123568894154,
+        "crc_incidence": 4.707399645332903,
+        "LYG_per_1000": 211.49040786716105
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 1.2523274990690003,
+        "crc_mortality": 0.7075597169761132,
+        "crc_mortality_se": 0.043230090987094016,
+        "crc_incidence": 1.9949992020003193,
+        "LYG_per_1000": 25.875139649944146
+      },
+      "auc_realized": 0.7492939360231962,
+      "frac_flagged": 0.4096
+    },
+    "c0.06|AUC0.775": {
+      "total_colo": 1.51436,
+      "colo_high": 2.4326132516524264,
+      "colo_low": 1.2113369154652338,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 1.51436,
+        "crc_mortality": 0.97,
+        "crc_mortality_se": 0.04383172851267092,
+        "crc_incidence": 2.69,
+        "LYG_per_1000": 71.105
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 2.4326132516524264,
+        "crc_mortality": 1.7169111720135417,
+        "crc_mortality_se": 0.1166312492663212,
+        "crc_incidence": 4.723520876995002,
+        "LYG_per_1000": 212.47783330646465
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 1.2113369154652338,
+        "crc_mortality": 0.7235197105921157,
+        "crc_mortality_se": 0.043711416148108084,
+        "crc_incidence": 2.018939192424323,
+        "LYG_per_1000": 24.452040219183914
+      },
+      "auc_realized": 0.7742592546200124,
+      "frac_flagged": 0.39976
+    },
+    "c0.06|AUC0.800": {
+      "total_colo": 1.49336,
+      "colo_high": 2.5085442527809123,
+      "colo_low": 1.1583497366601054,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 1.49336,
+        "crc_mortality": 0.9780000000000001,
+        "crc_mortality_se": 0.044010328994239116,
+        "crc_incidence": 2.704,
+        "LYG_per_1000": 72.40000000000002
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 2.5085442527809123,
+        "crc_mortality": 1.7410930195066903,
+        "crc_mortality_se": 0.11743527449593945,
+        "crc_incidence": 4.779945187812349,
+        "LYG_per_1000": 214.1302595518298
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 1.1583497366601054,
+        "crc_mortality": 0.7261797095281162,
+        "crc_mortality_se": 0.04379110762072222,
+        "crc_incidence": 2.018939192424323,
+        "LYG_per_1000": 25.629089748364102
+      },
+      "auc_realized": 0.7992420735483745,
+      "frac_flagged": 0.38964
+    },
+    "c0.06|AUC0.825": {
+      "total_colo": 1.4653,
+      "colo_high": 2.5961631468644204,
+      "colo_low": 1.0921157631536946,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 1.4653,
+        "crc_mortality": 0.984,
+        "crc_mortality_se": 0.04414378612530953,
+        "crc_incidence": 2.7359999999999998,
+        "LYG_per_1000": 72.83000000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 2.5961631468644204,
+        "crc_mortality": 1.684668708689344,
+        "crc_mortality_se": 0.11554987867924826,
+        "crc_incidence": 4.715460261163953,
+        "LYG_per_1000": 220.92132838948896
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 1.0921157631536946,
+        "crc_mortality": 0.7527796988881205,
+        "crc_mortality_se": 0.04457995572770474,
+        "crc_incidence": 2.0827791668883333,
+        "LYG_per_1000": 23.959940416023827
+      },
+      "auc_realized": 0.8242419897131671,
+      "frac_flagged": 0.37862
+    },
+    "c0.06|AUC0.850": {
+      "total_colo": 1.42954,
+      "colo_high": 2.6853941641141383,
+      "colo_low": 1.0151087939564825,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 1.42954,
+        "crc_mortality": 1.028,
+        "crc_mortality_se": 0.0451099215040368,
+        "crc_incidence": 2.77,
+        "LYG_per_1000": 66.805
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 2.6853941641141383,
+        "crc_mortality": 1.700789940351443,
+        "crc_mortality_se": 0.11609191330519292,
+        "crc_incidence": 4.7557633403192,
+        "LYG_per_1000": 212.67934870224087
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 1.0151087939564825,
+        "crc_mortality": 0.8059796776081288,
+        "crc_mortality_se": 0.04611596486368451,
+        "crc_incidence": 2.1146991541203386,
+        "LYG_per_1000": 18.666542533382984
+      },
+      "auc_realized": 0.8492740977399821,
+      "frac_flagged": 0.36624
+    },
+    "c0.1|AUC0.500": {
+      "total_colo": 0.85542,
+      "colo_high": 0.9633241979687248,
+      "colo_low": 0.8198116720753311,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 0.85542,
+        "crc_mortality": 1.236,
+        "crc_mortality_se": 0.04941148560707519,
+        "crc_incidence": 3.2840000000000003,
+        "LYG_per_1000": 36.33500000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 0.9633241979687248,
+        "crc_mortality": 2.555215218442689,
+        "crc_mortality_se": 0.14167546892493202,
+        "crc_incidence": 6.65000806061583,
+        "LYG_per_1000": 93.96662905045949
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 0.8198116720753311,
+        "crc_mortality": 0.8006596797361281,
+        "crc_mortality_se": 0.04596474752256126,
+        "crc_incidence": 2.1732191307123476,
+        "LYG_per_1000": 17.316593073362764
+      },
+      "auc_realized": 0.5027212350875498,
+      "frac_flagged": 0.0
+    },
+    "c0.1|AUC0.550": {
+      "total_colo": 0.71788,
+      "colo_high": 0.8234725133000161,
+      "colo_low": 0.6830345267861893,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 0.71788,
+        "crc_mortality": 1.306,
+        "crc_mortality_se": 0.050773406806878495,
+        "crc_incidence": 3.4520000000000004,
+        "LYG_per_1000": 32.89500000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 0.8234725133000161,
+        "crc_mortality": 2.7728518458810254,
+        "crc_mortality_se": 0.14742078594311314,
+        "crc_incidence": 7.117523778816702,
+        "LYG_per_1000": 78.26857971949059
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 0.6830345267861893,
+        "crc_mortality": 0.8219396712241315,
+        "crc_mortality_se": 0.04656657366008774,
+        "crc_incidence": 2.242379103048359,
+        "LYG_per_1000": 17.921742831302865
+      },
+      "auc_realized": 0.5498159866510679,
+      "frac_flagged": 0.48498
+    },
+    "c0.1|AUC0.600": {
+      "total_colo": 0.58034,
+      "colo_high": 0.7504433338707077,
+      "colo_low": 0.5242059903176038,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 0.58034,
+        "crc_mortality": 1.37,
+        "crc_mortality_se": 0.05198572929488444,
+        "crc_incidence": 3.5680000000000005,
+        "LYG_per_1000": 26.840000000000003
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 0.7504433338707077,
+        "crc_mortality": 2.821215540867322,
+        "crc_mortality_se": 0.14866388594469007,
+        "crc_incidence": 7.31097855876189,
+        "LYG_per_1000": 67.89053683701435
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 0.5242059903176038,
+        "crc_mortality": 0.8910996435601426,
+        "crc_mortality_se": 0.04846921336802606,
+        "crc_incidence": 2.332819066872373,
+        "LYG_per_1000": 13.29334468266212
+      },
+      "auc_realized": 0.599660307886965,
+      "frac_flagged": 0.46748
+    },
+    "c0.1|AUC0.650": {
+      "total_colo": 0.52482,
+      "colo_high": 0.7730936643559568,
+      "colo_low": 0.44288982284407086,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 0.52482,
+        "crc_mortality": 1.374,
+        "crc_mortality_se": 0.05206050985088139,
+        "crc_incidence": 3.592,
+        "LYG_per_1000": 25.084999999999997
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 0.7730936643559568,
+        "crc_mortality": 2.8292761566983717,
+        "crc_mortality_se": 0.14886993695741185,
+        "crc_incidence": 7.375463485410286,
+        "LYG_per_1000": 62.99371271965182
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 0.44288982284407086,
+        "crc_mortality": 0.8937596424961429,
+        "crc_mortality_se": 0.048540850160545206,
+        "crc_incidence": 2.343459062616375,
+        "LYG_per_1000": 12.575144969942013
+      },
+      "auc_realized": 0.6495100151597212,
+      "frac_flagged": 0.4487
+    },
+    "c0.1|AUC0.700": {
+      "total_colo": 0.5181,
+      "colo_high": 0.8837659197162663,
+      "colo_low": 0.3974304410278236,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 0.5181,
+        "crc_mortality": 1.396,
+        "crc_mortality_se": 0.05246978884629547,
+        "crc_incidence": 3.612,
+        "LYG_per_1000": 23.290000000000006
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 0.8837659197162663,
+        "crc_mortality": 2.7647912300499757,
+        "crc_mortality_se": 0.14721245753983003,
+        "crc_incidence": 7.278736095437692,
+        "LYG_per_1000": 66.0164436562954
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 0.3974304410278236,
+        "crc_mortality": 0.9442996222801511,
+        "crc_mortality_se": 0.04988168920955947,
+        "crc_incidence": 2.4019790392083844,
+        "LYG_per_1000": 9.190296323881464
+      },
+      "auc_realized": 0.6993911102483923,
+      "frac_flagged": 0.42954
+    },
+    "c0.1|AUC0.725": {
+      "total_colo": 0.52526,
+      "colo_high": 0.9642108657101403,
+      "colo_low": 0.3804064478374209,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 0.52526,
+        "crc_mortality": 1.39,
+        "crc_mortality_se": 0.052358502922224257,
+        "crc_incidence": 3.58,
+        "LYG_per_1000": 25.34
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 0.9642108657101403,
+        "crc_mortality": 2.6922456875705305,
+        "crc_mortality_se": 0.1453224415030881,
+        "crc_incidence": 7.077220699661455,
+        "LYG_per_1000": 78.83282282766407
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 0.3804064478374209,
+        "crc_mortality": 0.9602596158961536,
+        "crc_mortality_se": 0.05029740588647379,
+        "crc_incidence": 2.425919029632388,
+        "LYG_per_1000": 7.687396925041224
+      },
+      "auc_realized": 0.7243369709294064,
+      "frac_flagged": 0.41906
+    },
+    "c0.1|AUC0.750": {
+      "total_colo": 0.53558,
+      "colo_high": 1.0512655166854747,
+      "colo_low": 0.3654040538383785,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 0.53558,
+        "crc_mortality": 1.362,
+        "crc_mortality_se": 0.0518358260188567,
+        "crc_incidence": 3.556,
+        "LYG_per_1000": 28.120000000000005
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 1.0512655166854747,
+        "crc_mortality": 2.587457681766887,
+        "crc_mortality_se": 0.14254293028680312,
+        "crc_incidence": 6.916008383040465,
+        "LYG_per_1000": 88.72722876027733
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 0.3654040538383785,
+        "crc_mortality": 0.9575996169601533,
+        "crc_mortality_se": 0.05022836807922846,
+        "crc_incidence": 2.4471990211203916,
+        "LYG_per_1000": 8.119646752141302
+      },
+      "auc_realized": 0.7492939360231962,
+      "frac_flagged": 0.4096
+    },
+    "c0.1|AUC0.775": {
+      "total_colo": 0.55006,
+      "colo_high": 1.1541189746896663,
+      "colo_low": 0.3507208597116561,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 0.55006,
+        "crc_mortality": 1.348,
+        "crc_mortality_se": 0.051572387129376555,
+        "crc_incidence": 3.542,
+        "LYG_per_1000": 29.085
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 1.1541189746896663,
+        "crc_mortality": 2.4665484443011443,
+        "crc_mortality_se": 0.13925898878506532,
+        "crc_incidence": 6.7467354505884245,
+        "LYG_per_1000": 95.78026761244563
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 0.3507208597116561,
+        "crc_mortality": 0.9788796084481567,
+        "crc_mortality_se": 0.050777938633532846,
+        "crc_incidence": 2.4844390062243975,
+        "LYG_per_1000": 7.075597169761124
+      },
+      "auc_realized": 0.7742592546200124,
+      "frac_flagged": 0.39976
+    },
+    "c0.1|AUC0.800": {
+      "total_colo": 0.56316,
+      "colo_high": 1.26059970981783,
+      "colo_low": 0.3330052667978933,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 0.56316,
+        "crc_mortality": 1.306,
+        "crc_mortality_se": 0.050773406806878495,
+        "crc_incidence": 3.486,
+        "LYG_per_1000": 33.72500000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 1.26059970981783,
+        "crc_mortality": 2.313396743511204,
+        "crc_mortality_se": 0.13497215437014776,
+        "crc_incidence": 6.504916975656941,
+        "LYG_per_1000": 114.0375624697727
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 0.3330052667978933,
+        "crc_mortality": 0.9735596105761558,
+        "crc_mortality_se": 0.05064112743085034,
+        "crc_incidence": 2.489759004096398,
+        "LYG_per_1000": 7.2218971112411605
+      },
+      "auc_realized": 0.7992420735483745,
+      "frac_flagged": 0.38964
+    },
+    "c0.1|AUC0.825": {
+      "total_colo": 0.57614,
+      "colo_high": 1.367080444945994,
+      "colo_low": 0.31513007394797043,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 0.57614,
+        "crc_mortality": 1.278,
+        "crc_mortality_se": 0.05023330357139329,
+        "crc_incidence": 3.438,
+        "LYG_per_1000": 36.94500000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 1.367080444945994,
+        "crc_mortality": 2.22472996936966,
+        "crc_mortality_se": 0.1324203649109771,
+        "crc_incidence": 6.327583427373851,
+        "LYG_per_1000": 126.51136546832181
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 0.31513007394797043,
+        "crc_mortality": 0.9655796137681545,
+        "crc_mortality_se": 0.05043518680075159,
+        "crc_incidence": 2.4844390062243975,
+        "LYG_per_1000": 7.388147044741181
+      },
+      "auc_realized": 0.8242419897131671,
+      "frac_flagged": 0.37862
+    },
+    "c0.1|AUC0.850": {
+      "total_colo": 0.59306,
+      "colo_high": 1.491697565694019,
+      "colo_low": 0.29651008139596746,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 0.59306,
+        "crc_mortality": 1.278,
+        "crc_mortality_se": 0.05023330357139329,
+        "crc_incidence": 3.418,
+        "LYG_per_1000": 39.550000000000004
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 1.491697565694019,
+        "crc_mortality": 2.2005481218765115,
+        "crc_mortality_se": 0.1317150075752674,
+        "crc_incidence": 6.19055295824601,
+        "LYG_per_1000": 139.48895695631148
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 0.29651008139596746,
+        "crc_mortality": 0.9735596105761558,
+        "crc_mortality_se": 0.050641127430850356,
+        "crc_incidence": 2.5030589987764005,
+        "LYG_per_1000": 6.570197371921049
+      },
+      "auc_realized": 0.8492740977399821,
+      "frac_flagged": 0.36624
+    }
+  },
+  "panels": {
+    "c0.02|P1 FH": {
+      "total_colo": 4.25764,
+      "colo_high": 4.983395131388038,
+      "colo_low": 4.018141192743523,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 4.25764,
+        "crc_mortality": 0.7060000000000001,
+        "crc_mortality_se": 0.037444082592399355,
+        "crc_incidence": 2.156,
+        "LYG_per_1000": 93.27000000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 4.983395131388038,
+        "crc_mortality": 1.160728679671127,
+        "crc_mortality_se": 0.09616825612665066,
+        "crc_incidence": 3.5386103498307273,
+        "LYG_per_1000": 267.45123327422215
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 4.018141192743523,
+        "crc_mortality": 0.555939777624089,
+        "crc_mortality_se": 0.03834862581998717,
+        "crc_incidence": 1.699739320104272,
+        "LYG_per_1000": 35.79028568388573
+      },
+      "auc_realized": 0.6038451684732175,
+      "frac_flagged": 0.14948
+    },
+    "c0.02|P2 FH+PA": {
+      "total_colo": 4.28082,
+      "colo_high": 5.0714170562630985,
+      "colo_low": 4.019923392030643,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 4.28082,
+        "crc_mortality": 0.736,
+        "crc_mortality_se": 0.03822558441549427,
+        "crc_incidence": 2.118,
+        "LYG_per_1000": 92.765
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 5.0714170562630985,
+        "crc_mortality": 1.1687892955021764,
+        "crc_mortality_se": 0.09649766090267994,
+        "crc_incidence": 3.393519264871836,
+        "LYG_per_1000": 274.76624214089964
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 4.019923392030643,
+        "crc_mortality": 0.5931797627280949,
+        "crc_mortality_se": 0.03960479427109083,
+        "crc_incidence": 1.6970793211682715,
+        "LYG_per_1000": 32.704686918125226
+      },
+      "auc_realized": 0.6695352080040693,
+      "frac_flagged": 0.23282
+    },
+    "c0.02|P3 +ENV": {
+      "total_colo": 4.30538,
+      "colo_high": 5.115024987909076,
+      "colo_low": 4.038197584720966,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 4.30538,
+        "crc_mortality": 0.724,
+        "crc_mortality_se": 0.03791497370307169,
+        "crc_incidence": 2.114,
+        "LYG_per_1000": 96.265
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 5.115024987909076,
+        "crc_mortality": 1.1446074480090278,
+        "crc_mortality_se": 0.09550587371368419,
+        "crc_incidence": 3.3451555698855393,
+        "LYG_per_1000": 279.6832177978398
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 4.038197584720966,
+        "crc_mortality": 0.5851997659200936,
+        "crc_mortality_se": 0.039339071167339534,
+        "crc_incidence": 1.707719316912273,
+        "LYG_per_1000": 35.73708570516572
+      },
+      "auc_realized": 0.7023556904264164,
+      "frac_flagged": 0.26518
+    },
+    "c0.02|P4 +PRS-140": {
+      "total_colo": 4.28942,
+      "colo_high": 5.153393519264871,
+      "colo_low": 4.004309198276321,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 4.28942,
+        "crc_mortality": 0.764,
+        "crc_mortality_se": 0.03894042125000888,
+        "crc_incidence": 2.166,
+        "LYG_per_1000": 97.965
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 5.153393519264871,
+        "crc_mortality": 1.192971142995325,
+        "crc_mortality_se": 0.09747887426087513,
+        "crc_incidence": 3.369337417378688,
+        "LYG_per_1000": 279.4413993229083
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 4.004309198276321,
+        "crc_mortality": 0.6224397510240995,
+        "crc_mortality_se": 0.04056386540795781,
+        "crc_incidence": 1.7688992924402829,
+        "LYG_per_1000": 38.07788476884609
+      },
+      "auc_realized": 0.7391051323605264,
+      "frac_flagged": 0.33514
+    },
+    "c0.02|P5 PRS-GW": {
+      "total_colo": 4.25796,
+      "colo_high": 5.194180235369982,
+      "colo_low": 3.9490078203968717,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 4.25796,
+        "crc_mortality": 0.6859999999999999,
+        "crc_mortality_se": 0.036913619875415166,
+        "crc_incidence": 2.052,
+        "LYG_per_1000": 106.34
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 5.194180235369982,
+        "crc_mortality": 1.047880058036434,
+        "crc_mortality_se": 0.09142604960492053,
+        "crc_incidence": 3.1194583266161535,
+        "LYG_per_1000": 300.49975818152507
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 3.9490078203968717,
+        "crc_mortality": 0.5665797733680906,
+        "crc_mortality_se": 0.038711787924767434,
+        "crc_incidence": 1.699739320104272,
+        "LYG_per_1000": 42.26738309304675
+      },
+      "auc_realized": 0.7652682545246505,
+      "frac_flagged": 0.36018
+    },
+    "c0.02|P6 +microbiome": {
+      "total_colo": 4.24062,
+      "colo_high": 5.207560857649525,
+      "colo_low": 3.9215300313879875,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 4.24062,
+        "crc_mortality": 0.732,
+        "crc_mortality_se": 0.038122337103747,
+        "crc_incidence": 2.106,
+        "LYG_per_1000": 103.37500000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 5.207560857649525,
+        "crc_mortality": 1.1446074480090278,
+        "crc_mortality_se": 0.09550587371368419,
+        "crc_incidence": 3.3370949540544896,
+        "LYG_per_1000": 298.24278574883124
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 3.9215300313879875,
+        "crc_mortality": 0.5958397616640954,
+        "crc_mortality_se": 0.03969296385223214,
+        "crc_incidence": 1.699739320104272,
+        "LYG_per_1000": 39.068734372506256
+      },
+      "auc_realized": 0.7750389177613151,
+      "frac_flagged": 0.3626
+    },
+    "c0.02|P7 +FIT f-Hb": {
+      "total_colo": 4.18906,
+      "colo_high": 5.267531839432532,
+      "colo_low": 3.8331648667340534,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 4.18906,
+        "crc_mortality": 0.69,
+        "crc_mortality_se": 0.03702033779030389,
+        "crc_incidence": 2.098,
+        "LYG_per_1000": 107.06500000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 5.267531839432532,
+        "crc_mortality": 1.047880058036434,
+        "crc_mortality_se": 0.09142604960492051,
+        "crc_incidence": 3.1758826374335,
+        "LYG_per_1000": 308.72158632919553
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 3.8331648667340534,
+        "crc_mortality": 0.5718997712400915,
+        "crc_mortality_se": 0.03889206830150169,
+        "crc_incidence": 1.742299303080279,
+        "LYG_per_1000": 40.51843379262648
+      },
+      "auc_realized": 0.8030910251121309,
+      "frac_flagged": 0.36544
+    },
+    "c0.02|P8 +mt-sDNA": {
+      "total_colo": 4.1302,
+      "colo_high": 5.305255521521844,
+      "colo_low": 3.742432303027079,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 4.1302,
+        "crc_mortality": 0.674,
+        "crc_mortality_se": 0.036591546275405985,
+        "crc_incidence": 2.104,
+        "LYG_per_1000": 108.31
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 5.305255521521844,
+        "crc_mortality": 0.967273899725939,
+        "crc_mortality_se": 0.08787507675852486,
+        "crc_incidence": 3.1355795582782524,
+        "LYG_per_1000": 316.8426567789779
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 3.742432303027079,
+        "crc_mortality": 0.5772197691120923,
+        "crc_mortality_se": 0.03907149758429089,
+        "crc_incidence": 1.7635792945682822,
+        "LYG_per_1000": 39.49433420226632
+      },
+      "auc_realized": 0.82627570748746,
+      "frac_flagged": 0.3614
+    },
+    "c0.02|P9 +cfDNA": {
+      "total_colo": 4.07862,
+      "colo_high": 5.34531678220216,
+      "colo_low": 3.660610735755706,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 4.07862,
+        "crc_mortality": 0.73,
+        "crc_mortality_se": 0.03807060529358245,
+        "crc_incidence": 2.156,
+        "LYG_per_1000": 103.385
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 5.34531678220216,
+        "crc_mortality": 1.047880058036434,
+        "crc_mortality_se": 0.09142604960492051,
+        "crc_incidence": 3.1355795582782524,
+        "LYG_per_1000": 310.5150733516041
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 3.660610735755706,
+        "crc_mortality": 0.6250997499601,
+        "crc_mortality_se": 0.040649903889281205,
+        "crc_incidence": 1.8327392669042935,
+        "LYG_per_1000": 35.032185987125594
+      },
+      "auc_realized": 0.8461147239916407,
+      "frac_flagged": 0.3555
+    },
+    "c0.03|P1 FH": {
+      "total_colo": 3.58062,
+      "colo_high": 4.2795421570207965,
+      "colo_low": 3.349976060009576,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 3.58062,
+        "crc_mortality": 0.776,
+        "crc_mortality_se": 0.03924267166931419,
+        "crc_incidence": 2.2319999999999998,
+        "LYG_per_1000": 89.15500000000002
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 4.2795421570207965,
+        "crc_mortality": 1.2977591487989681,
+        "crc_mortality_se": 0.10161601783350402,
+        "crc_incidence": 3.715943898113816,
+        "LYG_per_1000": 260.3175882637434
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 3.349976060009576,
+        "crc_mortality": 0.6038197584720967,
+        "crc_mortality_se": 0.03995627699302395,
+        "crc_incidence": 1.742299303080279,
+        "LYG_per_1000": 32.67143693142523
+      },
+      "auc_realized": 0.6038451684732175,
+      "frac_flagged": 0.14948
+    },
+    "c0.03|P2 FH+PA": {
+      "total_colo": 3.1778,
+      "colo_high": 4.2159438981138155,
+      "colo_low": 2.8352130659147736,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 3.1778,
+        "crc_mortality": 0.786,
+        "crc_mortality_se": 0.03949272431101038,
+        "crc_incidence": 2.278,
+        "LYG_per_1000": 88.45500000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 4.2159438981138155,
+        "crc_mortality": 1.2493954538126713,
+        "crc_mortality_se": 0.09972899852306497,
+        "crc_incidence": 3.7643075931001126,
+        "LYG_per_1000": 260.5392551990973
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 2.8352130659147736,
+        "crc_mortality": 0.6330797467681013,
+        "crc_mortality_se": 0.040906905966322626,
+        "crc_incidence": 1.7875192849922859,
+        "LYG_per_1000": 31.667287333085063
+      },
+      "auc_realized": 0.6695352080040693,
+      "frac_flagged": 0.23282
+    },
+    "c0.03|P3 +ENV": {
+      "total_colo": 3.31624,
+      "colo_high": 4.326293728840883,
+      "colo_low": 2.982922806830877,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 3.31624,
+        "crc_mortality": 0.792,
+        "crc_mortality_se": 0.039641974594146985,
+        "crc_incidence": 2.318,
+        "LYG_per_1000": 91.89
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 4.326293728840883,
+        "crc_mortality": 1.2090923746574238,
+        "crc_mortality_se": 0.0981272989298444,
+        "crc_incidence": 3.828792519748509,
+        "LYG_per_1000": 268.156537159439
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 2.982922806830877,
+        "crc_mortality": 0.6543597382561047,
+        "crc_mortality_se": 0.041584281222978324,
+        "crc_incidence": 1.8194392722242911,
+        "LYG_per_1000": 33.722136511145386
+      },
+      "auc_realized": 0.7023556904264164,
+      "frac_flagged": 0.26518
+    },
+    "c0.03|P4 +PRS-140": {
+      "total_colo": 3.3627,
+      "colo_high": 4.438497501209093,
+      "colo_low": 3.007687396925041,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 3.3627,
+        "crc_mortality": 0.744,
+        "crc_mortality_se": 0.038431221931866585,
+        "crc_incidence": 2.15,
+        "LYG_per_1000": 97.27000000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 4.438497501209093,
+        "crc_mortality": 1.1687892955021764,
+        "crc_mortality_se": 0.09649766090267994,
+        "crc_incidence": 3.5386103498307273,
+        "LYG_per_1000": 269.4059326132517
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 3.007687396925041,
+        "crc_mortality": 0.6038197584720967,
+        "crc_mortality_se": 0.03995627699302395,
+        "crc_incidence": 1.6917593232962707,
+        "LYG_per_1000": 40.46523381390647
+      },
+      "auc_realized": 0.7391051323605264,
+      "frac_flagged": 0.33514
+    },
+    "c0.03|P5 PRS-GW": {
+      "total_colo": 3.31762,
+      "colo_high": 4.504755763340319,
+      "colo_low": 2.925865829653668,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 3.31762,
+        "crc_mortality": 0.7779999999999999,
+        "crc_mortality_se": 0.03929281357327279,
+        "crc_incidence": 2.254,
+        "LYG_per_1000": 88.215
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 4.504755763340319,
+        "crc_mortality": 1.2493954538126713,
+        "crc_mortality_se": 0.09972899852306497,
+        "crc_incidence": 3.522489118168628,
+        "LYG_per_1000": 259.45107206190556
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 2.925865829653668,
+        "crc_mortality": 0.6224397510240995,
+        "crc_mortality_se": 0.04056386540795782,
+        "crc_incidence": 1.8353992658402936,
+        "LYG_per_1000": 31.707187317125076
+      },
+      "auc_realized": 0.7652682545246505,
+      "frac_flagged": 0.36018
+    },
+    "c0.03|P6 +microbiome": {
+      "total_colo": 3.2947,
+      "colo_high": 4.526761244559085,
+      "colo_low": 2.8881204447518223,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 3.2947,
+        "crc_mortality": 0.758,
+        "crc_mortality_se": 0.03878838499829833,
+        "crc_incidence": 2.252,
+        "LYG_per_1000": 94.48
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 4.526761244559085,
+        "crc_mortality": 1.1849105271642755,
+        "crc_mortality_se": 0.09715295816418468,
+        "crc_incidence": 3.530549733999678,
+        "LYG_per_1000": 268.1363856198614
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 2.8881204447518223,
+        "crc_mortality": 0.6171197531520988,
+        "crc_mortality_se": 0.040391224650841,
+        "crc_incidence": 1.8300792679682927,
+        "LYG_per_1000": 37.17348513060595
+      },
+      "auc_realized": 0.7750389177613151,
+      "frac_flagged": 0.3626
+    },
+    "c0.03|P7 +FIT f-Hb": {
+      "total_colo": 3.23262,
+      "colo_high": 4.608012252136064,
+      "colo_low": 2.778741288503485,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 3.23262,
+        "crc_mortality": 0.762,
+        "crc_mortality_se": 0.03888981059798784,
+        "crc_incidence": 2.234,
+        "LYG_per_1000": 96.14500000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 4.608012252136064,
+        "crc_mortality": 1.1849105271642755,
+        "crc_mortality_se": 0.09715295816418468,
+        "crc_incidence": 3.586974044817024,
+        "LYG_per_1000": 275.008060615831
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 2.778741288503485,
+        "crc_mortality": 0.6224397510240995,
+        "crc_mortality_se": 0.04056386540795781,
+        "crc_incidence": 1.7875192849922859,
+        "LYG_per_1000": 37.12028515188594
+      },
+      "auc_realized": 0.8030910251121309,
+      "frac_flagged": 0.36544
+    },
+    "c0.03|P8 +mt-sDNA": {
+      "total_colo": 3.16978,
+      "colo_high": 4.674109301950669,
+      "colo_low": 2.673352130659148,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 3.16978,
+        "crc_mortality": 0.776,
+        "crc_mortality_se": 0.03924267166931419,
+        "crc_incidence": 2.212,
+        "LYG_per_1000": 91.88000000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 4.674109301950669,
+        "crc_mortality": 1.192971142995325,
+        "crc_mortality_se": 0.09747887426087513,
+        "crc_incidence": 3.5547315814928258,
+        "LYG_per_1000": 273.0533612768016
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 2.673352130659148,
+        "crc_mortality": 0.6383997446401022,
+        "crc_mortality_se": 0.041077324482005836,
+        "crc_incidence": 1.7688992924402829,
+        "LYG_per_1000": 32.09288716284512
+      },
+      "auc_realized": 0.82627570748746,
+      "frac_flagged": 0.3614
+    },
+    "c0.03|P9 +cfDNA": {
+      "total_colo": 3.11038,
+      "colo_high": 4.734725133000161,
+      "colo_low": 2.574346970261212,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 3.11038,
+        "crc_mortality": 0.716,
+        "crc_mortality_se": 0.03770643599581258,
+        "crc_incidence": 2.152,
+        "LYG_per_1000": 100.735
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 4.734725133000161,
+        "crc_mortality": 1.015637594712236,
+        "crc_mortality_se": 0.09002316856493577,
+        "crc_incidence": 3.3612768015476386,
+        "LYG_per_1000": 294.8170240206352
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 2.574346970261212,
+        "crc_mortality": 0.6171197531520988,
+        "crc_mortality_se": 0.040391224650841,
+        "crc_incidence": 1.7529392988242805,
+        "LYG_per_1000": 36.68803532478587
+      },
+      "auc_realized": 0.8461147239916407,
+      "frac_flagged": 0.3555
+    },
+    "c0.06|P1 FH": {
+      "total_colo": 1.19742,
+      "colo_high": 1.7212639045623086,
+      "colo_low": 1.024551790179284,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 1.19742,
+        "crc_mortality": 1.0659999999999998,
+        "crc_mortality_se": 0.04592728019708249,
+        "crc_incidence": 2.93,
+        "LYG_per_1000": 55.364999999999995
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 1.7212639045623086,
+        "crc_mortality": 1.966790262776076,
+        "crc_mortality_se": 0.12467151917603463,
+        "crc_incidence": 5.376430759310011,
+        "LYG_per_1000": 170.70369176205062
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 1.024551790179284,
+        "crc_mortality": 0.768739692504123,
+        "crc_mortality_se": 0.04504643372780662,
+        "crc_incidence": 2.1226791509283394,
+        "LYG_per_1000": 17.303293078682767
+      },
+      "auc_realized": 0.6038451684732175,
+      "frac_flagged": 0.14948
+    },
+    "c0.06|P2 FH+PA": {
+      "total_colo": 1.34764,
+      "colo_high": 2.0500564243108172,
+      "colo_low": 1.1158429536628185,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 1.34764,
+        "crc_mortality": 1.002,
+        "crc_mortality_se": 0.04454166138787354,
+        "crc_incidence": 2.802,
+        "LYG_per_1000": 64.22
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 2.0500564243108172,
+        "crc_mortality": 1.7410930195066903,
+        "crc_mortality_se": 0.11743527449593945,
+        "crc_incidence": 4.989521199419636,
+        "LYG_per_1000": 202.38191197807515
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 1.1158429536628185,
+        "crc_mortality": 0.7580996967601213,
+        "crc_mortality_se": 0.044736005685725076,
+        "crc_incidence": 2.0801191679523328,
+        "LYG_per_1000": 18.62664254934297
+      },
+      "auc_realized": 0.6695352080040693,
+      "frac_flagged": 0.23282
+    },
+    "c0.06|P3 +ENV": {
+      "total_colo": 1.39684,
+      "colo_high": 2.130501370304691,
+      "colo_low": 1.1547321381071447,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 1.39684,
+        "crc_mortality": 0.964,
+        "crc_mortality_se": 0.04369727988153702,
+        "crc_incidence": 2.752,
+        "LYG_per_1000": 67.43000000000002
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 2.130501370304691,
+        "crc_mortality": 1.6927293245203934,
+        "crc_mortality_se": 0.11582123568894154,
+        "crc_incidence": 4.91697565694019,
+        "LYG_per_1000": 206.04949218120265
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 1.1547321381071447,
+        "crc_mortality": 0.7235197105921157,
+        "crc_mortality_se": 0.043711416148108084,
+        "crc_incidence": 2.037559184976326,
+        "LYG_per_1000": 21.685641325743465
+      },
+      "auc_realized": 0.7023556904264164,
+      "frac_flagged": 0.26518
+    },
+    "c0.06|P4 +PRS-140": {
+      "total_colo": 1.47582,
+      "colo_high": 2.296953087215863,
+      "colo_low": 1.2048465180613928,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 1.47582,
+        "crc_mortality": 0.9979999999999999,
+        "crc_mortality_se": 0.04445356501326804,
+        "crc_incidence": 2.698,
+        "LYG_per_1000": 65.09500000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 2.296953087215863,
+        "crc_mortality": 1.700789940351443,
+        "crc_mortality_se": 0.11609191330519292,
+        "crc_incidence": 4.7557633403192,
+        "LYG_per_1000": 211.89343865871356
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 1.2048465180613928,
+        "crc_mortality": 0.7660796935681226,
+        "crc_mortality_se": 0.04496903389579083,
+        "crc_incidence": 2.018939192424323,
+        "LYG_per_1000": 16.65159333936267
+      },
+      "auc_realized": 0.7391051323605264,
+      "frac_flagged": 0.33514
+    },
+    "c0.06|P5 PRS-GW": {
+      "total_colo": 1.4975,
+      "colo_high": 2.3908592616475897,
+      "colo_low": 1.2026919189232324,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 1.4975,
+        "crc_mortality": 1.03,
+        "crc_mortality_se": 0.04515332519821247,
+        "crc_incidence": 2.7439999999999998,
+        "LYG_per_1000": 63.53
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 2.3908592616475897,
+        "crc_mortality": 1.765274866999839,
+        "crc_mortality_se": 0.11823343354590958,
+        "crc_incidence": 4.691278413670805,
+        "LYG_per_1000": 198.5934225374819
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 1.2026919189232324,
+        "crc_mortality": 0.7873596850561261,
+        "crc_mortality_se": 0.045584437322647976,
+        "crc_incidence": 2.1013991594403363,
+        "LYG_per_1000": 18.959142416343028
+      },
+      "auc_realized": 0.7652682545246505,
+      "frac_flagged": 0.36018
+    },
+    "c0.06|P6 +microbiome": {
+      "total_colo": 1.49642,
+      "colo_high": 2.4264065774625183,
+      "colo_low": 1.1895249241900303,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 1.49642,
+        "crc_mortality": 1.014,
+        "crc_mortality_se": 0.04480486836856673,
+        "crc_incidence": 2.73,
+        "LYG_per_1000": 67.84000000000002
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 2.4264065774625183,
+        "crc_mortality": 1.7572142511687892,
+        "crc_mortality_se": 0.11796802495899546,
+        "crc_incidence": 4.6751571820087054,
+        "LYG_per_1000": 210.70449782363377
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 1.1895249241900303,
+        "crc_mortality": 0.768739692504123,
+        "crc_mortality_se": 0.04504643372780662,
+        "crc_incidence": 2.088099164760334,
+        "LYG_per_1000": 20.694791722083313
+      },
+      "auc_realized": 0.7750389177613151,
+      "frac_flagged": 0.3626
+    },
+    "c0.06|P7 +FIT f-Hb": {
+      "total_colo": 1.4842,
+      "colo_high": 2.5193454779945186,
+      "colo_low": 1.1426025429589828,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 1.4842,
+        "crc_mortality": 1.042,
+        "crc_mortality_se": 0.04541283922548038,
+        "crc_incidence": 2.752,
+        "LYG_per_1000": 64.09500000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 2.5193454779945186,
+        "crc_mortality": 1.7249717878445914,
+        "crc_mortality_se": 0.11689991692742127,
+        "crc_incidence": 4.659035950346606,
+        "LYG_per_1000": 213.18313719168148
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 1.1426025429589828,
+        "crc_mortality": 0.8166196733521307,
+        "crc_mortality_se": 0.04641687300026114,
+        "crc_incidence": 2.1226791509283394,
+        "LYG_per_1000": 14.895994041602384
+      },
+      "auc_realized": 0.8030910251121309,
+      "frac_flagged": 0.36544
+    },
+    "c0.06|P8 +mt-sDNA": {
+      "total_colo": 1.45416,
+      "colo_high": 2.593825568273416,
+      "colo_low": 1.0780709687716126,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 1.45416,
+        "crc_mortality": 1.05,
+        "crc_mortality_se": 0.04558499270408186,
+        "crc_incidence": 2.826,
+        "LYG_per_1000": 63.79000000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 2.593825568273416,
+        "crc_mortality": 1.7249717878445914,
+        "crc_mortality_se": 0.11689991692742127,
+        "crc_incidence": 4.650975334515557,
+        "LYG_per_1000": 211.24858939222958
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 1.0780709687716126,
+        "crc_mortality": 0.8272596690961322,
+        "crc_mortality_se": 0.046715778491131434,
+        "crc_incidence": 2.223759110496356,
+        "LYG_per_1000": 15.128743948502416
+      },
+      "auc_realized": 0.82627570748746,
+      "frac_flagged": 0.3614
+    },
+    "c0.06|P9 +cfDNA": {
+      "total_colo": 1.42576,
+      "colo_high": 2.6735450588424956,
+      "colo_low": 1.0139915944033622,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 1.42576,
+        "crc_mortality": 1.032,
+        "crc_mortality_se": 0.045196685440499894,
+        "crc_incidence": 2.8160000000000003,
+        "LYG_per_1000": 65.33
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 2.6735450588424956,
+        "crc_mortality": 1.620183782040948,
+        "crc_mortality_se": 0.1133539763723004,
+        "crc_incidence": 4.61067225536031,
+        "LYG_per_1000": 218.34193132355313
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 1.0139915944033622,
+        "crc_mortality": 0.8378996648401341,
+        "crc_mortality_se": 0.04701271953459874,
+        "crc_incidence": 2.223759110496356,
+        "LYG_per_1000": 14.836144065542372
+      },
+      "auc_realized": 0.8461147239916407,
+      "frac_flagged": 0.3555
+    },
+    "c0.1|P1 FH": {
+      "total_colo": 0.15502,
+      "colo_high": 0.3645816540383685,
+      "colo_low": 0.08586476565409373,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 0.15502,
+        "crc_mortality": 1.58,
+        "crc_mortality_se": 0.055768577197953105,
+        "crc_incidence": 3.934,
+        "LYG_per_1000": 8.650000000000018
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 0.3645816540383685,
+        "crc_mortality": 3.2806706432371433,
+        "crc_mortality_se": 0.15993354737868948,
+        "crc_incidence": 8.213767531839434,
+        "LYG_per_1000": 28.977913912622945
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 0.08586476565409373,
+        "crc_mortality": 1.018779592488163,
+        "crc_mortality_se": 0.05179204127934124,
+        "crc_incidence": 2.5216789913284035,
+        "LYG_per_1000": 1.941799223280305
+      },
+      "auc_realized": 0.6038451684732175,
+      "frac_flagged": 0.14948
+    },
+    "c0.1|P2 FH+PA": {
+      "total_colo": 0.26416,
+      "colo_high": 0.6459777527003063,
+      "colo_low": 0.1381603447358621,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 0.26416,
+        "crc_mortality": 1.534,
+        "crc_mortality_se": 0.054963599772449384,
+        "crc_incidence": 3.7960000000000003,
+        "LYG_per_1000": 15.58000000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 0.6459777527003063,
+        "crc_mortality": 3.095276479123005,
+        "crc_mortality_se": 0.15549764385826773,
+        "crc_incidence": 7.617281960341771,
+        "LYG_per_1000": 55.86006770917301
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 0.1381603447358621,
+        "crc_mortality": 1.018779592488163,
+        "crc_mortality_se": 0.05179204127934124,
+        "crc_incidence": 2.5349789860084058,
+        "LYG_per_1000": 2.2875990849603594
+      },
+      "auc_realized": 0.6695352080040693,
+      "frac_flagged": 0.23282
+    },
+    "c0.1|P3 +ENV": {
+      "total_colo": 0.3972,
+      "colo_high": 0.8417701112364985,
+      "colo_low": 0.25049209980316006,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 0.3972,
+        "crc_mortality": 1.434,
+        "crc_mortality_se": 0.0531688764089328,
+        "crc_incidence": 3.5860000000000003,
+        "LYG_per_1000": 27.365000000000002
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 0.8417701112364985,
+        "crc_mortality": 2.86151862002257,
+        "crc_mortality_se": 0.14969095483041994,
+        "crc_incidence": 7.117523778816702,
+        "LYG_per_1000": 85.76495244236659
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 0.25049209980316006,
+        "crc_mortality": 0.962919614832154,
+        "crc_mortality_se": 0.050366345325856605,
+        "crc_incidence": 2.4205990317603874,
+        "LYG_per_1000": 8.09304676278129
+      },
+      "auc_realized": 0.7023556904264164,
+      "frac_flagged": 0.26518
+    },
+    "c0.1|P4 +PRS-140": {
+      "total_colo": 0.4929,
+      "colo_high": 1.029018216991778,
+      "colo_low": 0.31598127360749056,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 0.4929,
+        "crc_mortality": 1.3719999999999999,
+        "crc_mortality_se": 0.05202313377843518,
+        "crc_incidence": 3.46,
+        "LYG_per_1000": 35.96000000000002
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 1.029018216991778,
+        "crc_mortality": 2.651942608415283,
+        "crc_mortality_se": 0.1442604627607201,
+        "crc_incidence": 6.65000806061583,
+        "LYG_per_1000": 120.96969208447528
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 0.31598127360749056,
+        "crc_mortality": 0.9496196201521521,
+        "crc_mortality_se": 0.050020660374438045,
+        "crc_incidence": 2.407299037080385,
+        "LYG_per_1000": 7.906846837261269
+      },
+      "auc_realized": 0.7391051323605264,
+      "frac_flagged": 0.33514
+    },
+    "c0.1|P5 PRS-GW": {
+      "total_colo": 0.52828,
+      "colo_high": 1.1466226019667902,
+      "colo_low": 0.3242272703090919,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 0.52828,
+        "crc_mortality": 1.3379999999999999,
+        "crc_mortality_se": 0.051383342874500665,
+        "crc_incidence": 3.404,
+        "LYG_per_1000": 35.54000000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 1.1466226019667902,
+        "crc_mortality": 2.4987909076253425,
+        "crc_mortality_se": 0.1401430531767033,
+        "crc_incidence": 6.472674512332742,
+        "LYG_per_1000": 113.77559245526359
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 0.3242272703090919,
+        "crc_mortality": 0.9549396180241528,
+        "crc_mortality_se": 0.05015923149794805,
+        "crc_incidence": 2.3913390434643826,
+        "LYG_per_1000": 9.722296111081551
+      },
+      "auc_realized": 0.7652682545246505,
+      "frac_flagged": 0.36018
+    },
+    "c0.1|P6 +microbiome": {
+      "total_colo": 0.53544,
+      "colo_high": 1.1864420441721748,
+      "colo_low": 0.3206096717561313,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 0.53544,
+        "crc_mortality": 1.366,
+        "crc_mortality_se": 0.05191083484876249,
+        "crc_incidence": 3.408,
+        "LYG_per_1000": 33.195
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 1.1864420441721748,
+        "crc_mortality": 2.5471546026116396,
+        "crc_mortality_se": 0.14145767984363353,
+        "crc_incidence": 6.416250201515396,
+        "LYG_per_1000": 116.45574721908758
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 0.3206096717561313,
+        "crc_mortality": 0.9762196095121563,
+        "crc_mortality_se": 0.050709581026517736,
+        "crc_incidence": 2.4152790338883867,
+        "LYG_per_1000": 5.7189977124009195
+      },
+      "auc_realized": 0.7750389177613151,
+      "frac_flagged": 0.3626
+    },
+    "c0.1|P7 +FIT f-Hb": {
+      "total_colo": 0.55718,
+      "colo_high": 1.3001773335482831,
+      "colo_low": 0.3119912752034899,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 0.55718,
+        "crc_mortality": 1.318,
+        "crc_mortality_se": 0.05100303467629082,
+        "crc_incidence": 3.3480000000000003,
+        "LYG_per_1000": 36.47500000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 1.3001773335482831,
+        "crc_mortality": 2.394002901821699,
+        "crc_mortality_se": 0.13724679233522025,
+        "crc_incidence": 6.142189263259714,
+        "LYG_per_1000": 127.57939706593585
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 0.3119912752034899,
+        "crc_mortality": 0.962919614832154,
+        "crc_mortality_se": 0.05036634532585661,
+        "crc_incidence": 2.425919029632388,
+        "LYG_per_1000": 6.410597435761028
+      },
+      "auc_realized": 0.8030910251121309,
+      "frac_flagged": 0.36544
+    },
+    "c0.1|P8 +mt-sDNA": {
+      "total_colo": 0.57336,
+      "colo_high": 1.402466548444301,
+      "colo_low": 0.299755280097888,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 0.57336,
+        "crc_mortality": 1.3339999999999999,
+        "crc_mortality_se": 0.05130751922701569,
+        "crc_incidence": 3.3320000000000003,
+        "LYG_per_1000": 37.30500000000001
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 1.402466548444301,
+        "crc_mortality": 2.38594228599065,
+        "crc_mortality_se": 0.13702119978458088,
+        "crc_incidence": 6.053522489118169,
+        "LYG_per_1000": 145.514267290021
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 0.299755280097888,
+        "crc_mortality": 0.9868596052561579,
+        "crc_mortality_se": 0.05098243938102141,
+        "crc_incidence": 2.4338990264403897,
+        "LYG_per_1000": 1.5959993616002506
+      },
+      "auc_realized": 0.82627570748746,
+      "frac_flagged": 0.3614
+    },
+    "c0.1|P9 +cfDNA": {
+      "total_colo": 0.58514,
+      "colo_high": 1.493632113493471,
+      "colo_low": 0.28533808586476567,
+      "overall": {
+        "n": 50000,
+        "mean_colo": 0.58514,
+        "crc_mortality": 1.3299999999999998,
+        "crc_mortality_se": 0.051231577113044935,
+        "crc_incidence": 3.366,
+        "LYG_per_1000": 38.73500000000002
+      },
+      "high": {
+        "n": 12406,
+        "mean_colo": 1.493632113493471,
+        "crc_mortality": 2.4020635176527487,
+        "crc_mortality_se": 0.1374719765873425,
+        "crc_incidence": 6.174431726583911,
+        "LYG_per_1000": 145.0104788005804
+      },
+      "low": {
+        "n": 37594,
+        "mean_colo": 0.28533808586476567,
+        "crc_mortality": 0.9762196095121563,
+        "crc_mortality_se": 0.050709581026517736,
+        "crc_incidence": 2.4392190243123903,
+        "LYG_per_1000": 3.6641485343405917
+      },
+      "auc_realized": 0.8461147239916407,
+      "frac_flagged": 0.3555
+    }
+  }
+}
