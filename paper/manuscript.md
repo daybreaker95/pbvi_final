@@ -58,6 +58,13 @@ chronically non-adherent subgroup gains ≈ 0.4 pp CRC-mortality reduction), and
 an **observable polygenic risk score (AUC ≥ 0.8) and a cost-based budget**, it
 performs genuine **risk-targeting** — intensive surveillance of the high-risk class
 that cuts its CRC mortality below any fixed schedule at lower total colonoscopy use.
+Sweeping that discrimination finely to a *reachable* ceiling of AUROC 0.85 shows the
+requirement is **budget-dependent**: where colonoscopy capacity is ample it saturates
+by AUROC ≈ 0.70, whereas under a tight per-colonoscopy budget an intermediate
+classifier (AUROC 0.60–0.75) leaves the high-risk class **worse off than uniform
+screening**, and only a panel reaching ≳ 0.80 — today attainable only by stacking a
+lifestyle score, a next-generation polygenic score and at least two emerging assays
+used as risk *stratifiers* — converts the budget saving into a mortality gain.
 (This version reflects a corrected, quarter-year natural-history matrix, a corrected
 detection probability, and a re-tuned solver; see transitions/SCREENING_VALIDATION.md.)
 
@@ -447,6 +454,137 @@ AUC ≥ 0.8, at lower total colonoscopy use. At AUC ≈ 0.67 (family history alo
 high-risk mortality is indistinguishable from the flat prior — the payoff there is
 colonoscopy efficiency, not mortality (Figure 8).
 
+### 3.5 How much discrimination does risk-stratification need, and which tests supply it?
+
+Table 3 located the mortality-targeting turn-on on a four-point AUC grid whose top
+rung was a perfect-information oracle. Two questions were left open: the grid was
+too coarse to resolve *where* the turn-on sits, and an AUROC is not a screening
+programme — nothing said which **combination** of risk factors and tests reaches a
+given AUROC, or what the next test added to a panel is worth. We therefore swept
+the discrimination of the baseline classifier on an 11-point grid from 0.50 to a
+deliberate ceiling of **0.85** — an ambitious but reachable target for a combined
+questionnaire + PRS + biomarker panel, in place of the unreachable oracle — at
+**four per-colonoscopy costs** (c = 0.02 / 0.03 / 0.06 / 0.10), in two tracks.
+**Track A** feeds the policy an abstract calibrated risk score at each AUROC: the
+response curve to exactly that much information. **Track B** feeds it nine *named*
+marker panels (`experiments/risk_panels.py`) — family history, prior-adenoma
+history, a lifestyle/environmental score, a current (~140-locus) and a genome-wide
+PRS, a faecal microbiome signature, quantitative faecal haemoglobin, multi-target
+stool DNA/RNA, and a blood methylated-cfDNA score — each rung adding one modality,
+combined by naive Bayes into a calibrated `P(high | markers)` whose AUROC is
+**measured** from the simulated patients rather than assumed. All 85 arms run in
+the true CMOST environment at matched adherence with paired common random numbers
+(n = 50,000; high-risk class n ≈ 12,400, CRC-mortality SE ≈ 0.10 pp) and are
+reported by **true** risk class (Figure 10; `paper/results_auroc_sweep.md`).
+
+**Table 4.** Track A: high-risk-class CRC mortality (%) and total colonoscopies per
+person as classifier discrimination is swept, at four per-colonoscopy costs. In
+this cohort no screening gives 3.64 % high-class mortality, and the fixed schedules
+give 2.84 / 2.15 / 1.78 / 1.30 % at 0.89 / 1.66 / 2.59 / 3.24 colonoscopies
+(Fixed ×1–×4).
+
+| AUROC | c = 0.02 mort / colon. | c = 0.03 mort / colon. | c = 0.06 mort / colon. | c = 0.10 mort / colon. |
+|:--:|:--:|:--:|:--:|:--:|
+| 0.50 (flat prior) | 1.16 / 4.08 | 1.30 / 3.64 | 1.60 / 2.02 | 2.56 / 0.86 |
+| 0.55 | 1.18 / 4.10 | 1.30 / 3.64 | 1.86 / 1.57 | 2.77 / 0.72 |
+| 0.60 | 1.11 / 4.19 | 1.24 / 3.55 | 1.86 / 1.53 | 2.82 / 0.58 |
+| 0.65 | 1.02 / 4.26 | 1.20 / 3.47 | 1.80 / 1.53 | **2.83** / 0.52 |
+| 0.70 | **0.97** / 4.29 | 1.18 / 3.41 | 1.74 / 1.53 | 2.76 / 0.52 |
+| 0.725 | 0.98 / 4.28 | 1.12 / 3.38 | 1.72 / 1.53 | 2.69 / 0.53 |
+| 0.75 | 1.00 / 4.26 | 1.22 / 3.34 | 1.69 / 1.53 | 2.59 / 0.54 |
+| 0.775 | 0.98 / 4.23 | 1.16 / 3.29 | 1.72 / 1.51 | 2.47 / 0.55 |
+| 0.80 | 1.02 / 4.19 | 1.10 / 3.23 | 1.74 / 1.49 | 2.31 / 0.56 |
+| 0.825 | 0.98 / 4.13 | 1.14 / 3.17 | 1.68 / 1.47 | 2.22 / 0.58 |
+| **0.85** | 0.99 / 4.07 | **1.10** / 3.10 | 1.70 / 1.43 | **2.20** / 0.59 |
+
+**The discrimination requirement is budget-dependent, and only the mid-budget
+regime matches the story in §3.4.** At a **loose** budget (c = 0.02) discrimination
+*saturates* by AUROC ≈ 0.70: high-class mortality falls 1.16 → 0.97 % (≈ 2 SE) and
+is then flat to 0.85, and the extra information is spent on volume rather than
+mortality — high-class use keeps rising (4.72 → 5.34) while low-class use falls
+away (4.03 → 3.65), so total use peaks at 4.29 and comes back down to 4.07. At the
+**mid** budget (c = 0.03) discrimination pays on both axes at once: high-class
+mortality falls 1.30 → 1.10 % while total colonoscopies fall 3.64 → 3.10, so at
+AUROC 0.85 the policy sits **below Fixed ×4 (1.30 % @ 3.24) on both axes**; at AUROC
+0.50 the same policy needs 3.64 colonoscopies merely to match Fixed ×4's mortality,
+so the entire gain is attributable to the risk information.
+
+**At a tight budget there is a valley of harm at intermediate discrimination** —
+the finding the coarse grid of Table 3 could not see. At c = 0.10 high-class
+mortality *rises* from 2.56 % under a flat prior to 2.83 % at AUROC 0.65 (a ≈ 2 SE
+deterioration), crosses back below the flat prior only near AUROC 0.775, and
+reaches 2.20 % at 0.85; at c = 0.06 the same dip appears (1.60 → 1.86 % at AUROC
+0.55–0.60) and has not fully recovered by 0.85 (1.70 %). The mechanism is visible
+in the allocation: going from AUROC 0.50 to 0.65 at c = 0.10 cuts low-class use
+0.82 → 0.44 but barely moves high-class use (0.96 → 0.77), so total volume
+collapses 0.86 → 0.52. Under a tight budget a weak classifier **de-escalates faster
+than it escalates**, and because it is weak a large share of the truly high-risk sit
+in the de-escalated group. Only past AUROC ≈ 0.75 does the policy buy volume back
+for the people who need it (high-class use 0.77 → 1.49 while low-class use falls
+0.44 → 0.30). The practical reading is that where colonoscopy capacity is ample
+≈ 0.70 suffices, whereas where capacity is scarce — exactly where risk
+stratification is most attractive — a half-built classifier (AUROC 0.60–0.75) can
+leave the high-risk class **worse off than screening everyone uniformly**, and only
+a panel reaching ≳ 0.80 converts the budget saving into a mortality gain.
+
+**Table 5.** Track B: measured AUROC of each named panel and its outcome at
+c = 0.03 (n = 50,000, by true risk class). Each rung adds exactly one modality to
+the rung above it.
+
+| panel | added modality | measured AUROC | total colon. | colon. high / low | CRC mort. high-class % | CRC mort. overall % |
+|---|---|:--:|:--:|:--:|:--:|:--:|
+| P1 | family history alone | 0.604 | 3.58 | 4.28 / 3.35 | 1.30 | 0.78 |
+| P2 | + prior-adenoma history *(today's clinical baseline)* | 0.670 | 3.18 | 4.22 / 2.84 | 1.25 | 0.79 |
+| P3 | + lifestyle/environmental E-score | 0.702 | 3.32 | 4.33 / 2.98 | 1.21 | 0.79 |
+| P4 | + PRS, current generation (~140 loci) | 0.739 | 3.36 | 4.44 / 3.01 | 1.17 | 0.74 |
+| P5 | PRS → genome-wide / multi-ancestry | 0.765 | 3.32 | 4.50 / 2.93 | 1.25 | 0.78 |
+| P6 | + faecal microbiome signature | 0.775 | 3.29 | 4.53 / 2.89 | 1.18 | 0.76 |
+| P7 | + quantitative faecal haemoglobin | 0.803 | 3.23 | 4.61 / 2.78 | 1.18 | 0.76 |
+| P8 | + multi-target stool DNA/RNA | 0.826 | 3.17 | 4.67 / 2.67 | 1.19 | 0.78 |
+| P9 | + blood methylated cfDNA score | **0.846** | 3.11 | 4.73 / 2.57 | **1.02** | 0.72 |
+
+**Today's clinical baseline reaches only AUROC 0.670**, and no single addition moves
+it by more than ≈ 0.07: reaching 0.85 needs the whole stack — a lifestyle score, a
+next-generation PRS, and at least two of the emerging assays used as *risk
+stratifiers* rather than as yes/no tests. Because the markers are conditionally
+independent their discriminabilities combine as `d² = Σ dᵢ²`, so the marginal AUROC
+gain per added modality shrinks (+0.066, +0.032, +0.037, +0.026, +0.010, +0.028,
++0.023, +0.020); 0.85 is a ceiling approached with diminishing returns rather than a
+waypoint. The panels land on the Track-A curve — P9 at AUROC 0.846 gives 1.02 % vs
+Track A's 1.10 % at 0.85, within ≈ 1 SE — so at this budget the abstract knob is a
+fair summary of a real combination.
+
+**Two classifiers with the same AUROC are not interchangeable under a tight
+budget**, however: the *shape* of the induced risk distribution matters as much as
+its discrimination. At c = 0.10 the family-history-only panel (AUROC 0.604) yields
+0.16 colonoscopies per person and 3.28 % high-class mortality, against 0.58 and
+2.82 % for a Gaussian score of the same AUROC. Family history alone gives a
+two-point posterior in which the 85 % who are family-history-negative sit *below*
+the population prior, and a tight budget pushes essentially all of them to zero
+screening; a continuous score of equal AUROC spreads people out, so far fewer fall
+under the screen-worthy threshold. A pure AUROC target therefore under-specifies a
+risk-stratified programme. Consistently, the tight-budget panel ladder is where the
+added tests pay most, precisely because they convert the coarse posterior into a
+continuous one: at c = 0.10 high-class mortality falls 3.28 (P1) → 3.10 (P2) → 2.86
+(P3) → 2.65 (P4) → 2.50 (P5) → 2.39 (P7) → 2.40 % (P9), against 2.56 % under a flat
+prior and 2.84 % @ 0.89 colonoscopies for Fixed ×1 — the full panel reaching 2.40 %
+at **0.59** colonoscopies per person, a third fewer than Fixed ×1.
+
+Two caveats attach to these numbers. First, the target label is CMOST's *latent
+lifelong adenoma-risk class*, not prevalent neoplasia; published discrimination
+figures for PRS, stool DNA and cfDNA assays mostly describe *detection* of existing
+lesions, an easier label. The per-marker strengths in `risk_panels.py` are
+deliberately conservative **scenario anchors** for risk-class discrimination, not
+reproductions of reported assay statistics — the scientific content is the sweep,
+and the panels merely locate plausible, nameable points on it. Naive-Bayes
+combination also ignores correlation between markers, which if anything makes the
+panel AUROCs optimistic and so strengthens the "0.85 is a ceiling" reading. Second,
+these arms were re-run on the current solver (the cost-based alpha-vector caches
+behind Table 3 had gone stale against the model's present state axis and are
+regenerated here), so absolute percentages differ slightly from Table 3 — e.g.
+Fixed ×4 gives 1.30 % here vs 1.38 % there — while the qualitative ordering is
+unchanged.
+
 
 ---
 
@@ -524,7 +662,21 @@ benefiting the non-adherent subgroup most) and, once given an **observable basel
 risk factor plus a cost-based budget**, in **risk-targeting** — where a polygenic
 risk score (AUC ≥ 0.8) lets it cut high-risk-class CRC mortality below any fixed
 schedule at lower total colonoscopy use, while family history alone (AUC ≈ 0.67) buys
-only efficiency. At matched adherence and a hard per-person budget, by contrast, its
+only efficiency. §3.5 turns that observation into a design requirement and a warning.
+Swept finely to a reachable ceiling of 0.85, the discrimination needed depends on
+colonoscopy capacity: ≈ 0.70 suffices where capacity is ample, whereas under a tight
+budget a half-built classifier (AUROC 0.60–0.75) *raises* high-risk-class mortality
+above uniform screening — a weak score de-escalates faster than it escalates, and the
+truly high-risk are over-represented in the group it de-escalates — and only ≳ 0.80
+converts the saving into a mortality gain. Two classifiers of equal AUROC are
+moreover not interchangeable: family history alone induces a coarse two-point
+posterior that a tight budget pushes almost entirely to zero screening, so it
+de-escalates far more aggressively than a continuous score of the same AUROC. And
+reaching 0.80–0.85 *for the latent risk class* takes the whole stack — a lifestyle
+score, a next-generation PRS and at least two emerging assays used as risk
+stratifiers — with sharply diminishing marginal returns, since conditionally
+independent markers combine as `d² = Σ dᵢ²`. At matched adherence and a hard
+per-person budget, by contrast, its
 edge is limited to colonoscopy-sparing — the honest null that motivated these
 analyses. Further identifiable signal (continuous risk classes, observed adenoma
 number/size, which CMOST tracks) should extend this. Because the policy is derived on
