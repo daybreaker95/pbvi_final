@@ -38,7 +38,7 @@ colonoscopy; it is robust to imperfect adherence, and a model-structure
 ablation shows the dominance survives substantial misspecification.
 The manuscript written on these results is `paper/manuscript.md` (the
 earlier six-state version is kept as
-`paper/manuscript_v1_6state_superseded.md`). See also `docs/DP_PLAN.md`,
+`paper/archive/manuscript_v1_6state_superseded.md`). See also `docs/DP_PLAN.md`,
 `paper/dp_methods.md`, `paper/dp_results.md`, `results/dp/report_c6b.md`.
 
 ## 1. Clinical state discretization

@@ -4,7 +4,7 @@
 `results/dp/` (`report_c6b.md`, `eval_headline_c6b_n1000000.json`,
 `eval_adherence_c6b_n200000.json`); pipeline in `dp/` (see `docs/DP_PLAN.md`).
 The earlier six-state / QALY version of this analysis is preserved as
-`paper/manuscript_v1_6state_superseded.md` and is superseded by this one.*
+`paper/archive/manuscript_v1_6state_superseded.md` and is superseded by this one.*
 
 ---
 
