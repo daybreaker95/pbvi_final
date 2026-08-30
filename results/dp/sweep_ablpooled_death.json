@@ -1,0 +1,36 @@
+{
+ "kernels": "C:\\Users\\daybr\\Git_Works\\pbvi_final\\.claude\\worktrees\\colonoscopy-policy-optimization-ecf7f0\\results\\dp\\kernels_abl_pooled.npz",
+ "objective": "death",
+ "rows": [
+  {
+   "obj": "death",
+   "lam": 0.001561,
+   "sex": 1,
+   "path": "C:\\Users\\daybr\\Git_Works\\pbvi_final\\.claude\\worktrees\\colonoscopy-policy-optimization-ecf7f0\\results\\dp\\policies\\ablpooled_death_lam0.001561_sex1.npz",
+   "death": 0.008790276929851305,
+   "inc": 0.023833751766510158,
+   "comp": 4.21731035995355e-05,
+   "ly": 37.39615884250122,
+   "colos": 2.24663937840483,
+   "objective": -0.01229728099954124,
+   "n_nodes_max": 266551,
+   "gap": 0.006342991755580851,
+   "solve_sec": 61.80876874923706
+  },
+  {
+   "obj": "death",
+   "lam": 0.001561,
+   "sex": 2,
+   "path": "C:\\Users\\daybr\\Git_Works\\pbvi_final\\.claude\\worktrees\\colonoscopy-policy-optimization-ecf7f0\\results\\dp\\policies\\ablpooled_death_lam0.001561_sex2.npz",
+   "death": 0.009482849982943438,
+   "inc": 0.02486045183214699,
+   "comp": 6.5681592781943e-05,
+   "ly": 41.6666825868774,
+   "colos": 2.092081345381649,
+   "objective": -0.012748588963084194,
+   "n_nodes_max": 20731,
+   "gap": 0.006520143985442421,
+   "solve_sec": 47.161486864089966
+  }
+ ]
+}

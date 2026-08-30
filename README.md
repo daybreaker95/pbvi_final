@@ -21,6 +21,26 @@ where that trade currently lands.
 
 ---
 
+## 0. NEW (2026-08): `dp/` — engine-grounded MOMDP pipeline (current)
+
+The `dp/` package supersedes the `pomdp/` + `tests/` pipeline for the
+per-colonoscopy-efficiency question. It estimates ALL model kernels directly
+from the real engine (`cmost_engine/NumberCrunching_policy.py`, instrumented
+with a quarterly recorder and a real-findings hook), conditions the natural
+history on the observed memory (years since last colonoscopy x last finding)
+and a 6-level latent risk class, solves the finite-horizon MOMDP by
+vectorised point-based value iteration with exact in-model policy
+evaluation, and evaluates everything back inside the real engine with
+population-paired seeds. Result (n = 1M/arm): the DP policy family strictly
+dominates fixed 10-y / 5-y schedules and the best fixed schedules from an
+exhaustive 2112-schedule search, on both CRC deaths and diagnoses per
+colonoscopy; it is robust to imperfect adherence, and a model-structure
+ablation shows the dominance survives substantial misspecification.
+The manuscript written on these results is `paper/manuscript.md` (the
+earlier six-state version is kept as
+`paper/manuscript_v1_6state_superseded.md`). See also `docs/DP_PLAN.md`,
+`paper/dp_methods.md`, `paper/dp_results.md`, `results/dp/report_c6b.md`.
+
 ## 1. Clinical state discretization
 
 The patient's whole-colon + cancer status is discretized into **9 states**
