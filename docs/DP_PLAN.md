@@ -145,3 +145,109 @@ excluded from git for size).
     2.67 measured from the shared fixed/no-score corner and 3.04 measured
     with the other ingredient present. Now "about three times", in §3.6 and
     in the abstract.
+
+## Verification-driven experiments (2026-09-04)
+
+An independent verification of `paper/manuscript.md` against the pipeline
+(numbers, implementation, theory, gaps) motivated the following additions;
+every item has a generating script and a results file under `results/dp/`.
+
+* **Screening-only comparators disclosed; surveillance-augmented comparator
+  added** (`dp/surveillance_arms.py`, hook `FixedSurveillanceHook` in
+  `dp/hooks.py`; `eval_surveillance_n1000000.{json,md}`). Every engine arm
+  runs with CMOST's built-in surveillance off, so the fixed schedules of the
+  paper are screening-only. The new arms `q10y_surv` / `q5y_surv` reproduce
+  CMOST13's `Polyp_Surveillance` block on the hook side (single annual
+  decision, surveillance exams counted as programme colonoscopies, clocks
+  reset by the engine's real findings) on top of CMOST's rolling screening
+  semantics, at n = 1 000 000 paired with the headline arms; an adaptive
+  policy solved at a price matched to the 10-y + surveillance volume
+  (`c6bhi2`, lambda 0.001189, cap 1500) is deployed for a paired
+  matched-volume contrast. Manuscript: section 2.6, section 3.3, Table 5b.
+* **Deployment fallbacks counted** (`BeliefPolicyHook.counters()`,
+  `Policy.n_fallback`; written to every chunk summary as `hook_counters`).
+* **Solver robustness and belief-set coverage** (`dp/robustness.py`;
+  `robustness_solver.{json,md}`, `eval_robustness_n200000.json`): the
+  headline price re-solved with rollout seeds 1 and 2 and with reference
+  propensities 0.06 and 0.25 (cap 1500), plus a same-seed re-solve
+  (determinism check) that also computes `PBVISolver.density_diagnostic`
+  -- reach-weighted L1 distance from the policy's reachable beliefs and
+  their one-step deviations to the final belief sets, by age. All variants
+  deployed in the engine on the headline arm's first four chunk seeds.
+* **FIB optimality gaps** for every policy family and the cap 600 -> 1500
+  sensitivity of both bounds (`dp/gap_table.py`, `fib_gaps.{json,md}`).
+* **Kernel back-off usage** weighted by the headline policy's occupancy,
+  own-cell sample sizes of the tau >= 13 cells, tau composition of their
+  person-years (`dp/kernel_support.py`, `kernel_support.{json,md}`;
+  `dp/estimate_kernels.py` now writes `tau_rowcounts`).
+* **tau-support sensitivity** (`dp/estimate_kernels.py --tau-max 20`,
+  `dp/tau_sensitivity.py`; `kernels_c6b_tau20.npz`, `tau_sensitivity.{json,md}`,
+  `eval_tau_sensitivity_n200000.json`): WAIT person-years at tau > 20
+  excluded, headline price re-solved, policy deployed. Re-estimating the
+  paper's kernels with the current code reproduces `kernels_c6b.npz`
+  bit-for-bit (`kernels_c6b_re.npz`).
+* **Generating scripts for the engine tables** with t(19) intervals,
+  person-level paired SEs and Holm-adjusted p-values
+  (`dp/paired_tables.py`, `paired_tables.{json,md}`); one population
+  definition (alive and undiagnosed at the age-40 decision snapshot,
+  n = 965 258) now used for Tables 1, 2, 3 and 6 (`dp/ablate.py`
+  `engine_reference` updated accordingly).
+* **Engine instrumentation regression test**
+  (`tests/test_engine_hook_regression.py`): `NumberCrunching_policy` with
+  no hook, with and without recorders, is bit-identical to
+  `NumberCrunching_100000` on the same seed.
+* **Manifest** of the gitignored engine output and policy files
+  (`dp/manifest.py`, `results/dp/manifest.json`).
+* The engine cache lives in the worktree
+  `.claude/worktrees/colonoscopy-policy-optimization-ecf7f0/results/dp/`;
+  `results/dp/runs` and `results/dp/policies` in the main checkout are
+  directory junctions to it.
+
+Commands (from the repository root; engine workers were capped at 4 because
+other jobs shared the machine):
+
+    python -m dp.surveillance_arms --run --n 1000000 --workers 4 && python -m dp.surveillance_arms --analyse --n 1000000
+    python -m dp.robustness --solve --workers 2 && python -m dp.robustness --deploy --n 200000 --workers 4 && python -m dp.robustness --report --n 200000
+    python -m dp.gap_table
+    python -m dp.kernel_support
+    python -m dp.estimate_kernels --tag c6b_tau20 --tau-max 20 --cuts 0.5 0.8 0.95 0.965 0.98 --screen-runs results/dp/runs/screen_random_q,results/dp/runs/screen_random_q2
+    python -m dp.tau_sensitivity --solve --workers 2 && python -m dp.tau_sensitivity --deploy --n 200000 --workers 4 && python -m dp.tau_sensitivity --report --n 200000
+    python -m dp.sweep --kernels results/dp/kernels_c6b.npz --objective death --lams 0.001189 --tag c6bhi2 --cap 1500 --rounds 4 --rollouts 300 --workers 2
+    python -m dp.paired_tables
+    python -m dp.ablate
+    python tests/test_engine_hook_regression.py
+    python -m dp.manifest
+
+Findings (details in the results files named above and in the manuscript):
+
+* 10-y + CMOST surveillance: 2.946 colos/person (0.574 surveillance),
+  879.8 CRC deaths /100k -- 20 +- 12 fewer than the adaptive lambda 0.001561
+  policy but with 29 % more colonoscopies; the adaptive policy solved for its
+  volume (lambda 0.001189, 2.874 colos) has 62 +- 12 fewer deaths at a similar
+  number of diagnoses (+18 +- 17). 5-y + surveillance: 5.143 colos, 740.2
+  deaths, 72 +- 11 more than the adaptive incidence-objective policy at the
+  same volume (5.149). The surveillance programme is statistically
+  indistinguishable from the paper's three-tier rule (+13 +- 13, +0.06 colos).
+* FIB gap 57 % of the objective at the headline price (~700 deaths /100k in
+  death-equivalents vs an in-model adaptive-minus-best-fixed advantage of
+  ~90); cap 600 -> 1500 moves the lower bound by ~1e-6, the FIB bound by 0.
+  Same-seed re-solve is bit-identical; belief-set coverage of one-step
+  deviations: mean L1 0.007 / 0.004 (m/f), 93 / 96 % of mass within 0.01.
+* Rollout seeds 1-2 and reference propensities 0.06 / 0.25: objectives within
+  3e-7 of the headline; policy paths identical except one-year shifts of the
+  exams after >= 3 adenomas (the "re-examine after one year" feature is a
+  near-tie, not a robust prediction). Engine at 200k: 884.5-933.0 deaths
+  /100k vs 889.5; the seed-1 variant extended to 1M: 903.8 +- 7.4, paired
+  +4.0 +- 12.0 vs the headline arm, -128.3 +- 11.3 vs q10y.
+* Deployment counters (6.84 M decisions): 0 fallbacks, 0 impossible
+  observations, 0 low-probability updates; re-deployed headline arm identical
+  to the cached one.
+* Kernel support: 96.4 % of decision-age WAIT occupancy on own-cell rows at
+  the exact age; repeat colonoscopies at tau 1-3 are the least-supported
+  rows (4 % of colonoscopies); the tau >= 13 cell contains only tau 13-20
+  person-years at decision ages. tau > 20 excluded: engine 887.5 (16.3) vs
+  889.5 (paired -2 +- 25).
+* Population definition unified (age-40 decision snapshot, n = 965 258):
+  Table 1 errors 0.5 / 1.7 / 5.3 % (deaths), Table 2 engine row
+  45.6 / 41.6 / 59.3 / 52.3 %.
+

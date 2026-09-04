@@ -73,6 +73,11 @@ def build_hook(arm: dict, p: dict, seed: int, n: int):
         return H.BandFixedScheduleHook(arm['band_ages'], band, n,
                                        sex=np.asarray(p['gender_arr']).astype(int),
                                        band_ages_female=arm.get('band_ages_female'))
+    if kind == 'fixed_surv':
+        return H.FixedSurveillanceHook(n, mode=arm.get('mode', 'rolling'), start=arm.get('start', 50),
+                                       end=arm.get('end', 70), interval=arm.get('interval', 10),
+                                       ages=arm.get('ages', ()), min_gap=arm.get('min_gap', 1),
+                                       age_max=arm.get('age_max', 80))
     if kind == 'rule':
         return H.FindingRuleHook(n, start=arm.get('start', 52), intervals=tuple(arm.get('intervals', (10, 5, 3, 3))),
                                  age_max=arm.get('age_max', 80))
@@ -173,6 +178,8 @@ def run_chunk(job: dict) -> str:
         total_cost=float(Money['AllCost'].sum()),
         elapsed_sec=time.time() - t0,
     )
+    if hasattr(hook, 'counters'):
+        summary['hook_counters'] = hook.counters()
     save = dict(
         summary=json.dumps(summary),
         crc_death=crc_death_40, comp_death=comp_death_40, diagnosed=diagnosed,
@@ -193,6 +200,8 @@ def run_chunk(job: dict) -> str:
             save['log_' + k] = v
     if hasattr(hook, 'n_screen'):
         save['hook_n_screen'] = np.asarray(hook.n_screen)
+    if hasattr(hook, 'n_surv'):
+        save['hook_n_surv'] = np.asarray(hook.n_surv)
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     tmp = out_path + '.tmp.npz'
     np.savez_compressed(tmp, **save)

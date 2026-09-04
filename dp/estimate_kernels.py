@@ -44,6 +44,12 @@ NT_W = NC + NX                   # WAIT targets: 11 clinical + 6 exits
 NT_K = NO4 * NC + NX             # SCREEN targets: (obs, post) + exits
 MIN_ROW_W = 150
 MIN_ROW_K = 150
+# Sensitivity option: WAIT person-years with tau > TAU_MAX are excluded from
+# the estimation, so that the open-ended top tau group (13+) is estimated only
+# from person-years inside the randomised design's interval support
+# (intervals are 1..20 years) rather than from persons whose screening simply
+# stopped (dp.tau_sensitivity). None = no exclusion (the paper's kernels).
+TAU_MAX = None
 
 _TO_CODE = np.where(MAP18_TO_CLIN >= 0, MAP18_TO_CLIN, NC + MAP18_TO_EXIT).astype(np.int16)  # 18 -> 0..16
 
@@ -75,7 +81,7 @@ def _memory_per_year(n, log_z, log_y, log_obs_ol, log_exit):
     return tau, ol, screened
 
 
-def accumulate(paths, thr, n_class, with_logs, verbose=True):
+def accumulate(paths, thr, n_class, with_logs, verbose=True, tau_hist=None):
     W = np.zeros((2, n_class, N_MEM, NY, NC, NT_W), dtype=np.int64)
     Kc = np.zeros((2, n_class, N_MEM, NB, NC, NT_K), dtype=np.int64)
     occ40 = np.zeros((2, n_class, NC), dtype=np.int64)
@@ -137,11 +143,18 @@ def accumulate(paths, thr, n_class, with_logs, verbose=True):
             ol = np.zeros((NY, n), dtype=np.int8)
             pre18 = None
         mem = mem_index(tau, ol)                                   # (NY, n)
+        tau_excl = (tau > TAU_MAX) if TAU_MAX is not None else None
         # ---- WAIT kernel rows (annual windows)
         for iy, y in enumerate(range(Y0, Y1 + 1)):
             qi0 = (y - 1) * 4 + 1
             frm = MAP18_TO_CLIN[qr[qi0]]
             valid = frm >= 0
+            if tau_hist is not None and valid.any():
+                # diagnostic: WAIT rows by exact tau (index 0 = never, k+1 = tau k, capped at 60)
+                tv = np.minimum(tau[iy][valid].astype(np.int64) + 1, tau_hist.shape[1] - 1)
+                tau_hist[iy] += np.bincount(tv, minlength=tau_hist.shape[1])
+            if tau_excl is not None:
+                valid = valid & ~tau_excl[iy]
             if not valid.any():
                 continue
             seg = qr[qi0 + 1:qi0 + 5].copy()                         # (4, n) following snapshots
@@ -313,7 +326,11 @@ def main():
     ap.add_argument('--cuts', type=float, nargs='*', default=list(DEFAULT_CLASS_CUTS))
     ap.add_argument('--tag', default=None)
     ap.add_argument('--max-chunks', type=int, default=None)
+    ap.add_argument('--tau-max', type=int, default=None,
+                    help='exclude WAIT person-years with tau > this from the estimation (sensitivity)')
     a = ap.parse_args()
+    global TAU_MAX
+    TAU_MAX = a.tau_max
     cuts = tuple(a.cuts); n_class = len(cuts) + 1
     tag = a.tag or f'c{n_class}'
     thr = risk_thresholds(load_settings_pool(), cuts) if cuts else np.zeros(0)
@@ -322,8 +339,9 @@ def main():
     if a.max_chunks:
         nh_paths = nh_paths[:a.max_chunks]; sc_paths = sc_paths[:a.max_chunks]
     print(f'classes={n_class} thr={thr}; NH chunks={len(nh_paths)} screen chunks={len(sc_paths)}', flush=True)
-    W1, K1, occ40, dx1, n1 = accumulate(nh_paths, thr, n_class, with_logs=False)
-    W2, K2, _, dx2, n2 = accumulate(sc_paths, thr, n_class, with_logs=True)
+    tau_hist = np.zeros((NY, 62), dtype=np.int64)
+    W1, K1, occ40, dx1, n1 = accumulate(nh_paths, thr, n_class, with_logs=False, tau_hist=tau_hist)
+    W2, K2, _, dx2, n2 = accumulate(sc_paths, thr, n_class, with_logs=True, tau_hist=tau_hist)
     W = W1 + W2; Kc = K1 + K2; dx = dx1 + dx2
     Tw, Ew, K, X, fw, fk = finalize(W, Kc)
     b0 = occ40.reshape(2, n_class * NC).astype(float); b0 /= b0.sum(axis=1, keepdims=True)
@@ -332,7 +350,8 @@ def main():
     np.savez_compressed(out, Tw=Tw, Ew=Ew, K=K, X=X, b0=b0, thr=thr, cuts=np.array(cuts), n_class=n_class, nc=NC,
                         y0=Y0, y1=Y1, bands=np.array(BANDS), Vexit_death=Vd, Vexit_ly=Vl,
                         n_nh=n1, n_screen=n2, W_rowcounts=W.sum(axis=-1), K_rowcounts=Kc.sum(axis=-1),
-                        W_level=fw, K_level=fk)
+                        W_level=fw, K_level=fk, tau_rowcounts=tau_hist,
+                        tau_max=(-1 if TAU_MAX is None else int(TAU_MAX)))
     print('saved', out)
     # diagnostics
     rc = W.sum(axis=-1)

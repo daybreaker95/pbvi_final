@@ -101,17 +101,33 @@ def estimate_variant(name, nh_paths, sc_paths, force=False):
 
 
 def engine_reference():
-    """Engine outcomes on the model's own population (alive and undiagnosed at
-    the age-40 decision), per 100 000."""
+    """Engine outcomes on the model's own population -- persons alive and
+    undiagnosed at the age-40 decision epoch (the start of the second quarter
+    of age 40, the snapshot from which the initial belief is estimated) -- per
+    100 000. The mask is read from the never-screened quarterly cohort, whose
+    first chunks share the headline arms' seeds (identical persons; no policy
+    colonoscopy precedes age 40), so it transfers person-by-person to every
+    arm. Falls back to the per-person arrays (death_year >= 41 and no diagnosis
+    before 41) for chunks without a quarterly recording."""
+    from .common import MAP18_TO_CLIN
+    masks = {}
+    for p in sorted(glob.glob(os.path.join(RUNS, 'nh_quarterly', '*.npz'))):
+        z = np.load(p, allow_pickle=True)
+        masks[json.loads(str(z['summary']))['seed']] = MAP18_TO_CLIN[z['qr'][157]] >= 0
     ref = {}
     for nm, tag in (('none', 'none'), ('q10y', 'q10y'), ('q5y', 'q5y')):
         N = D = I = C = 0
         for p in sorted(glob.glob(os.path.join(RUNS, tag, '*.npz'))):
             d = np.load(p, allow_pickle=True)
-            m = (d['death_year'] >= 41) & ((d['dx_year'] == 0) | (d['dx_year'] > 40))
+            seed = json.loads(str(d['summary']))['seed']
+            if seed in masks:
+                m = masks[seed]
+            else:
+                m = (d['death_year'] >= 41) & ((d['dx_year'] == 0) | (d['dx_year'] > 40))
             N += m.sum(); D += d['crc_death'][m].sum(); I += d['diagnosed'][m].sum()
             C += d['n_policy_colo'][m].sum()
-        ref[nm] = dict(death=D / N * 1e5, inc=I / N * 1e5, colos=C / N, n=int(N))
+        ref[nm] = dict(death=D / N * 1e5, inc=I / N * 1e5, colos=C / N, n=int(N),
+                       mask='age-40 decision snapshot' if masks else 'per-person arrays')
     return ref
 
 

@@ -20,3 +20,5 @@ results/dp/kernels_abl_*.npz
 # score-scenario belief tables: deterministic output of
 # dp.run_riskscore.build_deployment, regenerable and ~1 MB each
 results/dp/score_tables/
+results/dp/kernels_c6b_re.npz
+results/dp/kernels_c6b_tau20.npz

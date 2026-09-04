@@ -40,6 +40,14 @@ The manuscript written on these results is `paper/manuscript.md` (the
 earlier six-state version is kept as
 `paper/archive/manuscript_v1_6state_superseded.md`). See also `docs/DP_PLAN.md`,
 `paper/dp_methods.md`, `paper/dp_results.md`, `results/dp/report_c6b.md`.
+A verification pass (2026-09-04) added a surveillance-augmented fixed
+comparator (CMOST's own post-polypectomy rule, `dp/surveillance_arms.py`),
+solver-robustness and belief-set-coverage diagnostics (`dp/robustness.py`),
+FIB-gap and kernel-support reports (`dp/gap_table.py`, `dp/kernel_support.py`),
+a tau-support sensitivity (`dp/tau_sensitivity.py`), generating scripts for
+every engine table (`dp/paired_tables.py`) and an engine-instrumentation
+regression test (`tests/test_engine_hook_regression.py`); see the last
+section of `docs/DP_PLAN.md`.
 
 ## 1. Clinical state discretization
 

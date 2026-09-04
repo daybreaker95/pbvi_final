@@ -48,20 +48,24 @@ all evaluations), instrumented with a quarter-resolved state recorder:
   quarterly snapshots so that within-year onset → diagnosis → death is never
   missed, stratified by sex × risk class × memory cell (τ group × last
   finding) × age. Two cohorts were pooled: 2 000 000 never-screened persons
-  and 1 000 000 persons screened on randomised schedules (first colonoscopy
+  and 2 000 000 persons screened on randomised schedules (first colonoscopy
   at a uniformly random age 40–75, subsequent intervals uniform on 1–20
-  years; 2 x 1 000 000 chunks), the latter supplying the post-colonoscopy
-  cells. Sparse cells back
-  off hierarchically (wider age window → pooled last finding → pooled τ →
-  pooled class → pooled sex; minimum 150 person-years).
-* **Colonoscopy (SCREEN) kernel.** From the randomised-schedule cohort's
-  decision log (≈3.5 million colonoscopies with the engine's true
+  years until age 80; two cohorts of 1 000 000 with distinct seeds), the
+  latter supplying the post-colonoscopy cells. τ groups for estimation:
+  {never, 0, 1, 2, 3, 4–5, 6–8, 9–12, 13+}. Sparse cells back off
+  hierarchically (wider age window ±0/1/2/4/8 years → pooled τ keeping the
+  finding → pooled finding keeping τ → all post-screen cells → all memory
+  cells → pooled class → pooled sex; minimum 150 person-years); the level
+  used for every row is stored (`W_level`, `K_level`) and reported by
+  `dp/kernel_support.py`.
+* **Colonoscopy (SCREEN) kernel.** From the randomised-schedule cohorts'
+  decision logs (4 520 648 colonoscopies with the engine's true
   pre-/post-procedure states), the joint probability of the observation
   (normal / 1–2 adenomas / ≥3 adenomas / advanced adenoma / cancer found /
   complication death) and of the post-polypectomy clinical state, given the
-  pre-procedure state, sex, class, memory cell and 5-year age band. This
-  kernel carries the engine's per-lesion detection, residual (missed) polyps
-  and reach.
+  pre-procedure state, sex, class, memory cell and 5-year age band (the
+  back-off widens the band axis by ±0/1/2/4/8 bands). This kernel carries
+  the engine's per-lesion detection, residual (missed) polyps and reach.
 * **Exit values.** For each sex, diagnosis age and stage: the probability
   of eventual CRC death and the expected remaining life-years, from the
   same cohorts.
@@ -90,13 +94,19 @@ search over fixed schedules (2 112 candidates) cheap.
 
 The MOMDP was solved by finite-horizon point-based value iteration: belief
 sets indexed by the observed key (age, τ, last finding) were generated as
-the closure of beliefs reachable from the initial belief (rounded-merge,
-capped per key by reach probability), a single backward sweep of point-based
-Bellman backups produced one α-vector per belief point and key, the
-policy's own exact reachable beliefs plus ε-greedy rollouts were added and
-the sweep repeated until the policy's exact in-model objective stopped
-improving. A fast-informed bound gives an upper bound. The resulting policy
-maps (age, τ, last finding, belief) to WAIT/SCREEN.
+the closure of beliefs reachable from the initial belief under a reference
+screening propensity of 0.12 (rounded-merge at 1e-4, capped per key at 600
+or 1500 points by reach probability), a single backward sweep of
+point-based Bellman backups produced one α-vector per belief point and key,
+the policy's own exact reachable beliefs plus 150/300 ε-greedy rollouts
+(ε = 0.1) were added and the sweep repeated until the policy's exact
+in-model objective stopped improving by more than 1e-7 in two consecutive
+rounds (budget 6/4/3 rounds). A fast-informed bound gives an upper bound;
+the gap is large (57 % of the objective at the headline price,
+`results/dp/fib_gaps.md`), so the reported policies are solved lower
+bounds, and the belief-set coverage and the sensitivity to the rollout seed
+and the reference propensity are reported instead (`dp/robustness.py`).
+The resulting policy maps (age, τ, last finding, belief) to WAIT/SCREEN.
 
 ## Evaluation in the engine
 
@@ -106,7 +116,11 @@ group, cancer detected, complication death) and a symptomatic-diagnosis
 flag, updates the belief with the model's kernels, and never re-screens a
 diagnosed patient. Fixed comparators (10-year 50/60/70; 5-year 50–75; and
 the best in-model fixed schedules at matched volume) use the same hook
-mechanism and the same no-re-screening rule. All arms are simulated on the
+mechanism and the same no-re-screening rule. All arms run with CMOST's
+built-in polyp and cancer surveillance switched off, so these comparators
+are screening-only; a 10-year (and 5-year) programme augmented with
+CMOST13's own post-polypectomy surveillance rule is evaluated separately
+(`dp/surveillance_arms.py`, hook `FixedSurveillanceHook`). All arms are simulated on the
 same chunk seeds (identical populations and random-number streams until
 the first colonoscopy), 1 000 000 persons per headline arm, 200 000 per
 λ-grid point; standard errors are computed across 50 000-person chunks.

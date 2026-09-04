@@ -65,17 +65,19 @@ Screening ages along canonical observation paths (male / female):
 | first colonoscopy | 49 | 58 |
 | all findings normal | 49, 69, 78 | 58, 73 |
 | adenoma (1–2) at first, then normal | 49, 58, 67, 75 | 58, 63, 73, 80 |
-| ≥3 adenomas at first, then normal | 49, 53, 61, 67, 75 | 58, 60, 65, 71, 76, 80 |
-| advanced adenoma at first, then normal | 49, 57, 67, 75 | 58, 63, 73, 80 |
+| ≥3 adenomas at first, then normal | 49, 50, 57, 64, 75 | 58, 59, 63, 69, 74, 79 |
+| advanced adenoma at first, then normal | 49, 52, 64, 75 | 58, 63, 73, 80 |
 | risk class known: lowest (50 %) | 49, 78 | 58, 72 |
 | risk class known: highest (2 %) | 49, 53, 61, 67, 73, 78, 80 | 58, 66, 73, 77, 79 |
 
 The policy reproduces — and quantitatively sharpens — the logic of
 post-polypectomy surveillance guidelines: a normal colonoscopy earns a long
 interval (~20 years, or exit from screening for the low-risk majority),
-1–2 small adenomas a ~9-year interval, ≥3 adenomas an early re-examination
-(3–4 years first, then ~6–8), advanced adenomas ~8 years, with all intervals
-shortening at higher ages and for men.
+1–2 small adenomas a ~9-year interval, ≥3 adenomas an immediate
+re-examination (one year, then 4–7), advanced adenomas ~3 years in men and
+5 in women, with all intervals shortening at higher ages and for men. (Paths
+of the headline cap-1500 latent-class policy; the observed-class variant
+differs slightly, e.g. 49, 53, 61, 67, 75 after ≥3 adenomas.)
 
 ## Headline confirmation (n = 1,000,000 per arm, paired chunk seeds)
 
@@ -293,3 +295,71 @@ on the model's own sex-specific prior), and 945.5 +- 13.8 at 2.023 in the
 engine against ~921 for the latent frontier interpolated at that volume.
 Belief conservation (sum_k w_k b_k = population prior) holds to <0.0011 on the
 14 deployment roots and to <0.0001 on the 2048-cell table, at every level.
+
+## Verification-driven additions (2026-09-04)
+
+Artefacts: `results/dp/eval_surveillance_n1000000.md`, `fib_gaps.md`,
+`kernel_support.md`, `robustness_solver.md`, `tau_sensitivity.md`,
+`paired_tables.md`; scripts in `dp/` of the same names.
+
+### Surveillance-augmented fixed comparators (engine, n = 1 000 000, paired)
+
+Every earlier arm runs with CMOST's built-in surveillance off. Adding
+CMOST13's own post-polypectomy rule (hook-side re-implementation,
+`FixedSurveillanceHook`) to rolling 10-yearly (50-70) and 5-yearly (50-75)
+screening:
+
+| arm | colos/person (screening + surveillance) | CRC deaths /100k | CRC dx /100k | deaths averted /1000 colos |
+|---|---|---|---|---|
+| 10-y + surveillance | 2.946 (2.372 + 0.574) | 879.8 (9.7) | 2350.1 (11.3) | 3.42 |
+| adaptive lambda 0.001189 (cap 1500), matched volume | 2.874 | 818.1 (6.8) | 2331.7 (15.3) | 3.72 |
+| 5-y + surveillance | 5.143 (4.415 + 0.728) | 740.2 (6.5) | 2126.3 (13.4) | 2.23 |
+| adaptive (inc objective) lambda 0.001724 | 5.149 | 668.4 (8.6) | 1977.6 (15.3) | 2.37 |
+
+Paired: 10-y + surveillance minus adaptive at matched volume +61.7 +- 12.4
+deaths (+18.4 +- 16.8 dx, +0.071 colos); minus the adaptive lambda 0.001561
+policy -20.0 +- 12.1 deaths for +0.657 colos; minus the three-tier rule
++13.3 +- 13.3 (+0.056 colos). 5-y + surveillance minus the adaptive
+incidence-objective policy at the same volume +71.8 +- 11.0 deaths, +148.7
++- 14.9 dx.
+
+### Optimality gaps and solver diagnostics
+
+FIB gap / |objective| = 57 % at lambda 0.001561 (about 700 deaths /100k in
+death-equivalents), 44-48 % at the other mortality prices, 33-46 % for the
+incidence objective; cap 600 -> 1500 moves the lower bound by ~1e-6 and the
+FIB bound not at all. Same-seed re-solve reproduces the headline objective
+exactly. Belief-set coverage (reach-weighted L1 to the nearest point):
+on-policy 1e-5; one-step deviations mean 0.007 (men) / 0.004 (women), 93 % /
+96 % of mass within 0.01. Seeds 1-2 and reference propensities 0.06 / 0.25:
+in-model objectives within 3e-7 of the headline; paths identical except
+one-year shifts of the exams after >= 3 adenomas; engine (200k, paired with
+the headline arm) 884.5-933.0 deaths /100k vs 889.5, all beating q10y by
+101-150. Deployment counters over 6.84 M decisions: 0 alpha-vector fallbacks,
+0 zero-probability observations, 0 updates with normaliser < 1e-6; the
+re-deployed headline arm is outcome-identical to the cached one.
+
+### Kernel support and tau sensitivity
+
+Under the headline policy, 96.4 % of WAIT-kernel occupancy at decision ages
+is on rows estimated in their own cell at the exact age (99.6 % within +-8
+years); SCREEN rows 88 % own cell at the exact band. Repeat colonoscopies at
+tau 1-3 (4 % of the policy's colonoscopies) are the least-supported rows
+(92-99 % of their mass on cells with < 150 own colonoscopies). The tau >= 13
+cell used by the policy is the normal-finding one (9 % of WAIT occupancy,
+6.2 M own person-years) and contains only tau 13-20 person-years at decision
+ages. Excluding tau > 20 person-years (0.8 % of all; no row changes below
+age 74): Table 1 predictions move <= 1.3 %, the re-solved policy differs
+only in the >= 3-adenoma exam timing, engine 887.5 (16.3) vs 889.5 (paired
+-2 +- 25).
+
+### Population definition and statistics
+
+Tables 1-3 use persons alive and undiagnosed at the age-40 decision snapshot
+(n = 965 258 of 1 000 000): engine none 1943.4 / 4628.3, q10y 1058.2 / 2703.2,
+q5y 791.7 / 2207.1 (model 1934.5 / 4641.5, 1040.5 / 2685.0, 750.0 / 2129.7).
+Table 5 death contrasts: t(19) 95 % CIs exclude zero (narrowest -62 to -22),
+person-level paired SEs 11.6-13.4 vs chunk-level 9.2-13.1, largest
+Holm-adjusted p = 7e-4. Engine instrumentation regression test: bit-identical
+to the un-instrumented port (n = 3000).
+

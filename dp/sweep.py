@@ -51,7 +51,8 @@ def _solve_one(job):
     pol = solve_policy(sex, kernels, weights=OBJECTIVES[objective], lam=lam, cap=cap, rounds=rounds,
                        rollouts=rollouts, verbose=False, class_known_roots=job.get('class_known_roots', False),
                        root_priors=job.get('root_priors'),
-                       root_beliefs=job.get('root_beliefs'), root_weights=job.get('root_weights'))
+                       root_beliefs=job.get('root_beliefs'), root_weights=job.get('root_weights'),
+                       p_ref=job.get('p_ref', 0.12), seed=job.get('seed', 0), density=job.get('density', False))
     pol.meta['solve_sec'] = time.time() - t0
     pol.save(out)
     return dict(obj=objective, lam=lam, sex=sex, path=out, **pol.meta['eval'], gap=pol.meta['gap'],
@@ -60,11 +61,12 @@ def _solve_one(job):
 
 def run_sweep(kernels, objective, lams=None, tag='c3', workers=4, cap=600, rounds=6, rollouts=150,
               class_known_roots=False, force=False, root_priors=None,
-              root_beliefs=None, root_weights=None):
+              root_beliefs=None, root_weights=None, p_ref=0.12, seed=0, density=False):
     lams = lams if lams is not None else DEFAULT_GRIDS[objective]
     jobs = [dict(objective=objective, lam=float(l), sex=s, kernels=kernels, tag=tag, cap=cap, rounds=rounds,
                  rollouts=rollouts, class_known_roots=class_known_roots, force=force,
-                 root_priors=root_priors, root_beliefs=root_beliefs, root_weights=root_weights)
+                 root_priors=root_priors, root_beliefs=root_beliefs, root_weights=root_weights,
+                 p_ref=p_ref, seed=seed, density=density)
             for l in lams for s in (1, 2)]
     res = []
     t0 = time.time()

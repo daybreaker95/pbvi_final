@@ -37,14 +37,20 @@ class Policy:
         # prior when None, otherwise a weighted set (e.g. the score bands)
         self.roots = roots
         self.root_weights = root_weights
+        # deployment diagnostics: how often best_action is asked at a key that
+        # has no alpha-vectors (silent WAIT fallback)
+        self.n_calls = 0
+        self.n_fallback = 0
 
     def best_action(self, y, tau, ol, b):
         y = int(y)
         if y > self.model.age_max or y < self.model.age_min:
             return WAIT
+        self.n_calls += 1
         key = (y,) + mem_key(tau, ol)
         A = self.alphas.get(key)
         if A is None or len(A) == 0:
+            self.n_fallback += 1
             return WAIT
         return int(self.acts[key][int(np.argmax(A @ b))])
 
@@ -106,6 +112,7 @@ class PBVISolver:
         self.cap = cap
         self.dec = round_decimals
         self.rng = np.random.default_rng(seed)
+        self.seed = seed
         self.p_ref = ref_screen_prob
         self.verbose = verbose
         self.roots = [model.initial_belief()] if init_beliefs is None else list(init_beliefs)
@@ -308,10 +315,97 @@ class PBVISolver:
         ubs = [max(float(b @ v) for v in UB[root].values()) for b in R]
         ub0 = float(np.dot(W, ubs))
         pol.meta.update(dict(objective=best[0], fib_upper=ub0, gap=ub0 - best[0], eval=best[2],
-                             fib_upper_by_root=ubs, history=self.history, cap=self.cap))
+                             fib_upper_by_root=ubs, history=self.history, cap=self.cap,
+                             solver=dict(p_ref=self.p_ref, seed=self.seed, round_decimals=self.dec,
+                                         rounds=rounds, rollouts=rollouts, eps=eps, tol=tol,
+                                         best_round=int(next(h['round'] for h in self.history
+                                                             if h['objective'] == best[0])))))
         if self.verbose:
             print(f'  done: obj={best[0]:.6f}  FIB ub={ub0:.6f}  gap={ub0 - best[0]:.6f}', flush=True)
         return pol
+
+    # -- belief-set coverage diagnostic -----------------------------------
+    def density_diagnostic(self, policy: 'Policy', prune=1e-6, chunk=400):
+        """How well the final belief sets B cover (i) the beliefs the policy
+        actually reaches and (ii) their one-step DEVIATIONS -- the successor
+        beliefs of the action the policy does not take, which the point-based
+        backup has to evaluate to rank the two actions. Distances are L1 to the
+        nearest point of B at the same observed key, weighted by reach
+        probability (times observation probability for deviations), by age.
+        A worst-case density bound (Pineau et al.) is not computable from a
+        weight-pruned reachable set; this weighted statistic is what governs
+        the objective error of the solved policy."""
+        m = self.m
+        R, W = self._roots_and_weights()
+        _, tree = policy_tree(m, policy.best_action_batch, collect=True, prune=prune, b0=R, weights=W)
+
+        def nn_l1(Q, B):
+            out = np.empty(len(Q))
+            Bf = np.asarray(B, np.float32)
+            for i in range(0, len(Q), chunk):
+                q = np.asarray(Q[i:i + chunk], np.float32)
+                out[i:i + chunk] = np.abs(q[:, None, :] - Bf[None, :, :]).sum(axis=2).min(axis=1)
+            return out
+
+        by_age = {}
+        blank = lambda: dict(w_on=[], d_on=[], w_dev=[], d_dev=[])
+        for key, (U, acts) in tree.items():
+            y = key[0]
+            mass = U.sum(axis=1)
+            Bn = U / mass[:, None]
+            rec = by_age.setdefault(y, blank())
+            Bk = self.B.get(key)
+            rec['w_on'].append(mass)
+            rec['d_on'].append(nn_l1(Bn, Bk) if Bk is not None and len(Bk) else np.full(len(Bn), 2.0))
+            if y >= m.age_max:
+                continue
+            for a in (WAIT, SCREEN):
+                sel = acts != a                      # rows at which `a` is the deviation
+                if not sel.any() or a not in m.M[key]:
+                    continue
+                Ua = U[sel]
+                for o, M in m.M[key][a].items():
+                    V = Ua @ M
+                    pm = V.sum(axis=1)
+                    ok = pm > prune
+                    if not ok.any():
+                        continue
+                    nk = (y + 1,) + m.succ[key][a][o]
+                    Bk2 = self.B.get(nk)
+                    Vn = V[ok] / pm[ok, None]
+                    rec2 = by_age.setdefault(y + 1, blank())
+                    rec2['w_dev'].append(pm[ok])
+                    rec2['d_dev'].append(nn_l1(Vn, Bk2) if Bk2 is not None and len(Bk2) else np.full(len(Vn), 2.0))
+
+        def summarise(w, d):
+            tot = float(w.sum())
+            order = np.argsort(d)
+            cw = np.cumsum(w[order]) / tot
+            return dict(mass=tot, mean=float((w * d).sum() / tot),
+                        p95=float(d[order][min(int(np.searchsorted(cw, 0.95)), len(d) - 1)]),
+                        max=float(d.max()),
+                        frac_le_001=float(w[d <= 0.01].sum() / tot), frac_le_005=float(w[d <= 0.05].sum() / tot),
+                        frac_le_010=float(w[d <= 0.10].sum() / tot))
+
+        rows = []
+        all_on = ([], []); all_dev = ([], [])
+        for y, rec in sorted(by_age.items()):
+            row = dict(age=int(y), n_points=int(sum(len(self.B[k]) for k in self._keys_at(y))),
+                       n_keys=len(self._keys_at(y)))
+            if rec['w_on']:
+                w = np.concatenate(rec['w_on']); d = np.concatenate(rec['d_on'])
+                row['on_policy'] = summarise(w, d); all_on[0].append(w); all_on[1].append(d)
+            if rec['w_dev']:
+                w = np.concatenate(rec['w_dev']); d = np.concatenate(rec['d_dev'])
+                row['deviation'] = summarise(w, d); all_dev[0].append(w); all_dev[1].append(d)
+            rows.append(row)
+        out = dict(prune=prune, by_age=rows,
+                   n_points_total=int(sum(len(b) for b in self.B.values())), n_keys=len(self.B))
+        if all_on[0]:
+            out['on_policy'] = summarise(np.concatenate(all_on[0]), np.concatenate(all_on[1]))
+        if all_dev[0]:
+            out['deviation'] = summarise(np.concatenate(all_dev[0]), np.concatenate(all_dev[1]))
+        return out
 
     def _log(self, r, ev, t0):
         self.history.append(dict(round=r, objective=ev['objective'], colos=ev['colos'], death=ev['death'],
@@ -325,10 +419,13 @@ class PBVISolver:
 
 def solve_policy(sex, kernels_npz, weights=None, lam=0.0, age_min=40, age_max=80, cap=2000, rounds=8,
                  rollouts=200, eps=0.1, seed=0, verbose=True, class_known_roots=False,
-                 root_priors=None, root_beliefs=None, root_weights=None):
+                 root_priors=None, root_beliefs=None, root_weights=None, p_ref=0.12, density=False):
     """root_priors: list of class-prior vectors to seed the belief set with,
     e.g. the per-score-band posteriors of a noisy baseline risk score. One
-    alpha-vector set serves every band, so a single solve per sex suffices."""
+    alpha-vector set serves every band, so a single solve per sex suffices.
+    p_ref: reference screening propensity used to build the initial reachable
+    closure; seed: rng seed of the epsilon-greedy rollouts; density: also
+    compute the belief-set coverage diagnostic (stored in meta['density'])."""
     m = ReducedPOMDP(sex, kernels_npz, age_min=age_min, age_max=age_max, weights=weights, lam=lam)
     roots = [m.initial_belief()]
     if class_known_roots:
@@ -341,5 +438,14 @@ def solve_policy(sex, kernels_npz, weights=None, lam=0.0, age_min=40, age_max=80
         # beliefs the policy is deployed from
         roots = [np.asarray(b, float) for b in root_beliefs]
     s = PBVISolver(m, cap=cap, seed=seed, init_beliefs=roots, verbose=verbose,
-                   root_weights=root_weights)
-    return s.solve(rounds=rounds, rollouts=rollouts, eps=eps)
+                   root_weights=root_weights, ref_screen_prob=p_ref)
+    pol = s.solve(rounds=rounds, rollouts=rollouts, eps=eps)
+    if density:
+        t0 = time.time()
+        pol.meta['density'] = s.density_diagnostic(pol)
+        if verbose:
+            d = pol.meta['density']
+            print(f"  density: on-policy mean L1 {d.get('on_policy', {}).get('mean', float('nan')):.4f}, "
+                  f"deviation mean {d.get('deviation', {}).get('mean', float('nan')):.4f} "
+                  f"p95 {d.get('deviation', {}).get('p95', float('nan')):.4f} ({time.time() - t0:.0f}s)", flush=True)
+    return pol

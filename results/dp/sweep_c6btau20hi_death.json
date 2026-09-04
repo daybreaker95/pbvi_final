@@ -1,0 +1,36 @@
+{
+ "kernels": "C:\\Users\\daybr\\Git_Works\\pbvi_final\\results\\dp\\kernels_c6b_tau20.npz",
+ "objective": "death",
+ "rows": [
+  {
+   "obj": "death",
+   "lam": 0.001561,
+   "sex": 1,
+   "path": "C:\\Users\\daybr\\Git_Works\\pbvi_final\\results\\dp\\policies\\c6btau20hi_death_lam0.001561_sex1.npz",
+   "death": 0.008203588683981803,
+   "inc": 0.023157519009683526,
+   "comp": 7.408005186758707e-05,
+   "ly": 37.41353301179024,
+   "colos": 2.64415804525093,
+   "objective": -0.012331119392618505,
+   "n_nodes_max": 289030,
+   "gap": 0.0070024714123778625,
+   "solve_sec": 1517.4990737438202
+  },
+  {
+   "obj": "death",
+   "lam": 0.001561,
+   "sex": 2,
+   "path": "C:\\Users\\daybr\\Git_Works\\pbvi_final\\results\\dp\\policies\\c6btau20hi_death_lam0.001561_sex2.npz",
+   "death": 0.009536690959639403,
+   "inc": 0.025036337675424063,
+   "comp": 6.841429301528857e-05,
+   "ly": 41.71887825789013,
+   "colos": 2.0884102332377177,
+   "objective": -0.012796699333723478,
+   "n_nodes_max": 76658,
+   "gap": 0.007281498189864758,
+   "solve_sec": 1452.5040709972382
+  }
+ ]
+}

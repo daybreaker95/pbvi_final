@@ -61,6 +61,23 @@ def frontier_figure(tag, n_head, n_grid, objectives):
             axes[1].plot([r['colos_per_person']], [r['incidence_per_100k']], '*', ms=14, color='C1')
     if any(k.endswith('_match_q10y') for k in src):
         axes[0].plot([], [], '*', ms=14, color='C1', label=f'DP policy at matched volume (engine n={n_head // 1000}k)')
+    surv = _load(os.path.join(RES, f'eval_surveillance_n{n_head}.json'))
+    if surv:
+        agg = surv['aggregate']
+        for k, mk, lab in (('q10y_surv', 'P', '10-y + CMOST surveillance (50-70, rolling)'),
+                           ('q5y_surv', 'X', '5-y + CMOST surveillance (50-75, rolling)')):
+            if k in agg:
+                r = agg[k]
+                axes[0].errorbar([r['colos_per_person']], [r['crc_death_per_100k']], yerr=[r['crc_death_se']],
+                                 fmt=mk, ms=10, color='C6', label=lab)
+                axes[1].errorbar([r['colos_per_person']], [r['incidence_per_100k']], yerr=[r['incidence_se']],
+                                 fmt=mk, ms=10, color='C6', label=lab)
+        for k, r in agg.items():
+            if k.startswith('dp_death_lam') and k.endswith('_surv'):
+                axes[0].plot([r['colos_per_person']], [r['crc_death_per_100k']], '*', ms=14, color='C1')
+                axes[1].plot([r['colos_per_person']], [r['incidence_per_100k']], '*', ms=14, color='C1')
+                axes[0].plot([], [], '*', ms=14, color='C1',
+                             label=f"adaptive DP policy at the surveillance programme's volume (n={n_head // 1000}k)")
     if fixed:
         rows = fixed['rows']
         # in-model fixed frontier as a faint reference
@@ -88,12 +105,21 @@ def per_colo_figure(tag, n_head):
     src = _load(os.path.join(RES, f'eval_headline_{tag}_n{n_head}.json')) or _load(os.path.join(RES, f'eval_baseline_{tag}_n{n_head}.json'))
     if not src:
         return None
+    src = dict(src)
+    surv = _load(os.path.join(RES, f'eval_surveillance_n{n_head}.json'))
+    if surv:
+        for k in ('q10y_surv', 'q5y_surv'):
+            if k in surv['aggregate']:
+                src[k] = surv['aggregate'][k]
+        for k, r in surv['aggregate'].items():
+            if k.startswith('dp_death_lam') and k.endswith('_surv'):
+                src[k] = r
     arms = [k for k in src if k != 'none']
     fig, axes = plt.subplots(1, 2, figsize=(11, 4.2))
     for ax, key, lab in ((axes[0], 'deaths_averted_per_1000_colos', 'CRC deaths averted per 1000 colonoscopies'),
                          (axes[1], 'cases_averted_per_1000_colos', 'CRC diagnoses averted per 1000 colonoscopies')):
         vals = [src[a].get(key, 0) for a in arms]
-        ax.barh(range(len(arms)), vals, color=['k' if a in ('q10y', 'q5y') else ('C3' if a.startswith('bestfixed') else 'C1') for a in arms])
+        ax.barh(range(len(arms)), vals, color=['k' if a in ('q10y', 'q5y') else ('C3' if a.startswith('bestfixed') else ('C6' if a.endswith('y_surv') else 'C1')) for a in arms])
         ax.set_yticks(range(len(arms))); ax.set_yticklabels(arms, fontsize=7)
         ax.set_xlabel(lab); ax.grid(alpha=0.3, axis='x')
     fig.tight_layout()

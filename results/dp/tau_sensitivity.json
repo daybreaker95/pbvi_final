@@ -1,0 +1,394 @@
+{
+ "lam": 0.001561,
+ "kernels": "C:\\Users\\daybr\\Git_Works\\pbvi_final\\results\\dp\\kernels_c6b_tau20.npz",
+ "kernel_diff": {
+  "max_dTw_ages_40_80": 0.07005675483936355,
+  "max_dTw_ages_81_99": 0.2350537674054113,
+  "max_dEw_ages_40_80": 0.04736642667677151,
+  "max_dEw_ages_81_99": 0.1460304766982096,
+  "rows_changed": 65387,
+  "rows_changed_ages_40_80": 4847,
+  "person_years_excluded": 1246834,
+  "person_years_total": 154854388
+ },
+ "table1_model": {
+  "none": {
+   "base_death": 1934.4842369464482,
+   "tau20_death": 1934.4876473039917,
+   "base_inc": 4641.462335525843,
+   "tau20_inc": 4641.4751508473355
+  },
+  "q10y": {
+   "base_death": 1040.4998373940582,
+   "tau20_death": 1054.2465022846038,
+   "base_inc": 2684.9615197357957,
+   "tau20_inc": 2707.2820112407235
+  },
+  "q5y": {
+   "base_death": 750.0025979302521,
+   "tau20_death": 757.3338421107844,
+   "base_inc": 2129.6590179263935,
+   "tau20_inc": 2142.157817296854
+  }
+ },
+ "in_model": {
+  "headline": {
+   "1": {
+    "objective": -0.012290776450847635,
+    "death": 0.00815655937670302,
+    "inc": 0.023065468635630193,
+    "colos": 2.648441431226535,
+    "gap": 0.006984401184950156,
+    "paths": {
+     "all_normal": [
+      49,
+      69,
+      78
+     ],
+     "adenoma_then_normal": [
+      49,
+      58,
+      67,
+      75
+     ],
+     "multi_then_normal": [
+      49,
+      50,
+      57,
+      64,
+      75
+     ],
+     "advad_then_normal": [
+      49,
+      52,
+      64,
+      75
+     ],
+     "adenoma_adenoma": [
+      49,
+      58,
+      67,
+      75
+     ],
+     "advad_advad": [
+      49,
+      52,
+      53,
+      61,
+      67,
+      75
+     ]
+    }
+   },
+   "2": {
+    "objective": -0.012715231846701725,
+    "death": 0.009453194277656328,
+    "inc": 0.02487824371635983,
+    "colos": 2.089710165948362,
+    "gap": 0.007228200015343727,
+    "paths": {
+     "all_normal": [
+      58,
+      73
+     ],
+     "adenoma_then_normal": [
+      58,
+      63,
+      73,
+      80
+     ],
+     "multi_then_normal": [
+      58,
+      59,
+      63,
+      69,
+      74,
+      79
+     ],
+     "advad_then_normal": [
+      58,
+      63,
+      73,
+      80
+     ],
+     "adenoma_adenoma": [
+      58,
+      63,
+      69,
+      76,
+      80
+     ],
+     "advad_advad": [
+      58,
+      63,
+      67,
+      71,
+      76,
+      80
+     ]
+    }
+   }
+  },
+  "tau20": {
+   "1": {
+    "objective": -0.012331119392618505,
+    "death": 0.008203588683981803,
+    "inc": 0.023157519009683526,
+    "colos": 2.64415804525093,
+    "gap": 0.0070024714123778625,
+    "paths": {
+     "all_normal": [
+      49,
+      69,
+      78
+     ],
+     "adenoma_then_normal": [
+      49,
+      58,
+      67,
+      75
+     ],
+     "multi_then_normal": [
+      49,
+      53,
+      61,
+      67,
+      75
+     ],
+     "advad_then_normal": [
+      49,
+      52,
+      64,
+      75
+     ],
+     "adenoma_adenoma": [
+      49,
+      58,
+      67,
+      75
+     ],
+     "advad_advad": [
+      49,
+      52,
+      53,
+      61,
+      67,
+      75
+     ]
+    }
+   },
+   "2": {
+    "objective": -0.012796699333723478,
+    "death": 0.009536690959639403,
+    "inc": 0.025036337675424063,
+    "colos": 2.0884102332377177,
+    "gap": 0.007281498189864758,
+    "paths": {
+     "all_normal": [
+      58,
+      73
+     ],
+     "adenoma_then_normal": [
+      58,
+      63,
+      73,
+      80
+     ],
+     "multi_then_normal": [
+      58,
+      59,
+      63,
+      70,
+      74,
+      79
+     ],
+     "advad_then_normal": [
+      58,
+      63,
+      73,
+      80
+     ],
+     "adenoma_adenoma": [
+      58,
+      63,
+      69,
+      76,
+      80
+     ],
+     "advad_advad": [
+      58,
+      63,
+      67,
+      71,
+      76,
+      80
+     ]
+    }
+   }
+  }
+ },
+ "pooled": {
+  "headline": {
+   "objective": -0.01250300414877468,
+   "death": 0.008804876827179675,
+   "inc": 0.02397185617599501,
+   "colos": 2.369075798587448,
+   "gap": 0.007106300600146942
+  },
+  "tau20": {
+   "objective": -0.012563909363170991,
+   "death": 0.008870139821810603,
+   "inc": 0.024096928342553794,
+   "colos": 2.366284139244324,
+   "gap": 0.0071419848011213104
+  }
+ },
+ "cross_evaluation": {
+  "policy headline on kernels base": {
+   "death": 0.008804876827179675,
+   "inc": 0.02397185617599501,
+   "colos": 2.369075798587448,
+   "objective": -0.01250300414877468
+  },
+  "policy headline on kernels tau20": {
+   "death": 0.008866266230901395,
+   "inc": 0.024079996220952807,
+   "colos": 2.369073142442967,
+   "objective": -0.012564389406254872
+  },
+  "policy tau20 on kernels base": {
+   "death": 0.008809788567604152,
+   "inc": 0.0239908416451423,
+   "colos": 2.3662836584615548,
+   "objective": -0.01250355735846265
+  },
+  "policy tau20 on kernels tau20": {
+   "death": 0.008870139821810603,
+   "inc": 0.024096928342553794,
+   "colos": 2.366284139244324,
+   "objective": -0.012563909363170991
+  }
+ },
+ "engine": {
+  "none": {
+   "n": 200000,
+   "n_chunks": 4,
+   "crc_death_per_100k": 1898.0,
+   "comp_death_per_100k": 0.0,
+   "incidence_per_100k": 4554.5,
+   "screen_detected_per_100k": 0.0,
+   "symptom_detected_per_100k": 4699.0,
+   "colos_per_person": 0.0,
+   "policy_colos_per_person": 0.0,
+   "total_colos_per_person": 0.04941,
+   "life_years_from40": 37.41363,
+   "cost_per_person": 2744.41362875,
+   "crc_death_se": 39.64845520319797,
+   "incidence_se": 27.13392710243027,
+   "colos_se": 0.0,
+   "life_years_se": 0.04138484464954131
+  },
+  "q10y": {
+   "n": 200000,
+   "n_chunks": 4,
+   "crc_death_per_100k": 1034.0,
+   "comp_death_per_100k": 7.499999999999999,
+   "incidence_per_100k": 2700.0,
+   "screen_detected_per_100k": 507.49999999999994,
+   "symptom_detected_per_100k": 2268.0,
+   "colos_per_person": 2.57746,
+   "policy_colos_per_person": 2.57746,
+   "total_colos_per_person": 2.601335,
+   "life_years_from40": 37.544505,
+   "cost_per_person": 4634.27641625,
+   "crc_death_se": 29.83286778035259,
+   "incidence_se": 27.349588662354687,
+   "colos_se": 0.001050174588659695,
+   "life_years_se": 0.028551335491240257,
+   "deaths_averted_per_100k": 864.0,
+   "cases_averted_per_100k": 1854.5,
+   "death_reduction_pct": 45.521601685985246,
+   "incidence_reduction_pct": 40.7179712372379,
+   "deaths_averted_per_1000_colos": 3.35213737555578,
+   "cases_averted_per_1000_colos": 7.1950680126946684,
+   "lyg_per_1000": 130.87500000000318,
+   "paired_death_diff_vs_none": -864.0,
+   "paired_death_diff_se": 58.497863208838666,
+   "paired_inc_diff_vs_none": -1854.5,
+   "paired_inc_diff_se": 30.037476591751208
+  },
+  "dp_death_lam0.001561_q10y": {
+   "n": 200000,
+   "n_chunks": 4,
+   "crc_death_per_100k": 889.5,
+   "comp_death_per_100k": 9.0,
+   "incidence_per_100k": 2460.0,
+   "screen_detected_per_100k": 607.0,
+   "symptom_detected_per_100k": 1932.4999999999998,
+   "colos_per_person": 2.28937,
+   "policy_colos_per_person": 2.28937,
+   "total_colos_per_person": 2.309845,
+   "life_years_from40": 37.515205,
+   "cost_per_person": 4243.47972375,
+   "crc_death_se": 19.737865470545,
+   "incidence_se": 45.40190891728379,
+   "colos_se": 0.004927788550658386,
+   "life_years_se": 0.032061741868880535,
+   "deaths_averted_per_100k": 1008.5,
+   "cases_averted_per_100k": 2094.5,
+   "death_reduction_pct": 53.134878819810325,
+   "incidence_reduction_pct": 45.987484905038976,
+   "deaths_averted_per_1000_colos": 4.405142025972212,
+   "cases_averted_per_1000_colos": 9.148805129795532,
+   "lyg_per_1000": 101.57500000000397,
+   "paired_death_diff_vs_none": -1008.5,
+   "paired_death_diff_se": 45.73383138698674,
+   "paired_inc_diff_vs_none": -2094.5,
+   "paired_inc_diff_se": 56.66495095441861
+  },
+  "tau20_lam0.001561": {
+   "n": 200000,
+   "n_chunks": 4,
+   "crc_death_per_100k": 887.4999999999999,
+   "comp_death_per_100k": 12.5,
+   "incidence_per_100k": 2462.0,
+   "screen_detected_per_100k": 625.5,
+   "symptom_detected_per_100k": 1922.5,
+   "colos_per_person": 2.28619,
+   "policy_colos_per_person": 2.28619,
+   "total_colos_per_person": 2.306495,
+   "life_years_from40": 37.52505,
+   "cost_per_person": 4225.734835,
+   "crc_death_se": 16.25576820700886,
+   "incidence_se": 42.91852746774987,
+   "colos_se": 0.0017819932659805132,
+   "life_years_se": 0.023006550516465732,
+   "deaths_averted_per_100k": 1010.5000000000001,
+   "cases_averted_per_100k": 2092.5,
+   "death_reduction_pct": 53.24025289778715,
+   "incidence_reduction_pct": 45.94357229114063,
+   "deaths_averted_per_1000_colos": 4.420017583840363,
+   "cases_averted_per_1000_colos": 9.152782577126136,
+   "lyg_per_1000": 111.42000000000252,
+   "paired_death_diff_vs_none": -1010.5,
+   "paired_death_diff_se": 31.212978070027216,
+   "paired_inc_diff_vs_none": -2092.5,
+   "paired_inc_diff_se": 54.20562701417635,
+   "paired_vs_headline_death": {
+    "mean": -2.0000000000000853,
+    "se": 24.87301080823683,
+    "n_chunks": 4
+   },
+   "paired_vs_headline_dx": {
+    "mean": 2.0,
+    "se": 24.725155880870265,
+    "n_chunks": 4
+   },
+   "paired_vs_headline_colos": {
+    "mean": -0.0031799999999999606,
+    "se": 0.003739037309254841,
+    "n_chunks": 4
+   }
+  }
+ }
+}

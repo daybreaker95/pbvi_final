@@ -228,6 +228,10 @@ class BeliefPolicyHook:
         self.n_screen = np.zeros(n, dtype=np.int16)
         self.n_missed = np.zeros(n, dtype=np.int16)
         self.n_impossible = 0
+        # deployment diagnostics (reported per arm; see counters())
+        self.n_decisions = 0          # decisions taken for undiagnosed persons
+        self.n_lowmass6 = 0           # belief updates whose normaliser fell below 1e-6
+        self.n_lowmass12 = 0          # ... below 1e-12 (observation nearly impossible in-model)
         self._cur = None
         self.log_z, self.log_y, self.log_o = [], [], []
 
@@ -238,6 +242,7 @@ class BeliefPolicyHook:
         if self.diagnosed[z]:
             return WAIT
         p = self.pol[self.sex_arr[z]]
+        self.n_decisions += 1
         a = int(p.best_action(y, int(self.tau[z]), int(self.ol[z]), self.belief[z]))
         if a == SCREEN and self.adherence < 1.0 and self.adh_rng.random() >= self.adherence:
             # no-show: no colonoscopy, no observation; the belief simply takes
@@ -265,12 +270,27 @@ class BeliefPolicyHook:
         M, (tau_n, ol_n) = m.step(y, int(self.tau[z]), int(self.ol[z]), a, o)
         bn = self.belief[z] @ M
         tot = bn.sum()
+        if tot < 1e-6:
+            self.n_lowmass6 += 1
+        if tot < 1e-12:
+            self.n_lowmass12 += 1
         if tot > 1e-300:
             self.belief[z] = bn / tot
         else:
             self.n_impossible += 1
         self.tau[z] = tau_n
         self.ol[z] = ol_n
+
+
+def _counters_of_belief_hook(h):
+    return dict(n_decisions=int(h.n_decisions),
+                n_fallback_wait=int(sum(getattr(p, 'n_fallback', 0) for p in h.pol.values())),
+                n_policy_calls=int(sum(getattr(p, 'n_calls', 0) for p in h.pol.values())),
+                n_impossible=int(h.n_impossible), n_lowmass6=int(h.n_lowmass6),
+                n_lowmass12=int(h.n_lowmass12), n_missed=int(np.asarray(h.n_missed).sum()))
+
+
+BeliefPolicyHook.counters = _counters_of_belief_hook
 
 
 class FindingRuleHook:
@@ -361,3 +381,103 @@ class BandFixedScheduleHook:
     def step_update(self, z, a, o, y):
         if o == O_EXIT:
             self.diagnosed[z] = True
+
+
+class FixedSurveillanceHook:
+    """A fixed screening programme PLUS CMOST's own post-polypectomy
+    surveillance rule, re-implemented on the hook side so that (i) every
+    colonoscopy is one annual decision (the engine's built-in surveillance
+    block would otherwise perform its own colonoscopy in the same year as the
+    hook's screening colonoscopy), (ii) surveillance colonoscopies are counted
+    as programme colonoscopies, and (iii) the findings at a surveillance exam
+    update the surveillance clock exactly as in the engine.
+
+    Surveillance rule = CMOST13's `Polyp_Surveillance` block
+    (cmost_engine/NumberCrunching_policy.py, "polyp and cancer surveillance"),
+    with Last_Polyp set by a removed early (stage 1-4) polyp and Last_AdvPolyp
+    by a removed advanced (stage 5-6) polyp or by >= 3 removed polyps of any
+    stage (Colonoscopy(): "3 polyps counts as an advanced polyp"):
+        y - Last_Polyp == 5      and y - Last_Colo >= 5                 -> surveil
+        5 < y - Last_Polyp <= 9  and y - Last_Colo >= 5                 -> surveil
+        y - Last_AdvPolyp == 3   and y - Last_Colo >= 3                 -> surveil
+        Last_AdvPolyp set, y - Last_AdvPolyp >= 5 and y - Last_Colo >= 5 -> surveil
+    Screening: mode 'rolling' = CMOST's screening semantics (a screening
+    colonoscopy whenever start <= y <= end and y - Last_Colo >= interval, so a
+    surveillance exam resets the screening clock); mode 'slots' keeps the fixed
+    ages as invitation slots, skipped only when a colonoscopy of any kind took
+    place within `min_gap` years. Diagnosed persons are never re-screened, as
+    in every other comparator. Decisions stop after `age_max`."""
+    wants_info = True
+    NEVER = -100
+
+    def __init__(self, n, mode='rolling', start=50, end=70, interval=10, ages=(), min_gap=1, age_max=80):
+        self.mode = mode
+        self.start, self.end, self.interval = int(start), int(end), int(interval)
+        self.ages = set(int(a) for a in ages)
+        self.min_gap = int(min_gap)
+        self.age_max = int(age_max)
+        self.diagnosed = np.zeros(n, dtype=bool)
+        self.last_colo = np.full(n, self.NEVER, dtype=np.int32)
+        self.last_polyp = np.full(n, self.NEVER, dtype=np.int32)
+        self.last_adv = np.full(n, self.NEVER, dtype=np.int32)
+        self.n_screen = np.zeros(n, dtype=np.int16)     # screening colonoscopies
+        self.n_surv = np.zeros(n, dtype=np.int16)       # surveillance colonoscopies
+        self._cur = None
+        self._kind = None
+        self.log_z, self.log_y, self.log_o, self.log_kind = [], [], [], []
+
+    def _surveillance_due(self, z, y):
+        lp, la, lc = int(self.last_polyp[z]), int(self.last_adv[z]), int(self.last_colo[z])
+        if (y - lp == 5) and (y - lc >= 5):
+            return True
+        if (5 < y - lp <= 9) and (y - lc >= 5):
+            return True
+        if (y - la == 3) and (y - lc >= 3):
+            return True
+        if la != self.NEVER and (y - la >= 5) and (y - lc >= 5):
+            return True
+        return False
+
+    def _screening_due(self, z, y):
+        lc = int(self.last_colo[z])
+        if self.mode == 'rolling':
+            return (self.start <= y <= self.end) and (y - lc >= self.interval)
+        return (y in self.ages) and (y - lc >= self.min_gap)
+
+    def decide_one(self, z, y, s_true=None):
+        self._cur = (z, y); self._kind = None
+        if s_true is not None and s_true in E_D:
+            self.diagnosed[z] = True
+        if self.diagnosed[z] or y > self.age_max:
+            return WAIT
+        if self._surveillance_due(z, y):
+            self._kind = 1; self.n_surv[z] += 1
+            return SCREEN
+        if self._screening_due(z, y):
+            self._kind = 0; self.n_screen[z] += 1
+            return SCREEN
+        return WAIT
+
+    def obs(self, a, s_true, info=None):
+        if a == SCREEN and info is not None:
+            z, y = self._cur
+            er, ar = int(info['early_removed']), int(info['adv_removed'])
+            if er > 0:
+                self.last_polyp[z] = y
+            if ar > 0 or er + ar > 2:
+                self.last_adv[z] = y
+            self.last_colo[z] = y
+        return info_to_obs(a, s_true, info)
+
+    def step_update(self, z, a, o, y):
+        if a == SCREEN:
+            self.log_z.append(z); self.log_y.append(y); self.log_o.append(o); self.log_kind.append(self._kind)
+        if o == O_EXIT:
+            self.diagnosed[z] = True
+
+    def log_arrays(self):
+        return dict(z=np.asarray(self.log_z, np.int32), y=np.asarray(self.log_y, np.int16),
+                    obs=np.asarray(self.log_o, np.int8), kind=np.asarray(self.log_kind, np.int8))
+
+    def counters(self):
+        return dict(n_screening_colos=int(self.n_screen.sum()), n_surveillance_colos=int(self.n_surv.sum()))
