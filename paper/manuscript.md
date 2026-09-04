@@ -2,7 +2,8 @@
 
 *Working manuscript. Figures in `paper/figures/dp_*.png`; numeric results in
 `results/dp/` (`report_c6b.md`, `eval_headline_c6b_n1000000.json`,
-`eval_adherence_c6b_n200000.json`, and the verification-driven artefacts
+`eval_adherence_c6b_n200000.json`, `report_riskscore_n200000.md`,
+`score_frontier.json`, and the verification-driven artefacts
 `paired_tables.md`, `eval_surveillance_n1000000.md`, `fib_gaps.md`,
 `kernel_support.md`, `robustness_solver.md`, `tau_sensitivity.md`); pipeline
 in `dp/` (see `docs/DP_PLAN.md`).
@@ -78,7 +79,7 @@ adaptivity proved nearly additive, with adaptivity worth about three times a
 realistic score. Under imperfect adherence the adaptive
 policy re-planned around no-shows without re-solving and held a 44–53 %
 mortality reduction at every attendance rate, whereas the fixed programme
-decayed from 45 % to 18 %. On life-years the adaptive and fixed schedules
+decayed from 46 % to 18 %. On life-years the adaptive and fixed schedules
 were statistically indistinguishable, and a life-year-objective sweep did
 not transfer its in-model advantage to the engine — an honest null we
 report alongside the positive findings.
@@ -99,10 +100,12 @@ Colorectal cancer is among the leading causes of cancer incidence and
 mortality in industrialised countries, and colonoscopy prevents it both by
 removing adenomatous precursors and by detecting cancer early. Guidelines
 therefore recommend colonoscopy at fixed intervals — typically every ten
-years from age 45 or 50 — and microsimulation models (MISCAN, CRC-SPIN,
-SimCRC, CRC-AIM and the open-source CMOST) are the standard instrument for
-choosing those intervals, because randomised trials cannot span the design
-space.
+years from age 45 or 50 (US Preventive Services Task Force 2021) — and
+microsimulation models (MISCAN, CRC-SPIN, SimCRC, CRC-AIM and the
+open-source CMOST; Rutter & Savarino 2010, Knudsen et al. 2021, and see
+Krijkamp et al. 2018 for the general method) are the standard instrument
+for choosing those intervals, because randomised trials cannot span the
+design space.
 
 Colonoscopy capacity, however, is finite, and each procedure carries cost,
 bowel preparation burden and a small risk of perforation or bleeding. The
@@ -125,9 +128,10 @@ true state is hidden, each colonoscopy is a noisy observation of it, and the
 optimal action depends on the belief the observations induce. POMDP
 formulations of cancer screening have been developed for breast cancer
 (Ayer et al. 2012) and for colonoscopy surveillance (Erenay et al. 2014),
-but they have generally been solved on abstract models calibrated to
-summary statistics rather than derived from — and validated back against —
-a full microsimulation.
+and the family is surveyed by Steimle & Denton (2017), but they have
+generally been solved on abstract models calibrated to summary statistics
+rather than derived from — and validated back against — a full
+microsimulation.
 
 We take the microsimulation itself as ground truth. Our contributions are:
 
@@ -140,18 +144,20 @@ We take the microsimulation itself as ground truth. Our contributions are:
    (§3.1).
 2. **A mixed-observability formulation with the right memory.** Conditioning
    on the observed pair (years since last colonoscopy, last finding), and on
-   a six-level latent risk class spanning CMOST's 23-fold risk gradient,
-   is what makes a Markov abstraction of CMOST accurate enough to optimise
-   against (§2.2, §3.1–3.2).
+   a six-level latent risk class spanning a 23-fold gradient in lifetime
+   CRC incidence, is what makes a Markov abstraction of CMOST accurate
+   enough to optimise against (§2.2, §3.1–3.2).
 3. **An engine-verified dominance result.** With population-paired random
    numbers and one million persons per arm, the adaptive policy prevents
    30 % more CRC deaths and 25 % more CRC diagnoses per colonoscopy than the
    uniform 10-year schedule, and also beats fixed schedules re-optimised
    inside the same simulator (§3.3).
 4. **Deployment-relevant extensions**: an explicit risk-targeting variant
-   when the risk class is observable (§3.5), robustness to imperfect
-   adherence without re-solving (§3.7), a transparent three-tier rule
-   distilled from the policy (§3.4), and an honest life-year null (§3.8).
+   when the risk class is observable (§3.5), a baseline risk score of
+   realistic discrimination that separates the value of information from
+   the value of adaptivity (§3.6), robustness to imperfect adherence
+   without re-solving (§3.7), a transparent three-tier rule distilled from
+   the policy (§3.4), and an honest life-year null (§3.8).
 
 ---
 
@@ -209,25 +215,9 @@ terminal for the decision process. Their remaining-lifetime consequences
 reward through estimated exit values, so the belief simplex has only the 66
 alive-and-undiagnosed dimensions.
 
-Two modelling choices deserve emphasis, because both were forced on us by
-diagnostic failures of simpler alternatives.
-
-**Keeping CMOST's six polyp stages.** The finer lesion axis is retained for
-a related but weaker reason, and its contribution is conditional (§3.3 shows
-that the policy's advantage over fixed scheduling survives every coarsening
-tested; what the coarsenings cost is the model's predictive accuracy): §3.1
-reports an ablation in which each abstraction is re-estimated from the
-*same* engine cohorts and asked to predict what the engine does under the
-guideline schedules. Pooling the six polyp stages into "early" and
-"advanced" — the discretisation of our earlier six-state analysis and of
-most published abstractions — turns out to be nearly harmless *provided the
-memory is kept*. The two coarsenings interact, however: without the memory,
-the stage-resolved model over-predicts the mortality reduction of 10-yearly
-screening by 8.9 percentage points while the pooled model under-predicts it
-by 8.0, so a memoryless abstraction is wrong not only by a large margin but
-with a sign that depends on the lesion axis. Six risk classes matter mainly
-at higher screening intensity, where one or three classes over-predict the
-5-yearly mortality reduction by 4.4 and 3.4 percentage points.
+Two modelling choices deserve emphasis. The first was forced on us by a
+diagnostic failure of the simpler alternative. The second is weaker and
+conditional, and we state below both what it buys and what it does not.
 
 **Conditioning the kernels on (τ, last finding).** The natural history of a
 person *after* a colonoscopy is not the natural history of the
@@ -246,12 +236,29 @@ most of which are backed-off estimates (§2.3). Because both τ and the last
 finding are known to any screening programme, conditioning on them buys
 this accuracy for free, without enlarging the belief space.
 
+**Keeping CMOST's six polyp stages.** The finer lesion axis is retained for
+a reason related to the one above but distinctly weaker, and its
+contribution is conditional (§3.3 shows that the policy's advantage over
+fixed scheduling survives every coarsening tested; what the coarsenings
+cost is the model's predictive accuracy): §3.1 reports an ablation in which
+each abstraction is re-estimated from the *same* engine cohorts and asked
+to predict what the engine does under the guideline schedules. Pooling the
+six polyp stages into "early" and "advanced" — the discretisation of our earlier six-state analysis and of
+most published abstractions — turns out to be nearly harmless *provided the
+memory is kept*. The two coarsenings interact, however: without the memory,
+the stage-resolved model over-predicts the mortality reduction of 10-yearly
+screening by 8.9 percentage points while the pooled model under-predicts it
+by 8.0, so a memoryless abstraction is wrong not only by a large margin but
+with a sign that depends on the lesion axis. Six risk classes matter mainly
+at higher screening intensity, where one or three classes over-predict the
+5-yearly mortality reduction by 4.4 and 3.4 percentage points.
+
 Three assumptions should be stated explicitly. The hidden process is
 *assumed* Markov given (risk class, clinical state, τ, last finding) and
 time-inhomogeneous in age; the kernels estimated from a randomised-schedule
 cohort are assumed policy-invariant given that conditioning set; and
 within-class heterogeneity remains (class 0 alone spans `individual_risk`
-0.03–0.77, a 22-fold range) and is what the memory conditioning has to
+0.035–0.77, a 22-fold range) and is what the memory conditioning has to
 absorb. §3.1 tests these assumptions on fixed schedules only. No
 stationarity, ergodicity or compactness argument is needed: the horizon is
 finite, the belief lives on a compact 66-simplex per observed key, and the
@@ -266,11 +273,12 @@ instrumented cohorts:
   surveillance colonoscopy (only the 0.049 diagnostic colonoscopies per
   person that follow a symptomatic presentation).
 * **Randomly-screened cohort**: 2 000 000 lives whose first colonoscopy age
-  is uniform on 40–75 and whose subsequent intervals are uniform on 1–20
-  years, yielding 4 520 648 colonoscopies with the engine's true pre- and
-  post-procedure states. This cohort supplies the post-colonoscopy memory
-  cells, and its randomised design ensures the estimated kernels are not
-  confounded with any particular screening policy.
+  is uniform on 40–75, whose subsequent intervals are uniform on 1–20
+  years and whose screening stops at age 80, yielding 4 520 648
+  colonoscopies with the engine's true pre- and post-procedure states.
+  This cohort supplies the post-colonoscopy memory cells, and its
+  randomised design ensures the estimated kernels are not confounded with
+  any particular screening policy.
 
 **WAIT kernel** `T[sex, class, (τ, finding), age]`: the annual transition
 from the decision-time state at age *y* to that at *y*+1, with exits read
@@ -367,21 +375,23 @@ consecutive rounds, within a budget of six, four (headline) or three
 (ablation) rounds; the best policy seen is kept. This stopping rule is a
 policy-improvement fixed point, not a Bellman-residual or belief-density
 criterion, and the expansion is reachability-based rather than
-distance-based (Pineau et al. 2006; Shani et al. 2013): coverage is
-guaranteed where the reference and current policies go, not where the
-optimal policy goes. Because every α-vector is the value of an executable
-plan (backups compose executable plans; the horizon boundary and the
-fallback used at a successor key with no belief points are WAIT-only
-plans), the representation is a valid lower bound wherever it is
-evaluated, so the scheme can only be pessimistic. A fast-informed bound
+distance-based (Pineau et al. 2006; Shani et al. 2013), as it is in the
+reachability-driven solvers of Smith & Simmons (2004) and Kurniawati et
+al. (2008): coverage is guaranteed where the reference and current
+policies go, not where the optimal policy goes. Because every α-vector is
+the value of an executable plan (backups compose executable plans; the
+horizon boundary and the fallback used at a successor key with no belief
+points are WAIT-only plans), the representation is a valid lower bound
+wherever it is evaluated, so the scheme can only be pessimistic. A fast-informed bound
 (Hauskrecht 2000) provides an upper bound.
 
 Convergence evidence is empirical rather than certified. (i) The exact
 in-model objective is flat to within 2 × 10⁻⁶ after one or two expansion
-rounds for all twelve cap-1500 headline policies. (ii) Raising the
-belief-point cap from 600 to 1500 per key changes a headline policy's
-in-model mortality by at most 0.3 % and its colonoscopy volume by at most
-0.6 % (0.17 % and 0.36 % once the sexes are pooled), moves the lower bound
+rounds for all twelve cap-1500 headline solves (the six headline policies,
+each solved separately per sex). (ii) Raising the belief-point cap from
+600 to 1500 per key changes a headline policy's in-model mortality by at
+most 0.3 % and its colonoscopy volume by at most 0.6 % (0.17 % and 0.36 %
+once the sexes are pooled), moves the lower bound
 by about 10⁻⁶ in objective units, and does not move the fast-informed
 bound at all. (iii) The fast-informed gap is nevertheless large: 57 % of
 the objective at λ = 0.001561, 44–48 % at the other mortality prices,
@@ -469,7 +479,7 @@ randomised-screening cohort's support.
 (persons alive and undiagnosed at the age-40 decision epoch, the start of
 the second quarter of age 40; engine n = 965 258 of 1 000 000; the same
 definition is used for Tables 2 and 3, whereas the engine arms of Tables
-4–6 count every simulated person).
+4–7 count every simulated person).
 
 | schedule | CRC deaths /100k (model → engine) | rel. error | CRC diagnoses /100k (model → engine) | rel. error |
 |---|---|---|---|---|
@@ -517,7 +527,7 @@ can ask where the rows the solved policy actually uses come from
 (`results/dp/kernel_support.md`; rows weighted by the exact occupancy of
 the headline policy). At the decision ages, 96.4 % of the WAIT-kernel
 occupancy falls on rows estimated in their own memory cell at the exact
-age and 99.6 % within ±8 years; for the SCREEN kernel the figures are
+age and 99.8 % within ±8 years; for the SCREEN kernel the figures are
 88 % in the own cell at the exact age band and 96 % within the widened
 bands. The exceptions are informative. Repeat colonoscopies one to three
 years after the previous one — the exams the policy orders after a finding
@@ -564,7 +574,7 @@ undiagnosed at age 40).
 
 | class | share | `individual_risk` range (mean) | lifetime CRC incidence | lifetime CRC mortality |
 |---|---|---|---|---|
-| 0 | 50.0 % | 0.03–0.77 (0.24) | 1.78 % | 0.74 % |
+| 0 | 50.0 % | 0.035–0.77 (0.24) | 1.78 % | 0.74 % |
 | 1 | 30.0 % | 0.78–3.62 (2.16) | 4.23 % | 1.75 % |
 | 2 | 15.0 % | 3.62–4.24 (3.89) | 6.46 % | 2.70 % |
 | 3 | 1.4 % | 6.23–18.19 (12.21) | 16.05 % | 6.75 % |
@@ -581,7 +591,7 @@ finding of ≥3 adenomas moves P(classes 3–5) from the 0.05 prior to 0.93 in
 men and 0.98 in women (P(top class) 0.02 → 0.53 and 0.71), whereas a normal
 exam lowers it to 0.007 and 0.017.
 
-### 3.3 The adaptive policy dominates every fixed comparator
+### 3.3 The adaptive policy dominates every screening-only fixed comparator
 
 Sweeping λ produces a frontier of policies that lies strictly below the
 fixed-schedule frontier over the whole clinically relevant volume range
@@ -600,7 +610,7 @@ colonoscopies performed.
 | fixed 10-yearly (50/60/70) | 2.575 | 1032.1 (9.1) | 2686.9 (13.2) | 3.32 | 7.22 | 9.9 |
 | best fixed at that volume (54/64/74) | 2.441 | 980.9 (9.0) | 2641.2 (17.5) | 3.71 | 7.80 | 7.3 |
 | **adaptive, λ = 0.001561** | **2.289** | **899.8 (7.6)** | **2486.4 (17.5)** | **4.32** | **9.00** | 9.3 |
-| adaptive (incidence objective), λ = 0.005125 | 2.164 | 932.4 (12.9) | 2516.7 (13.9) | 4.42 | 9.38 | 8.4 |
+| adaptive (incidence objective), λ = 0.005125 | 2.164 | 932.4 (12.9) | 2516.7 (13.9) | 4.41 | 9.38 | 8.4 |
 | three-tier rule (52; 10/5/3/3 y) | 2.890 | 866.5 (10.2) | 2344.9 (15.2) | 3.53 | 7.61 | 11.3 |
 | fixed 10-yearly + CMOST surveillance (rolling 50–70) | 2.946 | 879.8 (9.7) | 2350.1 (11.3) | 3.42 | 7.45 | 11.4 |
 | adaptive, λ = 0.001189 (matched to the surveillance programme) | 2.874 | 818.1 (6.8) | 2331.7 (15.3) | 3.72 | 7.70 | 11.1 |
@@ -629,9 +639,9 @@ colonoscopies and still leaves CRC mortality 12.8 % and incidence 7.5 %
 lower; per colonoscopy it averts 30 % more deaths and 25 % more diagnoses.
 At the 5-yearly schedule's volume it uses 8 % fewer colonoscopies for 12.0 %
 lower mortality (+18 % deaths averted per colonoscopy, +16 % diagnoses).
-Every paired mortality difference involving an adaptive policy exceeds
-four chunk-level standard errors; the t(19) 95 % intervals exclude zero by
-a wide margin (the narrowest, adaptive versus the best fixed schedule at
+Every paired mortality difference in Table 5 exceeds four chunk-level
+standard errors; the t(19) 95 % intervals exclude zero by a wide margin
+(the narrowest, adaptive versus the best fixed schedule at
 the 5-yearly volume, is −62 to −22 per 100 000), every contrast remains
 beyond 3.6 person-level standard errors, and the largest Holm-adjusted
 p-value in the family is 7 × 10⁻⁴ (`results/dp/paired_tables.md`).
@@ -659,12 +669,14 @@ screening and 0.574 surveillance exams, a fifth of its volume — and
 reaches 879.8 CRC deaths and 2350 diagnoses per 100 000: 152 ± 10 fewer
 deaths than the screening-only 10-yearly schedule for 0.37 more
 colonoscopies, and 20 ± 12 fewer than the adaptive policy at λ = 0.001561,
-which however uses 0.66 fewer colonoscopies per person (2.289; 29 % fewer).
+which however uses 0.66 fewer colonoscopies per person (2.289, 22 % fewer;
+equivalently, the augmented programme performs 29 % more).
 Per colonoscopy the ordering is unchanged: 3.42 deaths and 7.45 diagnoses
 averted per 1000 colonoscopies for the surveillance-augmented programme
-against 4.32 and 9.00 for the adaptive policy. For a like-for-like
-contrast we solved the adaptive policy at the price whose engine volume
-sits just below the augmented programme's (λ = 0.001189, cap 1500) and
+against 4.32 and 9.00 for the adaptive policy (Figure 6). For a
+like-for-like contrast we solved the adaptive policy at the price whose
+engine volume sits just below the augmented programme's (λ = 0.001189,
+cap 1500) and
 deployed it on the same million persons: at 2.874 colonoscopies per person
 (0.07 fewer) it has 818.1 CRC deaths per 100 000, 62 ± 12 fewer than the
 augmented programme, and 2332 diagnoses, a similar number (−18 ± 17). The
@@ -689,7 +701,8 @@ The augmented programme reaches 740.2 deaths and 2126 diagnoses per
 100 000 — 35 ± 10 fewer deaths than the screening-only 5-yearly schedule
 for 0.16 more colonoscopies — but 72 ± 11 more deaths and 149 ± 15 more
 diagnoses than the adaptive policy at the same volume, and 71 ± 15 more
-than the mortality-objective policy at λ = 0.000525 (5.270 colonoscopies).
+than the mortality-objective policy at λ = 0.000525 (5.270 colonoscopies,
+668.9 CRC deaths and 2012 diagnoses per 100 000).
 Surveillance therefore closes part of the gap between fixed and adaptive
 programmes at low intensity, where it adds the most volume, and little of
 it at high intensity, where 5-yearly screening already re-examines
@@ -744,13 +757,23 @@ coverage is weakest at the end of the horizon (ages 77–80, mean 0.02–0.04,
 value at stake is smallest.
 
 Re-solving with rollout seeds 1 and 2 and with reference propensities 0.06
-and 0.25 gives in-model objectives within 3 × 10⁻⁷ of the headline's
-(pooled mortality 880.5–880.8 per 100 000 at 2.367–2.369 colonoscopies),
-α-vector sets that are not identical, and policy paths that coincide with
-the headline's except for one-year shifts in the exams that follow a
-finding of three or more adenomas (§3.4). Deployed in the engine on the
-headline arm's first four chunk seeds (200 000 persons), the four variants
-give 884.5–933.0 CRC deaths per 100 000 at 2.284–2.292 colonoscopies per
+and 0.25 gives in-model objectives within 10⁻⁶ of the headline's (the
+largest deviation, 8 × 10⁻⁷, is the propensity-0.25 solve; pooled mortality
+880.5–880.8 per 100 000 at 2.367–2.369 colonoscopies), α-vector sets that
+are not identical, and policy paths that are identical to the headline's
+wherever the finding occurs once — the all-normal, the 1–2-adenoma and the
+advanced-adenoma paths are the same in every variant — and differ only
+where a finding is multiple or repeats. The exams that follow three or more
+adenomas move in every variant — by one to two years in women, and, under
+the propensity-0.25 solve, by three to four years in men. The two
+reference-propensity solves additionally move the women's
+advanced-adenoma-twice path by one to two years, the propensity-0.06 solve
+giving it five exams rather than six, and the propensity-0.25 solve moves
+the women's 1–2-adenoma-twice path by one to two years as well. These
+repeat-finding paths are the least-determined part of the policy, and §3.4
+returns to why. Deployed in the engine on the headline arm's first four
+chunk seeds (200 000 persons), the four variants give 884.5–933.0 CRC
+deaths per 100 000 at 2.284–2.292 colonoscopies per
 person against the headline's 889.5 — paired differences of −5 ± 27 to
 +44 ± 19 — and every one of them beats the 10-yearly schedule by 101–150
 deaths per 100 000 while using 11 % fewer colonoscopies. The one variant
@@ -786,6 +809,11 @@ The solved policy is legible, and it reproduces the logic of
 post-polypectomy surveillance guidelines while sharpening the quantities
 (Figure 3; λ = 0.001561, the 10-yearly-volume-matched policy).
 
+**Table 6.** Screening ages of the headline policy along canonical
+observation paths, by sex. A path is the sequence of ages at which the
+policy orders a colonoscopy when every exam returns the stated finding and
+the person remains alive and undiagnosed.
+
 | observation path | men | women |
 |---|---|---|
 | all findings normal | 49, 69, 78 | 58, 73 |
@@ -804,14 +832,18 @@ three years in men and five in women, and ≥3 adenomas trigger re-examination a
 followed by intervals of four to seven years (lengthening to eleven at the
 end of the horizon in men) — the policy discovers, rather than is told, the
 three-tier structure of the US Multi-Society Task Force recommendations.
-The timing of that first re-examination is the one feature of these paths
-that the objective does not pin down: solves with a different rollout seed,
-a different reference propensity or the τ-restricted kernels (§3.3) place
-it one to four years after the finding in men and shift the later exams of
-the same path by a year, at in-model objective differences below 3 × 10⁻⁷
-(0.03 deaths per 100 000), and the repeat-colonoscopy kernel rows at τ =
-1–3 are the least-supported cells of the model (§3.1). What is robust is the
-shape of the response — three or more adenomas bring the next exam
+The timing of that first re-examination is the feature of these paths that
+the objective pins down least: solves with a different rollout seed, a
+different reference propensity or the τ-restricted kernels (§3.3) place it
+one to four years after the finding in men and shift the later exams of the
+same path by up to four years. The paths that follow a *repeated* finding
+move too, though less: the two reference-propensity solves shift the exams
+of the advanced-adenoma-twice and 1–2-adenoma-twice paths by one to two
+years in women, and one of them leaves the former with five exams rather
+than six. All of this happens at in-model objective differences below 10⁻⁶
+(0.08 deaths per 100 000), and the repeat-colonoscopy kernel rows at
+τ = 1–3 are the least-supported cells of the model (§3.1). What is robust
+is the shape of the response — three or more adenomas bring the next exam
 forward to within four years and keep the subsequent intervals at four to
 seven — not the year.
 Third, **the sexes are offset by roughly nine years** at the first
@@ -825,19 +857,26 @@ or advanced adenomas — already recovers a large share of the benefit
 than the 10-yearly schedule at 12 % more colonoscopies, and better
 per-colonoscopy efficiency (3.53 vs 3.32). The rule is not optimal — it
 neither uses sex nor lets intervals lengthen with age — but it shows that
-most of the gain is implementable without belief tracking.
+most of the *absolute mortality* gain is implementable without belief
+tracking. Which part of the gain it captures depends on the measure,
+however, and on the per-colonoscopy measure it captures much less: it
+closes only about a fifth of the adaptive policy's efficiency advantage
+over the 10-yearly schedule (3.53 against 3.32 and 4.32 deaths averted per
+1000 colonoscopies), and against the adaptive policy solved for its own
+volume it is 48 deaths per 100 000 worse (866.5 vs 818.1 at 2.89 and 2.87
+colonoscopies, Table 5b). It buys mortality, and it buys it with volume.
 
 ### 3.5 When the risk class is observable, the policy becomes a targeting programme
 
 If a baseline test (a polygenic risk score, or any classifier of comparable
 discrimination) revealed the risk class at age 40, the same objective and
 shadow price produce a radically different, explicitly targeted programme
-(Table 6). Screening ages along the all-normal path for men become: class 0,
+(Table 7). Screening ages along the all-normal path for men become: class 0,
 **none at all**; class 1, ages 57/67/76; class 2, 41/56/66/75/80; class 5,
 eleven colonoscopies from age 40 to 80. Overall volume falls to 1.665
 colonoscopies per person.
 
-**Table 6.** Engine outcomes by *true* risk class (n = 1 000 000). "low" =
+**Table 7.** Engine outcomes by *true* risk class (n = 1 000 000). "low" =
 class 0 (50 % of the population), "mid" = classes 1–2 (45 %), "high" =
 classes 3–5 (5 %).
 
@@ -896,19 +935,22 @@ multiplier, even sigma = 0 attains only AUC 0.751 on lifetime CRC. No
 instrument can do better under this model, so we make no claim about AUC-0.8
 scores. We report each level by the risk gradient it induces as well as by
 AUC, because AUC is rank-invariant and hides the tail magnitude that
-targeting actually exploits (Table 7); at AUC 0.60 the top score decile
+targeting actually exploits (Table 8); at AUC 0.60 the top score decile
 carries 1.76 times the population's lifetime CRC risk and the top-to-bottom
 decile ratio is 3.2, which is what published CRC polygenic risk scores
 achieve.
 
-**Table 7.** Score levels: discrimination and the risk gradient each induces
+**Table 8.** Score levels: discrimination and the risk gradient each induces
 (lifetime CRC relative risk by score decile), with the value of the score at a
 matched colonoscopy volume. Every level is solved on its own price-volume
 frontier and read at 2.369 colonoscopies per person, the latent-class
 policy's volume, so the levels differ in information and not in budget. The
 control's sigma = 60 is a numerical stand-in for sigma -> infinity, so a
 trace of signal survives it: AUC 0.507 rather than 0.500, and a
-top-to-bottom decile risk ratio of 1.1 rather than 1.0.
+top-to-bottom decile risk ratio of 1.1 rather than 1.0. The last column is
+computed before rounding - the mortality column is 891.9, 883.2, 867.4,
+836.7, 787.1 and 714.4 - so it does not always equal the difference of the
+rounded entries.
 
 | level | sigma | AUC | RR top decile | top/bottom decile | CRC deaths /100k at matched volume | vs uninformative |
 |---|---|---|---|---|---|---|
@@ -955,7 +997,7 @@ alternative to a belief-tracking policy is a risk-tiered FIXED programme, so
 we gave the same score to the fixed-schedule search: for each score band the
 best of the same 2 112 candidate schedules was selected at a common price,
 tuned to the same volume. The resulting 2 x 2 separates the two ingredients
-(Table 8). A realistic score is worth 24-30 CRC deaths per 100 000 whether
+(Table 9). A realistic score is worth 24-30 CRC deaths per 100 000 whether
 the programme is fixed or adaptive, and adaptivity is worth 74-80 whether or
 not a score is available: the two are close to additive, overlapping by only
 about 5 per 100 000, and responding to findings is worth about three times a
@@ -964,7 +1006,7 @@ colonoscopy showing three or more adenomas moves P(high-risk classes) from
 the 0.05 prior to 0.93, whereas the top decile of an AUC-0.60 score reaches
 only 0.14 and even its top 1 % only 0.23.
 
-**Table 8.** Information versus adaptivity, in-model, all four cells read at
+**Table 9.** Information versus adaptivity, in-model, all four cells read at
 2.369 colonoscopies per person (CRC deaths per 100 000). Neither fixed cell
 is a single attainable schedule at exactly that volume: one price selects
 schedules in discrete steps, so each is interpolated on its own price-volume
@@ -976,10 +1018,12 @@ schedules on each sex's own age-40 prior rather than on the sex-pooled belief
 the score arms are built from; re-scored on that same belief, its best
 *unisex* schedule gives 980 at this volume (interpolated between the best
 schedules at the adjacent volumes; 976 when read on the same
-price-selection envelope as the fixed cells of Table 8) and its best
+price-selection envelope as the fixed cells of Table 9) and its best
 score-blind but *sex-specific* programme 972 — the no-score cell to within
 0.5, which is a second wiring check: with an uninformative score the bands carry nothing and
 the fixed arm must collapse to a sex-specific fixed programme, and it does.
+As in Table 8 the margins are computed before rounding: the four cells are
+971.7, 941.7, 891.9 and 867.4.
 
 | | no score | score (AUC 0.60) | the score buys |
 |---|---|---|---|
@@ -1008,7 +1052,7 @@ although its interval comfortably contains the in-model gap of 50 per 100
 000. What the engine does support is the weaker and more useful statement:
 both routes to targeting beat an unstratified 10-yearly programme by roughly
 140 CRC deaths per 100 000 while using fewer colonoscopies, and the two are
-complementary rather than alternative.
+complementary rather than alternative (Figure 4).
 
 ### 3.7 Robustness to imperfect adherence
 
@@ -1019,7 +1063,7 @@ or the invitation is repeated annually until attended — and for the adaptive
 policy **unchanged** (a no-show yields no observation, so the policy simply
 re-plans at the next annual decision; no re-solving per adherence level).
 
-**Table 9.** Adherence scenarios (engine, n = 200 000 per arm; colonoscopies
+**Table 10.** Adherence scenarios (engine, n = 200 000 per arm; colonoscopies
 per person → CRC deaths per 100 000).
 
 | α | fixed 10-yearly (slot lost) | fixed 10-yearly + annual recall | adaptive policy |
@@ -1038,17 +1082,16 @@ than the recall-augmented fixed programme (975 vs 1023) with 22 % fewer
 colonoscopies (4.67 vs 3.44 deaths averted per 1000 colonoscopies, +36 %),
 and at α = 0.3 comparable mortality with 29 % fewer colonoscopies (+35 %).
 Re-planning is automatic because the belief, not a calendar, drives the
-recommendation (Figure 4).
+recommendation (Figure 5).
 
 ### 3.8 Life-years: an honest null
 
 We also swept λ under an undiscounted life-year objective. In the model
-these policies gain about 170–200 life-years per 1000 persons over the
-guideline schedules (202 at 2.65 colonoscopies per person against the
-10-yearly schedule, 173 at 4.84 against the 5-yearly), and about 110–130
-over the fixed schedule with the most life-years within ±0.15
-colonoscopies of the policy's volume, by shifting colonoscopies to younger
-ages. The
+these policies gain 173–202 life-years per 1000 persons over the guideline
+schedules (202 at 2.65 colonoscopies per person against the 10-yearly
+schedule, 173 at 4.84 against the 5-yearly), and about 110–130 over the
+fixed schedule with the most life-years within ±0.15 colonoscopies of the
+policy's volume, by shifting colonoscopies to younger ages. The
 advantage does not survive transfer to the engine: population-paired
 differences are −11 ± 31 life-years per 1000 versus the 10-yearly schedule
 (2.52 vs 2.58 colonoscopies per person) and −43 ± 11 versus the 5-yearly
@@ -1128,13 +1171,16 @@ marginal prevalence.
 
 **Clinical reading.** The optimal policy is not exotic. It is a three-tier
 surveillance rule with a sex offset and an age-dependent stopping rule, and a fixed rule of that form — colonoscopy at 52, then 10/5/3 years by
-finding — captures part of the gain without any belief tracking: it closes
-about a fifth of the adaptive policy's per-colonoscopy advantage over the
-10-yearly schedule (3.53 vs 3.32 and 4.32 deaths averted per 1000
-colonoscopies), while reaching a lower absolute mortality than either (866.5
-per 100 000) at a 12 % higher colonoscopy volume. Where the
-adaptive policy goes beyond guidelines is in the *length* of the interval it
-grants a clean first exam (15–20 years rather than 10) and in its
+finding — captures part of the gain without any belief tracking, though
+which part depends on the measure (§3.4). On absolute mortality it reaches
+866.5 per 100 000, below both the 10-yearly schedule and the headline
+adaptive policy, at a 12 % higher colonoscopy volume than the former; on
+the per-colonoscopy measure it closes only about a fifth of the adaptive
+policy's advantage over that schedule (3.53 vs 3.32 and 4.32 deaths averted
+per 1000 colonoscopies), and it remains 48 deaths per 100 000 behind an
+adaptive policy solved for its own volume. Where the adaptive policy goes
+beyond guidelines is in the *length* of the interval it grants a clean
+first exam (15–20 years rather than 10) and in its
 willingness to re-examine multi-adenoma patients within one to two years.
 Both are consequences of taking the information content of a colonoscopy
 seriously in a population with strong latent risk heterogeneity. The same
@@ -1151,9 +1197,11 @@ what makes the reported numbers trustworthy, not as what makes adaptivity
 work. Second, all results are internal to CMOST: the model
 inherits the simulator's calibration, including an absolute adenoma
 prevalence somewhat below US screening cohorts, and its synthetic
-risk-multiplier distribution, whose 23-fold top-to-bottom gradient sets the
-scale of the achievable personalisation gain. A simulator with weaker latent
-heterogeneity would show a smaller gain; the qualitative mechanism would
+risk-multiplier distribution, whose spread — a 23-fold ratio in lifetime CRC
+incidence between the top 2 % and the bottom half of the population, and a
+far wider one in the multiplier itself — sets the scale of the achievable
+personalisation gain. A simulator with weaker latent heterogeneity would
+show a smaller gain; the qualitative mechanism would
 remain. Third, the decision model is memoryless given (τ, last finding);
 the sojourn structure of preclinical cancer is only approximated, which is
 the likeliest source of the residual 5 % error at 5-yearly intensity and of
@@ -1169,10 +1217,10 @@ patients, remain future work. Finally, the score arm of §3.6 assumes a classica
 calibrated measurement of the model's own risk multiplier - the most
 favourable structure a real instrument could have - so a score correlated
 with risk through a different mechanism, or one that transports poorly
-across ancestries, would buy less than Table 7 implies at the same nominal
+across ancestries, would buy less than Table 8 implies at the same nominal
 AUC.
 
-**Reproducibility.** The complete pipeline — cohort simulation, kernel estimation, solver, exhaustive fixed-schedule search, λ sweeps, engine evaluation, ablation and reporting — is in `dp/`, with the engine-side instrumentation (quarterly state recorder and findings-carrying policy hook) in `cmost_engine/NumberCrunching_policy.py`; every step is cached and resumable, and the whole analysis is driven by the commands documented in `docs/DP_PLAN.md`. Every table in this paper has a generating script: `dp/paired_tables.py` (Tables 1, 4, 5, 6 and the life-year and complication contrasts), `dp/surveillance_arms.py` (Table 5b), `dp/gap_table.py` (optimality gaps), `dp/kernel_support.py` (kernel back-off usage), `dp/robustness.py` and `dp/tau_sensitivity.py` (solver and τ-support sensitivity), and `dp/ablate.py` (Table 2); `tests/test_engine_hook_regression.py` checks the engine instrumentation. The per-chunk engine output (`results/dp/runs/`, 0.55 GB) and the solved α-vector sets (`results/dp/policies/`, 10 GB) are excluded from the repository for size; a manifest of their sizes and checksums (`results/dp/manifest.json`) is committed, and both are regenerated by the pipeline commands.
+**Reproducibility.** The complete pipeline — cohort simulation, kernel estimation, solver, exhaustive fixed-schedule search, λ sweeps, engine evaluation, ablation and reporting — is in `dp/`, with the engine-side instrumentation (quarterly state recorder and findings-carrying policy hook) in `cmost_engine/NumberCrunching_policy.py`; every step is cached and resumable, and the whole analysis is driven by the commands documented in `docs/DP_PLAN.md`. Every table in this paper has a generating script: `dp/paired_tables.py` (Tables 1, 4, 5, 7 and the life-year and complication contrasts), `dp/surveillance_arms.py` (Table 5b), `dp/ablate.py` (Table 2), `dp/report.py` (Table 6), `dp/riskscore.py` with `dp/run_riskscore.py` and `dp/report_riskscore.py` (Table 8), `dp/score_frontier.py` and `dp/score_fixed.py` (Table 9), `dp/run_adherence.py` (Table 10), `dp/gap_table.py` (optimality gaps), `dp/kernel_support.py` (kernel back-off usage), and `dp/robustness.py` and `dp/tau_sensitivity.py` (solver and τ-support sensitivity); the class definition of Table 3 is `risk_thresholds` in `dp/common.py` applied to the CMOST13 `individual_risk` pool, with the per-class outcomes read off the never-screened cohort. `tests/test_engine_hook_regression.py` checks the engine instrumentation. The per-chunk engine output (`results/dp/runs/`, 0.55 GB) and the solved α-vector sets (`results/dp/policies/`, 10 GB) are excluded from the repository for size; a manifest of their sizes and checksums (`results/dp/manifest.json`) is committed, and both are regenerated by the pipeline commands.
 
 ---
 
