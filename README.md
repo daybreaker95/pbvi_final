@@ -1,268 +1,194 @@
-# Risk-stratified colonoscopy screening as a POMDP on the CMOST microsimulation
+# Adaptive colonoscopy screening as a MOMDP on the CMOST microsimulation
 
-**Branch:** `pbvi_thlee`  ·  **Author:** T.H. Lee (with Claude)
+**Author:** T.H. Lee (with Claude)
 
-This project turns the CMOST colorectal-cancer (CRC) microsimulation (Prakash
-et al. 2017) into an **individual-level, gym-style environment**, empirically
-estimates a 9-state natural-history Markov model from it, layers a
-**Korean-epidemiology-derived risk score** on top to stratify individuals into
-high/low CRC-risk groups, and solves a **partially observable Markov decision
-process (POMDP)** with a value-iteration solver (FiVI) to obtain a
-**risk-aware, budget-tunable** colonoscopy schedule. The resulting policy is
-compared, inside the same CMOST engine, against fixed-interval comparators
-(uniform 10-year and 5-year screening).
+This project asks whether a colonoscopy policy that **adapts each person's
+next interval to what their previous colonoscopies found** can prevent more
+colorectal-cancer (CRC) deaths and diagnoses *per colonoscopy* than any fixed
+schedule — including fixed schedules optimised in the same simulator.
 
-The scientific question: **does routing screening intensity by a
-population-derived risk score improve on uniform-interval screening at a
-matched colonoscopy budget?** A single scalar shadow price (λ) on
-colonoscopy cost lets the policy trade mortality reduction against
-colonoscopy volume continuously; the Results in `manuscript/draft.md` report
-where that trade currently lands.
+The CMOST microsimulation (Prakash et al. 2017) is treated as ground truth.
+Every kernel of a finite-horizon **mixed-observability Markov decision
+process (MOMDP)** is estimated directly from the instrumented CMOST engine,
+the MOMDP is solved by point-based value iteration with exact in-model policy
+evaluation, and every policy is evaluated back inside the real engine against
+fixed comparators with population-paired random-number streams.
+
+* Manuscript: [`paper/manuscript.md`](paper/manuscript.md)
+* Pipeline design, status and verification log: [`docs/DP_PLAN.md`](docs/DP_PLAN.md)
+* Methods / results drafts: [`paper/dp_methods.md`](paper/dp_methods.md), [`paper/dp_results.md`](paper/dp_results.md)
+* Headline tables: [`results/dp/report_c6b.md`](results/dp/report_c6b.md)
+* Figures: `paper/figures/dp_*.png` (index: [`paper/figures_index.md`](paper/figures_index.md))
 
 ---
 
-## 0. NEW (2026-08): `dp/` — engine-grounded MOMDP pipeline (current)
+## 1. Headline results (engine, n = 1 000 000 per arm, paired)
 
-The `dp/` package supersedes the `pomdp/` + `tests/` pipeline for the
-per-colonoscopy-efficiency question. It estimates ALL model kernels directly
-from the real engine (`cmost_engine/NumberCrunching_policy.py`, instrumented
-with a quarterly recorder and a real-findings hook), conditions the natural
-history on the observed memory (years since last colonoscopy x last finding)
-and a 6-level latent risk class, solves the finite-horizon MOMDP by
-vectorised point-based value iteration with exact in-model policy
-evaluation, and evaluates everything back inside the real engine with
-population-paired seeds. Result (n = 1M/arm): the DP policy family strictly
-dominates fixed 10-y / 5-y schedules and the best fixed schedules from an
-exhaustive 2112-schedule search, on both CRC deaths and diagnoses per
-colonoscopy; it is robust to imperfect adherence, and a model-structure
-ablation shows the dominance survives substantial misspecification.
-The manuscript written on these results is `paper/manuscript.md` (the
-earlier six-state version is kept as
-`paper/archive/manuscript_v1_6state_superseded.md`). See also `docs/DP_PLAN.md`,
-`paper/dp_methods.md`, `paper/dp_results.md`, `results/dp/report_c6b.md`.
-A verification pass (2026-09-04) added a surveillance-augmented fixed
-comparator (CMOST's own post-polypectomy rule, `dp/surveillance_arms.py`),
-solver-robustness and belief-set-coverage diagnostics (`dp/robustness.py`),
-FIB-gap and kernel-support reports (`dp/gap_table.py`, `dp/kernel_support.py`),
-a tau-support sensitivity (`dp/tau_sensitivity.py`), generating scripts for
-every engine table (`dp/paired_tables.py`) and an engine-instrumentation
-regression test (`tests/test_engine_hook_regression.py`); see the last
-section of `docs/DP_PLAN.md`.
-
-## 1. Clinical state discretization
-
-The patient's whole-colon + cancer status is discretized into **9 states**
-(`env/state9.py`):
-
-| index | state | index | state |
+| arm | colonoscopies / person | CRC deaths / 100 000 | deaths averted / 1000 colonoscopies |
 |---|---|---|---|
-| 0 | Normal | 5 | Cancer III |
-| 1 | Early Polyp | 6 | Cancer IV |
-| 2 | Advanced Polyp | 7 | CRC Death |
-| 3 | Cancer I | 8 | Other-cause Death |
-| 4 | Cancer II | | |
+| no screening | 0 | 1887.6 | — |
+| fixed 10-yearly (50/60/70) | 2.58 | 1032.1 | 3.32 |
+| best searched fixed schedule (54/64/74) | 2.44 | 980.9 | 3.71 |
+| **adaptive policy, λ = 0.001561** | **2.29** | **899.8** | **4.32** |
+| fixed 5-yearly (50–75) | 4.99 | 775.3 | 2.23 |
+| **adaptive policy, λ = 0.00069** | **4.59** | **682.5** | 2.63 |
+| adaptive + observed risk class, λ = 0.001561 | 1.67 | 832.9 | 6.34 |
 
-The belief state is `b_t ∈ Δ^9` over these indices; the agent observes the
-patient's age, colonoscopy history, and prior findings, but not the true
-state directly.
+* The adaptive policy **dominates every screening-only fixed comparator** on
+  CRC deaths and diagnoses at lower colonoscopy volume: +30 % deaths averted
+  and +25 % diagnoses averted per colonoscopy vs the 10-yearly schedule, and
+  it also beats the best of 2 112 exhaustively searched fixed schedules.
+* A 10-yearly programme with CMOST's own post-polypectomy surveillance
+  reaches 879.8 deaths / 100 000 but needs 29 % more colonoscopies (2.95);
+  an adaptive policy solved for that volume has 62 ± 12 fewer deaths.
+* Robust to imperfect adherence (re-plans around no-shows without
+  re-solving). On life-years the adaptive and fixed schedules are
+  statistically indistinguishable (reported as a null).
 
-## 2. Risk stratification methodology
+Full numbers, CIs and the remaining analyses are in the manuscript §3.
 
-Colonoscopy budget is finite, so *who* gets screened more often matters as
-much as *when*. Risk stratification here is built in three layers:
+## 2. Model
 
-**(a) Composite risk score.** Each simulated patient is assigned a
-log-additive relative-risk (RR) score from published hazard/odds ratios for
-modifiable risk factors — BMI, diabetes, alcohol, family history, and 7
-dietary factors (fiber, calcium, folate, processed meat, red meat, fruit,
-vegetable). Age is deliberately **excluded** from the score: CMOST already
-models age-dependent onset natively (`env/cmost_individual.py`'s
-`new_polyp[yi]` curve), and `individual_risk` is a separate,
-age-*independent* lifelong multiplier — including an age term in the score
-would double-count age. See `tests/jeon_elbow_analysis.py`'s module
-docstring for the exact per-factor sourcing and the reasoning above.
+**CMOST engine** — `cmost_engine/NumberCrunching_policy.py` (Python port,
+CMOST13 parameters) with two record-only instruments: a quarter-resolved
+18-state recorder and an annual decision hook that receives the engine's
+*actual* colonoscopy result. Without a hook the instrumented engine is
+bit-identical to the un-instrumented port
+(`tests/test_engine_hook_regression.py`).
 
-Two variants exist in `tests/`, reflecting an evolution during development:
-  - `nhic_elbow_analysis*.py` — the original 5-factor score (BMI, glucose,
-    cholesterol, family history, alcohol) from Shin et al. 2014 (Korean
-    NHIC cohort), later extended with 7 dietary factors from Jeon et al.
-    2018 (`nhic_elbow_analysis_diet.py`) to fix a severe combination-count
-    shortage (only 69/16 distinct scores for men/women — far coarser than
-    CMOST's own 500-slot risk pool, causing tie-breaking artifacts).
-  - `jeon_elbow_analysis.py` (**current**) — all factors re-sourced from
-    Jeon et al. 2018 alone, for source consistency (a single Western-cohort
-    paper throughout, rather than mixing a Korean NHIC core with a
-    Western-cohort dietary extension). This is the version the current
-    `transitions/estimate_transitions_9state_jeon_risk.py` and
-    `tests/jeon_4way_eval.py` / `tests/jeon_lambda_sweep_real_engine.py`
-    pipeline uses.
+**MOMDP** (`dp/model.py`, `dp/kernels.py`), one per sex:
 
-**(b) Mapping onto CMOST's own risk pool.** CMOST's `individual_risk`
-parameter (a multiplicative polyp-rate factor, `env/cmost_individual.py`
-line ~477) is drawn from a 500-value, right-skewed native pool (built to
-reproduce hereditary-syndrome-scale outliers CMOST's US calibration
-targets — the composite score above, built from modifiable lifestyle
-factors alone, cannot and should not reproduce that tail). Two mapping
-strategies were evaluated:
-  - **Continuous rank-preserving mapping** (`percentile_map_to_individual_risk`):
-    each person's exact percentile rank in the composite score is matched to
-    the same percentile in CMOST's pool. Used only for the diagnostic elbow
-    sweep now (cheap: one simulation, many cutoffs evaluated post hoc).
-  - **Binary bucket mapping** (`bucket_map_to_individual_risk`, **current
-    default**): the top `high_frac` by composite score draws (with
-    replacement) from CMOST's own top-`high_frac` sub-pool; the rest draws
-    from the remaining sub-pool. This is deliberately coarser — the
-    downstream POMDP agent only needs a high/low label, not a fine rank —
-    and both the classification threshold and the CMOST donor-pool split
-    use the *same* `high_frac`.
+| component | definition |
+|---|---|
+| observed | age; τ = years since last colonoscopy (never, capped at 13); last finding ∈ {normal, 1–2 early adenomas, ≥3 early adenomas, advanced adenoma} |
+| hidden (belief) | 6 latent risk classes (quantile bins of `individual_risk`, cuts 50/80/95/96.5/98 %) × 11 clinical states (N, P1–P6, U1–U4) = 66 states |
+| actions | WAIT / SCREEN, annually at ages 40–80 (outcomes accrue to 100) |
+| exits | diagnosis at stage I–IV, other-cause death, complication death — terminal, with remaining-lifetime value folded into the reward |
+| objective | minimise E[CRC deaths] (or diagnoses) + λ · E[colonoscopies], undiscounted; sweeping λ traces the efficiency frontier |
 
-**(c) Cutoff selection.** `high_frac` (currently 0.20, i.e. top 20% =
-"high risk") is chosen from an RR-vs-cutoff sweep (`--sweep` flag on the
-elbow-analysis scripts): the point where the high/low CRC-death-rate ratio
-stops improving with a stricter cutoff.
+**Kernels** (`dp/estimate_kernels.py`) — maximum likelihood on annual
+person-year windows from two engine cohorts: 2 M never-screened lives (WAIT
+kernels) and 2 M lives on randomised colonoscopy schedules (SCREEN kernel and
+post-colonoscopy natural history), with hierarchical back-off for sparse
+cells. Conditioning on (τ, last finding) is the load-bearing modelling choice
+(`dp/ablate.py`).
 
-## 3. Absolute-risk validation (independent of CMOST)
+**Solver** (`dp/solver.py`) — finite-horizon point-based value iteration with
+belief and α-vector sets indexed by the observed key (age, τ, finding):
 
-Because the CMOST-internal RR at any cutoff is partly a mechanical
-consequence of the mapping (higher `individual_risk` *always* raises
-simulated incidence), it cannot validate whether the *composite score's own
-magnitude* is epidemiologically realistic. A separate, CMOST-independent
-check applies the composite score's relative-risk multiplier directly to
-**KOSIS** (Statistics Korea) real 2023–2024 age/sex-specific CRC incidence
-and mortality rates, producing an "excess cases per 10,000" figure at each
-risk percentile — the same style of absolute-risk communication used by
-Archambault et al. 2022 (JNCI) for early-onset CRC risk scores. This
-sanity-checks the score's plausibility against real Korean population data,
-completely independent of how it is later mapped into CMOST.
+1. belief sets = reachable closure from the initial belief under a reference
+   screening propensity (0.12), rounded to 1e-4 and capped per key
+   (600, or 1500 for the headline / observed-class policies);
+2. one backward sweep of point-based backups (α-vectors are executable plans,
+   so the value is a valid lower bound);
+3. add the current policy's exact reachable set + ε-greedy rollouts
+   (ε = 0.1) and re-sweep, stopping when the **exact in-model objective fails
+   to improve by more than 1e-7 in two consecutive rounds** (best policy kept);
+4. a fast-informed bound (FIB) gives an upper bound.
 
-## 4. What is in this folder
+Convergence evidence is empirical, not certified: the objective is flat to
+within 2e-6 after one or two rounds, cap 600 → 1500 changes mortality by
+≤ 0.3 %, and rollout seed / reference propensity barely move the policy
+(`dp/robustness.py`). The FIB gap stays large (44–57 % of the objective,
+`results/dp/fib_gaps.md`), so optimality is not certified; see manuscript §2.5.
+
+**Evaluation** (`dp/engine_runner.py`, `dp/evaluate.py`) — every arm runs on
+the same 50 k-person chunk seeds (identical population and RNG stream until
+the first diverging colonoscopy); paired chunk-level and person-level SEs.
+Policy metrics in the model are computed exactly by forward propagation of
+the belief tree (no Monte-Carlo noise).
+
+## 3. Repository layout
 
 ```
-pbvi_thlee/
-├── env/                       individual-level CMOST engine + gym environment
-│   ├── cmost_individual.py    faithful per-patient, quarterly-stepping CMOST engine
-│   ├── crc_env.py             gym-style env: reset()/step(), true state + observation
-│   ├── state9.py              9-state clinical discretization + classifier
-│   └── params.py              builds the exact CMOST parameter bundle
-├── transitions/                empirical transition estimation + risk-stratified variants
-│   ├── estimate_transitions_9state.py            pooled age-stratified 9x9 matrices
-│   ├── estimate_transitions_9state_sex_risk.py   sex x CMOST-native-risk matrices
-│   ├── estimate_transitions_9state_nhic_risk.py  sex x NHIC-mapped-risk (5-factor)
-│   ├── estimate_transitions_9state_nhic_diet_risk.py  + Jeon dietary factors (12-factor mix)
-│   └── estimate_transitions_9state_jeon_risk.py  sex x Jeon-2018-only bucket risk (current)
-├── pomdp/                      POMDP model + solver
-│   ├── model_v2.py             CRCScreeningPOMDP9: 9-state (x sex x risk) POMDP, T/O/reward
-│   ├── fivi.py                 value-iteration solver + belief-tracking policy
-│   └── estimate_effects.py     colonoscopy detection probs + cancer life-year values
-├── tests/                      real-engine evaluation, risk-score sweeps, lambda sweeps
-│   ├── cmost_4way_eval.py      no_screen / q10y / q5y / policy comparison (shared engine)
-│   ├── jeon_elbow_analysis.py  current risk-score construction + cutoff sweep
-│   ├── jeon_4way_eval.py       4-way comparison using the Jeon-2018 bucket-mapped score
-│   └── jeon_lambda_sweep_real_engine.py   colo_penalty_qaly (lambda) grid search
-├── experiments/                policy experiments on the true-CMOST environment
-│   ├── risk_factors.py         baseline risk factors + cost budget -> targeting
-│   ├── prs_targeting.py        does a strong PRS turn on mortality-targeting?
-│   ├── risk_panels.py          named risk-factor / risk-test COMBINATIONS and the
-│   │                           AUROC each reaches (FH, prior adenoma, E-score,
-│   │                           PRS current/genome-wide, microbiome, quantitative
-│   │                           f-Hb, multi-target stool DNA, blood cfDNA)
-│   └── auroc_sweep.py          AUROC sweep to a 0.85 ceiling x 4 colonoscopy
-│                               budgets, plus the panel ladder (Section 7)
-├── results/                    estimated matrices, sweep outputs, 4-way comparison JSON
-└── paper/                      manuscript-adjacent figures + methods/results write-up
+pbvi_final/
+├── dp/                        CURRENT pipeline (engine-grounded MOMDP)
+│   ├── run_cohorts.py         simulate the two estimation cohorts in the engine
+│   ├── estimate_kernels.py    all WAIT / SCREEN / exit kernels  -> results/dp/kernels_<tag>.npz
+│   ├── kernels.py, model.py   observed memory, cell indexing, reduced MOMDP
+│   ├── solver.py              PBVI + exact in-model evaluation + FIB bound
+│   ├── sweep.py               lambda sweep -> in-model frontier, saved policies
+│   ├── fixed_search.py        exhaustive search over 2 112 fixed schedules
+│   ├── engine_runner.py       chunked, paired-seed, parallel engine runs (cached)
+│   ├── hooks.py               engine hooks: fixed schedules, surveillance, belief policy
+│   ├── evaluate.py, validate.py   engine evaluation; model-vs-engine validation
+│   ├── run_pipeline.py        end-to-end driver (kernels -> ... -> report)
+│   ├── report.py, figures.py, paired_tables.py   tables and figures for the paper
+│   ├── ablate.py, _abl_policy.py                 model-structure ablation
+│   ├── run_adherence.py                          imperfect-adherence scenarios
+│   ├── riskscore.py, run_riskscore.py, score_frontier.py, score_fixed.py,
+│   │   report_riskscore.py                       finite-discrimination risk score (§3.6)
+│   ├── surveillance_arms.py                      fixed + CMOST surveillance comparators
+│   ├── robustness.py, gap_table.py, kernel_support.py, tau_sensitivity.py
+│   │                                             solver / bound / kernel-support diagnostics
+│   └── manifest.py                               MD5 manifest of gitignored artefacts
+├── cmost_engine/              Python CMOST engine (NumberCrunching_policy.py = instrumented)
+├── results/dp/                kernels, sweeps, engine evaluations, reports (runs/ and policies/ gitignored)
+├── paper/                     manuscript.md, dp_methods.md, dp_results.md, figures/,
+│                              ksaim_poster/ (KoSAIM abstract), archive/ (superseded 6-state work)
+├── docs/DP_PLAN.md            design, status, follow-ups and verification log
+├── tests/test_engine_hook_regression.py      engine instrumentation regression test
+└── env/ transitions/ pomdp/ experiments/ tests/   LEGACY pipeline (see §5)
 ```
 
-## 5. Pipeline (how to reproduce the current risk-stratified policy)
+## 4. Reproducing
+
+Requirements: Python 3 with `numpy`, `scipy`, `matplotlib`. Engine runs are
+heavy (≈ 2.8 ms/person, so 1 M persons ≈ 47 CPU-min), and every step is
+cached and resumable under `results/dp/`.
 
 ```bash
-# 1. find the risk-score cutoff (RR-vs-cutoff elbow, KOSIS absolute-risk check
-#    is a separate, standalone calculation -- see Section 3 above)
-python tests/jeon_elbow_analysis.py --n 1000000 --sweep
+# 1. estimation cohorts in the real engine
+python -m dp.run_cohorts --nh-n 2000000 --screen-n 1000000 --workers 6
 
-# 2. estimate the 4 (sex x risk) transition matrices at the chosen cutoff
-python transitions/estimate_transitions_9state_jeon_risk.py -n 200000 --high_frac 0.20
+# 2. kernels, fixed-schedule search, lambda sweeps, engine evaluation, report
+python -m dp.run_pipeline --tag c6b --cuts 0.5 0.8 0.95 0.965 0.98 --steps kernels,fixed,sweep,baseline,grid,headline,report --objectives death,inc
 
-# 3. lambda=0 baseline for all 4 scenarios (no_screen / q10y / q5y / policy)
-python tests/jeon_4way_eval.py --scenario no_screen -n 1000000
-python tests/jeon_4way_eval.py --scenario q10y -n 1000000
-python tests/jeon_4way_eval.py --scenario q5y -n 1000000
-python tests/jeon_4way_eval.py --scenario policy -n 1000000
-
-# 4. lambda (colonoscopy-cost shadow price) sweep -- run ALONE, not alongside
-#    other heavy jobs (see that script's docstring: ~15x CPU-contention
-#    slowdown was observed running 4 processes in parallel previously)
-python tests/jeon_lambda_sweep_real_engine.py
+# 3. figures
+python -m dp.figures --tag c6b
 ```
 
-## 6. Method summary
+The paper's SCREEN kernel pools two randomised-schedule cohorts
+(`screen_random_q`, `screen_random_q2`). Follow-up and verification analyses
+(adherence, risk score, surveillance comparators, robustness, FIB gaps,
+kernel support, τ sensitivity, paired tables, ablation) each have their own
+entry point; the exact commands are listed in `docs/DP_PLAN.md`
+("Verification-driven experiments") and in each module's docstring.
 
-* **Environment.** `env/cmost_individual.py` re-implements every quarterly
-  CMOST event (adenoma initiation, growth, direct/fast cancer paths,
-  regression, symptomatic presentation, stage progression, colonoscopy
-  detection & complications, competing mortality) for a single patient,
-  reusing the exact parameter bundle from `calculate_sub.prepare_parameters`.
-
-* **Empirical transitions.** A large no-screening cohort is simulated, and
-  age- and (sex x risk)-specific 9x9 transition matrices are estimated by
-  maximum likelihood (`transitions/`).
-
-* **POMDP + solver.** Age, sex, and risk class are observed; the 9 clinical
-  states form the belief. Colonoscopy observations are discriminative, so
-  the belief tracks each individual's findings; the FiVI solver
-  (`pomdp/fivi.py`) computes a policy by value iteration over the belief
-  simplex. `colo_penalty_qaly` (λ) is a shadow price on colonoscopy cost in
-  the reward function — sweeping it traces out the efficiency frontier
-  between mortality reduction and colonoscopy volume.
-
-## 7. How much risk discrimination does this actually need?
-
-The risk score above is one classifier at one operating point. A separate
-experiment asks the design question directly: **how discriminating must a risk
-classifier be before risk-stratified screening beats a uniform schedule, and
-which combination of risk factors and emerging tests supplies that much
-discrimination?**
-
-`experiments/auroc_sweep.py` sweeps classifier AUROC on an 11-point grid from
-0.50 to a **0.85 ceiling** (no oracle arm -- no assay perfectly observes a
-lifelong latent adenoma-risk class) across four colonoscopy budgets, in two
-tracks: an abstract calibrated score at each AUROC, and nine named
-risk-factor / risk-test **combinations** from `experiments/risk_panels.py`
-(family history, prior adenoma, lifestyle/environmental E-score, PRS current and
-genome-wide, faecal microbiome, quantitative faecal haemoglobin, multi-target
-stool DNA, blood methylated cfDNA), each rung adding one modality and each
-panel's AUROC *measured* rather than assumed.
-
-Headline: the answer depends on colonoscopy capacity. With ample capacity ~0.70
-suffices; with scarce capacity an intermediate classifier (AUROC 0.60-0.75) can
-leave the high-risk class **worse off than uniform screening**, and only a panel
-reaching ~0.80+ converts the budget saving into a mortality gain. Today's
-FH + prior-adenoma baseline measures 0.67; reaching 0.85 takes the full stack.
-Full write-up: `paper/results_auroc_sweep.md`.
+`results/dp/runs/` (per-chunk engine output) and `results/dp/policies/`
+(α-vector sets) are excluded from git for size. Regenerated files can be
+checked against the paper's runs with:
 
 ```bash
-python experiments/auroc_sweep.py 50000 --workers 5   # 85 arms, ~20 min
-python -m experiments.risk_panels                     # panel definitions + AUROCs
+python -m dp.manifest --check
 ```
 
-## 8. Key references
+## 5. Legacy pipeline (superseded)
 
-* Prakash et al. (2017) *CMOST*, PLoS ONE — the microsimulation.
-* Shin A, et al. (2014) *PLoS ONE* 9(2):e88079 — Korean NHIC cohort CRC risk
-  model (metabolic factors, family history, alcohol).
-* Jeon J, Du M, Schoen RE, et al. (2018) *Gastroenterology* 154(8):2152-2164.e19
-  — lifestyle/environmental/genetic CRC risk score (E-score), current source
-  for all composite-score hazard ratios.
-* Archambault AN, et al. (2022) *JNCI* 114(4):528-539 — early-onset CRC risk
-  stratification using combined genetic + environmental risk scores;
-  methodological precedent for the absolute-risk (excess-cases-per-10,000)
-  validation approach in Section 3.
-* van den Puttelaar R, et al. (2023) *Clin Gastroenterol Hepatol*
-  21(13):3415-3423.e29 — MISCAN-Colon risk-stratified screening
-  cost-effectiveness; structural precedent for the percentile-mapping
-  methodology and its group-vs-individual calibration caveat.
-* Pashayan N, et al. (2018) *JAMA Oncol* 4(11):1504-1510 — risk-stratified
-  breast-cancer screening; precedent for percentile-threshold NMB
-  optimization (the λ-sweep here is the simulation-based analogue).
-* KOSIS (Statistics Korea) — 2023 national cancer incidence
-  (`DT_117N_A00023`) and 2024 cause-of-death mortality (`DT_1B34E01`)
-  statistics, used for the absolute-risk validation in Section 3.
+Before the `dp/` rewrite the project used a 9-state (and earlier 6-state)
+natural-history Markov model estimated from a re-implemented individual
+engine (`env/cmost_individual.py`, `transitions/`), a QALY-NMB POMDP
+(`pomdp/model_v2.py`) solved with FiVI (Walraven & Spaan 2019;
+`pomdp/fivi.py`), a Korean-epidemiology / Jeon et al. (2018) composite risk
+score mapped onto CMOST's risk pool, and evaluation scripts in `tests/` and
+`experiments/` (including the AUROC sweep, `experiments/auroc_sweep.py`).
+It was replaced because the objective did not match the reported metrics,
+observations were synthetic rather than the engine's real findings, the
+re-implemented engine under-produced incidence, and FiVI's sawtooth upper
+bound stayed frozen so convergence could not be verified
+(`docs/DP_PLAN.md`, "Diagnosis of the existing pipeline"). The code is kept
+for reference; the superseded manuscript and result write-ups are in
+[`paper/archive/`](paper/archive/README.md).
+
+## 6. Key references
+
+* Prakash MK, et al. (2017) *PLoS ONE* — CMOST microsimulation.
+* Zaika V, et al. (2024) — CMOST-based optimisation of fixed colonoscopy schedules.
+* Ong SCW, et al. (2010) *Int J Robot Res* — mixed observability (MOMDP).
+* Pineau J, Gordon G, Thrun S (2003) *IJCAI* — point-based value iteration.
+* Walraven E, Spaan MTJ (2019) *JAIR* 65 — point-based value iteration for finite-horizon POMDPs.
+* Hauskrecht M (2000) *JAIR* 13 — value-function approximations for POMDPs (fast-informed bound).
+* Smallwood RD, Sondik EJ (1973) *Oper Res* — optimal control of POMDPs.
+* Gupta S, et al. (2020) *Gastroenterology* — US MSTF post-polypectomy surveillance recommendations.
+
+Full reference list: `paper/manuscript.md`.
