@@ -64,11 +64,11 @@ CRC deaths / 100 000 within the subgroup (mortality reduction vs the same person
 
 ## E4 — non-adherence correlated with CRC risk (missing not at random)
 
-| scenario | mean attend. | never-attended share | fixed | fixed + recall | adaptive (unchanged) |
-|---|---|---|---|---|---|
-| Beta κ = 1 | 0.70 | 5 % | 1.80 → 1273 (33 %) | 2.39 → 1110 (42 %) | 1.98 → 1012 (47 %) |
-| Beta κ = 1, ρ = 0.2 | 0.70 | 5 % | 1.80 → 1364 (28 %) | 2.39 → 1122 (41 %) | 1.96 → 1053 (45 %) |
-| Beta κ = 1, ρ = 0.4 | 0.70 | 5 % | 1.81 → 1388 (27 %) | 2.39 → 1116 (41 %) | 1.93 → 1118 (41 %) |
+| scenario | mean attend. | never-attended share | fixed | fixed + recall | adaptive (unchanged) | adaptive (adherence-aware, matched volume) |
+|---|---|---|---|---|---|---|
+| Beta κ = 1 | 0.70 | 5 % | 1.80 → 1273 (33 %) | 2.39 → 1110 (42 %) | 1.98 → 1012 (47 %) | 1.92 → 1014 (47 %) |
+| Beta κ = 1, ρ = 0.2 | 0.70 | 5 % | 1.80 → 1364 (28 %) | 2.39 → 1122 (41 %) | 1.96 → 1053 (45 %) | — |
+| Beta κ = 1, ρ = 0.4 | 0.70 | 5 % | 1.81 → 1388 (27 %) | 2.39 → 1116 (41 %) | 1.93 → 1118 (41 %) | 1.86 → 1088 (43 %) |
 
 ### E4, ρ = 0.4: outcomes within adherence subgroups
 
@@ -79,3 +79,6 @@ CRC deaths / 100 000 within the subgroup (mortality reduction vs the same person
 | q10y_e4_beta_k1_rho04 | 3044 (7 %), 0.33 c | 1531 (27 %), 1.32 c | 866 (40 %), 2.40 c |
 | q10y_recall_e4_beta_k1_rho04 | 2079 (36 %), 1.55 c | 1038 (51 %), 2.53 c | 868 (40 %), 2.58 c |
 | dp_e4_beta_k1_rho04 | 2251 (31 %), 1.09 c | 1118 (47 %), 2.02 c | 794 (45 %), 2.14 c |
+| dpaware_lam0.001561_e4_beta_k1_rho04 | 2110 (35 %), 1.49 c | 860 (59 %), 2.51 c | 743 (48 %), 2.31 c |
+| dpaware_lam0.00205_e4_beta_k1_rho04 | 2125 (35 %), 1.28 c | 970 (54 %), 2.08 c | 832 (42 %), 1.95 c |
+| dpaware_lam0.002691_e4_beta_k1_rho04 | 2182 (33 %), 1.05 c | 1095 (48 %), 1.78 c | 868 (40 %), 1.73 c |

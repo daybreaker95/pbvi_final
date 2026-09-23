@@ -66,7 +66,7 @@ EXPERIMENTS = {
 AWARE_ADH = dict(probs=[0.15, 0.90], prior=[0.3, 0.7])
 AWARE_LAMS = [0.001561, 0.00205, 0.002691]
 # the aware policies are also deployed (misspecified) under these truths
-AWARE_MISSPEC = ['e1_beta_k1', 'e2_markov_a']
+AWARE_MISSPEC = ['e1_beta_k1', 'e2_markov_a', 'e4_beta_k1_rho04']
 
 
 def aware_path(lam, sex):

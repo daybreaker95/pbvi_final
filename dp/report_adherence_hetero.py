@@ -124,7 +124,8 @@ def write(n):
             L.append(f"| {t.split('_lam')[1].split('_')[0]} | {r['colos_per_person']:.2f} | {inv:.2f} | "
                      f"{r['crc_death_per_100k']:.0f} | {r['deaths_averted_per_1000_colos']:.2f} |")
         subgroup_table('e3_mix', 'E3, mixture truth')
-    table(['e1_beta_k1'] + EXPERIMENTS['e4'], 'E4 — non-adherence correlated with CRC risk (missing not at random)')
+    table(['e1_beta_k1'] + EXPERIMENTS['e4'], 'E4 — non-adherence correlated with CRC risk (missing not at random)',
+          extra_cols=('adaptive (adherence-aware, matched volume)',))
     subgroup_table('e4_beta_k1_rho04', 'E4, ρ = 0.4')
     out = os.path.join(RES, f'report_adherence_hetero_n{n}.md')
     with open(out, 'w', encoding='utf-8') as f:
