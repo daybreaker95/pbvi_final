@@ -1009,6 +1009,170 @@
       "paired_death_diff_se": 49.80068121440776
      }
     }
+   },
+   "dpaware_lam0.00205_e1_beta_k1": {
+    "arm": {
+     "kind": "policy",
+     "policy_male": "C:\\Users\\daybr\\Git_Works\\pbvi_final\\results\\dp\\policies\\c6bhi_adh_death_lam0.00205_sex1.npz",
+     "policy_female": "C:\\Users\\daybr\\Git_Works\\pbvi_final\\results\\dp\\policies\\c6bhi_adh_death_lam0.00205_sex2.npz",
+     "observed_class": false,
+     "adherence": {
+      "kind": "beta",
+      "mean": 0.7,
+      "kappa": 1.0
+     }
+    },
+    "rates": {
+     "n": 200000,
+     "n_chunks": 4,
+     "crc_death_per_100k": 1014.5,
+     "comp_death_per_100k": 7.499999999999999,
+     "incidence_per_100k": 2687.5,
+     "screen_detected_per_100k": 528.0,
+     "symptom_detected_per_100k": 2245.5,
+     "colos_per_person": 1.91533,
+     "policy_colos_per_person": 1.91533,
+     "total_colos_per_person": 1.938985,
+     "life_years_from40": 37.546175,
+     "cost_per_person": 3917.33585125,
+     "crc_death_se": 18.997806890972093,
+     "incidence_se": 40.06141119165258,
+     "colos_se": 0.0034630092886582856,
+     "life_years_se": 0.007276237008235052,
+     "deaths_averted_per_100k": 883.5,
+     "cases_averted_per_100k": 1867.0,
+     "death_reduction_pct": 46.54899894625922,
+     "incidence_reduction_pct": 40.992425074102535,
+     "deaths_averted_per_1000_colos": 4.612782131538691,
+     "cases_averted_per_1000_colos": 9.747667503772195,
+     "lyg_per_1000": 132.54500000000036,
+     "paired_death_diff_vs_none": -883.5,
+     "paired_death_diff_se": 40.43410276816669,
+     "never_attended_share": 0.040785
+    },
+    "subgroups": {
+     "low<0.3": {
+      "share": 0.17488,
+      "n": 34976,
+      "crc_death_per_100k": 1346.6376944190304,
+      "colos_per_person": 1.2159194876486734,
+      "invites_per_person": 12.176549634034767,
+      "attendance": 0.09985747393087838,
+      "never_attended_share": 0.22095150960658738,
+      "crc_death_per_100k_none": 1969.922232387923,
+      "death_reduction_pct": 31.640058055152398,
+      "paired_death_diff_vs_none": -623.3670521311749,
+      "paired_death_diff_se": 147.09709610928573
+     },
+     "mid": {
+      "share": 0.21452,
+      "n": 42904,
+      "crc_death_per_100k": 960.2834234570203,
+      "colos_per_person": 2.020091366772329,
+      "invites_per_person": 4.149356703337684,
+      "attendance": 0.4868444704084843,
+      "never_attended_share": 0.007994592578780534,
+      "crc_death_per_100k_none": 1887.9358567965692,
+      "death_reduction_pct": 49.135802469135804,
+      "paired_death_diff_vs_none": -928.1834772333191,
+      "paired_death_diff_se": 88.16725917815225
+     },
+     "high>=0.7": {
+      "share": 0.6106,
+      "n": 122120,
+      "crc_death_per_100k": 938.4212250245661,
+      "colos_per_person": 2.0788404847690796,
+      "invites_per_person": 2.2582214215525713,
+      "attendance": 0.9205653905009175,
+      "never_attended_share": 0.0007042253521126761,
+      "crc_death_per_100k_none": 1880.9367834916477,
+      "death_reduction_pct": 50.10883761427949,
+      "paired_death_diff_vs_none": -942.6222677267749,
+      "paired_death_diff_se": 62.36839349329498
+     }
+    }
+   },
+   "dpaware_lam0.002691_e1_beta_k1": {
+    "arm": {
+     "kind": "policy",
+     "policy_male": "C:\\Users\\daybr\\Git_Works\\pbvi_final\\results\\dp\\policies\\c6bhi_adh_death_lam0.002691_sex1.npz",
+     "policy_female": "C:\\Users\\daybr\\Git_Works\\pbvi_final\\results\\dp\\policies\\c6bhi_adh_death_lam0.002691_sex2.npz",
+     "observed_class": false,
+     "adherence": {
+      "kind": "beta",
+      "mean": 0.7,
+      "kappa": 1.0
+     }
+    },
+    "rates": {
+     "n": 200000,
+     "n_chunks": 4,
+     "crc_death_per_100k": 1069.5,
+     "comp_death_per_100k": 4.5,
+     "incidence_per_100k": 2820.0,
+     "screen_detected_per_100k": 534.5,
+     "symptom_detected_per_100k": 2380.5,
+     "colos_per_person": 1.648305,
+     "policy_colos_per_person": 1.648305,
+     "total_colos_per_person": 1.67337,
+     "life_years_from40": 37.487755,
+     "cost_per_person": 3670.60186,
+     "crc_death_se": 28.111385593741193,
+     "incidence_se": 30.40833219146796,
+     "colos_se": 0.002676880958628248,
+     "life_years_se": 0.022041243726251335,
+     "deaths_averted_per_100k": 828.5,
+     "cases_averted_per_100k": 1734.5,
+     "death_reduction_pct": 43.651211801896736,
+     "incidence_reduction_pct": 38.08321440333736,
+     "deaths_averted_per_1000_colos": 5.026375579762241,
+     "cases_averted_per_1000_colos": 10.522931132284377,
+     "lyg_per_1000": 74.12500000000222,
+     "paired_death_diff_vs_none": -828.5,
+     "paired_death_diff_se": 50.480194135918275,
+     "never_attended_share": 0.042695
+    },
+    "subgroups": {
+     "low<0.3": {
+      "share": 0.17488,
+      "n": 34976,
+      "crc_death_per_100k": 1406.678865507777,
+      "colos_per_person": 0.9886779505946935,
+      "invites_per_person": 9.990307639524245,
+      "attendance": 0.09896371425873088,
+      "never_attended_share": 0.23175892040256177,
+      "crc_death_per_100k_none": 1969.922232387923,
+      "death_reduction_pct": 28.592162554426704,
+      "paired_death_diff_vs_none": -563.3566351321981,
+      "paired_death_diff_se": 99.11884370944303
+     },
+     "mid": {
+      "share": 0.21452,
+      "n": 42904,
+      "crc_death_per_100k": 1020.8838336751819,
+      "colos_per_person": 1.7354325936975574,
+      "invites_per_person": 3.571182174156256,
+      "attendance": 0.48595465284757666,
+      "never_attended_share": 0.00843744173037479,
+      "crc_death_per_100k_none": 1887.9358567965692,
+      "death_reduction_pct": 45.925925925925924,
+      "paired_death_diff_vs_none": -867.2506545674639,
+      "paired_death_diff_se": 27.625946776666158
+     },
+     "high>=0.7": {
+      "share": 0.6106,
+      "n": 122120,
+      "crc_death_per_100k": 990.009826400262,
+      "colos_per_person": 1.806616442843105,
+      "invites_per_person": 1.9609154929577466,
+      "attendance": 0.92131274872947,
+      "never_attended_share": 0.0005813953488372093,
+      "crc_death_per_100k_none": 1880.9367834916477,
+      "death_reduction_pct": 47.36612973443622,
+      "paired_death_diff_vs_none": -890.9403094811099,
+      "paired_death_diff_se": 55.14848330293744
+     }
+    }
    }
   }
  },
@@ -1456,6 +1620,92 @@
      "paired_death_diff_vs_none": -990.0,
      "paired_death_diff_se": 73.57082755186777,
      "never_attended_share": 0.01381
+    },
+    "subgroups": null
+   },
+   "dpaware_lam0.00205_e2_markov_a": {
+    "arm": {
+     "kind": "policy",
+     "policy_male": "C:\\Users\\daybr\\Git_Works\\pbvi_final\\results\\dp\\policies\\c6bhi_adh_death_lam0.00205_sex1.npz",
+     "policy_female": "C:\\Users\\daybr\\Git_Works\\pbvi_final\\results\\dp\\policies\\c6bhi_adh_death_lam0.00205_sex2.npz",
+     "observed_class": false,
+     "adherence": {
+      "kind": "markov",
+      "p_first": 0.5,
+      "p_aa": 0.85,
+      "p_ma": 0.25
+     }
+    },
+    "rates": {
+     "n": 200000,
+     "n_chunks": 4,
+     "crc_death_per_100k": 969.5,
+     "comp_death_per_100k": 6.999999999999999,
+     "incidence_per_100k": 2646.5,
+     "screen_detected_per_100k": 567.0,
+     "symptom_detected_per_100k": 2180.0,
+     "colos_per_person": 2.033355,
+     "policy_colos_per_person": 2.033355,
+     "total_colos_per_person": 2.056215,
+     "life_years_from40": 37.52838,
+     "cost_per_person": 4053.9429225,
+     "crc_death_se": 16.9975488428969,
+     "incidence_se": 19.05037182489273,
+     "colos_se": 0.0017332700308953831,
+     "life_years_se": 0.009914215383309997,
+     "deaths_averted_per_100k": 928.5,
+     "cases_averted_per_100k": 1908.0,
+     "death_reduction_pct": 48.91991570073762,
+     "incidence_reduction_pct": 41.89263365901855,
+     "deaths_averted_per_1000_colos": 4.566344784850654,
+     "cases_averted_per_1000_colos": 9.383506569192296,
+     "lyg_per_1000": 114.7500000000008,
+     "paired_death_diff_vs_none": -928.5,
+     "paired_death_diff_se": 46.46414388177906,
+     "never_attended_share": 0.016365
+    },
+    "subgroups": null
+   },
+   "dpaware_lam0.002691_e2_markov_a": {
+    "arm": {
+     "kind": "policy",
+     "policy_male": "C:\\Users\\daybr\\Git_Works\\pbvi_final\\results\\dp\\policies\\c6bhi_adh_death_lam0.002691_sex1.npz",
+     "policy_female": "C:\\Users\\daybr\\Git_Works\\pbvi_final\\results\\dp\\policies\\c6bhi_adh_death_lam0.002691_sex2.npz",
+     "observed_class": false,
+     "adherence": {
+      "kind": "markov",
+      "p_first": 0.5,
+      "p_aa": 0.85,
+      "p_ma": 0.25
+     }
+    },
+    "rates": {
+     "n": 200000,
+     "n_chunks": 4,
+     "crc_death_per_100k": 1073.0,
+     "comp_death_per_100k": 6.0,
+     "incidence_per_100k": 2747.5,
+     "screen_detected_per_100k": 529.0,
+     "symptom_detected_per_100k": 2319.0,
+     "colos_per_person": 1.69642,
+     "policy_colos_per_person": 1.69642,
+     "total_colos_per_person": 1.720985,
+     "life_years_from40": 37.474535,
+     "cost_per_person": 3712.65046875,
+     "crc_death_se": 13.478377746103819,
+     "incidence_se": 48.52748362182678,
+     "colos_se": 0.003473499676119183,
+     "life_years_se": 0.029914443974999053,
+     "deaths_averted_per_100k": 825.0,
+     "cases_averted_per_100k": 1807.0,
+     "death_reduction_pct": 43.4668071654373,
+     "incidence_reduction_pct": 39.675046657152265,
+     "deaths_averted_per_1000_colos": 4.863182466606147,
+     "cases_averted_per_1000_colos": 10.65184329352401,
+     "lyg_per_1000": 60.905000000005316,
+     "paired_death_diff_vs_none": -825.0,
+     "paired_death_diff_se": 47.641018740856794,
+     "never_attended_share": 0.01834
     },
     "subgroups": null
    }
@@ -2452,6 +2702,156 @@
       "death_reduction_pct": 51.66666666666666,
       "paired_death_diff_vs_none": -975.4958284208001,
       "paired_death_diff_se": 60.41555141194805
+     }
+    }
+   },
+   "dpaware_lam0.00205_e3_mix": {
+    "arm": {
+     "kind": "policy",
+     "policy_male": "C:\\Users\\daybr\\Git_Works\\pbvi_final\\results\\dp\\policies\\c6bhi_adh_death_lam0.00205_sex1.npz",
+     "policy_female": "C:\\Users\\daybr\\Git_Works\\pbvi_final\\results\\dp\\policies\\c6bhi_adh_death_lam0.00205_sex2.npz",
+     "observed_class": false,
+     "adherence": {
+      "kind": "mixture",
+      "probs": [
+       0.15,
+       0.9
+      ],
+      "weights": [
+       0.3,
+       0.7
+      ]
+     }
+    },
+    "rates": {
+     "n": 200000,
+     "n_chunks": 4,
+     "crc_death_per_100k": 955.0,
+     "comp_death_per_100k": 6.0,
+     "incidence_per_100k": 2645.0,
+     "screen_detected_per_100k": 524.0,
+     "symptom_detected_per_100k": 2205.5,
+     "colos_per_person": 1.905635,
+     "policy_colos_per_person": 1.905635,
+     "total_colos_per_person": 1.92876,
+     "life_years_from40": 37.53265,
+     "cost_per_person": 3870.6862525,
+     "crc_death_se": 10.754843869934446,
+     "incidence_se": 67.4166151627327,
+     "colos_se": 0.003728577700231898,
+     "life_years_se": 0.037182320619706895,
+     "deaths_averted_per_100k": 943.0,
+     "cases_averted_per_100k": 1909.5,
+     "death_reduction_pct": 49.68387776606955,
+     "incidence_reduction_pct": 41.92556811944231,
+     "deaths_averted_per_1000_colos": 4.948481739682573,
+     "cases_averted_per_1000_colos": 10.020281953259676,
+     "lyg_per_1000": 119.01999999999902,
+     "paired_death_diff_vs_none": -943.0,
+     "paired_death_diff_se": 45.02961988143653,
+     "never_attended_share": 0.018995
+    },
+    "subgroups": {
+     "class_low": {
+      "share": 0.30091,
+      "n": 60182,
+      "crc_death_per_100k": 1118.2745671463229,
+      "colos_per_person": 1.5225482702469177,
+      "invites_per_person": 10.144677810641056,
+      "attendance": 0.15008345249268254,
+      "never_attended_share": 0.06073244491708484,
+      "crc_death_per_100k_none": 1920.8401183077997,
+      "death_reduction_pct": 41.78200692041523,
+      "paired_death_diff_vs_none": -802.7392239990645,
+      "paired_death_diff_se": 63.11810936475906
+     },
+     "class_high": {
+      "share": 0.69909,
+      "n": 139818,
+      "crc_death_per_100k": 884.721566608019,
+      "colos_per_person": 2.0705273999055915,
+      "invites_per_person": 2.3011128753093306,
+      "attendance": 0.8997939310679219,
+      "never_attended_share": 0.0010299103119769987,
+      "crc_death_per_100k_none": 1888.1689052911645,
+      "death_reduction_pct": 53.1439393939394,
+      "paired_death_diff_vs_none": -1003.3960416677655,
+      "paired_death_diff_se": 51.72739640740548
+     }
+    }
+   },
+   "dpaware_lam0.002691_e3_mix": {
+    "arm": {
+     "kind": "policy",
+     "policy_male": "C:\\Users\\daybr\\Git_Works\\pbvi_final\\results\\dp\\policies\\c6bhi_adh_death_lam0.002691_sex1.npz",
+     "policy_female": "C:\\Users\\daybr\\Git_Works\\pbvi_final\\results\\dp\\policies\\c6bhi_adh_death_lam0.002691_sex2.npz",
+     "observed_class": false,
+     "adherence": {
+      "kind": "mixture",
+      "probs": [
+       0.15,
+       0.9
+      ],
+      "weights": [
+       0.3,
+       0.7
+      ]
+     }
+    },
+    "rates": {
+     "n": 200000,
+     "n_chunks": 4,
+     "crc_death_per_100k": 1091.0,
+     "comp_death_per_100k": 5.5,
+     "incidence_per_100k": 2807.0,
+     "screen_detected_per_100k": 526.5,
+     "symptom_detected_per_100k": 2375.0,
+     "colos_per_person": 1.63315,
+     "policy_colos_per_person": 1.63315,
+     "total_colos_per_person": 1.658275,
+     "life_years_from40": 37.492335,
+     "cost_per_person": 3657.14839375,
+     "crc_death_se": 13.178264933847197,
+     "incidence_se": 31.374086972106987,
+     "colos_se": 0.002942396982053905,
+     "life_years_se": 0.02503232094047016,
+     "deaths_averted_per_100k": 807.0,
+     "cases_averted_per_100k": 1747.5,
+     "death_reduction_pct": 42.518440463645945,
+     "incidence_reduction_pct": 38.368646393676585,
+     "deaths_averted_per_1000_colos": 4.941370970210942,
+     "cases_averted_per_1000_colos": 10.700180632519977,
+     "lyg_per_1000": 78.70499999999936,
+     "paired_death_diff_vs_none": -807.0,
+     "paired_death_diff_se": 30.16068080575549,
+     "never_attended_share": 0.02268
+    },
+    "subgroups": {
+     "class_low": {
+      "share": 0.30091,
+      "n": 60182,
+      "crc_death_per_100k": 1277.790701538666,
+      "colos_per_person": 1.2269615499651059,
+      "invites_per_person": 8.175301585191585,
+      "attendance": 0.15008150307110077,
+      "never_attended_share": 0.07334418929247948,
+      "crc_death_per_100k_none": 1920.8401183077997,
+      "death_reduction_pct": 33.47750865051903,
+      "paired_death_diff_vs_none": -643.1967735006292,
+      "paired_death_diff_se": 40.50686700462412
+     },
+     "class_high": {
+      "share": 0.69909,
+      "n": 139818,
+      "crc_death_per_100k": 1010.59949362743,
+      "colos_per_person": 1.8079860962107883,
+      "invites_per_person": 2.0101846686406613,
+      "attendance": 0.8994129367394862,
+      "never_attended_share": 0.000872562903202735,
+      "crc_death_per_100k_none": 1888.1689052911645,
+      "death_reduction_pct": 46.47727272727272,
+      "paired_death_diff_vs_none": -877.5389692009326,
+      "paired_death_diff_se": 39.40078297389751
      }
     }
    }

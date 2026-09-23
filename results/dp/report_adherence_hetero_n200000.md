@@ -23,6 +23,8 @@ CRC deaths / 100 000 within the subgroup (mortality reduction vs the same person
 | q10y_recall_e1_beta_k1 | 1367 (31 %), 1.56 c | 970 (49 %), 2.54 c | 1086 (42 %), 2.58 c |
 | dp_e1_beta_k1 | 1370 (30 %), 1.06 c | 1005 (47 %), 1.98 c | 911 (52 %), 2.25 c |
 | dpaware_lam0.001561_e1_beta_k1 | 1215 (38 %), 1.42 c | 967 (49 %), 2.46 c | 929 (51 %), 2.44 c |
+| dpaware_lam0.00205_e1_beta_k1 | 1347 (32 %), 1.22 c | 960 (49 %), 2.02 c | 938 (50 %), 2.08 c |
+| dpaware_lam0.002691_e1_beta_k1 | 1407 (29 %), 0.99 c | 1021 (46 %), 1.74 c | 990 (47 %), 1.81 c |
 
 ## E2 — state-dependent (habitual) attendance: P(attend | first / after attending / after missing)
 
@@ -35,15 +37,17 @@ CRC deaths / 100 000 within the subgroup (mortality reduction vs the same person
 
 | scenario | mean attend. | never-attended share | fixed | fixed + recall | adaptive (unchanged) | adaptive (adherence-aware, matched volume) |
 |---|---|---|---|---|---|---|
-| mixture 30 % @ .15, 70 % @ .90 | 0.67 | 2 % | 1.74 → 1264 (33 %) | 2.40 → 1068 (44 %) | 1.96 → 995 (48 %) | 2.24 → 964 (49 %) |
-| Beta κ = 1 | 0.70 | 5 % | 1.80 → 1273 (33 %) | 2.39 → 1110 (42 %) | 1.98 → 1012 (47 %) | 2.27 → 988 (48 %) |
-| Markov .5/.85/.25 | 0.62 | 2 % | 1.40 → 1364 (28 %) | 2.50 → 1068 (44 %) | 2.03 → 992 (48 %) | 2.48 → 908 (52 %) |
+| mixture 30 % @ .15, 70 % @ .90 | 0.67 | 2 % | 1.74 → 1264 (33 %) | 2.40 → 1068 (44 %) | 1.96 → 995 (48 %) | 1.91 → 955 (50 %) |
+| Beta κ = 1 | 0.70 | 5 % | 1.80 → 1273 (33 %) | 2.39 → 1110 (42 %) | 1.98 → 1012 (47 %) | 1.92 → 1014 (47 %) |
+| Markov .5/.85/.25 | 0.62 | 2 % | 1.40 → 1364 (28 %) | 2.50 → 1068 (44 %) | 2.03 → 992 (48 %) | 2.03 → 970 (49 %) |
 
 Aware-policy λ grid under the mixture truth (λ per attended colonoscopy):
 
 | λ | colonoscopies | invitations / person | CRC deaths / 100k | deaths averted / 1000 colos |
 |---|---|---|---|---|
 | 0.001561 | 2.24 | 5.45 | 964 | 4.17 |
+| 0.00205 | 1.91 | 4.66 | 955 | 4.95 |
+| 0.002691 | 1.63 | 3.87 | 1091 | 4.94 |
 
 ### E3, mixture truth: outcomes within adherence subgroups
 
@@ -55,6 +59,8 @@ CRC deaths / 100 000 within the subgroup (mortality reduction vs the same person
 | q10y_recall_e3_mix | 1117 (42 %), 2.00 c | 1046 (45 %), 2.57 c |
 | dp_e3_mix | 1065 (45 %), 1.32 c | 964 (49 %), 2.24 c |
 | dpaware_lam0.001561_e3_mix | 1083 (44 %), 1.78 c | 913 (52 %), 2.44 c |
+| dpaware_lam0.00205_e3_mix | 1118 (42 %), 1.52 c | 885 (53 %), 2.07 c |
+| dpaware_lam0.002691_e3_mix | 1278 (33 %), 1.23 c | 1011 (46 %), 1.81 c |
 
 ## E4 — non-adherence correlated with CRC risk (missing not at random)
 
