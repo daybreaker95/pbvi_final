@@ -60,7 +60,8 @@ def build_hook(arm: dict, p: dict, seed: int, n: int):
         if not arm.get('no_dx', True):
             return H.FixedScheduleHook(arm['ages'])
         return H.FixedScheduleNoDxHook(arm['ages'], n, adherence=arm.get('adherence', 1.0),
-                                       recall=arm.get('recall', False), seed=seed)
+                                       recall=arm.get('recall', False), seed=seed,
+                                       risk=np.asarray(p['individual_risk'], float))
     if kind == 'record_screen':
         return H.RandomScheduleRecorderHook(n, seed, age_lo=arm.get('age_lo', 40),
                                             age_hi_first=arm.get('age_hi_first', 70),
@@ -99,7 +100,8 @@ def build_hook(arm: dict, p: dict, seed: int, n: int):
         return H.BeliefPolicyHook(pols, sex_arr, risk_class=rc,
                                  observed_class=arm.get('observed_class', False),
                                  adherence=arm.get('adherence', 1.0), seed=seed,
-                                 score_cell=cell, cell_beliefs=beliefs, score_band=band)
+                                 score_cell=cell, cell_beliefs=beliefs, score_band=band,
+                                 risk=np.asarray(p['individual_risk'], float))
     raise ValueError(f'unknown arm kind {kind}')
 
 
@@ -202,6 +204,8 @@ def run_chunk(job: dict) -> str:
         save['hook_n_screen'] = np.asarray(hook.n_screen)
     if hasattr(hook, 'n_surv'):
         save['hook_n_surv'] = np.asarray(hook.n_surv)
+    if getattr(hook, 'adh', None) is not None:
+        save.update(hook.adh.person_arrays())
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     tmp = out_path + '.tmp.npz'
     np.savez_compressed(tmp, **save)

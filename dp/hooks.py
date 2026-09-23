@@ -22,6 +22,7 @@ from .common import (
     O_ADENOMA, O_MULTI, O_ADVAD, O_EXIT, O_NORMAL, O_NOTEST, SCREEN, WAIT,
 )
 from .kernels import OL_OF_OBS
+from .adherence import AdherenceProcess
 
 
 class FixedScheduleHook:
@@ -48,18 +49,18 @@ class FixedScheduleNoDxHook(FixedScheduleHook):
     and would otherwise receive pointless 'screening' colonoscopies.
 
     adherence: probability that a due invitation is attended (drawn from the
-    hook's OWN rng so the engine's global paired stream is untouched).
+    hook's OWN rng so the engine's global paired stream is untouched), or an
+    adherence-process spec (dp.adherence: per-person / state-dependent).
     recall: if True, a missed invitation is re-issued every following year
     until attended (then the next slot is the next scheduled age > y);
     if False, a missed slot is lost for good (classic fixed programme)."""
     wants_info = True
 
-    def __init__(self, screen_ages, n, adherence=1.0, recall=False, seed=0):
+    def __init__(self, screen_ages, n, adherence=1.0, recall=False, seed=0, risk=None):
         super().__init__(screen_ages)
         self.diagnosed = np.zeros(n, dtype=bool)
-        self.adherence = float(adherence)
+        self.adh = AdherenceProcess(adherence, n, seed, risk)
         self.recall = bool(recall)
-        self.rng = np.random.default_rng(seed + 4242)
         self.ages_sorted = sorted(self.screen_ages)
         first = self.ages_sorted[0] if self.ages_sorted else 10**6
         self.next_due = np.full(n, first, dtype=np.int32)
@@ -77,10 +78,8 @@ class FixedScheduleNoDxHook(FixedScheduleHook):
         due = (y >= self.next_due[z]) if self.recall else (y in self.screen_ages)
         if not due:
             return WAIT
-        if self.adherence < 1.0 and self.rng.random() >= self.adherence:
-            self.n_missed[z] += 1
-            if not self.recall:
-                pass                    # slot lost; next chance = next scheduled age
+        if not self.adh.draw(z):
+            self.n_missed[z] += 1       # no recall: slot lost, next chance = next scheduled age
             return WAIT
         return SCREEN
 
@@ -194,13 +193,16 @@ class BeliefPolicyHook:
 
     def __init__(self, policies, sex_arr, risk_class=None, observed_class=False,
                  adherence=1.0, seed=0, score_cell=None, cell_beliefs=None,
-                 score_band=None):
-        self.adherence = float(adherence)
-        self.adh_rng = np.random.default_rng(seed + 4242)
-        self.n_missed = None
+                 score_band=None, risk=None):
         self.pol = policies
         self.sex_arr = np.asarray(sex_arr).astype(int)
         n = len(self.sex_arr)
+        self.adh = AdherenceProcess(adherence, n, seed, risk)
+        # adherence-aware policies (dp.adherence_model) carry a latent
+        # adherence class and observe a declined invitation as its own
+        # observation; the plain policy learns nothing from a no-show
+        self.noshow_obs = getattr(policies[1].model, 'O_NOSHOW', None)
+        self._noshow_pending = np.zeros(n, dtype=bool)
         self.diagnosed = np.zeros(n, dtype=bool)
         S = policies[1].model.S
         self.belief = np.zeros((n, S))
@@ -244,10 +246,12 @@ class BeliefPolicyHook:
         p = self.pol[self.sex_arr[z]]
         self.n_decisions += 1
         a = int(p.best_action(y, int(self.tau[z]), int(self.ol[z]), self.belief[z]))
-        if a == SCREEN and self.adherence < 1.0 and self.adh_rng.random() >= self.adherence:
-            # no-show: no colonoscopy, no observation; the belief simply takes
-            # the WAIT transition below and the policy re-plans next year
+        if a == SCREEN and not self.adh.draw(z):
+            # no-show: no colonoscopy, no clinical observation; the belief
+            # takes the WAIT transition below (plus the no-show evidence for
+            # an adherence-aware policy) and the policy re-plans next year
             self.n_missed[z] += 1
+            self._noshow_pending[z] = True
             return WAIT
         if a == SCREEN:
             self.n_screen[z] += 1
@@ -263,6 +267,10 @@ class BeliefPolicyHook:
     def step_update(self, z, a, o, y):
         if a == SCREEN:
             self.log_z.append(z); self.log_y.append(y); self.log_o.append(o)
+        if self._noshow_pending[z]:
+            self._noshow_pending[z] = False
+            if self.noshow_obs is not None and o != O_EXIT:
+                a, o = SCREEN, self.noshow_obs
         if o == O_EXIT:
             self.diagnosed[z] = True
             return

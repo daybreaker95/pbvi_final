@@ -95,8 +95,13 @@ class Policy:
 def load_policy(path) -> Policy:
     z = np.load(path, allow_pickle=True)
     meta = json.loads(str(z['meta']))
-    model = ReducedPOMDP(meta['sex'], meta['kernels_npz'], age_min=meta['age_min'], age_max=meta['age_max'],
-                         life_max=meta['life_max'], weights=meta['weights'], lam=meta['lam'])
+    kw = dict(age_min=meta['age_min'], age_max=meta['age_max'], life_max=meta['life_max'],
+              weights=meta['weights'], lam=meta['lam'])
+    if meta.get('adh'):
+        from .adherence_model import AdherencePOMDP
+        model = AdherencePOMDP(meta['sex'], meta['kernels_npz'], meta['adh'], **kw)
+    else:
+        model = ReducedPOMDP(meta['sex'], meta['kernels_npz'], **kw)
     alphas, acts = {}, {}
     for i, key in enumerate(z['keys']):
         k = tuple(int(v) for v in key)

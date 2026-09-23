@@ -281,6 +281,11 @@ def policy_tree(model: ReducedPOMDP, action_batch, b0=None, prune=1e-12, decimal
     population prior alone.
     Returns (metrics dict, tree) where tree[(y, tau, ol)] = (U, actions) if collect.
     """
+    # a model may ask for a coarser merge of its tree (the adherence-aware
+    # model's belief over the latent adherence class makes the exact tree
+    # branch on the whole invitation history)
+    decimals = getattr(model, 'tree_decimals', decimals)
+    prune = max(prune, getattr(model, 'tree_prune', prune))
     if b0 is None:
         B0 = model.initial_belief()[None, :]
     else:
