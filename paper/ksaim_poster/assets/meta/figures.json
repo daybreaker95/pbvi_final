@@ -1,0 +1,442 @@
+[
+  {
+    "file": "assets/figures/momdp_pipeline.png",
+    "path": "assets/figures/momdp_pipeline.png",
+    "page": 0,
+    "figure_id": "fig-method-pipeline",
+    "original_label": "Method schematic",
+    "caption_label": "Method schematic",
+    "caption": "Pipeline: the instrumented CMOST engine supplies maximum-likelihood kernels for a mixed-observability MDP, solved by point-based value iteration and deployed back inside the engine on population-paired arms.",
+    "width": 4800,
+    "height": 2000,
+    "column": "full",
+    "caption_provenance": {
+      "selected_source": "poster_schematic_from_methods",
+      "quality": {
+        "status": "trusted",
+        "reasons": []
+      }
+    },
+    "semantic_schema_version": "figure_semantics.v2",
+    "semantic_eligible": true,
+    "semantic_status": "classified",
+    "semantic_role": "method",
+    "semantic_confidence": 0.95,
+    "semantic_roles": [
+      {
+        "role": "method",
+        "confidence": 0.95,
+        "evidence": [
+          "poster schematic of Sections 2.1-2.6: engine -> kernels -> MOMDP -> PBVI -> deployment"
+        ]
+      }
+    ],
+    "section_relevance": [
+      {
+        "section_id": "method",
+        "confidence": 0.95,
+        "evidence": [
+          "Methods 2.1-2.6"
+        ]
+      }
+    ],
+    "section_exclusions": [
+      {
+        "section_id": "motivation",
+        "role": "method",
+        "confidence": 0.95,
+        "evidence": [
+          "poster schematic of Sections 2.1-2.6: engine -> kernels -> MOMDP -> PBVI -> deployment"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "assets/figures/dp_frontier_c6b.png",
+    "path": "assets/figures/dp_frontier_c6b.png",
+    "page": 1,
+    "figure_id": "fig-1",
+    "original_label": "Figure 1",
+    "caption_label": "Figure 1",
+    "caption": "Efficiency frontiers in the engine: CRC deaths (left) and CRC diagnoses (right) per 100,000 versus colonoscopies per person for the adaptive policy family, the guideline schedules, the best fixed schedules and the surveillance-augmented programmes.",
+    "width": 1760,
+    "height": 736,
+    "column": "full",
+    "caption_provenance": {
+      "selected_source": "manuscript_figure_table",
+      "quality": {
+        "status": "trusted",
+        "reasons": []
+      }
+    },
+    "semantic_schema_version": "figure_semantics.v2",
+    "semantic_eligible": true,
+    "semantic_status": "classified",
+    "semantic_role": "result",
+    "semantic_confidence": 0.95,
+    "semantic_roles": [
+      {
+        "role": "result",
+        "confidence": 0.95,
+        "evidence": [
+          "Figure 1 caption: efficiency frontiers in the engine; Table 4 headline arms"
+        ]
+      }
+    ],
+    "section_relevance": [
+      {
+        "section_id": "key-result",
+        "confidence": 0.95,
+        "evidence": [
+          "Section 3.3"
+        ]
+      }
+    ],
+    "section_exclusions": [
+      {
+        "section_id": "motivation",
+        "role": "result",
+        "confidence": 0.95,
+        "evidence": [
+          "Figure 1 caption: efficiency frontiers in the engine; Table 4 headline arms"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "assets/figures/dp_validation_c6b.png",
+    "path": "assets/figures/dp_validation_c6b.png",
+    "page": 2,
+    "figure_id": "fig-2",
+    "original_label": "Figure 2",
+    "caption_label": "Figure 2",
+    "caption": "Model versus engine decision-time prevalence of early adenoma, advanced adenoma and undetected cancer by age in men, under 10-yearly screening (left) and no screening (right).",
+    "width": 1760,
+    "height": 672,
+    "column": "full",
+    "caption_provenance": {
+      "selected_source": "manuscript_figure_table",
+      "quality": {
+        "status": "trusted",
+        "reasons": []
+      }
+    },
+    "semantic_schema_version": "figure_semantics.v2",
+    "semantic_eligible": true,
+    "semantic_status": "classified",
+    "semantic_role": "dataset",
+    "semantic_confidence": 0.7,
+    "semantic_roles": [
+      {
+        "role": "dataset",
+        "confidence": 0.7,
+        "evidence": [
+          "Figure 2 caption: model reproduces the engine's prevalence trajectories (Section 3.1 validation)"
+        ]
+      },
+      {
+        "role": "method",
+        "confidence": 0.5,
+        "evidence": [
+          "validates the reduced model of Section 2"
+        ]
+      },
+      {
+        "role": "result",
+        "confidence": 0.4,
+        "evidence": [
+          "Table 1 model-vs-engine agreement"
+        ]
+      }
+    ],
+    "section_relevance": [
+      {
+        "section_id": "dataset-benchmark",
+        "confidence": 0.7,
+        "evidence": [
+          "Section 3.1"
+        ]
+      },
+      {
+        "section_id": "method",
+        "confidence": 0.5,
+        "evidence": [
+          "Section 2"
+        ]
+      }
+    ],
+    "section_exclusions": []
+  },
+  {
+    "file": "assets/figures/dp_policy_c6b_lam0.001561.png",
+    "path": "assets/figures/dp_policy_c6b_lam0.001561.png",
+    "page": 3,
+    "figure_id": "fig-3",
+    "original_label": "Figure 3",
+    "caption_label": "Figure 3",
+    "caption": "Screening ages of the headline policy along canonical observation paths and by known risk class, by sex.",
+    "width": 1760,
+    "height": 672,
+    "column": "full",
+    "caption_provenance": {
+      "selected_source": "manuscript_figure_table",
+      "quality": {
+        "status": "trusted",
+        "reasons": []
+      }
+    },
+    "semantic_schema_version": "figure_semantics.v2",
+    "semantic_eligible": true,
+    "semantic_status": "classified",
+    "semantic_role": "qualitative",
+    "semantic_confidence": 0.8,
+    "semantic_roles": [
+      {
+        "role": "qualitative",
+        "confidence": 0.8,
+        "evidence": [
+          "Figure 3 caption: what the policy does (Section 3.4)"
+        ]
+      },
+      {
+        "role": "result",
+        "confidence": 0.6,
+        "evidence": [
+          "Table 6 screening ages"
+        ]
+      },
+      {
+        "role": "method",
+        "confidence": 0.4,
+        "evidence": [
+          "illustrates the solved policy"
+        ]
+      }
+    ],
+    "section_relevance": [
+      {
+        "section_id": "what-the-policy-does",
+        "confidence": 0.85,
+        "evidence": [
+          "Section 3.4"
+        ]
+      },
+      {
+        "section_id": "key-result",
+        "confidence": 0.6,
+        "evidence": [
+          "Table 6"
+        ]
+      }
+    ],
+    "section_exclusions": [
+      {
+        "section_id": "motivation",
+        "role": "result",
+        "confidence": 0.6,
+        "evidence": [
+          "Table 6 screening ages"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "assets/figures/dp_riskscore_c6b.png",
+    "path": "assets/figures/dp_riskscore_c6b.png",
+    "page": 4,
+    "figure_id": "fig-4",
+    "original_label": "Figure 4",
+    "caption_label": "Figure 4",
+    "caption": "Value of a baseline risk score against its discrimination at matched colonoscopy volume (left) and the engine arms on the efficiency plane (right).",
+    "width": 1760,
+    "height": 704,
+    "column": "full",
+    "caption_provenance": {
+      "selected_source": "manuscript_figure_table",
+      "quality": {
+        "status": "trusted",
+        "reasons": []
+      }
+    },
+    "semantic_schema_version": "figure_semantics.v2",
+    "semantic_eligible": true,
+    "semantic_status": "classified",
+    "semantic_role": "result",
+    "semantic_confidence": 0.8,
+    "semantic_roles": [
+      {
+        "role": "result",
+        "confidence": 0.8,
+        "evidence": [
+          "Figure 4 caption: Section 3.6 score ladder and engine arms"
+        ]
+      },
+      {
+        "role": "ablation",
+        "confidence": 0.45,
+        "evidence": [
+          "information vs adaptivity 2x2 (Table 9)"
+        ]
+      }
+    ],
+    "section_relevance": [
+      {
+        "section_id": "risk-information-vs-adaptivity",
+        "confidence": 0.85,
+        "evidence": [
+          "Section 3.6"
+        ]
+      },
+      {
+        "section_id": "key-result",
+        "confidence": 0.7,
+        "evidence": [
+          "Tables 8-9"
+        ]
+      }
+    ],
+    "section_exclusions": [
+      {
+        "section_id": "motivation",
+        "role": "result",
+        "confidence": 0.8,
+        "evidence": [
+          "Figure 4 caption: Section 3.6 score ladder and engine arms"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "assets/figures/dp_adherence_c6b.png",
+    "path": "assets/figures/dp_adherence_c6b.png",
+    "page": 5,
+    "figure_id": "fig-5",
+    "original_label": "Figure 5",
+    "caption_label": "Figure 5",
+    "caption": "CRC mortality and colonoscopy use versus attendance probability for the fixed programme (with and without recall) and the adaptive policy.",
+    "width": 1760,
+    "height": 704,
+    "column": "full",
+    "caption_provenance": {
+      "selected_source": "manuscript_figure_table",
+      "quality": {
+        "status": "trusted",
+        "reasons": []
+      }
+    },
+    "semantic_schema_version": "figure_semantics.v2",
+    "semantic_eligible": true,
+    "semantic_status": "classified",
+    "semantic_role": "result",
+    "semantic_confidence": 0.85,
+    "semantic_roles": [
+      {
+        "role": "result",
+        "confidence": 0.85,
+        "evidence": [
+          "Figure 5 caption: Section 3.7 adherence scenarios (Table 10)"
+        ]
+      },
+      {
+        "role": "ablation",
+        "confidence": 0.6,
+        "evidence": [
+          "robustness analysis"
+        ]
+      }
+    ],
+    "section_relevance": [
+      {
+        "section_id": "robustness",
+        "confidence": 0.9,
+        "evidence": [
+          "Section 3.7"
+        ]
+      },
+      {
+        "section_id": "ablation-study",
+        "confidence": 0.6,
+        "evidence": [
+          "Table 10"
+        ]
+      },
+      {
+        "section_id": "key-result",
+        "confidence": 0.65,
+        "evidence": [
+          "Table 10"
+        ]
+      }
+    ],
+    "section_exclusions": [
+      {
+        "section_id": "motivation",
+        "role": "result",
+        "confidence": 0.85,
+        "evidence": [
+          "Figure 5 caption: Section 3.7 adherence scenarios (Table 10)"
+        ]
+      },
+      {
+        "section_id": "motivation",
+        "role": "ablation",
+        "confidence": 0.6,
+        "evidence": [
+          "robustness analysis"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "assets/figures/dp_per_colonoscopy_c6b.png",
+    "path": "assets/figures/dp_per_colonoscopy_c6b.png",
+    "page": 6,
+    "figure_id": "fig-6",
+    "original_label": "Figure 6",
+    "caption_label": "Figure 6",
+    "caption": "Deaths and diagnoses averted per 1000 colonoscopies, all headline arms and the surveillance-augmented programmes.",
+    "width": 1760,
+    "height": 672,
+    "column": "full",
+    "caption_provenance": {
+      "selected_source": "manuscript_figure_table",
+      "quality": {
+        "status": "trusted",
+        "reasons": []
+      }
+    },
+    "semantic_schema_version": "figure_semantics.v2",
+    "semantic_eligible": true,
+    "semantic_status": "classified",
+    "semantic_role": "result",
+    "semantic_confidence": 0.75,
+    "semantic_roles": [
+      {
+        "role": "result",
+        "confidence": 0.75,
+        "evidence": [
+          "Figure 6 caption: per-colonoscopy efficiency, Table 4 columns"
+        ]
+      }
+    ],
+    "section_relevance": [
+      {
+        "section_id": "key-result",
+        "confidence": 0.75,
+        "evidence": [
+          "Table 4"
+        ]
+      }
+    ],
+    "section_exclusions": [
+      {
+        "section_id": "motivation",
+        "role": "result",
+        "confidence": 0.75,
+        "evidence": [
+          "Figure 6 caption: per-colonoscopy efficiency, Table 4 columns"
+        ]
+      }
+    ]
+  }
+]

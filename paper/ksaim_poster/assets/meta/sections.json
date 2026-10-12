@@ -1,0 +1,71 @@
+{
+  "schema": "paper2assets.sections.v1",
+  "title": "Adaptive Colonoscopy Screening from a Mixed-Observability Markov Decision Process Built on the CMOST Microsimulation",
+  "sections": [
+    {
+      "id": "problem",
+      "heading": "Problem",
+      "custom": false
+    },
+    {
+      "id": "motivation",
+      "heading": "Motivation",
+      "custom": false
+    },
+    {
+      "id": "contribution",
+      "heading": "Contribution",
+      "custom": false
+    },
+    {
+      "id": "method",
+      "heading": "Method",
+      "custom": false
+    },
+    {
+      "id": "dataset-benchmark",
+      "heading": "Dataset / Benchmark",
+      "custom": false
+    },
+    {
+      "id": "key-result",
+      "heading": "Key Result",
+      "custom": false
+    },
+    {
+      "id": "ablation-study",
+      "heading": "Ablation Study",
+      "custom": false
+    },
+    {
+      "id": "headline-numbers",
+      "heading": "Headline Numbers",
+      "custom": false
+    },
+    {
+      "id": "takeaway",
+      "heading": "Takeaway",
+      "custom": false
+    },
+    {
+      "id": "what-the-policy-does",
+      "heading": "What the policy does",
+      "custom": true
+    },
+    {
+      "id": "robustness-to-imperfect-adherence",
+      "heading": "Robustness to imperfect adherence",
+      "custom": true
+    },
+    {
+      "id": "risk-information-vs-adaptivity",
+      "heading": "Risk information vs adaptivity",
+      "custom": true
+    },
+    {
+      "id": "limitations",
+      "heading": "Limitations",
+      "custom": true
+    }
+  ]
+}

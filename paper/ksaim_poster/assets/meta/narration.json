@@ -1,0 +1,76 @@
+{
+  "provider": "edge",
+  "voice": null,
+  "sections": [
+    {
+      "id": "title",
+      "heading": "Title",
+      "text": "Adaptive Colonoscopy Screening from a Mixed-Observability Markov Decision Process Built on the CMOST Microsimulation, by Taehyung Lee, Inseo Choi and Jaehoon Shim. Colonoscopy capacity is limited, and every fixed screening schedule throws away the information a person's own colonoscopies generate. We built a decision model directly on the CMOST microsimulation, solved it for finding-adaptive policies, and verified inside the same simulator that they prevent more cancer deaths per colonoscopy than any fixed schedule."
+    },
+    {
+      "id": "problem",
+      "heading": "Problem",
+      "text": "Colonoscopy is an effective colorectal cancer screening tool, but it is invasive and capacity is finite, so the question is not only how much cancer a programme prevents but how much it prevents per colonoscopy. Microsimulation studies, including the CMOST optimisation of Zaika and colleagues, search over fixed schedules, the same ages for everyone or for everyone in a baseline risk stratum, and so cannot act on what a person's own previous colonoscopies found. We asked whether adapting to findings can beat the best fixed schedule."
+    },
+    {
+      "id": "motivation",
+      "heading": "Motivation",
+      "text": "Why should adapting to findings matter? Because a single colonoscopy is a very strong signal about a person's hidden risk. In our model, finding three or more adenomas at a first colonoscopy at fifty-two raises the probability of a high-risk class from five percent to ninety-three percent in men and ninety-eight in women, while a normal exam drops it below two percent. And hidden risk spans a twenty-three-fold gradient in lifetime cancer incidence, which no single fixed schedule can express."
+    },
+    {
+      "id": "contribution",
+      "heading": "Contribution",
+      "text": "We make three contributions. First, a decision model whose every transition, observation and exit kernel is estimated by maximum likelihood from the CMOST engine itself, not from summary statistics. Second, a mixed-observability formulation that conditions on years since the last colonoscopy and its finding, together with six latent risk classes. Third, an engine-verified dominance result: thirty percent more deaths and twenty-five percent more diagnoses averted per colonoscopy than ten-yearly screening, at lower colonoscopy volume."
+    },
+    {
+      "id": "method",
+      "heading": "Method",
+      "text": "The observed state is age, sex, years since the last colonoscopy and its finding; the hidden state crosses six latent risk classes with eleven clinical states. Each year from forty to eighty the policy chooses to wait or to screen. We estimated every kernel from four million instrumented CMOST lives, solved the model by point-based value iteration, swept the shadow price lambda to trace an efficiency frontier, and deployed every policy back inside the real engine against fixed-schedule comparators."
+    },
+    {
+      "id": "dataset-benchmark",
+      "heading": "Dataset / Benchmark",
+      "text": "Our ground truth is CMOST, an open-source microsimulation of the adenoma-carcinoma sequence in three-month steps from birth to age one hundred. Two instrumented cohorts of two million lives each, one never screened and one screened at random ages and intervals, supplied four and a half million colonoscopies for estimation. The reduced model reproduces the engine's cancer deaths and diagnoses within half a percent without screening, within two percent under ten-yearly screening and within five point three percent under five-yearly screening."
+    },
+    {
+      "id": "key-result",
+      "heading": "Key Result",
+      "text": "Inside the engine, with one million population-paired persons per arm, the adaptive policy used eleven percent fewer colonoscopies than ten-yearly screening and still lowered colorectal cancer mortality from one thousand thirty-two to about nine hundred per hundred thousand. Deaths averted per thousand colonoscopies rose from three point three to four point three, a thirty percent gain, and diagnoses averted rose twenty-five percent. It also beat the best re-optimised fixed schedule while using fewer colonoscopies than it did. The comparator closest to guideline practice, ten-yearly screening with CMOST's own post-polypectomy surveillance, reaches twenty fewer deaths per hundred thousand than this policy, but only by performing twenty-nine percent more colonoscopies; the adaptive policy solved for that volume has sixty-two fewer deaths, and per colonoscopy the ordering is unchanged."
+    },
+    {
+      "id": "ablation-study",
+      "heading": "Ablation Study",
+      "text": "Two ablations. First, we re-solved the policy on deliberately simplified models: pooled polyp stages, no memory of the last finding, or a single risk class. Every one still beat ten-yearly screening by more than one hundred and twenty deaths per hundred thousand, so adaptivity itself, not the exact abstraction, drives the gain. Second, as a predictive model, dropping the memory of years since the last colonoscopy and its finding is the most damaging simplification."
+    },
+    {
+      "id": "headline-numbers",
+      "heading": "Headline Numbers",
+      "text": "The headline: thirty percent more colorectal cancer deaths averted per thousand colonoscopies, four point three two against three point three two, while performing eleven percent fewer colonoscopies than ten-yearly screening. That is one hundred and thirty-two fewer deaths per hundred thousand people. And when attendance is imperfect, the adaptive policy keeps a forty-four to fifty-three percent mortality reduction at every attendance level we tested, down to thirty percent, while the fixed programme decays from forty-six to eighteen percent."
+    },
+    {
+      "id": "takeaway",
+      "heading": "Takeaway",
+      "text": "The takeaway is simple. Deciding each person's next colonoscopy from what their last one found prevents more cancers and deaths per colonoscopy than any fixed schedule, including schedules optimised inside the same simulator. And the solved policy is not exotic: it has the shape of a three-tier surveillance rule with different starting ages for men and women, longer intervals after clean exams and an age-dependent stop, which clinicians will recognise. A clean first exam earns fifteen to twenty years; three or more adenomas bring the next exam forward to within a few years."
+    },
+    {
+      "id": "what-the-policy-does",
+      "heading": "What the policy does",
+      "text": "What does the policy actually do? Men get a first colonoscopy at forty-nine, women at fifty-eight. If that exam is clean, the next one is twenty years later for men and fifteen for women. One or two adenomas shorten the interval to nine years in men and five in women; an advanced adenoma to three or five; three or more adenomas bring the next exam forward to within one to four years, the one feature of the policy the objective pins down least. A simple fixed rule, fifty-two then ten, five or three years by finding, captures much of the absolute mortality gain."
+    },
+    {
+      "id": "robustness-to-imperfect-adherence",
+      "heading": "Robustness to imperfect adherence",
+      "text": "Fixed schedules assume everyone attends. We let each invitation be attended with probability alpha. The classic fixed programme decays from a forty-six percent to an eighteen percent mortality reduction as alpha falls to zero point three. The adaptive policy, unchanged and simply re-planning around no-shows, holds a forty-four to fifty-three percent reduction at every attendance level, and at fifty percent attendance it beats even an annual-recall fixed programme with twenty-two percent fewer colonoscopies."
+    },
+    {
+      "id": "risk-information-vs-adaptivity",
+      "heading": "Risk information vs adaptivity",
+      "text": "If the hidden risk class could be known at baseline, a hypothetical oracle that no current test provides, the policy would become an explicit targeting programme: no screening for the lowest-risk half, which is a property of the shadow price rather than a recommendation and is reversed by a smaller lambda, seven and a half colonoscopies for the highest-risk five percent, and six point three deaths averted per thousand colonoscopies overall. A realistic baseline score with AUC zero point six, like a polygenic score, buys, in the model, twenty-four fewer deaths per hundred thousand, a difference the engine cannot resolve at two hundred thousand persons per arm. Information and adaptivity are nearly additive, and adaptivity is worth about three times a realistic score."
+    },
+    {
+      "id": "limitations",
+      "heading": "Limitations",
+      "text": "Four limitations. All results are internal to CMOST, so they inherit its calibration and its synthetic spread of latent risk; a simulator with weaker heterogeneity would show a smaller gain. The decision model is memoryless given years since the last colonoscopy and its finding, so the sojourn structure of preclinical cancer is only approximated. Non-attendance is modelled as missing completely at random. And on life-years the adaptive and fixed schedules did not differ significantly, an honest null, and we optimise events per colonoscopy, not cost-effectiveness."
+    }
+  ]
+}

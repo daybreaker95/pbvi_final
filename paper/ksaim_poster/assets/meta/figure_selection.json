@@ -1,0 +1,51 @@
+{
+  "schema_version": "paper2poster.figure-selection.v2",
+  "source": "assets/meta/figures.json",
+  "mode": "semantic",
+  "semantics_available": true,
+  "thresholds": {
+    "motivation_min_confidence": 0.62,
+    "role_min_confidence": 0.55,
+    "motivation_veto_confidence": 0.55
+  },
+  "selections": {
+    "method": {
+      "figure_id": "fig-method-pipeline",
+      "file": "assets/figures/momdp_pipeline.png",
+      "role": "method",
+      "confidence": 0.95,
+      "section_relevance": 0.95,
+      "evidence": [
+        "poster schematic of Sections 2.1-2.6: engine -> kernels -> MOMDP -> PBVI -> deployment"
+      ],
+      "caption": "Pipeline: the instrumented CMOST engine supplies maximum-likelihood kernels for a mixed-observability MDP, solved by point-based value iteration and deployed back inside the engine on population-paired arms.",
+      "caption_provenance": {
+        "selected_source": "poster_schematic_from_methods",
+        "quality": {
+          "status": "trusted",
+          "reasons": []
+        }
+      }
+    },
+    "motivation": null,
+    "result": {
+      "figure_id": "fig-1",
+      "file": "assets/figures/dp_frontier_c6b.png",
+      "role": "result",
+      "confidence": 0.95,
+      "section_relevance": 0.95,
+      "evidence": [
+        "Figure 1 caption: efficiency frontiers in the engine; Table 4 headline arms"
+      ],
+      "caption": "Efficiency frontiers in the engine: CRC deaths (left) and CRC diagnoses (right) per 100,000 versus colonoscopies per person for the adaptive policy family, the guideline schedules, the best fixed schedules and the surveillance-augmented programmes.",
+      "caption_provenance": {
+        "selected_source": "manuscript_figure_table",
+        "quality": {
+          "status": "trusted",
+          "reasons": []
+        }
+      }
+    }
+  },
+  "warnings": []
+}

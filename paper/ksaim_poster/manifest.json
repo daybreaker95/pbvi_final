@@ -1,0 +1,25 @@
+{
+  "schema": "paper2assets.manifest.v2",
+  "producer": "build_bundle.py (hand-built; paper2assets not installed)",
+  "title": "Adaptive Colonoscopy Screening from a Mixed-Observability Markov Decision Process Built on the CMOST Microsimulation",
+  "source": "paper/manuscript.md",
+  "figure_semantics_generation": "e98e32a976f62865d7312bcddbaeddddb9f069ae72817293ec66fe1b39af8a8b",
+  "artifacts": {
+    "figures": {
+      "path": "assets/meta/figures.json",
+      "hash_scope": "semantic-selection-fields",
+      "sha256": "e98e32a976f62865d7312bcddbaeddddb9f069ae72817293ec66fe1b39af8a8b"
+    },
+    "sections": {
+      "path": "assets/meta/sections.json",
+      "hash_scope": "normalized-json",
+      "sha256": "46bf8dc3afe9fcdd01e4f592fbed0f3c3595def519f1211e1b6a13c3c9ac7141"
+    },
+    "narration": {
+      "path": "assets/meta/narration.json",
+      "hash_scope": "normalized-json",
+      "sha256": "59be6ca460ad3da7bdcfaef486721562b5b61f2f546209ccbd73c64a5222cbf2"
+    }
+  },
+  "package_generation": "39eb45be1fce5861a913db63ac06607ab0f4c80e433f81299640fd0620b3ceaa"
+}

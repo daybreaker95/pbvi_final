@@ -1,0 +1,10 @@
+# Regenerable build artefacts of the paper2poster pipeline (see assets/meta/*.py)
+assets/_pptx_build/
+assets/_schematic/variant_*
+assets/audio/
+assets/fonts/
+assets/meta/_crop*.png
+assets/meta/poster_print_full.png
+assets/meta/poster_debug.json
+assets/meta/slack_last.txt
+assets/meta/.fill_budget.json
