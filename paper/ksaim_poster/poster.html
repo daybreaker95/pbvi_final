@@ -1444,10 +1444,10 @@
   </style>
 <script id="paper2poster-composition" type="application/json">{"catalog":{"headers":["pv1","pv2","pv3","pv4","pv5"],"layouts":["full","half"],"styles":["elevated","framed","left-bar","legend-frame","neo-brutal","simple","solid","tag","tinted"],"themes":["blue","burgundy","green","mono","plum","purple","rust","slate","teal"]},"catalog_digest":"f25974508ec5f5797d750e61984ba47d86286d8869f9a1b96c82dc71dfbabfed","requested":{"header":"pv2","layout":"full","math":null,"orientation":"portrait","scan":"aside","style":"solid","theme":"teal"},"resolved":{"header":"pv2","layout":"full","math":"katex","orientation":"portrait","scan":null,"style":"solid","theme":"teal"},"sampler_version":4,"schema_version":"paper2poster.composition.v1","seed_sha256":"8efa822e889721fcc27d7d44e1a86067ea877b6003c4c06f7ac793d775c52bd4","seed_source":"resolved_output_path","variant_combination_space":null,"variant_index":null,"variant_joint_axes":[],"variant_seed_sha256":null}</script>
 <style id="ksaim-overrides">
-  /* KoSAIM 2026: the institution emblem sits at the right edge of the byline rows (same height as
-     authors + affiliations + contact); the venue/QR strip is centred underneath. */
-  header.titlebar.pv2 .meta-rail { grid-column: 1 / -1; justify-content: center; border-right: 0; }
-  header.titlebar.pv2 { row-gap: 6pt; }
+  /* KoSAIM 2026: one byline row under the title. The venue badge + QR sit at its left edge and
+     the institution emblem at its right edge, both level with authors + affiliations + contact. */
+  header.titlebar.pv2 { grid-template-columns: minmax(0, 1fr); grid-template-areas: "tt"; }
+  header.titlebar.pv2 .byline-row .meta-rail { grid-area: auto; grid-column: 1; grid-row: 1; justify-self: start; align-self: center; margin: 0 0 0 6pt; padding: 0; border-right: 0; }
   header.titlebar .byline-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: stretch; column-gap: 12pt; }
   header.titlebar .byline { grid-column: 2; text-align: center; }
   header.titlebar .inst-logo { grid-column: 3; justify-self: end; align-self: stretch; height: 100%; max-height: 150pt; width: auto; object-fit: contain; background: none; box-shadow: none; padding: 0; margin-right: 6pt; }
@@ -1504,6 +1504,13 @@
   .band-full .section p:last-child { margin-bottom: 0; }
   .p-table td.method { white-space: nowrap; }
   .section[data-section="ablation-study"] > figure { max-height: 305px; }
+  /* Takeaway frame: mirror the 6px left accent bar on the right and the 4px top stripe at the bottom. */
+  .section[data-section="takeaway"] { border-right: 6px solid var(--accent); }
+  .section[data-section="takeaway"]::after {
+    content: ""; position: absolute; bottom: 0; left: 0; right: 0; height: 4px; pointer-events: none;
+    background: linear-gradient(90deg, var(--section-accent, var(--accent)),
+      color-mix(in srgb, var(--section-accent, var(--accent)) 70%, white));
+  }
 </style>
 </head>
 <body data-poster-orientation="portrait" data-poster-layout="full" data-poster-style="solid" data-poster-header="pv2" data-poster-theme="teal">
@@ -1562,22 +1569,22 @@
   }
 </style>
 <header class="titlebar pv2" data-section="title" data-header="pv2">
-  <div class="meta-rail" data-section="header-meta">
-    <div class="venue-badge">
-      <a class="vb-link" href="https://www.kosaim.org/" target="_blank" rel="noopener">
-        <div class="vb-venue">KoSAIM</div>
-        <div class="vb-year">2026</div>
-        <div class="vb-tag">POSTER</div>
-      </a>
-    </div>
-    <div class="qr-block">
-      <figure class="qr"><img class="qr-img" src="" alt="Paper QR" onerror="this.parentElement.remove()"><figcaption class="qr-label">Paper</figcaption></figure>
-      <figure class="qr"><img class="qr-img" src="assets/qr/code.png" alt="Code QR" onerror="this.parentElement.remove()"><figcaption class="qr-label">Code</figcaption></figure>
-    </div>
-  </div>
   <div class="title-block">
     <h1>Adaptive Colonoscopy Screening From a Mixed-Observability Markov Decision Process Built on the CMOST Microsimulation: More Cancers and Deaths Prevented per Colonoscopy Than Any Fixed Schedule</h1>
     <div class="byline-row">
+      <div class="meta-rail" data-section="header-meta">
+        <div class="venue-badge">
+          <a class="vb-link" href="https://www.kosaim.org/" target="_blank" rel="noopener">
+            <div class="vb-venue">KoSAIM</div>
+            <div class="vb-year">2026</div>
+            <div class="vb-tag">POSTER</div>
+          </a>
+        </div>
+        <div class="qr-block">
+          <figure class="qr"><img class="qr-img" src="" alt="Paper QR" onerror="this.parentElement.remove()"><figcaption class="qr-label">Paper</figcaption></figure>
+          <figure class="qr"><img class="qr-img" src="assets/qr/code.png" alt="Code QR" onerror="this.parentElement.remove()"><figcaption class="qr-label">Code</figcaption></figure>
+        </div>
+      </div>
       <div class="byline">
         <div class="authors">Taehyung Lee<sup>1</sup>, Inseo Choi<sup>2</sup>, Jaehoon Shim<sup>3</sup></div>
         <div class="author-legend"><div class="institutes-line"><sup>1</sup> University of Ulsan College of Medicine &nbsp;&nbsp; <sup>2</sup> Chosun University College of Medicine &nbsp;&nbsp; <sup>3</sup> Seoul National University</div></div>

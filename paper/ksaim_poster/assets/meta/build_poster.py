@@ -170,13 +170,13 @@ html = re.sub(r'const PLAYLIST = \[[^\]]*\];',
               'const PLAYLIST = ["title", "problem", "motivation", "method", "key-result", "ablation-study", "what-the-policy-does", "risk-information-vs-adaptivity", "takeaway"];',
               html, count=1)
 
-# 1j. Header: no institution logos are available, so centre the venue + QR strip
-#     under the title instead of leaving the right half of the strip empty.
+# 1j. Header: collapse the pv2 masthead to the title block; the venue + QR strip and the
+#     institution emblem flank the byline (markup moved in 1j2).
 OVERRIDES = '''<style id="ksaim-overrides">
-  /* KoSAIM 2026: the institution emblem sits at the right edge of the byline rows (same height as
-     authors + affiliations + contact); the venue/QR strip is centred underneath. */
-  header.titlebar.pv2 .meta-rail { grid-column: 1 / -1; justify-content: center; border-right: 0; }
-  header.titlebar.pv2 { row-gap: 6pt; }
+  /* KoSAIM 2026: one byline row under the title. The venue badge + QR sit at its left edge and
+     the institution emblem at its right edge, both level with authors + affiliations + contact. */
+  header.titlebar.pv2 { grid-template-columns: minmax(0, 1fr); grid-template-areas: "tt"; }
+  header.titlebar.pv2 .byline-row .meta-rail { grid-area: auto; grid-column: 1; grid-row: 1; justify-self: start; align-self: center; margin: 0 0 0 6pt; padding: 0; border-right: 0; }
   header.titlebar .byline-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: stretch; column-gap: 12pt; }
   header.titlebar .byline { grid-column: 2; text-align: center; }
   header.titlebar .inst-logo { grid-column: 3; justify-self: end; align-self: stretch; height: 100%; max-height: 150pt; width: auto; object-fit: contain; background: none; box-shadow: none; padding: 0; margin-right: 6pt; }
@@ -233,13 +233,26 @@ OVERRIDES = '''<style id="ksaim-overrides">
   .band-full .section p:last-child { margin-bottom: 0; }
   .p-table td.method { white-space: nowrap; }
   .section[data-section="ablation-study"] > figure { max-height: 305px; }
+  /* Takeaway frame: mirror the 6px left accent bar on the right and the 4px top stripe at the bottom. */
+  .section[data-section="takeaway"] { border-right: 6px solid var(--accent); }
+  .section[data-section="takeaway"]::after {
+    content: ""; position: absolute; bottom: 0; left: 0; right: 0; height: 4px; pointer-events: none;
+    background: linear-gradient(90deg, var(--section-accent, var(--accent)),
+      color-mix(in srgb, var(--section-accent, var(--accent)) 70%, white));
+  }
 </style>
 </head>'''
 html = must_replace(html, "</head>", OVERRIDES, "header overrides")
 
-# 1j2. Header: put the institution emblem (transparent PNG, no chip) at the right edge of the
-#      byline rows (authors / affiliations / contact) and drop the bottom logo strip.
+# 1j2. Header: put the venue badge + QR at the left edge and the institution emblem (transparent
+#      PNG, no chip) at the right edge of the byline rows (authors / affiliations / contact), and
+#      drop the bottom logo strip.
 NL = "\n"
+m_mr = re.search(r'\n(  <div class="meta-rail" data-section="header-meta">\n.*?\n  </div>)(?=\n  <div class="title-block">)',
+                 html, flags=re.S)
+assert m_mr, "meta rail not found"
+html = html[:m_mr.start()] + html[m_mr.end():]
+META_RAIL = NL.join("    " + line for line in m_mr.group(1).split(NL))
 OLD_BYLINE = NL.join([
     '    <div class="authors">{{AUTHORS}}</div>',
     '    <div class="author-legend">{{AUTHOR_LEGEND}}</div>',
@@ -248,6 +261,7 @@ OLD_BYLINE = NL.join([
 ])
 NEW_BYLINE = NL.join([
     '    <div class="byline-row">',
+    META_RAIL,
     '      <div class="byline">',
     '        <div class="authors">{{AUTHORS}}</div>',
     '        <div class="author-legend">{{AUTHOR_LEGEND}}</div>',
